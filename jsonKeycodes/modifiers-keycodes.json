@@ -1,0 +1,92 @@
+[
+    {
+       "code": "KC.HYPR",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Left Control"
+    },
+    {
+       "code": "KC.MEH",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Left Control"
+    },
+    {
+       "code": "KC.LCTL(kc)",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": true,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Left Control and press `kc"
+    },
+    {
+       "code": "KC.LSFT(kc)",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": true,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Left Shift and press `kc"
+    },
+    {
+       "code": "KC.LALT(kc)",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": true,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Left Alt and press `kc"
+    },
+    {
+       "code": "KC.LGUI(kc)",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": true,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Left GUI and press `kc"
+    },
+    {
+       "code": "KC.RCTL(kc)",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": true,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Right Control and press `kc"
+    },
+    {
+       "code": "KC.RSFT(kc)",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": true,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Right Shift and press `kc"
+    },
+    {
+       "code": "KC.RALT(kc)",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": true,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Right Alt and press `kc"
+    },
+    {
+       "code": "KC.RGUI(kc)",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": true,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Hold Right GUI and press `kc"
+    }
+]

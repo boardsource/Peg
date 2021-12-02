@@ -1,0 +1,11 @@
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\bin\ExportDebug\Peg 2.dll
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\bin\ExportDebug\Peg 2.pdb
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\bin\ExportDebug\Newtonsoft.Json.dll
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\ExportDebug\Peg 2.csproj.AssemblyReference.cache
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\ExportDebug\Peg 2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\ExportDebug\Peg 2.AssemblyInfoInputs.cache
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\ExportDebug\Peg 2.AssemblyInfo.cs
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\ExportDebug\Peg 2.csproj.CoreCompileInputs.cache
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\ExportDebug\Peg 2.csproj.CopyComplete
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\ExportDebug\Peg 2.dll
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\ExportDebug\Peg 2.pdb

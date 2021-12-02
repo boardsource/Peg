@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/Visual/SingleUableKey.cs" type="Script" id=1]
+
+[node name="SingleUableKey" type="Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1850.0
+margin_bottom = -1010.0
+rect_min_size = Vector2( 70, 70 )
+rect_clip_content = true
+text = "KC.NO"
+clip_text = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="mouse_entered" from="." to="." method="_on_SingleUseableKey_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_SingleUseableKey_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_SingleUseableKey_pressed"]

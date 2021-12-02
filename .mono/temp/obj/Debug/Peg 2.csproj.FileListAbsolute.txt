@@ -1,0 +1,22 @@
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\obj\Debug\Peg 2.AssemblyInfoInputs.cache
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\obj\Debug\Peg 2.AssemblyInfo.cs
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\obj\Debug\Peg 2.csproj.CoreCompileInputs.cache
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\bin\Debug\Peg 2.dll
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\bin\Debug\Peg 2.pdb
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\obj\Debug\Peg 2.dll
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\obj\Debug\Peg 2.pdb
+C:\USERS\COLE\DOCUMENTS\CODE\GAMES\GODOT\PROJECTS\PEG2\.mono\temp\bin\Debug\Newtonsoft.Json.dll
+C:\USERS\COLE\DOCUMENTS\CODE\GAMES\GODOT\PROJECTS\PEG2\.mono\temp\obj\Debug\Peg 2.csproj.CopyComplete
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\obj\Debug\Peg 2.csproj.AssemblyReference.cache
+C:\Users\cole\Documents\code\games\godot\projects\peg2\.mono\temp\obj\Debug\Peg 2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\bin\Debug\Peg 2.dll
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\bin\Debug\Peg 2.pdb
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\Debug\Peg 2.csproj.AssemblyReference.cache
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\Debug\Peg 2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\Debug\Peg 2.AssemblyInfoInputs.cache
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\Debug\Peg 2.AssemblyInfo.cs
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\Debug\Peg 2.csproj.CoreCompileInputs.cache
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\Debug\Peg 2.csproj.CopyComplete
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\Debug\Peg 2.dll
+C:\Users\cole\Documents\code\games\godot\projects\Peg 2\.mono\temp\obj\Debug\Peg 2.pdb

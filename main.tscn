@@ -1,0 +1,181 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://KeyLayout.tscn" type="PackedScene" id=1]
+[ext_resource path="res://makeCustomKey.tscn" type="PackedScene" id=2]
+[ext_resource path="res://useableKeyGrid.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/Keymap.cs" type="Script" id=4]
+[ext_resource path="res://scripts/MapManager.cs" type="Script" id=5]
+[ext_resource path="res://main.gd" type="Script" id=6]
+[ext_resource path="res://ToolTip.tscn" type="PackedScene" id=7]
+
+[node name="main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+margin_right = 1916.0
+margin_bottom = 689.0
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="default" parent="TabContainer" instance=ExtResource( 1 )]
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Layer 1" parent="TabContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedLayer = 1
+
+[node name="Layer 2" parent="TabContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedLayer = 2
+
+[node name="Layer 3" parent="TabContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedLayer = 3
+
+[node name="Make Custom Key" parent="TabContainer" instance=ExtResource( 2 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="TabContainer2" type="TabContainer" parent="."]
+margin_left = 3.0
+margin_top = 719.0
+margin_right = 1931.0
+margin_bottom = 1081.0
+tab_align = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Base" parent="TabContainer2" instance=ExtResource( 3 )]
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Modifiers" parent="TabContainer2" instance=ExtResource( 3 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedSet = 5
+
+[node name="Shifted" parent="TabContainer2" instance=ExtResource( 3 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedSet = 6
+
+[node name="Layers" parent="TabContainer2" instance=ExtResource( 3 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedSet = 7
+
+[node name="Less used" parent="TabContainer2" instance=ExtResource( 3 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedSet = 1
+
+[node name="BLE" parent="TabContainer2" instance=ExtResource( 3 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedSet = 2
+
+[node name="International" parent="TabContainer2" instance=ExtResource( 3 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedSet = 4
+
+[node name="Internal" parent="TabContainer2" instance=ExtResource( 3 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedSet = 3
+
+[node name="Custom" parent="TabContainer2" instance=ExtResource( 3 )]
+visible = false
+anchor_top = 0.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+SelectedSet = 8
+
+[node name="Keymap" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="MapManager" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_left = 7.0
+margin_top = 751.0
+margin_right = 322.0
+margin_bottom = 881.0
+
+[node name="ToolTip" parent="." instance=ExtResource( 7 )]
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 1737.6
+margin_top = 697.125
+margin_right = 1903.6
+margin_bottom = 738.125
+text = "save"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
