@@ -154,5 +154,6 @@ import from file imports them all from the file into the array of keycodes and c
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="Save" to="." method="_on_Save_pressed"]
 [connection signal="text_changed" from="code/codeEdit" to="." method="_on_codeEdit_text_changed"]

@@ -61,9 +61,8 @@ namespace Peg
             string[] layers= rawLayers.Split("],");
             foreach (string match in layers)
             {
-                this.keymapStr.Add(new List<string>(match.Replace("[","").Replace("]","").Split(", ")));
+                this.keymapStr.Add(new List<string>(match.Replace("[","").Replace("]","").Replace(" ", "").Split(",")));
             }
-
             this.keymap = new List<List<KeyCode>>();
 
             foreach (List<string> layer in keymapStr)
@@ -109,7 +108,12 @@ namespace Peg
         }
         public override string ToString()
         {
-            return miscKeymapParts.ReturnFileHeader()+this.keymapBackToString() + miscKeymapParts.ReturnFileFooter();
+            GD.Print("this is what I got");
+
+            string newLayers = this.keymapBackToString();
+            string newHeader = miscKeymapParts.ReturnFileHeader();
+            string newfooter= miscKeymapParts.ReturnFileFooter();
+            return newHeader + newLayers + newfooter; 
         }
 
 

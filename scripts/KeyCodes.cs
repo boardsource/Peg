@@ -154,7 +154,6 @@ namespace Peg
         }
         public KeyCode LayerKeyCodeForString(string code)
         {
-            GD.Print(code," layer on");
             bool hasValue = Layers.TryGetValue(code, out KeyCode value);
             if (hasValue)
             {

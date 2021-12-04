@@ -53,6 +53,7 @@ namespace Peg
 			{
 				for (int index = 0; index < keymap.KeyLayout.layout.Count; index++)
 				{
+					
 					var item = keymap.KeyLayout.layout[index];
 					var indexCode = keymap.keymap[SelectedLayer][index];
 					var addedKey = (Panel)this.blankKey.Instance();

@@ -19,8 +19,12 @@ namespace Peg
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            GD.Print("I am managing things here");
             this.keymap = Keymap.Instance();
+
+
+
+   
+
 
         }
         public void NoticeThatKeyIsWaiting(int index,int layer)

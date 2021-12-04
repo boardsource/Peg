@@ -1,2 +1,2 @@
-﻿61570
-C:/Users/cole/Documents/code/games/godot/Godot_v3.4-stable_mono_win64/Godot_v3.4-stable_mono_win64/Godot_v3.4-stable_mono_win64.exe
+﻿59511
+C:/Users/cole/Documents/code/games/godot/godot/bin/godot.windows.opt.tools.64.mono.exe

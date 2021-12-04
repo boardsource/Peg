@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.mono"
+    "\\scripts",
+    "\\scripts\\Visual"
   ],
-  "SelectedNode": "\\Peg2.sln",
+  "SelectedNode": "\\scripts\\Visual\\LayoutKey.cs",
   "PreviewInSolutionExplorer": false
 }
