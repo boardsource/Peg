@@ -47,7 +47,7 @@ namespace Peg
 
                 //todo num of pixels needs to be pulled from the layout;
                 imports += "from kmk.extensions.RGB import RGB\n";
-                baseCode += "rgb_ext = RGB(pixel_pin=keyboard.rgb_pixel_pin, num_pixels=10)\nkeyboard.extensions.append(rgb_ext)\n";
+                baseCode += $"rgb_ext = RGB(pixel_pin=keyboard.rgb_pixel_pin, num_pixels={settings.perkeyCount+settings.underglowCount})\nkeyboard.extensions.append(rgb_ext)\n";
             }
             return imports + baseCode;
         }

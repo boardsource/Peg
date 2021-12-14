@@ -48,6 +48,8 @@ namespace Peg
    
 
             EmitSignal(nameof(UpdatedMap), this);
+            Godot.OS.SetWindowTitle("Peg-"+this.KeyLayout.features.name+"-"+ this.KeyLayout.features.creator);
+
 
         }
 

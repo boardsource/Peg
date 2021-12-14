@@ -18,14 +18,17 @@ namespace Peg
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
+			Godot.OS.SetWindowTitle("Peg");
 			DriveInfo[] allDrives = DriveInfo.GetDrives();
 			for (int i = 0; i < allDrives.Length; i++)
 			{
 				DriveInfo d = allDrives[i];
 				if (d.IsReady == true)
 				{
-					if (d.VolumeLabel == "C:\b")
+					GD.Print(d.VolumeLabel);
+					if (d.VolumeLabel.StartsWith("C")|| d.VolumeLabel.StartsWith("/boot"))
 					{
+						GD.Print("skipping");
 						continue;
 					}
 					if (System.IO.Directory.Exists("" + d.VolumeLabel + "/"))

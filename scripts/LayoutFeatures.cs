@@ -12,7 +12,10 @@ namespace Peg
         public bool oled { get; set; }
         public bool ble { get; set; }
         public bool underglow { get; set; }
-
+        public string name { get; set; }
+        public string creator { get; set; }
+        public int perkeyCount { get; set; }
+        public int underglowCount { get; set; }
 
     }
 }

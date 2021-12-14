@@ -1,5 +1,4 @@
 [
-
   {
     "Code": "KC.LT(1,KC.SPACE)",
     "Display": "SPC-L1",
@@ -99,7 +98,6 @@
     "SubOne": null,
     "SubTwo": null
   },
-  
   {
     "Code": "send_string('cat')",
     "Display": "cat",
@@ -130,6 +128,17 @@
     "CanHaveSubNumber": false,
     "SubNumber": 0,
     "Description": "fr",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "send_string('fuck me')",
+    "Display": "fm",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "prits fuck me",
     "SubOne": null,
     "SubTwo": null
   }

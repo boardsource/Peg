@@ -20,7 +20,8 @@ namespace Peg
 			international,
 			modifiers,
 			shifted,
-			layers
+			layers,
+				led
 			 ,custom
 		}
 		KeyCodes codes;
@@ -98,6 +99,9 @@ namespace Peg
 					break;
 				case KeycodeSet.custom:
 					selectedCodes = new List<KeyCode>(this.codes.CustomCodes.Values);
+					break;
+				case KeycodeSet.led:
+					selectedCodes = new List<KeyCode>(this.codes.Led.Values);
 					break;
 			}
 		}
