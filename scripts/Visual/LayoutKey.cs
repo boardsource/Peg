@@ -7,6 +7,7 @@ namespace Peg
         public float X { get; set; }
         public float Y { get; set; }
         public float W { get; set; }
+        public float H { get; set; }
 
         public LayoutKey() { }
 

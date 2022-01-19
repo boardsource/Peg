@@ -12,6 +12,7 @@ namespace Peg
 
         public bool seven = true;
         public bool tooltips = true;
+        public string ApiUrl = "http://159.89.159.24:3000/api/";
         public static ProgramSettings Instance()
         {
             // Uses lazy initialization
@@ -24,6 +25,10 @@ namespace Peg
         }
         protected ProgramSettings()
         {
+        }
+        public void SaveOutToFile()
+        {
+
         }
     }
 }

@@ -1,0 +1,2 @@
+﻿53924
+C:/Users/cole/Documents/code/games/godot/godot/bin/godot.windows.opt.tools.64.mono.exe

@@ -1,0 +1,159 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/Visual/MakeCustomKey.cs" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.168627, 0.164706, 0.219608, 1 )
+
+[node name="Make Custom Key" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 87.0
+margin_right = 0.00012207
+margin_bottom = 0.00012207
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Save" type="Button" parent="."]
+margin_left = 1465.34
+margin_top = 375.304
+margin_right = 1684.34
+margin_bottom = 433.304
+text = "Save key"
+
+[node name="code" type="Panel" parent="."]
+margin_left = 245.0
+margin_top = 50.0
+margin_right = 1367.0
+margin_bottom = 166.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="codeEdit" type="LineEdit" parent="code"]
+margin_left = 10.0
+margin_top = 40.0
+margin_right = 273.0
+margin_bottom = 84.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="code"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 280.0
+margin_bottom = 24.0
+text = "Output Text"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="code"]
+margin_left = 302.642
+margin_top = 12.7279
+margin_right = 666.642
+margin_bottom = 87.7279
+text = "This is the string you want your key to send when pressed"
+
+[node name="Error" type="Label" parent="code"]
+modulate = Color( 0.811765, 0.196078, 0.196078, 1 )
+margin_left = 294.243
+margin_top = 45.5736
+margin_right = 826.243
+margin_bottom = 92.5736
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="display" type="Panel" parent="."]
+margin_left = 249.172
+margin_top = 172.294
+margin_right = 1372.17
+margin_bottom = 292.294
+custom_styles/panel = SubResource( 1 )
+
+[node name="displayEdit" type="LineEdit" parent="display"]
+margin_left = 10.0
+margin_top = 40.0
+margin_right = 273.0
+margin_bottom = 84.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="display"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 280.0
+margin_bottom = 24.0
+text = "Display Text"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="display"]
+margin_left = 298.47
+margin_top = 13.4701
+margin_right = 662.47
+margin_bottom = 88.4701
+text = "This is what you want to display as in your key map
+ ( just for the GUI)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="description" type="Panel" parent="."]
+margin_left = 252.586
+margin_top = 301.915
+margin_right = 1371.59
+margin_bottom = 415.915
+custom_styles/panel = SubResource( 1 )
+
+[node name="descriptionEdit" type="LineEdit" parent="description"]
+margin_left = 10.0
+margin_top = 40.0
+margin_right = 273.0
+margin_bottom = 84.0
+
+[node name="Label" type="Label" parent="description"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 280.0
+margin_bottom = 24.0
+text = "Descripton Text"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="description"]
+margin_left = 296.47
+margin_top = 8.3006
+margin_right = 660.47
+margin_bottom = 83.3006
+text = "this is the descripton avaiable on hover (just for the gui)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 261.0
+margin_top = 443.0
+margin_right = 1365.0
+margin_bottom = 510.0
+text = "add custom key code is alwasy a tab like layer then in there you can make a custom keyode maybe \"add blank key\" then you can slect key codes like normal then \"then send string \" and you can input a string  \"uni code \" input unicode \"emogi \" emogy picker  so on 
+then you click save and that saves the keycode to your custom keycode json file 
+
+we make one function custom keycode array to json 
+
+that replaces the custom keycode json file and we can uust update the array and save the file again. 
+
+so delete custom key removes its self from the array and calls the function
+import from file imports them all from the file into the array of keycodes and calls save "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Save" to="." method="_on_Save_pressed"]
+[connection signal="text_changed" from="code/codeEdit" to="." method="_on_codeEdit_text_changed"]

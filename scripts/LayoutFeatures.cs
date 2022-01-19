@@ -16,6 +16,7 @@ namespace Peg
         public string creator { get; set; }
         public int perkeyCount { get; set; }
         public int underglowCount { get; set; }
+        public bool split { get; set; }
 
     }
 }

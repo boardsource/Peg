@@ -16,6 +16,9 @@ _global_script_class_icons={
 
 config/name="Peg2"
 run/main_scene="res://main.tscn"
+boot_splash/image="res://splash.png"
+config/icon="res://peg.png"
+config/windows_native_icon="res://peg.ico"
 
 [autoload]
 

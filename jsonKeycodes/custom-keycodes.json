@@ -141,5 +141,16 @@
     "Description": "prits fuck me",
     "SubOne": null,
     "SubTwo": null
+  },
+  {
+    "Code": "send_string('hello')",
+    "Display": "hello",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "print hello",
+    "SubOne": null,
+    "SubTwo": null
   }
 ]

@@ -24,7 +24,7 @@ namespace Peg
 			//GD.Print(this.GetType());
 			//this.unsub= keymap.Subscribe(this);
 			//GD.Print(this.keymap.keymap[0][0].Code);
-			this.blankKey = ResourceLoader.Load("res://SingleLayoutKey.tscn") as PackedScene;
+			this.blankKey = ResourceLoader.Load("res://views/SingleLayoutKey.tscn") as PackedScene;
 			this.keysInLayout = new List<SingleLayoutKey>();
 
 			this.keymap = Keymap.Instance();

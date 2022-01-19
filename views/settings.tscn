@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/AppSettings.cs" type="Script" id=1]
+
+[node name="settings" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 87.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="seven-label" type="Label" parent="."]
+margin_left = 125.0
+margin_top = 157.0
+margin_right = 297.0
+margin_bottom = 189.0
+text = "seven
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="seven" type="CheckButton" parent="."]
+margin_left = 125.0
+margin_top = 177.0
+margin_right = 201.0
+margin_bottom = 217.0
+
+[node name="toolTip-label" type="Label" parent="."]
+margin_left = 119.0
+margin_top = 222.0
+margin_right = 291.0
+margin_bottom = 254.0
+text = "tool Tips
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="toolTip" type="CheckButton" parent="."]
+margin_left = 119.0
+margin_top = 242.0
+margin_right = 195.0
+margin_bottom = 282.0
+
+[connection signal="toggled" from="seven" to="." method="_on_seven_toggled"]
+[connection signal="toggled" from="toolTip" to="." method="_on_toolTip_toggled"]

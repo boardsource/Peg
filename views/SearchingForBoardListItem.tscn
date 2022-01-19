@@ -1,0 +1,27 @@
+[gd_scene format=2]
+
+[node name="SearchingForBoardListItem" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1420.0
+margin_bottom = -1030.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+margin_bottom = 50.0
+
+[node name="Name" type="Label" parent="Panel"]
+margin_right = 200.0
+margin_bottom = 40.0
+text = "test"
+
+[node name="Button" type="Button" parent="Panel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -60.0
+margin_right = -9.0
+margin_bottom = 40.0
+text = "select"

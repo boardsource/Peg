@@ -10,6 +10,11 @@ namespace Peg
 		string kbDrive = "";
 		string hasKeymap = "";
 		string hasLayout = "";
+		bool didNotFindDrive = false;
+		bool keepLooking = true;
+		PackedScene searchingForBoardScene;
+		Control searchingForBoard;
+		Timer delayTimer;
 		Keymap mainKeymap;
 		// Declare member variables here. Examples:
 		// private int a = 2;
@@ -18,17 +23,61 @@ namespace Peg
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
+			this.searchingForBoardScene = ResourceLoader.Load("res://SearchingForBoard.tscn") as PackedScene;
+			delayTimer = GetNode<Timer>("Timer");
 			Godot.OS.SetWindowTitle("Peg");
+			scanDrives();
+			manageTimer();
+
+
+
+		}
+		void manageTimer()
+        {
+			delayTimer.SetWaitTime(3f);
+			if (didNotFindDrive && keepLooking)
+			{
+				delayTimer.Start();
+				if (searchingForBoardScene != null)
+				{
+					if (searchingForBoard == null)
+                    {
+						this.searchingForBoard = (Control)searchingForBoardScene.Instance();
+						AddChild(searchingForBoard);
+					}
+				}
+				else
+                {
+					GD.Print("Not of type PackedScene");
+				}
+					
+			}
+			else
+			{
+				RemoveChild(searchingForBoard);
+				delayTimer.Stop();
+			}
+		
+		}
+
+		public void _on_Timer_timeout()
+        {
+			if (didNotFindDrive && keepLooking)
+			{
+				scanDrives();
+			}
+			manageTimer();
+		}
+		void scanDrives()
+        {
 			DriveInfo[] allDrives = DriveInfo.GetDrives();
 			for (int i = 0; i < allDrives.Length; i++)
 			{
 				DriveInfo d = allDrives[i];
 				if (d.IsReady == true)
 				{
-					GD.Print(d.VolumeLabel);
-					if (d.VolumeLabel.StartsWith("C")|| d.VolumeLabel.StartsWith("/boot"))
+					if (d.VolumeLabel.StartsWith("C") || d.VolumeLabel.StartsWith("/boot"))
 					{
-						GD.Print("skipping");
 						continue;
 					}
 					if (System.IO.Directory.Exists("" + d.VolumeLabel + "/"))
@@ -47,6 +96,7 @@ namespace Peg
 			}
 			if (this.kbDrive != "")
 			{
+				didNotFindDrive = false;
 				this.mainKeymap = Keymap.Instance();
 				if (hasKeymap != "")
 				{
@@ -58,8 +108,11 @@ namespace Peg
 					string layoutText = this.loadTextFile(hasLayout);
 					this.mainKeymap.ParceLayout(layoutText);
 				}
-			}
-
+            }
+            else
+            {
+				didNotFindDrive = true;
+            }
 		}
 		public void _on_Button2_pressed()
 		{

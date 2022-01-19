@@ -40,7 +40,7 @@ namespace Peg
             this.currentKeyCode = keycode;
             this.currentLayoutKey = layoutKey;
             this.SetPosition(new Vector2(layoutKey.X*75, layoutKey.Y*75));
-            this.RectSize = new Vector2(layoutKey.W * 70, 70);
+            this.RectSize = new Vector2(layoutKey.W * 70,layoutKey.H==0?70:layoutKey.H*70); 
             if (subButtonText == null)
             {
                 subButtonText = GetNode<Label>("SubButtonText");

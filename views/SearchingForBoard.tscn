@@ -1,0 +1,138 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/SearchingForBoard.cs" type="Script" id=1]
+
+[node name="SearchingForBoard" type="Control"]
+light_mask = 524289
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectDrive" type="Button" parent="background"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -144.0
+margin_top = -34.0
+margin_right = 144.0
+margin_bottom = 34.0
+text = "select Drive"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="background"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -293.0
+margin_right = 293.0
+margin_bottom = 91.0
+rect_pivot_offset = Vector2( 289, 50 )
+text = "Cant find your board.....
+I can keep looking if you want to plug it in. Or If you board is not set up yet select the drive."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileDialog" type="FileDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -770.0
+margin_top = -360.0
+margin_right = 770.0
+margin_bottom = 360.0
+window_title = "Open a Directory"
+mode = 2
+access = 2
+current_dir = "/Users/cole/Documents/code/games/godot/projects/Peg2"
+current_path = "/Users/cole/Documents/code/games/godot/projects/Peg2/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="Popup" type="Popup" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -400.0
+margin_right = 400.0
+margin_bottom = 1000.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="popupBackGround" type="Panel" parent="Popup"]
+margin_right = 800.0
+margin_bottom = 1000.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="Popup/popupBackGround"]
+margin_top = 50.0
+margin_right = 500.0
+margin_bottom = 500.0
+auto_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MakeBoard" type="Button" parent="Popup/popupBackGround"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -6.0
+margin_top = -20.0
+margin_right = 6.0
+text = "Make it happen"
+
+[node name="Drive" type="Label" parent="Popup/popupBackGround"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -20.0
+margin_right = 20.0
+margin_bottom = 14.0
+rect_scale = Vector2( 2, 2 )
+text = "test
+"
+
+[node name="title" type="Label" parent="Popup/popupBackGround"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -155.0
+margin_right = -98.0
+margin_bottom = 31.0
+rect_scale = Vector2( 2, 2 )
+text = ":On Drive:
+"
+
+[node name="Board" type="Label" parent="Popup/popupBackGround"]
+margin_left = 77.0
+margin_right = 167.0
+margin_bottom = 14.0
+rect_scale = Vector2( 2, 2 )
+text = "Board"
+clip_text = true
+
+[connection signal="pressed" from="background/SelectDrive" to="." method="_on_SelectDrive_pressed"]
+[connection signal="dir_selected" from="FileDialog" to="." method="_on_FileDialog_dir_selected"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="item_selected" from="Popup/popupBackGround/ItemList" to="." method="_on_ItemList_item_selected"]
+[connection signal="pressed" from="Popup/popupBackGround/MakeBoard" to="." method="_on_MakeBoard_pressed"]

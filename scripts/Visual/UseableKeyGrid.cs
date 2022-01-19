@@ -43,7 +43,7 @@ namespace Peg
 			this.codes = KeyCodes.Instance();
 			this.selectKeyCodes();
 
-			this.blankKey =ResourceLoader.Load("res://SingleUableKey.tscn") as PackedScene;
+			this.blankKey =ResourceLoader.Load("res://views/SingleUableKey.tscn") as PackedScene;
 			if (blankKey != null)
 				this.renderKeyCodes();
 			else
