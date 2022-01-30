@@ -1,6 +1,6 @@
 .SingleUsableKeyCode{
-    width: 50px;
-    height: 50px;
+    width: var(--keyMultiplyer);
+    height: var(--keyMultiplyer);
     border: 1px solid black;
     margin: auto;
     overflow:hidden;

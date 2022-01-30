@@ -16,6 +16,14 @@ export class AppManager {
         }, 1000);
 
     }
+    public Scan(_event: Electron.IpcMainEvent, _fileName: string,) {
+        if (this.diskManager) {
+            this.diskManager.scanDrives()
+            console.log("scaning")
+        }
+
+
+    }
     public fileSave(event: Electron.IpcMainEvent, fileName: string, fileData: string) {
         console.log(fileName, fileData) // prints "ping"
         // event.reply('fileSave-reply', 'pong')

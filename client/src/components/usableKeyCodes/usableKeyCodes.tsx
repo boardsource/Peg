@@ -8,11 +8,7 @@ type UsableKeyCodesProps = {
 
 export default function UsableKeyCodes(props: UsableKeyCodesProps) {
     onMount(() => {
-        setTimeout(() => {
-            // console.log("prosps", props)
-            const keymap = KeyMap.getInstance()
-            console.log("map", keymap.layout, { ...keymap })
-        }, 1000);
+
     });
     return (
         <div className="usableKeyCodes">

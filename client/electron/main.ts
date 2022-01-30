@@ -14,6 +14,7 @@ function createWindow() {
     }
   })
 
+
   if (app.isPackaged) {
     // 'build/index.html'
     win.loadURL(`file://${__dirname}/../index.html`);
@@ -35,6 +36,7 @@ function createWindow() {
   }
   pegApp = new AppManager(win)
   pegApp.run();
+  ipcMain.on("Scan", pegApp.Scan)
 }
 
 

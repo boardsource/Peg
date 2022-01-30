@@ -17,21 +17,15 @@ export class KeyMap {
     private constructor() {
         this.codes = KeyCodes.getInstance();
         this.subscribers = new Map();
-        console.log("I am setting up")
     }
     public static getInstance(): KeyMap {
-        console.log("I need a instance", KeyMap.instance)
         if (!KeyMap.instance) {
             KeyMap.instance = new KeyMap();
         }
 
         return KeyMap.instance;
     }
-    public Test(map: string) {
-        console.log("test", map)
-        this.layout = map;
-        console.log("lay", this.layout)
-    }
+
     public Subscribe(name: string, updateFuction: (keyMap: KeyMap) => void) {
         this.subscribers.set(name, updateFuction)
     }
