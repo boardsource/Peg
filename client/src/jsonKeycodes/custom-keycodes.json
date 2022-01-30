@@ -1,0 +1,167 @@
+[
+  {
+    "Code": "KC.LT(1,KC.SPACE)",
+    "Display": "SPC-L1",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "Space when tapped layer 1 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "KC.LT(2,KC.SPACE)",
+    "Display": "SPC-L2",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "Space when tapped layer 2 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "KC.LT(3,KC.SPACE)",
+    "Display": "SPC-L3",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "Space when tapped layer 3 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "KC.LT(1,KC.BSPC)",
+    "Display": "BKS-L1",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "BKSpace when tapped layer 1 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "KC.LT(2,KC.BSPC)",
+    "Display": "BKS-L2",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "BKSpace when tapped layer 2 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "KC.LT(3,KC.BSPC)",
+    "Display": "BKS-L3",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "BKSpace when tapped layer 3 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "KC.LT(1,KC.ENT)",
+    "Display": "ENT-L1",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "Enter when tapped layer 1 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "KC.LT(2,KC.ENT)",
+    "Display": "ENT-L2",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "Enter when tapped layer 2 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "KC.LT(3,KC.ENT)",
+    "Display": "ENT-L3",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "Enter when tapped layer 3 when held",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "send_string('cat')",
+    "Display": "cat",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "cat",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "send_string('this time')",
+    "Display": "tt",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "tt",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "send_string('for real')",
+    "Display": "fr",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "fr",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "send_string('fuck me')",
+    "Display": "fm",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "prits fuck me",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "send_string('hello')",
+    "Display": "hello",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "print hello",
+    "SubOne": null,
+    "SubTwo": null
+  },
+  {
+    "Code": "send_string('still working')",
+    "Display": "sw",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "sends string still working",
+    "SubOne": null,
+    "SubTwo": null
+  }
+]

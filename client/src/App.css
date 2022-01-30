@@ -1,0 +1,80 @@
+body {
+  width: 100vw;
+  height: 100vh;
+}
+#root {
+  height: 100%;
+  width: 100%;
+}
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
+html {
+  --scrollbarBG: #2aa4aa;
+  --thumbBG: #3b77a6;
+  --mainBG: #55607d;
+  --textColor: #c1e5ea;
+  --defaultMsgBG: #61407a;
+  --yourMsgBG: #2e2c3b;
+  --settingsPanel: #b54131;
+  --titleColor: #f3c220;
+  --borderColor: #f3c220;
+  --inputColor: #2e2c3b;
+  --inputBG: #c6de78;
+}
+body::-webkit-scrollbar {
+  width: 11px;
+}
+body {
+  font-family: "Fira Mono", monospace;
+  color: var(--textColor);
+  background: var(--mainBG);
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+body::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG);
+  border-radius: 6px;
+  border: 1px solid var(--scrollbarBG);
+}
+button,
+.upload {
+  border: 1px solid var(--borderColor);
+  border-radius: 0.5em;
+  background: var(--inputBG);
+  color: var(--inputColor);
+  outline-color: var(--settingsPanel) !important;
+}
+input:focus {
+  outline-color: var(--settingsPanel) !important;
+  outline: 1px solid var(--settingsPanel);
+}
+textarea,
+input {
+  font-size: 16px;
+  border: 1px solid var(--borderColor);
+  border-radius: 0.5em;
+  background: var(--inputBG);
+  color: var(--inputColor);
+}
+textarea {
+  width: 80%;
+  height: 200px;
+}
+.icon {
+  max-height: 100%;
+  width: 24px;
+  height: 24px;
+}
+a:link {
+  color: var(--inputBG);
+}
+
+a:visited {
+  color: var(--borderColor);
+}

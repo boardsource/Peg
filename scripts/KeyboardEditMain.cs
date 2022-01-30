@@ -4,7 +4,7 @@ using System.IO;
 using System.Collections;
 namespace Peg
 {
-	public class main : Control
+	public class KeyboardEditMain : Control
 	{
 		string keymap = "";
 		string kbDrive = "";
@@ -23,15 +23,13 @@ namespace Peg
 		// Called when the node enters the scene tree for the first time.
 		public override void _Ready()
 		{
-			this.searchingForBoardScene = ResourceLoader.Load("res://SearchingForBoard.tscn") as PackedScene;
+			this.searchingForBoardScene = ResourceLoader.Load("res://views/SearchingForBoard.tscn") as PackedScene;
 			delayTimer = GetNode<Timer>("Timer");
 			Godot.OS.SetWindowTitle("Peg");
 			scanDrives();
 			manageTimer();
-
-
-
 		}
+
 		void manageTimer()
         {
 			delayTimer.SetWaitTime(3f);
@@ -54,7 +52,10 @@ namespace Peg
 			}
 			else
 			{
-				RemoveChild(searchingForBoard);
+                if (searchingForBoard != null)
+                {
+					RemoveChild(searchingForBoard);
+				}
 				delayTimer.Stop();
 			}
 		

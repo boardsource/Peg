@@ -1,0 +1,491 @@
+ [
+
+  {
+    "code": "KC.PSCREEN",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Print Screen"
+   },
+   {
+    "code": "KC.SCROLLLOCK",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Scroll Lock"
+   },
+   {
+    "code": "KC.PAUSE",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "KC.BRK"
+   },
+   {
+    "code": "KC.INSERT",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Insert"
+   },
+   {
+    "code": "KC.HOME",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Home"
+   },
+   {
+    "code": "KC.PGUP",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Page Up"
+   },
+   {
+    "code": "KC.DELETE",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Forward Delete"
+   },
+   {
+    "code": "KC.END",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "End"
+   },
+   {
+    "code": "KC.PGDOWN",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Page Down"
+   },
+
+   {
+    "code": "KC.NUMLOCK",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad Num Lock and Clear"
+   },
+   {
+    "code": "KC.KP_SLASH",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `/"
+   },
+   {
+    "code": "KC.KP_ASTERISK",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `*"
+   },
+   {
+    "code": "KC.KP_MINUS",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `-"
+   },
+   {
+    "code": "KC.KP_PLUS",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `+"
+   },
+   {
+    "code": "KC.KP_ENTER",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad Enter"
+   },
+   {
+    "code": "KC.KP_1",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `1` and End"
+   },
+   {
+    "code": "KC.KP_2",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `2` and Down Arrow"
+   },
+   {
+    "code": "KC.KP_3",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `3` and Page Down"
+   },
+   {
+    "code": "KC.KP_4",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `4` and Left Arrow"
+   },
+   {
+    "code": "KC.KP_5",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `5"
+   },
+   {
+    "code": "KC.KP_6",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `6` and Right Arrow"
+   },
+   {
+    "code": "KC.KP_7",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `7` and Home"
+   },
+   {
+    "code": "KC.KP_8",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `8` and Up Arrow"
+   },
+   {
+    "code": "KC.KP_9",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `9` and Page Up"
+   },
+   {
+    "code": "KC.KP_0",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `0` and Insert"
+   },
+   {
+    "code": "KC.KP_DOT",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `.` and Delete"
+   },
+   {
+    "code": "KC.KP_EQUAL",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `="
+   },
+   {
+    "code": "KC.F13",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F13"
+   },
+   {
+    "code": "KC.F14",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F14"
+   },
+   {
+    "code": "KC.F15",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F15"
+   },
+   {
+    "code": "KC.F16",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F16"
+   },
+   {
+    "code": "KC.F17",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F17"
+   },
+   {
+    "code": "KC.F18",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F18"
+   },
+   {
+    "code": "KC.F19",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F19"
+   },
+   {
+    "code": "KC.F20",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F20"
+   },
+   {
+    "code": "KC.F21",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F21"
+   },
+   {
+    "code": "KC.F22",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F22"
+   },
+   {
+    "code": "KC.F23",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F23"
+   },
+   {
+    "code": "KC.F24",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "F24"
+   },
+   {
+    "code": "KC.LOCKING_CAPS",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Locking Caps Lock"
+   },
+   {
+    "code": "KC.LOCKING_NUM",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Locking Num Lock"
+   },
+   {
+    "code": "KC.LOCKING_SCROLL",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Locking Scroll Lock"
+   },
+   {
+    "code": "KC.KP_COMMA",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad "
+   },
+   {
+    "code": "KC.KP_EQUAL_AS400",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Keypad `=` on AS/400 keyboards"
+   },
+   {
+    "code": "KC.AUDIO_MUTE",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Mute"
+   },
+   {
+    "code": "KC.AUDIO_VOL_UP",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Volume Up"
+   },
+   {
+    "code": "KC.AUDIO_VOL_DOWN",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Volume Down"
+   },
+   {
+    "code": "KC.MEDIA_NEXT_TRACK",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Next Track (Windows)"
+   },
+   {
+    "code": "KC.MEDIA_PREV_TRACK",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Previous Track (Windows)"
+   },
+   {
+    "code": "KC.MEDIA_STOP",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Stop Track (Windows)"
+   },
+   {
+    "code": "KC.MEDIA_PLAY_PAUSE",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Play/Pause Track"
+   },
+   {
+    "code": "KC.MEDIA_EJECT",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Eject (macOS)"
+   },
+   {
+    "code": "KC.MEDIA_FAST_FORWARD",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Next Track (macOS)"
+   },
+   {
+    "code": "KC.MEDIA_REWIND",
+     "display": "",
+     "keybinding": "",
+     "canHaveSub": false,
+     "canHaveNumber": false,
+     "subNumber": 0,
+     "Description": "Previous Track (macOS)"
+   }
+  ]
+ 

@@ -15,7 +15,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Peg2"
-run/main_scene="res://main.tscn"
+run/main_scene="res://Main.tscn"
 boot_splash/image="res://splash.png"
 config/icon="res://peg.png"
 config/windows_native_icon="res://peg.ico"
@@ -26,5 +26,5 @@ MapManager="*res://scripts/MapManager.cs"
 
 [display]
 
-window/size/width=1920
-window/size/height=1080
+window/size/width=1200
+window/size/height=720

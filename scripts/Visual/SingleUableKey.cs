@@ -16,8 +16,8 @@ namespace Peg
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            mapManager = GetNode<MapManager>("/root/MapManager");
-            toolTip = GetNode<ToolTip>("/root/main/ToolTip");
+            mapManager = GetNode<MapManager>("/root/Main/mainViews/keyboardEditView/MapManager");
+            toolTip = GetNode<ToolTip>("/root/Main/mainViews/keyboardEditView/ToolTip");
 
 
         }

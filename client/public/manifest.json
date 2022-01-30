@@ -1,0 +1,22 @@
+{
+  "name": "My Carrier site",
+  "short_name": "Carrier",
+  "lang": "en-US",
+  "start_url": "/https://www.mycarrier.site/",
+  "scope": "https://www.mycarrier.site/",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "theme_color": "#b54131",
+  "background_color": "#55607d"
+}

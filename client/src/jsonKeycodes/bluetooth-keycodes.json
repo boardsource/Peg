@@ -1,0 +1,29 @@
+[
+    {
+       "code": "KC.BT_CLEAR_BONDS",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Clears all stored bondings"
+    },
+    {
+       "code": "KC.BT_NEXT_CONN",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Selects the next BT connection"
+    },
+    {
+       "code": "KC.BT_PREV_CONN",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Selects the previous BT connection"
+    }
+]

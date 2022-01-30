@@ -13,10 +13,10 @@ namespace Peg
         Button mainButton;
         Button clearButton;
         Label subButtonText;
-
         Keymap keymap;
         KeyCodes codes;
         ToolTip toolTip;
+        public bool ledAdjust = false;
 
 
 
@@ -27,20 +27,21 @@ namespace Peg
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            mapManager = GetNode<MapManager>("/root/MapManager");
+            mapManager = GetNode<MapManager>("/root/Main/mainViews/keyboardEditView/MapManager");
+            toolTip = GetNode<ToolTip>("/root/Main/mainViews/keyboardEditView/ToolTip");
             mapManager.Connect("ReleaceLastKey", this, nameof(_on_MapManager_ReleaceLastKey));
-            toolTip = GetNode<ToolTip>("/root/main/ToolTip");
 
         }
 
-        public void Setup(LayoutKey layoutKey, KeyCode keycode, int index,int layer)
+        public void Setup(LayoutKey layoutKey, KeyCode keycode, int index,int layer,bool ledAdjust)
         {
             this.layer = layer;
             this.index = index;
             this.currentKeyCode = keycode;
             this.currentLayoutKey = layoutKey;
-            this.SetPosition(new Vector2(layoutKey.X*75, layoutKey.Y*75));
-            this.RectSize = new Vector2(layoutKey.W * 70,layoutKey.H==0?70:layoutKey.H*70); 
+            this.SetPosition(new Vector2(layoutKey.X*52, layoutKey.Y*52));
+            this.RectSize = new Vector2(layoutKey.W * 50,layoutKey.H==0?50:layoutKey.H*50);
+            this.ledAdjust = ledAdjust;
             if (subButtonText == null)
             {
                 subButtonText = GetNode<Label>("SubButtonText");
@@ -138,7 +139,7 @@ namespace Peg
         //      
         //  }
         public void _on_MainButton_pressed() {
-            mapManager.NoticeThatKeyIsWaiting(index, layer);
+            mapManager.NoticeThatKeyIsWaiting(index, layer,ledAdjust);
         }
         public void _on_MapManager_ReleaceLastKey(int index,int layer)
         {

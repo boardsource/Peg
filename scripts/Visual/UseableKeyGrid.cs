@@ -50,7 +50,7 @@ namespace Peg
 				GD.Print("Not of type PackedScene");
 			if (SelectedSet == KeycodeSet.custom)
 			{
-				MakeCustomKey makeCustomKey = GetNode<MakeCustomKey>("/root/main/keyboard layout/Make Custom Key");
+				MakeCustomKey makeCustomKey = GetNode<MakeCustomKey>("/root/Main/mainViews/keyboardEditView/keyboard layout/Make Custom Key");
 				if (makeCustomKey != null)
 				{
 					GD.Print("I found it");

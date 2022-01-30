@@ -10,9 +10,25 @@ namespace Peg
     {
         LayoutFeatures settings;
         ProgramSettings programSettings;
-        public MiscKeymapParts(Layout layout) {
+        Keymap keymap;
+        public MiscKeymapParts(Layout layout,Keymap keymap) {
             this.settings = layout.features;
             this.programSettings = ProgramSettings.Instance();
+            this.keymap = keymap;
+        }
+        string returnLedDisplay()
+        {
+            var tempLedMap = new List<string>();
+            foreach (var color in keymap.ledMap)
+            {
+                var templeds = new List<string>();
+                templeds.Add((color.h*255).ToString());
+                templeds.Add((color.s * 255).ToString());
+                templeds.Add((color.v * 255).ToString());
+                var combinedColors = String.Join(String.Empty, templeds.ToArray());
+                tempLedMap.Add($"[{combinedColors}],");
+            }
+            return $"ledDisplay=[{ String.Join(String.Empty, tempLedMap.ToArray())}]";
         }
         public string ReturnFileFooter()
         {
@@ -44,10 +60,11 @@ namespace Peg
             }
             if (settings.perkey || settings.underglow)
             {
+                var ledMap = returnLedDisplay();
 
                 //todo num of pixels needs to be pulled from the layout;
-                imports += "from kmk.extensions.RGB import RGB\n";
-                baseCode += $"rgb_ext = RGB(pixel_pin=keyboard.rgb_pixel_pin, num_pixels={settings.perkeyCount+settings.underglowCount})\nkeyboard.extensions.append(rgb_ext)\n";
+                imports += "from kmk.extensions.rgb_matrix import Rgb_matrix\n";
+                baseCode += $"{ledMap}\nsrgb_ext = RGB(pixel_pin=keyboard.rgb_pixel_pin, num_pixels={settings.perkeyCount+settings.underglowCount},keyPos=keyboard.ledKeypos,ledDisplay=ledDisplay)\nkeyboard.extensions.append(rgb_ext)\n";
             }
             if (settings.split)
             {

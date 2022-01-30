@@ -1,201 +1,134 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://views/KeyLayout.tscn" type="PackedScene" id=1]
-[ext_resource path="res://views/makeCustomKey.tscn" type="PackedScene" id=2]
-[ext_resource path="res://views/useableKeyGrid.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scripts/Keymap.cs" type="Script" id=4]
-[ext_resource path="res://scripts/MapManager.cs" type="Script" id=5]
-[ext_resource path="res://main.cs" type="Script" id=6]
-[ext_resource path="res://views/ToolTip.tscn" type="PackedScene" id=7]
-[ext_resource path="res://views/settings.tscn" type="PackedScene" id=8]
+[ext_resource path="res://views/keyboardEditView.tscn" type="PackedScene" id=1]
+[ext_resource path="res://views/settings.tscn" type="PackedScene" id=2]
+[ext_resource path="res://views/makeCustomKey.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/buttons/sideBar-mainView/iconmonstr-view-5-240.png" type="Texture" id=4]
+[ext_resource path="res://assets/buttons/sideBar-customKey/iconmonstr-view-10-240.png" type="Texture" id=5]
+[ext_resource path="res://assets/buttons/sideBar-mainView/iconmonstr-view-5-240-40FFB3.png" type="Texture" id=6]
+[ext_resource path="res://scripts/Visual/TabViewChanger.cs" type="Script" id=7]
+[ext_resource path="res://assets/buttons/sideBar-settings/iconmonstr-control-panel-5-240.png" type="Texture" id=8]
+[ext_resource path="res://assets/buttons/sideBar-settings/iconmonstr-control-panel-5-240-40FFB3.png" type="Texture" id=9]
+[ext_resource path="res://assets/buttons/sideBar-customKey/iconmonstr-view-10-240-40FFB3.png" type="Texture" id=10]
+[ext_resource path="res://views/LedLayout.tscn" type="PackedScene" id=11]
 
-[node name="main" type="Control"]
+[node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="keyboard layout" type="TabContainer" parent="."]
-margin_right = 1916.0
-margin_bottom = 689.0
-tab_align = 0
+[node name="mainViews" type="TabContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 55.0
+tabs_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="default" parent="keyboard layout" instance=ExtResource( 1 )]
-anchor_top = 0.0
+[node name="keyboardEditView" parent="mainViews" instance=ExtResource( 1 )]
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 8.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="Layer 1" parent="keyboard layout" instance=ExtResource( 1 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedLayer = 1
-
-[node name="Layer 2" parent="keyboard layout" instance=ExtResource( 1 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedLayer = 2
-
-[node name="Layer 3" parent="keyboard layout" instance=ExtResource( 1 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedLayer = 3
-
-[node name="Make Custom Key" parent="keyboard layout" instance=ExtResource( 2 )]
+[node name="Make Custom Key" parent="mainViews" instance=ExtResource( 3 )]
 visible = false
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 8.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="settings" parent="keyboard layout" instance=ExtResource( 8 )]
+[node name="LedLayout" parent="mainViews" instance=ExtResource( 11 )]
+visible = false
+margin_left = -55.0
+margin_right = -63.0
+margin_bottom = -12.0
+
+[node name="settings" parent="mainViews" instance=ExtResource( 2 )]
 visible = false
 margin_left = 4.0
-margin_top = 32.0
+margin_top = 8.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="TabContainer2" type="TabContainer" parent="."]
-margin_left = 3.0
-margin_top = 719.0
-margin_right = 1931.0
-margin_bottom = 1081.0
-tab_align = 0
+[node name="mainViewChanger" type="Panel" parent="."]
+anchor_bottom = 1.0
+margin_right = 50.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+mainView = NodePath("../mainViews")
+
+[node name="keyboardEditSelect" type="TextureButton" parent="mainViewChanger"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -15.0
+margin_top = 18.0
+margin_right = 15.0
+margin_bottom = 48.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+pressed = true
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Base" parent="TabContainer2" instance=ExtResource( 3 )]
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="Modifiers" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 5
-
-[node name="Shifted" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 6
-
-[node name="Layers" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 7
-
-[node name="Less used" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 1
-
-[node name="BLE" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 2
-
-[node name="LED" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 8
-
-[node name="International" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 4
-
-[node name="Internal" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 3
-
-[node name="Custom" parent="TabContainer2" instance=ExtResource( 3 )]
-visible = false
-anchor_top = 0.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-SelectedSet = 9
-
-[node name="Keymap" type="Node" parent="."]
-script = ExtResource( 4 )
-
-[node name="MapManager" type="Node" parent="."]
-script = ExtResource( 5 )
-
-[node name="FileDialog" type="FileDialog" parent="."]
-margin_left = 7.0
-margin_top = 751.0
-margin_right = 322.0
-margin_bottom = 881.0
-
-[node name="ToolTip" parent="." instance=ExtResource( 7 )]
-
-[node name="Button2" type="Button" parent="."]
-margin_left = 1737.6
-margin_top = 697.125
-margin_right = 1903.6
-margin_bottom = 738.125
-text = "save"
+[node name="customKeySelect" type="TextureButton" parent="mainViewChanger"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -15.0
+margin_top = 86.0
+margin_right = 15.0
+margin_bottom = 116.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 10 )
+expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Timer" type="Timer" parent="."]
+[node name="LedLayout" type="TextureButton" parent="mainViewChanger"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -15.0
+margin_top = 158.0
+margin_right = 15.0
+margin_bottom = 188.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[node name="settingsSelect" type="TextureButton" parent="mainViewChanger"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -14.0
+margin_top = 252.0
+margin_right = 16.0
+margin_bottom = 282.0
+grow_horizontal = 0
+grow_vertical = 2
+toggle_mode = true
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

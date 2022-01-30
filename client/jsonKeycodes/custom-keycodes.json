@@ -152,5 +152,16 @@
     "Description": "print hello",
     "SubOne": null,
     "SubTwo": null
+  },
+  {
+    "Code": "send_string('still working')",
+    "Display": "sw",
+    "Keybinding": "",
+    "CanHaveSub": false,
+    "CanHaveSubNumber": false,
+    "SubNumber": 0,
+    "Description": "sends string still working",
+    "SubOne": null,
+    "SubTwo": null
   }
 ]

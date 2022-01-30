@@ -8,6 +8,7 @@ namespace Peg
         bool waitingKey = false;
         int waitingLayer = 0;
         int waitingIndex = 0;
+        bool led = false;
         Keymap keymap;
         [Signal]
         public delegate void ReleaceLastKey(int index, int layer);
@@ -27,20 +28,29 @@ namespace Peg
 
 
         }
-        public void NoticeThatKeyIsWaiting(int index,int layer)
+        public void NoticeThatKeyIsWaiting(int index,int layer,bool led)
         {
             EmitSignal(nameof(ReleaceLastKey),waitingIndex,waitingLayer);
             waitingIndex = index;
             waitingLayer = layer;
             waitingKey = true;
+            this.led = led;
+            GD.Print("waiting"); 
 
         }
         public void NoticeToUpdateKey(KeyCode keyCode) {
             if (this.waitingKey)
             {
-                EmitSignal(nameof(ReleaceLastKey), waitingIndex, waitingLayer);
+                if (!led)
+                {
+                    EmitSignal(nameof(ReleaceLastKey), waitingIndex, waitingLayer);
+                    keymap.ChangeKey(waitingLayer, waitingIndex, keyCode);
+                }
+                else
+                {
+                    EmitSignal(nameof(ReleaceLastKey), waitingIndex, waitingLayer);
+                }
 
-                keymap.ChangeKey(waitingLayer, waitingIndex, keyCode);
             }
         }
 

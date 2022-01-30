@@ -21,6 +21,7 @@ namespace Peg
         public string layout;
         public bool HaveLayout;
         public bool HaveMap;
+        public List<Color> ledMap;
 
         [Signal]
         public delegate void UpdatedMap(Keymap map);
@@ -44,7 +45,7 @@ namespace Peg
         {
             this.KeyLayout = JsonConvert.DeserializeObject<Layout>(layoutJson);
             this.HaveLayout = true;
-            this.miscKeymapParts = new MiscKeymapParts(KeyLayout);
+            this.miscKeymapParts = new MiscKeymapParts(KeyLayout,this);
    
 
             EmitSignal(nameof(UpdatedMap), this);
@@ -57,6 +58,7 @@ namespace Peg
             this.keymapStr = new List<List<string>>();
             int headderCharacterCount =20;
             int footerCharacterCount = 3;
+            
             string justLayers = baseMap.Split("# keymap")[1];
             string remvedFooters = justLayers.Substring(0, justLayers.Length - footerCharacterCount);
             string rawLayers= remvedFooters.Substring(headderCharacterCount);
@@ -78,8 +80,27 @@ namespace Peg
                 keymap.Add(tempLayer);
             }
             this.HaveMap = true;
-      
+            var ledMap = baseMap.Split("# ledmap");
+
+           
+            if (ledMap.Length == 3)
+            {
+                int ledHeadderCharacterCount = 14;
+                int ledFooterCharacterCount = 3;
+                List<string> tempLedMap = new List<string>(ledMap[1].Substring(0, ledMap[1].Length - ledFooterCharacterCount).Substring(ledHeadderCharacterCount).Split("],["));
+                this.ledMap = new List<Color>();
+                foreach (var led in tempLedMap)
+                {
+                    var ledParts = led.Split(",");
+                    var tempColor = Color.FromHsv(float.Parse(ledParts[0]), float.Parse(ledParts[1]), float.Parse(ledParts[2]), 1);
+                    this.ledMap.Add(tempColor);
+                }
+            }
             EmitSignal(nameof(UpdatedMap), this);
+
+        }
+        public void ChangeKeyLed(int pos, string color)
+        {
 
         }
         
