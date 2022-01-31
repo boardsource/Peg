@@ -1,5 +1,5 @@
 import "./keyLayout.css"
-import { Show, createSignal, onMount, For, createResource } from "solid-js";
+import { Show, createSignal, onMount, For, createResource, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 import { KeyMap } from "../../logic/keymapManager";
 import { LayoutKey } from "../../types/types";
@@ -13,6 +13,7 @@ type KeyLayoutProps = {
 export default function KeyLayout(props: KeyLayoutProps) {
     const [keys, setKeys] = createSignal({ ...keymap.keyLayout })
         , [rowCount, setRowCount] = createSignal(0)
+
     const setkeys = (_newMap: KeyMap) => {
         console.log("updating")
         let tempKeys = { ...keymap.keyLayout }
@@ -22,7 +23,10 @@ export default function KeyLayout(props: KeyLayoutProps) {
         }
         setKeys(tempKeys)
     }
-    keymap.Subscribe("0", setkeys)
+    const subId = keymap.Subscribe(setkeys)
+    onCleanup(() => {
+        keymap.Unsubscribe(subId)
+    })
     const returnHeight = () => {
         if (keys().layout) {
             return `height:${(rowCount() + 1) * magicNumbers.keyMultiplyer}px;`

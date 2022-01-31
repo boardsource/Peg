@@ -1,5 +1,6 @@
 import "./singleLayoutKey.css"
-import { Show, createSignal, onMount } from "solid-js";
+import { Show, createSignal, onMount, onCleanup } from "solid-js";
+import { createStore } from "solid-js/store";
 import { KeyCode } from "../../types/types";
 import { LayoutKey } from "../../types/types";
 import { magicNumbers } from "../../magicNumbers";
@@ -13,6 +14,17 @@ type SingleLayoutKeyProps = {
 };
 
 export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
+    const [state, setState] = createStore({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: props.code });
+    const updateWaitingInfo = (_newClient: ClientManager) => {
+
+        setState({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: clientManager.keymap.keymap[props.layer][props.index] })
+        console.log("updateing", state)
+    }
+    const subId = clientManager.Subscribe(updateWaitingInfo)
+    onCleanup(() => {
+        clientManager.Unsubscribe(subId)
+    })
+
     const mainButtonPress = () => {
         clientManager.NoticeThatKeyIsWaiting(props.index, props.layer, false)
     }
@@ -28,13 +40,15 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     }
 
     return (
-        <div className="singleLayoutKey" style={returnStyles()}>
+        <div className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === props.index ? "waitingKey" : ""}`} style={returnStyles()}>
             <button onClick={mainButtonPress} className="singleLayoutKey__main">
-                {props.code.code}
+                {state.code.code}
             </button>
-            <button onClick={clearButtonPress} className="singleLayoutKey__clear">
-                x
-            </button>
+            <Show when={state.code.canHaveSub} fallback={""}>
+                <button onClick={clearButtonPress} className="singleLayoutKey__clear">
+                    x
+                </button>
+            </Show>
         </div>
     );
 }

@@ -16,3 +16,6 @@
     top:-5px;
     z-index:2;
 }
+.waitingKey .singleLayoutKey__main{
+    background: aquamarine;
+}

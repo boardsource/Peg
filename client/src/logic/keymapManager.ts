@@ -1,10 +1,11 @@
 import { KeyCodes } from "./keycodes";
 import { KeyCode, Layout } from "../types/types";
 import { MiscKeymapParts } from "./miscKeyMapParts";
+import { Subscribable } from "./subscribable";
 
-export class KeyMap {
+export class KeyMap extends Subscribable {
     private static instance: KeyMap;
-    subscribers: Map<string, (keyMap: KeyMap) => void>;
+
     codes: KeyCodes
     keymap: KeyCode[][] = [];
     keyLayout!: Layout;
@@ -15,6 +16,7 @@ export class KeyMap {
     miscKeymapParts: MiscKeymapParts | undefined
     keymapStr: string[][] = []
     private constructor() {
+        super();
         this.codes = KeyCodes.getInstance();
         this.subscribers = new Map();
     }
@@ -26,17 +28,7 @@ export class KeyMap {
         return KeyMap.instance;
     }
 
-    public Subscribe(name: string, updateFuction: (keyMap: KeyMap) => void) {
-        this.subscribers.set(name, updateFuction)
-    }
-    public Unsubscribe(name: string) {
-        this.subscribers.delete(name)
-    }
-    updateSubScribers() {
-        this.subscribers.forEach(updateFunction => {
-            updateFunction(this);
-        });
-    }
+
     public ParceLayout(layoutJson: string) {
         this.keyLayout = JSON.parse(layoutJson)
         this.haveLayout = true;

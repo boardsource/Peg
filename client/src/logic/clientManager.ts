@@ -1,14 +1,16 @@
 import { KeyCode } from "../types/types";
 import { KeyMap } from "./keymapManager";
+import { Subscribable } from "./subscribable";
 
-export class ClientManager {
+export class ClientManager extends Subscribable {
     private static instance: ClientManager;
     keymap: KeyMap
-    waitingLayer: number = 0;
-    waitingIndex: number = 0;
+    waitingLayer: number | undefined = undefined;
+    waitingIndex: number | undefined = undefined;
     waitingKey: boolean = false;
     waitingIsLed: boolean = false;
     private constructor() {
+        super();
         this.keymap = KeyMap.getInstance()
         this.lessonToEvent("UpdateLayout", (args: string) => { this.keymap.ParceLayout(args) })
         this.lessonToEvent("UpdateKeyMap", (args: string) => { this.keymap.StringToKeymap(args) })
@@ -27,19 +29,23 @@ export class ClientManager {
         this.waitingLayer = layer;
         this.waitingIsLed = isLed;
         this.waitingKey = true;
-        console.log("waiting", { ...this })
+        this.updateSubScribers()
     }
 
     public NoticeToUpdateKey(newKeyCode: KeyCode) {
-        if (this.waitingKey) {
+        if (this.waitingKey && this.waitingIndex !== undefined && this.waitingLayer !== undefined) {
             if (!this.waitingIsLed) {
                 this.keymap.ChangeKey(this.waitingLayer, this.waitingIndex, newKeyCode);
-                console.log("updating", { ...this.keymap })
 
             }
             else {
-                //todo
+                //todo when you get here you the waiting key is waiting for LED input
             }
+            this.waitingIndex = undefined;
+            this.waitingLayer = undefined;
+            this.waitingIsLed = false;
+            this.waitingKey = false;
+            this.updateSubScribers()
         }
     }
 
