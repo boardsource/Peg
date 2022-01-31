@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
-import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+// import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 import { AppManager } from "../src/logic/appManager"
 let pegApp
 function createWindow() {
@@ -21,7 +21,7 @@ function createWindow() {
   } else {
     win.loadURL('http://localhost:3000/index.html');
 
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
     // Hot Reloading on 'node_modules/.bin/electronPath'
     require('electron-reload')(__dirname, {
       electron: path.join(__dirname,
@@ -41,10 +41,10 @@ function createWindow() {
 
 
 app.whenReady().then(() => {
-  // DevTools
-  installExtension(REACT_DEVELOPER_TOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err));
+  // // DevTools
+  // installExtension(REACT_DEVELOPER_TOOLS)
+  //   .then((name) => console.log(`Added Extension:  ${name}`))
+  //   .catch((err) => console.log('An error occurred: ', err));
 
   createWindow();
 
