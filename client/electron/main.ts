@@ -13,8 +13,6 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-
-
   if (app.isPackaged) {
     // 'build/index.html'
     win.loadURL(`file://${__dirname}/../index.html`);

@@ -4,9 +4,11 @@ import UsableKeyCodes from "../../components/usableKeyCodes/usableKeyCodes";
 import _basic from "../../jsonKeycodes/basic-keycodes.json"
 import { KeyCode } from "../../types/types";
 
+import { Router, Routes, Route, Link } from "solid-app-router";
+
 
 type PageProps = {
-    id: string;
+
 };
 
 export default function KeymapEditView(props: PageProps) {
