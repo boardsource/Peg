@@ -14,7 +14,15 @@ export class ClientManager extends Subscribable {
         this.keymap = KeyMap.getInstance()
         this.lessonToEvent("UpdateLayout", (args: string) => { this.keymap.ParceLayout(args) })
         this.lessonToEvent("UpdateKeyMap", (args: string) => { this.keymap.StringToKeymap(args) })
-        this.sendToBackend("Scan", "")
+
+        console.log("startup", this.keymap.layout)
+        setTimeout(() => {
+            if (this.keymap.layout === undefined) {
+                this.sendToBackend("Scan", "")
+            }
+
+        }, 1000);
+
     }
 
     public static getInstance(): ClientManager {
@@ -46,6 +54,7 @@ export class ClientManager extends Subscribable {
             this.waitingIsLed = false;
             this.waitingKey = false;
             this.updateSubScribers()
+            this.sendToBackend("SaveMap", this.keymap.toString())
         }
     }
 

@@ -1,5 +1,8 @@
 import { KeyMap } from "./keymapManager";
+import { app } from 'electron';
+
 import { readdir } from 'fs/promises';
+//@ts-ignore
 import { AppManager } from "./AppManager";
 const nodeDiskInfo = require('node-disk-info')
 import * as fs from 'fs/promises';
@@ -20,11 +23,68 @@ export class DiskManager {
     hasLayout: string = "";
     didNotFindDrive: boolean = false;
     keepLooking: boolean = true;
+    isScaning: boolean = false;
+
     appManager: AppManager;
     constructor(appManager: AppManager) {
         this.appManager = appManager
+        console.log("setting up diskmanager")
+        this.loadFromCacheIfCan()
+    }
+    async loadFromCacheIfCan() {
+        const dataStr = await this.readCache()
+        console.log("trying to read cache:", dataStr)
+        if (dataStr !== "") {
+            const data = JSON.parse(dataStr)
+            this.hasLayout = data.hasLayout
+            this.hasKeymap = data.hasKeymap
+            this.kbDrive = data.kbDrive
+            this.didNotFindDrive = false
+        }
     }
 
+    delay(time: number) {
+        return new Promise(res => setTimeout(res, time))
+    };
+    public async manageDriveScan() {
+        if (!this.didNotFindDrive && this.hasKeymap !== "" && this.hasLayout !== "") {
+            const layoutjson = await fs.readFile(this.hasLayout, 'utf8');
+            this.appManager.UpdateLayout(layoutjson)
+            const mainPy = await fs.readFile(this.hasKeymap, 'utf8');
+            this.appManager.UpdateKeyMap(mainPy)
+        }
+        if (!this.isScaning) {
+            console.log("scaning")
+            await this.scanDrives()
+            if (this.didNotFindDrive && this.keepLooking) {
+                console.log("scaning again")
+                await this.delay(1000)
+                this.manageDriveScan()
+                this.isScaning = true
+            }
+        }
+    }
+    async readCache(): Promise<string> {
+        try {
+            const tmpPath = path.join(app.getPath("temp"), 'peg.temp')
+            const data = await fs.readFile(tmpPath, 'utf8');
+            return data
+
+        } catch (error) {
+            console.log("error in reading cache data", error)
+            return ""
+        }
+    }
+    async cacheData(data: string) {
+        try {
+            const tmpPath = path.join(app.getPath("temp"), 'peg.temp')
+            const newFile = await fs.writeFile(tmpPath, data, 'utf8');
+            // console.log("newFile from cache", newFile)
+        } catch (error) {
+            console.log("error in writing cache data", error)
+        }
+
+    }
 
     public async scanDrives() {
         try {
@@ -38,24 +98,53 @@ export class DiskManager {
                     break
                 }
             }
-            if (this.kbDrive != "") {
+            if (this.kbDrive !== "") {
                 this.didNotFindDrive = false;
-
-                if (this.hasKeymap != "") {
+                this.isScaning = false
+                let tempData: any = { kbDrive: this.kbDrive }
+                if (this.hasKeymap !== "") {
                     const mainPy = await fs.readFile(this.hasKeymap, 'utf8');
                     this.appManager.UpdateKeyMap(mainPy)
+                    tempData["hasKeymap"] = this.hasKeymap
                 }
-                if (this.hasLayout != "") {
+                if (this.hasLayout !== "") {
                     const layoutjson = await fs.readFile(this.hasLayout, 'utf8');
                     this.appManager.UpdateLayout(layoutjson)
+                    tempData["hasLayout"] = this.hasLayout
                 }
+                this.cacheData(JSON.stringify(tempData))
             }
             else {
                 this.didNotFindDrive = true;
+
             }
 
         } catch (err) {
             console.error(err);
+        }
+
+    }
+    public async saveFile(newMap: string, retry: boolean = false) {
+        try {
+            if (this.kbDrive !== "") {
+                if (this.hasKeymap !== "") {
+                    const newFile = await fs.writeFile(this.hasKeymap, newMap, 'utf8');
+                    console.log("newFile from save", newFile)
+                }
+            }
+            else {
+                if (!retry) {
+                    await this.loadFromCacheIfCan()
+                    this.saveFile(newMap, true)
+                }
+                //todo alaert user map did not update
+                console.log("dont have the needed stuff")
+
+            }
+        } catch (error) {
+            console.log("error in writing map", error)
+
+            //todo alaert user map did not update
         }
 
     }

@@ -1,37 +1,45 @@
 import { DiskManager } from "./diskManager";
-import Electron, { ipcMain, webContents } from 'electron';
+import Electron, { app, ipcMain, BrowserWindow } from 'electron';
+import * as path from 'path';
+
 
 
 export class AppManager {
     diskManager: DiskManager;
     win: Electron.BrowserWindow
-    constructor(win: Electron.BrowserWindow) {
-        this.win = win;
+    constructor(bWin: Electron.BrowserWindow) {
         this.diskManager = new DiskManager(this)
+        this.win = bWin;
+
     }
+
     run() {
         setTimeout(() => {
             console.log("running on main thread")
-            this.diskManager.scanDrives()
+            this.diskManager.manageDriveScan()
         }, 1000);
 
     }
     public Scan(_event: Electron.IpcMainEvent, _fileName: string,) {
-        if (this.diskManager) {
-            this.diskManager.scanDrives()
-            console.log("scaning")
+        if (this.diskManager !== undefined) {
+            this.diskManager.manageDriveScan()
+
         }
+    }
 
+    public fileSave(event: Electron.IpcMainEvent, fileData: string) {
+
+        this.diskManager.saveFile(fileData)
 
     }
-    public fileSave(event: Electron.IpcMainEvent, fileName: string, fileData: string) {
-        console.log(fileName, fileData) // prints "ping"
-        // event.reply('fileSave-reply', 'pong')
-    }
+
     public UpdateKeyMap(keymap: string) {
-        this.win.webContents.send('UpdateKeyMap', keymap);
+        if (this.win)
+            this.win.webContents.send('UpdateKeyMap', keymap);
     }
+
     public UpdateLayout(layout: string) {
-        this.win.webContents.send('UpdateLayout', layout);
+        if (this.win)
+            this.win.webContents.send('UpdateLayout', layout);
     }
 }
