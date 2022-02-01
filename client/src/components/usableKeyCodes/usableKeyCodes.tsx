@@ -1,4 +1,4 @@
-import { Show, createState, createSignal, onMount, For } from "solid-js";
+import { Show, createSignal, onMount, For } from "solid-js";
 import { KeyMap } from "../../logic/keymapManager";
 import { KeyCode } from "../../types/types"
 import SingleUsableKeyCode from "../singleUsableKeyCode/singleUsableKeyCode";
@@ -8,7 +8,7 @@ type UsableKeyCodesProps = {
 
 export default function UsableKeyCodes(props: UsableKeyCodesProps) {
     onMount(() => {
-
+        console.log("prop", props)
     });
     return (
         <div className="usableKeyCodes">
