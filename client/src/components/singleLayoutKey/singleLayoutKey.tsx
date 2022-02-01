@@ -17,7 +17,6 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     const [state, setState] = createStore({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: props.code });
     const updateWaitingInfo = (_newClient: ClientManager) => {
         setState({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: clientManager.keymap.keymap[props.layer][props.index] })
-        console.log("updateing", state)
     }
     const subId = clientManager.Subscribe(updateWaitingInfo)
     onCleanup(() => {

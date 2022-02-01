@@ -1,10 +1,12 @@
-import { Show, createSignal, onMount } from "solid-js";
+import { Show, createSignal, onMount, onCleanup } from "solid-js";
 import KeyLayout from "../../components/keyLayout/keyLayout";
 import _basic from "../../jsonKeycodes/basic-keycodes.json"
 import { KeyCode } from "../../types/types";
-
 import { Router, Routes, Route, Link } from "solid-app-router";
 import UsableKeyCodeDisplay from "../../components/usableKeyCodeDisplay/usableKeyCodeDisplay";
+import NewBoardSetup from "../../components/newBoardSetup/newBoardSetup";
+import { ClientManager } from "../../logic/clientManager";
+const clientManager = ClientManager.getInstance()
 
 
 type PageProps = {
@@ -12,14 +14,37 @@ type PageProps = {
 };
 
 export default function KeymapEditView(props: PageProps) {
-    //@ts-ignore
+    const [isScaning, setIsScaning] = createSignal(false)
+    const updatelocalIsScaning = () => {
+        setIsScaning(clientManager.scaning)
+        console.log("scaning updating", isScaning())
+    }
+    const subId = clientManager.Subscribe(updatelocalIsScaning)
+    onCleanup(() => {
+        clientManager.Unsubscribe(subId)
+    })
+    const returnEditView = () => {
+        if (isScaning()) {
+            return (
 
-    const basicKeycodes = _basic as KeyCode[];
+                <NewBoardSetup />
 
+            )
+        } else {
+            return (
+                <>
+                    <KeyLayout layer={0} />
+                    <UsableKeyCodeDisplay />
+                </>
+            );
+        }
+    }
     return (
         <div className="keymapEditView">
-            <KeyLayout layer={0} />
-            <UsableKeyCodeDisplay />
+            {returnEditView()}
         </div>
     );
+
+
+
 }

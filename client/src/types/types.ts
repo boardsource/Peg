@@ -34,3 +34,20 @@ export interface Layout {
     features: LayoutFeatures;
     layout: LayoutKey[];
 }
+
+export enum FileName {
+    main = "main.py",
+    kb = "kb.py",
+    layout = "layout.json"
+}
+
+export enum ElectronEvents {
+    UpdateLayout = "UpdateLayout",
+    UpdateKeyMap = "UpdateKeyMap",
+    Scan = "Scan",
+    SaveMap = "SaveMap",
+    Savefile = "Savefile",
+    FilePicker = "FilePicker",
+    FilePickerClose = "FilePickerClose",
+    ScanAgain = "ScanAgain"
+}
