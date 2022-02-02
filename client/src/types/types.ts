@@ -9,7 +9,7 @@ export interface KeyCode {
     canHaveSub: boolean;
     canHaveSubNumber: boolean;
     subNumber: number;
-    description: string;
+    Description: string;
     subOne?: KeyCode;
     subTwo?: KeyCode;
 }

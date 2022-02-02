@@ -5,7 +5,9 @@ import { KeyCode } from "../../types/types";
 import { LayoutKey } from "../../types/types";
 import { magicNumbers } from "../../magicNumbers";
 import { ClientManager } from "../../logic/clientManager";
+import { ToolTip } from "../../logic/tooltip";
 const clientManager = ClientManager.getInstance()
+const toolTip = ToolTip.getInstance()
 type SingleLayoutKeyProps = {
     code: KeyCode;
     index: number;
@@ -36,11 +38,24 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
         `
     }
+    const mouseEnter = (event: Event) => {
+
+        //@ts-ignore
+        toolTip.Show(event.clientX, event.clientY, state.code.display !== "" ? state.code.display : state.code.code, state.code.Description)
+    }
+    const mouseLeave = (event: Event) => {
+        toolTip.Hide()
+    }
+
 
     return (
-        <div className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === props.index ? "waitingKey" : ""}`} style={returnStyles()}>
+        <div className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === props.index ? "waitingKey" : ""}`}
+            style={returnStyles()}
+            onMouseEnter={mouseEnter}
+            onMouseLeave={mouseLeave}
+        >
             <button onClick={mainButtonPress} className="singleLayoutKey__main">
-                {state.code.code}
+                {state.code.display !== "" ? state.code.display : state.code.code}
             </button>
             <Show when={state.code.canHaveSub} fallback={""}>
                 <button onClick={clearButtonPress} className="singleLayoutKey__clear">
