@@ -99,10 +99,13 @@ export class DiskManager {
     public async scanDrives() {
         try {
             const disks = await nodeDiskInfo.getDiskInfo()
-            console.log("disks are", disks)
+            // console.log("platform = ", process.platform)
             for (const disk of disks) {
-                if (!disk.mounted.startsWith("/")) {
-                    continue
+                if (process.platform !== "win32") {
+                    if (!disk.mounted.startsWith("/")) {
+                        console.log("not fucking with ", disk)
+                        continue
+                    }
                 }
 
                 const files = await fs.readdir(disk.mounted);
