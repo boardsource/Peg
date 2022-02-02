@@ -34,6 +34,11 @@ export class ProgramSettings extends Subscribable {
         return this._darkmode;
     }
     public set darkmode(newValue: boolean) {
+        if (newValue) {
+            document.documentElement.classList.add('dark')
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
         this._darkmode = newValue
         this.updateSubScribers()
     }
