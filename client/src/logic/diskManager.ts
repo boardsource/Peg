@@ -7,6 +7,7 @@ import { AppManager } from "./AppManager";
 const nodeDiskInfo = require('node-disk-info')
 import * as fs from 'fs/promises';
 import path from 'path'
+import { ElectronEvents } from "../types/types";
 type DiskInfo = {
     filesystem: string
     blocks: number
@@ -24,6 +25,7 @@ export class DiskManager {
     didNotFindDrive: boolean = false;
     keepLooking: boolean = true;
     isScaning: boolean = false;
+    haveToldClientAboutScaning: boolean = false;
 
     appManager: AppManager;
     constructor(appManager: AppManager) {
@@ -54,13 +56,21 @@ export class DiskManager {
             this.appManager.UpdateKeyMap(mainPy)
         }
         if (!this.isScaning) {
+
             console.log("scaning")
+            this.isScaning = true
             await this.scanDrives()
             if (this.didNotFindDrive && this.keepLooking) {
+
                 console.log("scaning again")
+                if (!this.haveToldClientAboutScaning) {
+                    this.appManager.SendMiscEvent(ElectronEvents.ScanAgain, {})
+                    this.haveToldClientAboutScaning = true
+                }
                 await this.delay(1000)
                 this.manageDriveScan()
-                this.isScaning = true
+
+
             }
         }
     }
@@ -100,7 +110,7 @@ export class DiskManager {
             }
             if (this.kbDrive !== "") {
                 this.didNotFindDrive = false;
-                this.isScaning = false
+                this.haveToldClientAboutScaning = false
                 let tempData: any = { kbDrive: this.kbDrive }
                 if (this.hasKeymap !== "") {
                     const mainPy = await fs.readFile(this.hasKeymap, 'utf8');
@@ -116,6 +126,7 @@ export class DiskManager {
             }
             else {
                 this.didNotFindDrive = true;
+                this.isScaning = false
 
             }
 
@@ -141,6 +152,21 @@ export class DiskManager {
                 console.log("dont have the needed stuff")
 
             }
+        } catch (error) {
+            console.log("error in writing map", error)
+
+            //todo alaert user map did not update
+        }
+
+    }
+    public async writeData(data: { fileData: string, path: string[] }) {
+        try {
+
+
+            const writepath = path.join(...data.path)
+            const newFile = await fs.writeFile(writepath, data.fileData, 'utf8');
+            console.log("force write data")
+
         } catch (error) {
             console.log("error in writing map", error)
 

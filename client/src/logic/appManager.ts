@@ -1,6 +1,7 @@
 import { DiskManager } from "./diskManager";
 import Electron, { app, ipcMain, BrowserWindow } from 'electron';
 import * as path from 'path';
+import { ElectronEvents } from "../types/types";
 
 
 
@@ -33,13 +34,24 @@ export class AppManager {
 
     }
 
+    public writeFile(event: Electron.IpcMainEvent, data: { fileData: string, path: string[] }) {
+
+        this.diskManager.writeData(data)
+
+    }
+
+    public SendMiscEvent(event: ElectronEvents, data: any) {
+        if (this.win)
+            this.win.webContents.send(event, data);
+    }
+
     public UpdateKeyMap(keymap: string) {
         if (this.win)
-            this.win.webContents.send('UpdateKeyMap', keymap);
+            this.win.webContents.send(ElectronEvents.UpdateKeyMap, keymap);
     }
 
     public UpdateLayout(layout: string) {
         if (this.win)
-            this.win.webContents.send('UpdateLayout', layout);
+            this.win.webContents.send(ElectronEvents.UpdateLayout, layout);
     }
 }

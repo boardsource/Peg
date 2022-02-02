@@ -1,6 +1,7 @@
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell, dialog } from 'electron';
 import { AppManager } from "../src/logic/appManager"
 import * as path from 'path';
+import { ElectronEvents } from '../src/types/types';
 let mainWindow: BrowserWindow | null = null;
 let pegApp: AppManager | null = null;
 const createWindow = async () => {
@@ -38,7 +39,6 @@ const createWindow = async () => {
     });
   }
   mainWindow.on('ready-to-show', () => {
-    console.log("showing")
     if (pegApp) {
       pegApp.diskManager.cacheData("")
     } else {
@@ -83,7 +83,7 @@ app.on('window-all-closed', () => {
 });
 
 
-ipcMain.on("Scan", (event: Electron.IpcMainEvent, fileName: string,) => {
+ipcMain.on(ElectronEvents.Scan, (event: Electron.IpcMainEvent, fileName: string,) => {
   if (pegApp) {
     pegApp.Scan(event, fileName)
   } else {
@@ -95,7 +95,8 @@ ipcMain.on("Scan", (event: Electron.IpcMainEvent, fileName: string,) => {
   }
 }
 )
-ipcMain.on("SaveMap", (event: Electron.IpcMainEvent, file: string,) => {
+
+ipcMain.on(ElectronEvents.SaveMap, (event: Electron.IpcMainEvent, file: string,) => {
   if (pegApp) {
     pegApp.fileSave(event, file)
   } else {
@@ -104,6 +105,30 @@ ipcMain.on("SaveMap", (event: Electron.IpcMainEvent, file: string,) => {
       pegApp.fileSave(event, file)
 
     }
+  }
+}
+)
+
+ipcMain.on(ElectronEvents.Savefile, (event: Electron.IpcMainEvent, data: { fileData: string, path: string[] }) => {
+  if (pegApp) {
+    pegApp.writeFile(event, data)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.writeFile(event, data)
+
+    }
+  }
+}
+)
+
+
+ipcMain.on(ElectronEvents.FilePicker, async (event: Electron.IpcMainEvent, file: string,) => {
+  if (mainWindow !== null) {
+    const drivePath = await dialog.showOpenDialogSync(mainWindow, {
+      properties: ['openFile', 'openDirectory']
+    })
+    event.reply(ElectronEvents.FilePickerClose, drivePath ? drivePath[0] : '')
   }
 }
 )

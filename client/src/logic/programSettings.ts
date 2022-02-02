@@ -4,7 +4,7 @@ export class ProgramSettings extends Subscribable {
     private static instance: ProgramSettings;
     private _seven: boolean = true
     private _tooltips: boolean = true;
-    private _apiUrl: string = ""
+    private _apiUrl: string = "http://159.89.159.24:3000/api/"
     private _darkmode: boolean = true;
     private constructor() {
         super();

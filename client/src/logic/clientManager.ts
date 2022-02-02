@@ -1,4 +1,4 @@
-import { KeyCode } from "../types/types";
+import { ElectronEvents, KeyCode } from "../types/types";
 import { KeyMap } from "./keymapManager";
 import { Subscribable } from "./subscribable";
 
@@ -9,16 +9,31 @@ export class ClientManager extends Subscribable {
     waitingIndex: number | undefined = undefined;
     waitingKey: boolean = false;
     waitingIsLed: boolean = false;
+    scaning: boolean = false
     private constructor() {
         super();
         this.keymap = KeyMap.getInstance()
-        this.lessonToEvent("UpdateLayout", (args: string) => { this.keymap.ParceLayout(args) })
-        this.lessonToEvent("UpdateKeyMap", (args: string) => { this.keymap.StringToKeymap(args) })
+        this.lessonToEvent(ElectronEvents.UpdateLayout, (args: string) => {
+            this.scaning = false
+            this.updateSubScribers()
+            this.keymap.ParceLayout(args)
+        })
+        this.lessonToEvent(ElectronEvents.UpdateKeyMap, (args: string) => {
+            this.scaning = false
+            this.updateSubScribers()
+            this.keymap.StringToKeymap(args)
+        })
+        this.lessonToEvent(ElectronEvents.ScanAgain, () => {
+            console.log("scaning again")
+            setTimeout(() => {
+                this.scaning = true
+                this.updateSubScribers()
+            }, 1000);
+        })
 
-        console.log("startup", this.keymap.layout)
         setTimeout(() => {
             if (this.keymap.layout === undefined) {
-                this.sendToBackend("Scan", "")
+                this.sendToBackend(ElectronEvents.Scan, "")
             }
 
         }, 1000);
@@ -54,7 +69,7 @@ export class ClientManager extends Subscribable {
             this.waitingIsLed = false;
             this.waitingKey = false;
             this.updateSubScribers()
-            this.sendToBackend("SaveMap", this.keymap.toString())
+            this.sendToBackend(ElectronEvents.SaveMap, this.keymap.toString())
         }
     }
 

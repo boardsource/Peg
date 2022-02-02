@@ -9,14 +9,17 @@ import Options from './options/options'
 import Account from './account/account'
 import NotFound from './NotFound';
 import Sidebar from '../components/sidebar/sidebar'
+import ToolTipDisplay from '../components/tooltipDisplay/tooltipDisplay';
 export default function Root() {
   return (
     <>
+
       <div className="peg-wrapper font-sans bg-gray-200">
         <div className="peg-wrapper__sidebar">
           <Sidebar />
         </div>
         <div className="peg-wrapper__views flex-1 bg-white rounded-xl m-5 flex p-6">
+   <ToolTipDisplay />
           <Routes>
             {/* i comment this out when i am working on stuff because it breaks widths */}
             <Route path="/index.html" element={<KeymapEditView />} />
