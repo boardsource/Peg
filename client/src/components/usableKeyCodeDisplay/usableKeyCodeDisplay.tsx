@@ -1,8 +1,10 @@
 import { Show, createSignal, onMount, For } from "solid-js";
 import { KeyMap } from "../../logic/keymapManager";
 import { KeyCodes } from "../../logic/keycodes";
-import { KeyCode } from "../../types/types"
+import { KeyCode, LayoutKey } from "../../types/types"
 import UsableKeyCodes from "../usableKeyCodes/usableKeyCodes";
+import _ansi from "./layoutDisplays/ansi104.json"
+const ansi = _ansi as LayoutKey[]
 const keycodes = KeyCodes.getInstance()
 type UsableKeyCodeDisplayProps = {
 
@@ -24,6 +26,20 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
             ["International", "international"],
         ]
     )
+    const usesLayout: Map<string, LayoutKey[] | undefined> = new Map(
+        [
+            ["basic", ansi],
+            ["layers", undefined],
+            ["led", undefined],
+            ["customCodes", undefined],
+            ["modifiers", undefined],
+            ["shifted", undefined],
+            ["lessUsed", undefined],
+            ["bluetooth", undefined],
+            ["internalCodes", undefined],
+            ["international", undefined]
+        ]
+    )
     const [selectedKeyCodeName, setSelectedKeyCodeName] = createSignal("basic")
     return (
         <div className="UsableKeyCodeDisplay">
@@ -43,7 +59,9 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
             <div className="UsableKeyCodeDisplay__current">
                 <UsableKeyCodes
                     //@ts-ignore
-                    keycodes={Array.from(keycodes[selectedKeyCodeName()].values())} />
+                    keycodes={Array.from(keycodes[selectedKeyCodeName()].values())}
+                    layout={usesLayout.get(selectedKeyCodeName())}
+                />
             </div>
         </div>
     );

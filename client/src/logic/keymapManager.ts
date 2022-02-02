@@ -47,7 +47,7 @@ export class KeyMap extends Subscribable {
         const justLayers = baseMap.split("# keymap")[1];
         const remvedFooters = justLayers.substring(0, justLayers.length - footerCharacterCount);
         const rawLayers = remvedFooters.substring(headderCharacterCount);
-        const layers = rawLayers.split("],");
+        const layers = rawLayers.replace(/(?:\r\n|\r|\n)/g, '').split("],");
 
         //todo rework to map
         layers.forEach((match: string) => {

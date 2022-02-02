@@ -129,6 +129,7 @@ export class KeyCodes {
                 subNumber: 0,
                 description: "error no key code '" + code + "' from imported map"
             }
+            console.log("returning a shit code")
             return errorCode;
         }
     }
