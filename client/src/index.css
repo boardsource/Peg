@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* colors to be set from tailwind docs */
+.navlink {
+  color: red;
+  font-size: .875rem;
+  margin-bottom: 0.25rem;
+}
+
+.navlink:hover {
+  color: green;
+}
 
 /* this is all replaced by tailwind */
 /* body {

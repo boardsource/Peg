@@ -11,7 +11,7 @@ html {
   height: 100vh;
 }
 
-html {
+/* html {
   --scrollbarBG: #2aa4aa;
   --thumbBG: #3b77a6;
   --mainBG: #55607d;
@@ -71,10 +71,10 @@ textarea {
   width: 24px;
   height: 24px;
 }
-a:link {
+/* a:link {
   color: var(--inputBG);
-}
+} */
 
-a:visited {
+/* a:visited {
   color: var(--borderColor);
-}
+} */ 
