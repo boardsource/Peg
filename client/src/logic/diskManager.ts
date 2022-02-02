@@ -99,7 +99,12 @@ export class DiskManager {
     public async scanDrives() {
         try {
             const disks = await nodeDiskInfo.getDiskInfo()
+            console.log("disks are", disks)
             for (const disk of disks) {
+                if (!disk.mounted.startsWith("/")) {
+                    continue
+                }
+
                 const files = await fs.readdir(disk.mounted);
                 if (files.includes("main.py") && files.includes("layout.json")) {
                     this.kbDrive = `${disk.mounted}/`;
