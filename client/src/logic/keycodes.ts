@@ -127,7 +127,7 @@ export class KeyCodes {
                 canHaveSub: false,
                 canHaveSubNumber: false,
                 subNumber: 0,
-                description: "error no key code '" + code + "' from imported map"
+                Description: "error no key code '" + code + "' from imported map"
             }
             console.log("returning a shit code")
             return errorCode;
