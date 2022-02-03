@@ -1,5 +1,10 @@
+import MainView from '../../components/mainView/mainView'
+
 export default function OLED() {
     return (
-        <h1>OLED</h1>
+        <MainView title='OLED'>
+            <p>oled stuff will go here</p>
+        </MainView>
+
     )
 }

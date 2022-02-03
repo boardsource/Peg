@@ -1,5 +1,9 @@
+import MainView from '../../components/mainView/mainView'
+
 export default function Account() {
     return (
-        <h1>Account</h1>
+        <MainView title="Account">
+            <p>testing if children work</p>
+        </MainView>
     )
 }

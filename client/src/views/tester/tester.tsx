@@ -1,5 +1,10 @@
+import MainView from '../../components/mainView/mainView'
+
 export default function Tester() {
     return (
-        <h1>Tester</h1>
+        <MainView title="Tester">
+            <p>keyboard tester will go here, eventually :)</p>
+        </MainView>
+
     )
 }

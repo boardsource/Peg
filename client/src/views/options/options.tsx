@@ -1,5 +1,10 @@
+import MainView from '../../components/mainView/mainView'
+
 export default function Options() {
     return (
-        <h1>Options</h1>
+        <MainView title="Options">
+            <p>options will go here</p>
+        </MainView>
+
     )
 }
