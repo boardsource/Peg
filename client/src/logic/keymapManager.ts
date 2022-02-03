@@ -15,6 +15,7 @@ export class KeyMap extends Subscribable {
     ledMap: string[] = [];
     miscKeymapParts: MiscKeymapParts | undefined
     keymapStr: string[][] = []
+    // parsing: boolean = false
     private constructor() {
         super();
         this.codes = KeyCodes.getInstance();
@@ -40,7 +41,8 @@ export class KeyMap extends Subscribable {
     }
 
     public StringToKeymap(baseMap: string) {
-
+        // if (!this.parsing) {
+        //     this.parsing = true
         const headderCharacterCount = 20;
         const footerCharacterCount = 3;
 
@@ -78,7 +80,10 @@ export class KeyMap extends Subscribable {
             this.ledMap = tempLedMap
 
         }
+        console.log("just parsed keymap", this)
         this.updateSubScribers()
+        //     this.parsing = false
+        // }
 
         // EmitSignal(nameof(UpdatedMap), this);
     }
@@ -94,8 +99,21 @@ export class KeyMap extends Subscribable {
 
         // EmitSignal(nameof(UpdatedMap), this);
     }
+    keycodeToString(code: KeyCode) {
+        if (code.canHaveSub) {
+            return code.code.split("kc")[0] + code.subOne?.code + ")";
+        } else {
+            return code.code
+        }
+    }
     keymapBackToString(): string {
-        let keymapString: string[] = this.keymap.map(layer => layer.map(keycode => keycode.code).join(","))
+        let keymapString: string[] = this.keymap.map(layer => {
+
+            const layerToString = layer.map(keycode => this.keycodeToString(keycode)).join(",")
+            console.log("layerToString", layerToString)
+            return `[${layerToString}]`;
+        })
+        console.log("layers=", keymapString)
         return `# keymap\nkeyboard.keymap = [ ${keymapString.join(", \n")} ] \n# keymap\n"`;
     }
     public toString(): string {

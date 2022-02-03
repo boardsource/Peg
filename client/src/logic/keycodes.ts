@@ -83,6 +83,41 @@ export class KeyCodes {
             return undefined
         }
     }
+    customCodeForString(dirtyCode: string, code: string): KeyCode | undefined {
+        let tempCode = this.customCodes.get(code)
+        if (tempCode !== undefined) {
+
+            return { ...tempCode }
+        } else {
+
+            tempCode = this.customCodes.get(dirtyCode)
+            if (tempCode !== undefined) {
+                return { ...tempCode }
+            }
+            return undefined
+        }
+    }
+
+    ModifiersKeyCodeForString(code: string): KeyCode | undefined {
+        const tempCode = this.modifiers.get(code);
+        if (tempCode !== undefined) {
+            return { ...tempCode }
+        }
+        else {
+            if (code.includes("(")) {
+                var splitCode = code.split("(");
+                const newSeachCode = splitCode[0] + "(kc)";
+                const secondSearch = this.modifiers.get(newSeachCode);
+                if (secondSearch !== undefined) {
+                    const remvedstuff = splitCode[1].substring(0, splitCode[1].length - 1);
+                    const NeededKey = { ...secondSearch }
+                    NeededKey.subOne = this.KeyCodeForString(remvedstuff);
+                    return NeededKey;
+                }
+            }
+            return undefined;
+        }
+    }
 
     public KeyCodeForString(dirtycode: string): KeyCode {
         const code: string = dirtycode.trim();
@@ -96,7 +131,7 @@ export class KeyCodes {
         if (tempCode != undefined) {
             return tempCode;
         }
-        tempCode = this.CodeForStringAndSet(code, this.modifiers);
+        tempCode = this.ModifiersKeyCodeForString(code);
         if (tempCode != undefined) {
             return tempCode;
         }
@@ -120,7 +155,7 @@ export class KeyCodes {
         if (tempCode != undefined) {
             return tempCode;
         }
-        tempCode = this.CodeForStringAndSet(code, this.customCodes);
+        tempCode = this.customCodeForString(dirtycode, code);
         if (tempCode != undefined) {
             return tempCode;
         }

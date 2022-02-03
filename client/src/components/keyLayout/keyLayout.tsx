@@ -15,11 +15,9 @@ export default function KeyLayout(props: KeyLayoutProps) {
         , [rowCount, setRowCount] = createSignal(0)
 
     const setkeys = (_newMap: KeyMap) => {
-        console.log("updating")
         let tempKeys = { ...keymap.keyLayout }
         if (tempKeys.layout) {
             setRowCount(tempKeys.layout[tempKeys.layout.length - 1].y)
-            console.log("updating")
         }
         setKeys(tempKeys)
     }

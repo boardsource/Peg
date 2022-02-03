@@ -28,10 +28,11 @@ export class ClientManager extends Subscribable {
         })
         this.lessonToEvent(ElectronEvents.ScanAgain, () => {
             console.log("scaning again")
+            this.scaning = true
             setTimeout(() => {
-                this.scaning = true
+
                 this.updateSubScribers()
-            }, 1000);
+            }, 2000);
         })
         this.lessonToEvent(ElectronEvents.ReadSettings, (settingsStr) => {
             try {
@@ -63,12 +64,12 @@ export class ClientManager extends Subscribable {
         this.programSettings.Subscribe(() => {
             this.sendToBackend(ElectronEvents.SaveSettings, JSON.stringify({ seven: this.programSettings.seven, darkmode: this.programSettings.darkmode, tooltips: this.programSettings.tooltips }))
         })
-        setTimeout(() => {
-            if (this.keymap.layout === undefined) {
-                this.sendToBackend(ElectronEvents.Scan, "")
-            }
+        // setTimeout(() => {
+        //     if (!this.scaning && this.keymap.layout === undefined) {
+        //         this.sendToBackend(ElectronEvents.Scan, "")
+        //     }
 
-        }, 1000);
+        // }, 2000);
 
 
     }

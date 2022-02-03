@@ -38,6 +38,7 @@ const createWindow = async () => {
       hardResetMethod: 'exit'
     });
   }
+
   mainWindow.on('ready-to-show', () => {
     if (pegApp) {
       pegApp.diskManager.cacheData("")

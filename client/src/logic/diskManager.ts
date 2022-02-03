@@ -62,13 +62,13 @@ export class DiskManager {
             this.isScaning = true
             await this.scanDrives()
             if (this.didNotFindDrive && this.keepLooking) {
-
+                await this.delay(1000)
                 console.log("scaning again")
                 if (!this.haveToldClientAboutScaning) {
                     this.appManager.SendMiscEvent(ElectronEvents.ScanAgain, {})
                     this.haveToldClientAboutScaning = true
                 }
-                await this.delay(1000)
+
                 this.manageDriveScan()
 
 
@@ -122,7 +122,7 @@ export class DiskManager {
 
     }
 
-    public async scanDrives() {
+    public async scanDrives(dontUpdate: boolean = false) {
         try {
             const disks = await nodeDiskInfo.getDiskInfo()
             // console.log("platform = ", process.platform)
@@ -148,12 +148,17 @@ export class DiskManager {
                 let tempData: any = { kbDrive: this.kbDrive }
                 if (this.hasKeymap !== "") {
                     const mainPy = await fs.readFile(this.hasKeymap, 'utf8');
-                    this.appManager.UpdateKeyMap(mainPy)
+                    if (!dontUpdate) {
+                        this.appManager.UpdateKeyMap(mainPy)
+                    }
+
                     tempData["hasKeymap"] = this.hasKeymap
                 }
                 if (this.hasLayout !== "") {
                     const layoutjson = await fs.readFile(this.hasLayout, 'utf8');
-                    this.appManager.UpdateLayout(layoutjson)
+                    if (!dontUpdate) {
+                        this.appManager.UpdateLayout(layoutjson)
+                    }
                     tempData["hasLayout"] = this.hasLayout
                 }
                 this.cacheData(JSON.stringify(tempData))
@@ -181,6 +186,10 @@ export class DiskManager {
                 if (!retry) {
                     await this.loadFromCacheIfCan()
                     this.saveFile(newMap, true)
+                } else {
+                    await this.scanDrives(true)
+                    this.saveFile(newMap, true)
+
                 }
                 //todo alaert user map did not update
                 console.log("dont have the needed stuff")
