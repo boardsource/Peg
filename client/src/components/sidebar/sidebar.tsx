@@ -1,4 +1,3 @@
-import './sidebar.sass'
 import { Show, createSignal, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 import { ProgramSettings } from "../../logic/programSettings";

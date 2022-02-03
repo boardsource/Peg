@@ -1,5 +1,10 @@
+import MainView from '../../components/mainView/mainView'
+
 export default function LED() {
     return (
-        <h1>LED</h1>
+        <MainView title="LED">
+            <p>LED Controls will go here</p>
+        </MainView>
+
     )
 }
