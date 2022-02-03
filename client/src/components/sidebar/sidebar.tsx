@@ -1,5 +1,5 @@
 import './sidebar.sass'
-import { Show, createState, createSignal, onMount } from "solid-js";
+import { Show, createSignal, onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 import { ProgramSettings } from "../../logic/programSettings";
 import Navigation from '../navigation/navigation';
@@ -9,6 +9,8 @@ import iconExternalLink from '../../images/icons/external_link.svg'
 
 
 export default function Sidebar() {
+
+    onMount(() => { console.log("ps", programSettings) })
     const [state, setState] = createStore({ darkMode: programSettings.darkmode })
     const setTheme = () => {
         setState({ darkMode: programSettings.darkmode })

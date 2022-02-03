@@ -10,6 +10,7 @@ import Account from './account/account'
 import NotFound from './NotFound';
 import Sidebar from '../components/sidebar/sidebar'
 import ToolTipDisplay from '../components/tooltipDisplay/tooltipDisplay';
+import MakeCustomCodes from './makeCustomCodes/makeCustomCodes';
 export default function Root() {
   return (
     <>
@@ -19,15 +20,17 @@ export default function Root() {
           <Sidebar />
         </div>
         <div className="peg-wrapper__views flex-1 bg-white rounded-xl m-5 flex p-6">
-   <ToolTipDisplay />
+          <ToolTipDisplay />
           <Routes>
             {/* i comment this out when i am working on stuff because it breaks widths */}
             <Route path="/index.html" element={<KeymapEditView />} />
             <Route path="/index.html/led" element={<LED />} />
             <Route path="/index.html/oled" element={<OLED />} />
+            <Route path="/index.html/makeCustom" element={<MakeCustomCodes />} />
             <Route path="/index.html/tester" element={<Tester />} />
             <Route path="/index.html/options" element={<Options />} />
             <Route path="/index.html/account" element={<Account />} />
+
           </Routes>
         </div>
 

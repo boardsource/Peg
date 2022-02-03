@@ -38,7 +38,9 @@ export interface Layout {
 export enum FileName {
     main = "main.py",
     kb = "kb.py",
-    layout = "layout.json"
+    layout = "layout.json",
+    settings = "settings.json",
+    customCodes = "customCodes.json"
 }
 
 export enum ElectronEvents {
@@ -49,5 +51,9 @@ export enum ElectronEvents {
     Savefile = "Savefile",
     FilePicker = "FilePicker",
     FilePickerClose = "FilePickerClose",
-    ScanAgain = "ScanAgain"
+    ScanAgain = "ScanAgain",
+    ReadSettings = "ReadSettings",
+    ReadCustomCodes = "ReadCustomCodes",
+    SaveSettings = "SaveSettings",
+    SaveCustomCodes = "SaveCustomCodes"
 }

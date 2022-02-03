@@ -10,6 +10,7 @@ export default function Navigation() {
             <Link class="text-gray-600 text-sm mb-1 hover:text-purple-500" href='/index.html'>KEYMAP</Link>
             <Link class="text-gray-600 text-sm mb-1 hover:text-purple-500" href='/index.html/led'>LED</Link>
             <Link class="text-gray-600 text-sm mb-1 hover:text-purple-500" href='/index.html/oled'>OLED</Link>
+            <Link class="text-gray-600 text-sm mb-1 hover:text-purple-500" href='/index.html/makeCustom'>MAKE CUSTOM KEY</Link>
             <Separator title='Tools' />
             <Link class="text-gray-600 text-sm mb-1 hover:text-purple-500" href='/index.html/tester'>TESTER</Link>
             <Separator title='Settings' />

@@ -1,5 +1,6 @@
 import { ElectronEvents, KeyCode } from "../types/types";
 import { KeyMap } from "./keymapManager";
+import { ProgramSettings } from "./programSettings";
 import { Subscribable } from "./subscribable";
 
 export class ClientManager extends Subscribable {
@@ -10,9 +11,11 @@ export class ClientManager extends Subscribable {
     waitingKey: boolean = false;
     waitingIsLed: boolean = false;
     scaning: boolean = false
+    programSettings: ProgramSettings
     private constructor() {
         super();
         this.keymap = KeyMap.getInstance()
+        this.programSettings = ProgramSettings.getInstance()
         this.lessonToEvent(ElectronEvents.UpdateLayout, (args: string) => {
             this.scaning = false
             this.updateSubScribers()
@@ -30,13 +33,43 @@ export class ClientManager extends Subscribable {
                 this.updateSubScribers()
             }, 1000);
         })
+        this.lessonToEvent(ElectronEvents.ReadSettings, (settingsStr) => {
+            try {
+                const tempSettings = JSON.parse(settingsStr)
+                Object.keys(this.programSettings).forEach((key: string) => {
+                    if (key !== "_apiUrl") {
+                        const realKey = key.substring(1)
+                        //@ts-ignore
+                        this.programSettings[realKey] = tempSettings[realKey]
+                    }
+                });
+            } catch (error) {
+                console.log("error", error)
+            }
 
+        })
+
+        this.lessonToEvent(ElectronEvents.ReadCustomCodes, (customCodesStr) => {
+            try {
+                const tempCustomCodes = JSON.parse(customCodesStr)
+                const customKeycodes = tempCustomCodes as KeyCode[]
+                this.keymap.codes.customCodes = new Map(customKeycodes.map(i => [i.code, i]));
+            } catch (error) {
+                console.log("error", error)
+            }
+
+        })
+
+        this.programSettings.Subscribe(() => {
+            this.sendToBackend(ElectronEvents.SaveSettings, JSON.stringify({ seven: this.programSettings.seven, darkmode: this.programSettings.darkmode, tooltips: this.programSettings.tooltips }))
+        })
         setTimeout(() => {
             if (this.keymap.layout === undefined) {
                 this.sendToBackend(ElectronEvents.Scan, "")
             }
 
         }, 1000);
+
 
     }
 
@@ -73,7 +106,7 @@ export class ClientManager extends Subscribable {
         }
     }
 
-    sendToBackend(key: string, data: any) {
+    sendToBackend(key: ElectronEvents, data: any) {
         //@ts-ignore
         window.electron.ipcRenderer.send(key, data)
     }

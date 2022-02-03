@@ -7,7 +7,7 @@ import { AppManager } from "./AppManager";
 const nodeDiskInfo = require('node-disk-info')
 import * as fs from 'fs/promises';
 import path from 'path'
-import { ElectronEvents } from "../types/types";
+import { ElectronEvents, FileName } from "../types/types";
 type DiskInfo = {
     filesystem: string
     blocks: number
@@ -48,6 +48,7 @@ export class DiskManager {
     delay(time: number) {
         return new Promise(res => setTimeout(res, time))
     };
+
     public async manageDriveScan() {
         if (!this.didNotFindDrive && this.hasKeymap !== "" && this.hasLayout !== "") {
             const layoutjson = await fs.readFile(this.hasLayout, 'utf8');
@@ -74,6 +75,7 @@ export class DiskManager {
             }
         }
     }
+
     async readCache(): Promise<string> {
         try {
             const tmpPath = path.join(app.getPath("temp"), 'peg.temp')
@@ -85,6 +87,7 @@ export class DiskManager {
             return ""
         }
     }
+
     async cacheData(data: string) {
         try {
             const tmpPath = path.join(app.getPath("temp"), 'peg.temp')
@@ -92,6 +95,29 @@ export class DiskManager {
             // console.log("newFile from cache", newFile)
         } catch (error) {
             console.log("error in writing cache data", error)
+        }
+    }
+
+    async readSettings(event: ElectronEvents, fileName: FileName) {
+        try {
+            const tmpPath = path.join(app.getPath("appData"), fileName)
+            const data = await fs.readFile(tmpPath, 'utf8');
+            this.appManager.SendMiscEvent(event, data)
+            console.log("reading Settings", data)
+
+        } catch (error) {
+            console.log("error in reading cache data", error)
+            return ""
+        }
+    }
+
+    async saveSettings(data: string, fileName: FileName) {
+        try {
+            const tmpPath = path.join(app.getPath("appData"), fileName)
+            const newFile = await fs.writeFile(tmpPath, data, 'utf8');
+            console.log("saving Settings")
+        } catch (error) {
+            console.log("error in writing settings data", error)
         }
 
     }
