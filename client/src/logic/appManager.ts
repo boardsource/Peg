@@ -1,9 +1,6 @@
 import { DiskManager } from "./diskManager";
 import Electron, { app, ipcMain, BrowserWindow } from 'electron';
-import * as path from 'path';
-import { ElectronEvents } from "../types/types";
-
-
+import { ElectronEvents, FileName } from "../types/types";
 
 export class AppManager {
     diskManager: DiskManager;
@@ -11,7 +8,6 @@ export class AppManager {
     constructor(bWin: Electron.BrowserWindow) {
         this.diskManager = new DiskManager(this)
         this.win = bWin;
-
     }
 
     run() {
@@ -25,6 +21,14 @@ export class AppManager {
         if (this.diskManager !== undefined) {
             this.diskManager.manageDriveScan()
 
+        }
+    }
+
+    public SaveSetting(event: Electron.IpcMainEvent, fileData: string, eventType: ElectronEvents) {
+        if (eventType === ElectronEvents.SaveSettings) {
+            this.diskManager.saveSettings(fileData, FileName.settings)
+        } else if (eventType === ElectronEvents.SaveCustomCodes) {
+            this.diskManager.saveSettings(fileData, FileName.customCodes)
         }
     }
 

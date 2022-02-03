@@ -11,6 +11,7 @@ import NotFound from './NotFound';
 import Sidebar from '../components/sidebar/sidebar'
 import Topbar from '../components/topbar/topbar'
 import ToolTipDisplay from '../components/tooltipDisplay/tooltipDisplay';
+import MakeCustomCodes from './makeCustomCodes/makeCustomCodes';
 export default function Root() {
   return (
     <>
@@ -19,6 +20,7 @@ export default function Root() {
         <div className="peg-wrapper__sidebar">
           <Sidebar />
         </div>
+
         <div className="peg-wrapper__views flex flex-1 flex-col m-5">
           <div className="peg-wrapper__views__topbar flex mb-5">
             <Topbar />
@@ -30,12 +32,12 @@ export default function Root() {
               <Route path="/index.html" element={<KeymapEditView />} />
               <Route path="/index.html/led" element={<LED />} />
               <Route path="/index.html/oled" element={<OLED />} />
+              <Route path="/index.html/makeCustom" element={<MakeCustomCodes />} />
               <Route path="/index.html/tester" element={<Tester />} />
               <Route path="/index.html/options" element={<Options />} />
               <Route path="/index.html/account" element={<Account />} />
             </Routes>
           </div>
-
 
         </div>
 

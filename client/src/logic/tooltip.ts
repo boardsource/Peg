@@ -22,7 +22,7 @@ export class ToolTip extends Subscribable {
     }
 
     Show(x: number, y: number, title: string, body: string) {
-        console.log("body", body)
+        // console.log("body", body)
         this.x = x;
         this.y = y;
         this.title = title;

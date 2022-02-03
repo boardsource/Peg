@@ -7,7 +7,7 @@ import { AppManager } from "./AppManager";
 const nodeDiskInfo = require('node-disk-info')
 import * as fs from 'fs/promises';
 import path from 'path'
-import { ElectronEvents } from "../types/types";
+import { ElectronEvents, FileName } from "../types/types";
 type DiskInfo = {
     filesystem: string
     blocks: number
@@ -48,6 +48,7 @@ export class DiskManager {
     delay(time: number) {
         return new Promise(res => setTimeout(res, time))
     };
+
     public async manageDriveScan() {
         if (!this.didNotFindDrive && this.hasKeymap !== "" && this.hasLayout !== "") {
             const layoutjson = await fs.readFile(this.hasLayout, 'utf8');
@@ -61,19 +62,20 @@ export class DiskManager {
             this.isScaning = true
             await this.scanDrives()
             if (this.didNotFindDrive && this.keepLooking) {
-
+                await this.delay(1000)
                 console.log("scaning again")
                 if (!this.haveToldClientAboutScaning) {
                     this.appManager.SendMiscEvent(ElectronEvents.ScanAgain, {})
                     this.haveToldClientAboutScaning = true
                 }
-                await this.delay(1000)
+
                 this.manageDriveScan()
 
 
             }
         }
     }
+
     async readCache(): Promise<string> {
         try {
             const tmpPath = path.join(app.getPath("temp"), 'peg.temp')
@@ -85,6 +87,7 @@ export class DiskManager {
             return ""
         }
     }
+
     async cacheData(data: string) {
         try {
             const tmpPath = path.join(app.getPath("temp"), 'peg.temp')
@@ -93,10 +96,33 @@ export class DiskManager {
         } catch (error) {
             console.log("error in writing cache data", error)
         }
+    }
+
+    async readSettings(event: ElectronEvents, fileName: FileName) {
+        try {
+            const tmpPath = path.join(app.getPath("appData"), fileName)
+            const data = await fs.readFile(tmpPath, 'utf8');
+            this.appManager.SendMiscEvent(event, data)
+            console.log("reading Settings", data)
+
+        } catch (error) {
+            console.log("error in reading cache data", error)
+            return ""
+        }
+    }
+
+    async saveSettings(data: string, fileName: FileName) {
+        try {
+            const tmpPath = path.join(app.getPath("appData"), fileName)
+            const newFile = await fs.writeFile(tmpPath, data, 'utf8');
+            console.log("saving Settings")
+        } catch (error) {
+            console.log("error in writing settings data", error)
+        }
 
     }
 
-    public async scanDrives() {
+    public async scanDrives(dontUpdate: boolean = false) {
         try {
             const disks = await nodeDiskInfo.getDiskInfo()
             // console.log("platform = ", process.platform)
@@ -122,12 +148,17 @@ export class DiskManager {
                 let tempData: any = { kbDrive: this.kbDrive }
                 if (this.hasKeymap !== "") {
                     const mainPy = await fs.readFile(this.hasKeymap, 'utf8');
-                    this.appManager.UpdateKeyMap(mainPy)
+                    if (!dontUpdate) {
+                        this.appManager.UpdateKeyMap(mainPy)
+                    }
+
                     tempData["hasKeymap"] = this.hasKeymap
                 }
                 if (this.hasLayout !== "") {
                     const layoutjson = await fs.readFile(this.hasLayout, 'utf8');
-                    this.appManager.UpdateLayout(layoutjson)
+                    if (!dontUpdate) {
+                        this.appManager.UpdateLayout(layoutjson)
+                    }
                     tempData["hasLayout"] = this.hasLayout
                 }
                 this.cacheData(JSON.stringify(tempData))
@@ -155,6 +186,10 @@ export class DiskManager {
                 if (!retry) {
                     await this.loadFromCacheIfCan()
                     this.saveFile(newMap, true)
+                } else {
+                    await this.scanDrives(true)
+                    this.saveFile(newMap, true)
+
                 }
                 //todo alaert user map did not update
                 console.log("dont have the needed stuff")

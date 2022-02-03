@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain, shell, dialog } from 'electron';
 import { AppManager } from "../src/logic/appManager"
 import * as path from 'path';
-import { ElectronEvents } from '../src/types/types';
+import { ElectronEvents, FileName } from '../src/types/types';
 let mainWindow: BrowserWindow | null = null;
 let pegApp: AppManager | null = null;
 const createWindow = async () => {
@@ -38,13 +38,18 @@ const createWindow = async () => {
       hardResetMethod: 'exit'
     });
   }
+
   mainWindow.on('ready-to-show', () => {
     if (pegApp) {
       pegApp.diskManager.cacheData("")
+      pegApp.diskManager.readSettings(ElectronEvents.ReadSettings, FileName.settings)
+      pegApp.diskManager.readSettings(ElectronEvents.ReadCustomCodes, FileName.customCodes)
     } else {
       if (mainWindow !== null) {
         const pegApp = new AppManager(mainWindow)
         pegApp.diskManager.cacheData("")
+        pegApp.diskManager.readSettings(ElectronEvents.ReadSettings, FileName.settings)
+        pegApp.diskManager.readSettings(ElectronEvents.ReadCustomCodes, FileName.customCodes)
       }
     }
     if (!mainWindow) {
@@ -108,6 +113,34 @@ ipcMain.on(ElectronEvents.SaveMap, (event: Electron.IpcMainEvent, file: string,)
   }
 }
 )
+
+ipcMain.on(ElectronEvents.SaveSettings, (event: Electron.IpcMainEvent, file: string,) => {
+  if (pegApp) {
+    pegApp.SaveSetting(event, file, ElectronEvents.SaveSettings)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.SaveSetting(event, file, ElectronEvents.SaveSettings)
+
+    }
+  }
+}
+)
+
+ipcMain.on(ElectronEvents.SaveCustomCodes, (event: Electron.IpcMainEvent, file: string,) => {
+  console.log("save file")
+  if (pegApp) {
+    pegApp.SaveSetting(event, file, ElectronEvents.SaveCustomCodes)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.SaveSetting(event, file, ElectronEvents.SaveCustomCodes)
+
+    }
+  }
+}
+)
+
 
 ipcMain.on(ElectronEvents.Savefile, (event: Electron.IpcMainEvent, data: { fileData: string, path: string[] }) => {
   if (pegApp) {

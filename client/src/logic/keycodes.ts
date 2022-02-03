@@ -1,4 +1,4 @@
-import { KeyCode } from "../types/types";
+import { ElectronEvents, KeyCode } from "../types/types";
 import _basic from "../jsonKeycodes/basic-keycodes.json"
 import _bluetooth from "../jsonKeycodes/bluetooth-keycodes.json"
 import _custom from "../jsonKeycodes/custom-keycodes.json"
@@ -9,6 +9,7 @@ import _led from "../jsonKeycodes/led-keycodes.json"
 import _lessused from "../jsonKeycodes/lessused-keycodes.json"
 import _modifiers from "../jsonKeycodes/modifiers-keycodes.json"
 import _shifted from "../jsonKeycodes/shifted-keycodes.json"
+import { ClientManager } from "./clientManager";
 
 export class KeyCodes {
     private static instance: KeyCodes;
@@ -22,7 +23,9 @@ export class KeyCodes {
     layers: Map<string, KeyCode>;
     led: Map<string, KeyCode>;
     customCodes: Map<string, KeyCode>;
+
     private constructor() {
+
         //@ts-ignore
         const basicKeycodes = _basic as KeyCode[]
         this.basic = new Map(basicKeycodes.map(i => [i.code, i]));
@@ -54,6 +57,8 @@ export class KeyCodes {
         const shiftedKeycodes = _shifted as KeyCode[]
         this.shifted = new Map(shiftedKeycodes.map(i => [i.code, i]));
         this.addBlankSubKeys();
+
+
     }
 
     public static getInstance(): KeyCodes {
@@ -78,6 +83,41 @@ export class KeyCodes {
             return undefined
         }
     }
+    customCodeForString(dirtyCode: string, code: string): KeyCode | undefined {
+        let tempCode = this.customCodes.get(code)
+        if (tempCode !== undefined) {
+
+            return { ...tempCode }
+        } else {
+
+            tempCode = this.customCodes.get(dirtyCode)
+            if (tempCode !== undefined) {
+                return { ...tempCode }
+            }
+            return undefined
+        }
+    }
+
+    ModifiersKeyCodeForString(code: string): KeyCode | undefined {
+        const tempCode = this.modifiers.get(code);
+        if (tempCode !== undefined) {
+            return { ...tempCode }
+        }
+        else {
+            if (code.includes("(")) {
+                var splitCode = code.split("(");
+                const newSeachCode = splitCode[0] + "(kc)";
+                const secondSearch = this.modifiers.get(newSeachCode);
+                if (secondSearch !== undefined) {
+                    const remvedstuff = splitCode[1].substring(0, splitCode[1].length - 1);
+                    const NeededKey = { ...secondSearch }
+                    NeededKey.subOne = this.KeyCodeForString(remvedstuff);
+                    return NeededKey;
+                }
+            }
+            return undefined;
+        }
+    }
 
     public KeyCodeForString(dirtycode: string): KeyCode {
         const code: string = dirtycode.trim();
@@ -91,7 +131,7 @@ export class KeyCodes {
         if (tempCode != undefined) {
             return tempCode;
         }
-        tempCode = this.CodeForStringAndSet(code, this.modifiers);
+        tempCode = this.ModifiersKeyCodeForString(code);
         if (tempCode != undefined) {
             return tempCode;
         }
@@ -115,7 +155,7 @@ export class KeyCodes {
         if (tempCode != undefined) {
             return tempCode;
         }
-        tempCode = this.CodeForStringAndSet(code, this.customCodes);
+        tempCode = this.customCodeForString(dirtycode, code);
         if (tempCode != undefined) {
             return tempCode;
         }
@@ -133,21 +173,23 @@ export class KeyCodes {
             return errorCode;
         }
     }
+
     public RemoveCustomCode(code: string) {
         this.customCodes.delete(code);
         this.saveCustomCodes();
 
     }
+
     public AddCustomCode(newCode: KeyCode) {
         this.customCodes.set(newCode.code, newCode);
         this.saveCustomCodes();
+
     }
+
     saveCustomCodes() {
-        //todo
-        // Godot.File file = new Godot.File();
-        // file.Open("res://jsonKeycodes/custom-keycodes.json", Godot.File.ModeFlags.Write);
-        // string customText = JsonConvert.SerializeObject(new List<KeyCode>(this.CustomCodes.Values), Formatting.Indented);
-        // file.StoreString(customText);
-        // file.Close();
+        const clientManager = ClientManager.getInstance();
+        clientManager.sendToBackend(ElectronEvents.SaveCustomCodes,
+            JSON.stringify(Array.from(this.customCodes.values())).replace("null", '""')
+        )
     }
 }

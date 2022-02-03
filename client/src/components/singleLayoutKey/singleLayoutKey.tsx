@@ -6,6 +6,8 @@ import { LayoutKey } from "../../types/types";
 import { magicNumbers } from "../../magicNumbers";
 import { ClientManager } from "../../logic/clientManager";
 import { ToolTip } from "../../logic/tooltip";
+import { KeyMap } from "../../logic/keymapManager";
+import { KeyCodes } from "../../logic/keycodes";
 const clientManager = ClientManager.getInstance()
 const toolTip = ToolTip.getInstance()
 type SingleLayoutKeyProps = {
@@ -29,7 +31,9 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         clientManager.NoticeThatKeyIsWaiting(props.index, props.layer, false)
     }
     const clearButtonPress = () => {
-        console.log("clear button press", props.code.code);
+        const keymap = KeyMap.getInstance()
+        const codes = KeyCodes.getInstance()
+        keymap.ChangeKey(props.index, props.layer, codes.KeyCodeForString("KC.NO"));
     }
     const returnStyles = () => {
         return `
@@ -39,7 +43,6 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         `
     }
     const mouseEnter = (event: Event) => {
-
         //@ts-ignore
         toolTip.Show(event.clientX, event.clientY, state.code.display !== "" ? state.code.display : state.code.code, state.code.Description)
     }
@@ -54,8 +57,15 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
+            <Show when={state.code.canHaveSub} fallback={""}>
+                <p>
+                    {state.code.subOne?.code}
+                </p>
+            </Show>
             <button onClick={mainButtonPress} className="singleLayoutKey__main">
-                {state.code.display !== "" ? state.code.display : state.code.code}
+                {state.code.canHaveSub ?
+                    state.code.subOne?.display !== "" ? state.code.subOne?.display : state.code.subOne?.code
+                    : state.code.display !== "" ? state.code.display : state.code.code}
             </button>
             <Show when={state.code.canHaveSub} fallback={""}>
                 <button onClick={clearButtonPress} className="singleLayoutKey__clear">

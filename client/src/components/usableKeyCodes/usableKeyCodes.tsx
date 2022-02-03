@@ -9,9 +9,9 @@ type UsableKeyCodesProps = {
 };
 
 export default function UsableKeyCodes(props: UsableKeyCodesProps) {
-    onMount(() => {
-        console.log("prop", props)
-    });
+    // onMount(() => {
+
+    // });
     const returnLoop = () => {
         if (props.layout) {
             return (<For each={props.layout} fallback={<div>Loading...</div>}>
