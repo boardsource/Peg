@@ -6,12 +6,7 @@ import { LayoutKey } from "../../types/types";
 import SingleLayoutKey from "../singleLayoutKey/singleLayoutKey";
 import { magicNumbers } from "../../magicNumbers";
 import {
-    DragDropProvider,
-    DragDropSensors,
     useDragDropContext,
-    createDraggable,
-    createDroppable,
-    transformStyle,
 } from "@thisbeyond/solid-dnd";
 import { KeyCodes } from "../../logic/keycodes";
 import { ClientManager } from "../../logic/clientManager";

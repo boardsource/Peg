@@ -9,10 +9,6 @@ import { ToolTip } from "../../logic/tooltip";
 import { KeyMap } from "../../logic/keymapManager";
 import { KeyCodes } from "../../logic/keycodes";
 import {
-    DragDropProvider,
-    DragDropSensors,
-    DragOverlay,
-    createDraggable,
     createDroppable,
 } from "@thisbeyond/solid-dnd";
 

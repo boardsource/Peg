@@ -11,9 +11,6 @@ import LedEdit from "../../components/ledEdit/ledEdit";
 import {
     DragDropProvider,
     DragDropSensors,
-    DragOverlay,
-    createDraggable,
-    createDroppable,
 } from "@thisbeyond/solid-dnd";
 
 const clientManager = ClientManager.getInstance()

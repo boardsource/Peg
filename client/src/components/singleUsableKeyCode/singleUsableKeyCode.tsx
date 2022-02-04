@@ -5,11 +5,7 @@ import { ClientManager } from "../../logic/clientManager";
 import { magicNumbers } from "../../magicNumbers";
 import { ToolTip } from "../../logic/tooltip";
 import {
-    DragDropProvider,
-    DragDropSensors,
-    DragOverlay,
     createDraggable,
-    createDroppable,
 } from "@thisbeyond/solid-dnd";
 
 const clientManager = ClientManager.getInstance()
