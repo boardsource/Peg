@@ -1,5 +1,5 @@
 const root = document.documentElement;
 export const magicNumbers = {
-    keyMultiplyer: 50
+    keyMultiplyer: 42
 }
 root.style.setProperty('--keyMultiplyer', magicNumbers.keyMultiplyer + "px");

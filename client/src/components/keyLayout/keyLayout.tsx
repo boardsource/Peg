@@ -5,14 +5,40 @@ import { KeyMap } from "../../logic/keymapManager";
 import { LayoutKey } from "../../types/types";
 import SingleLayoutKey from "../singleLayoutKey/singleLayoutKey";
 import { magicNumbers } from "../../magicNumbers";
+import {
+    DragDropProvider,
+    DragDropSensors,
+    useDragDropContext,
+    createDraggable,
+    createDroppable,
+    transformStyle,
+} from "@thisbeyond/solid-dnd";
+import { KeyCodes } from "../../logic/keycodes";
+import { ClientManager } from "../../logic/clientManager";
+
+const keycodes = KeyCodes.getInstance()
 const keymap = KeyMap.getInstance()
+const clientManager = ClientManager.getInstance()
 type KeyLayoutProps = {
     layer: number
+    isLed: boolean
 };
 
 export default function KeyLayout(props: KeyLayoutProps) {
+
     const [keys, setKeys] = createSignal({ ...keymap.keyLayout })
-        , [rowCount, setRowCount] = createSignal(0)
+        , [rowCount, setRowCount] = createSignal(3)
+        //@ts-ignore
+        , [_, { onDragEnd }] = useDragDropContext();
+
+    //@ts-ignore
+    onDragEnd(({ draggable, droppable }) => {
+        if (droppable) {
+            const code = keycodes.KeyCodeForString(draggable.id)
+            const [layer, index] = droppable.id.split(":")
+            clientManager.ForceKeyChange(layer, index, code)
+        }
+    });
 
     const setkeys = (_newMap: KeyMap) => {
         let tempKeys = { ...keymap.keyLayout }
@@ -32,12 +58,18 @@ export default function KeyLayout(props: KeyLayoutProps) {
             return `height:${6 * magicNumbers.keyMultiplyer}px;`
         }
     }
+
+
+
     return (
         <div className="KeyLayout" style={returnHeight()}>
             <For each={keys().layout} fallback={<div>Loading...</div>}>
                 {(layoutKey, index) => (
                     <SingleLayoutKey index={index()} layer={props.layer}
-                        code={keymap.keymap[props.layer][index()]} layoutKey={layoutKey} />)}
+                        code={keymap.keymap[props.layer][index()]}
+                        layoutKey={layoutKey}
+                        isLed={props.isLed}
+                    />)}
             </For>
         </div>
     );

@@ -17,6 +17,7 @@ export default function Root() {
     <>
 
       <div className="peg-wrapper font-sans bg-gray-200">
+
         <div className="peg-wrapper__sidebar">
           <Sidebar />
         </div>
@@ -29,8 +30,8 @@ export default function Root() {
             <ToolTipDisplay />
             <Routes>
               {/* i comment this out when i am working on stuff because it breaks widths */}
-              <Route path="/index.html" element={<KeymapEditView />} />
-              <Route path="/index.html/led" element={<LED />} />
+              <Route path="/index.html" element={<KeymapEditView isLed={false} />} />
+              <Route path="/index.html/led" element={<KeymapEditView isLed={true} />} />
               <Route path="/index.html/oled" element={<OLED />} />
               <Route path="/index.html/makeCustom" element={<MakeCustomCodes />} />
               <Route path="/index.html/tester" element={<Tester />} />

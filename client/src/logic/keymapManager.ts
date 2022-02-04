@@ -95,6 +95,7 @@ export class KeyMap extends Subscribable {
         else {
             this.keymap[layer][pos] = newKey;
         }
+        // console.log("just updatedKey", this.keymap[layer][pos])
         this.updateSubScribers()
 
         // EmitSignal(nameof(UpdatedMap), this);
@@ -113,7 +114,7 @@ export class KeyMap extends Subscribable {
             console.log("layerToString", layerToString)
             return `[${layerToString}]`;
         })
-        console.log("layers=", keymapString)
+        // console.log("layers=", keymapString)
         return `# keymap\nkeyboard.keymap = [ ${keymapString.join(", \n")} ] \n# keymap\n"`;
     }
     public toString(): string {

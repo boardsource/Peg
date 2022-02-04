@@ -7,15 +7,24 @@ import UsableKeyCodeDisplay from "../../components/usableKeyCodeDisplay/usableKe
 import NewBoardSetup from "../../components/newBoardSetup/newBoardSetup";
 import { ClientManager } from "../../logic/clientManager";
 import { KeyMap } from "../../logic/keymapManager";
+import LedEdit from "../../components/ledEdit/ledEdit";
+import {
+    DragDropProvider,
+    DragDropSensors,
+    DragOverlay,
+    createDraggable,
+    createDroppable,
+} from "@thisbeyond/solid-dnd";
+
 const clientManager = ClientManager.getInstance()
 const keyMap = KeyMap.getInstance()
 
 
-type PageProps = {
-
+type KeymapEditViewProps = {
+    isLed: boolean
 };
 
-export default function KeymapEditView(props: PageProps) {
+export default function KeymapEditView(props: KeymapEditViewProps) {
     const [isScaning, setIsScaning] = createSignal(clientManager.scaning)
         , [haveMap, setHaveMap] = createSignal(keyMap.layout !== undefined)
     const updatelocalIsScaning = () => {
@@ -27,7 +36,6 @@ export default function KeymapEditView(props: PageProps) {
         setHaveMap(keyMap.layout !== undefined)
     }
     const subId = clientManager.Subscribe(updatelocalIsScaning)
-
     const subId2 = keyMap.Subscribe(updateLocalHaveMap)
 
     onCleanup(() => {
@@ -39,6 +47,7 @@ export default function KeymapEditView(props: PageProps) {
             clientManager.sendToBackend(ElectronEvents.Scan, "")
         }
     }
+
     const returnEditView = () => {
         if (isScaning()) {
             return (
@@ -54,15 +63,22 @@ export default function KeymapEditView(props: PageProps) {
                             scan Again
                         </button>
                     </Show>
-                    <KeyLayout layer={0} />
-                    <UsableKeyCodeDisplay />
+                    <KeyLayout layer={0} isLed={props.isLed} />
+                    {props.isLed ?
+                        <LedEdit /> : <UsableKeyCodeDisplay />
+                    }
+
                 </>
             );
         }
     }
     return (
         <div className="keymapEditView">
-            {returnEditView()}
+            <DragDropProvider>
+                <DragDropSensors>
+                    {returnEditView()}
+                </DragDropSensors>
+            </DragDropProvider>
         </div>
     );
 

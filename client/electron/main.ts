@@ -10,7 +10,16 @@ const createWindow = async () => {
     show: false,
     width: 1280,
     height: 720,
-    // icon: getAssetPath('icon.png'),
+
+    minWidth: 1280,
+    minHeight: 720,
+    icon: `file://${__dirname}/../peg.png`,
+
+    // titleBarStyle: 'hiddenInset',
+    // titleBarOverlay: {
+    //   color: '#2f3241',
+    //   symbolColor: '#74b1be'
+    // },
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
@@ -100,6 +109,7 @@ ipcMain.on(ElectronEvents.Scan, (event: Electron.IpcMainEvent, fileName: string,
   }
 }
 )
+
 
 ipcMain.on(ElectronEvents.SaveMap, (event: Electron.IpcMainEvent, file: string,) => {
   if (pegApp) {

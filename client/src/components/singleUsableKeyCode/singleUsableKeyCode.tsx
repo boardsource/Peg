@@ -4,6 +4,14 @@ import { KeyCode, LayoutKey } from "../../types/types";
 import { ClientManager } from "../../logic/clientManager";
 import { magicNumbers } from "../../magicNumbers";
 import { ToolTip } from "../../logic/tooltip";
+import {
+    DragDropProvider,
+    DragDropSensors,
+    DragOverlay,
+    createDraggable,
+    createDroppable,
+} from "@thisbeyond/solid-dnd";
+
 const clientManager = ClientManager.getInstance()
 const toolTip = ToolTip.getInstance()
 type SingleUsableKeyCodeProps = {
@@ -12,6 +20,7 @@ type SingleUsableKeyCodeProps = {
 };
 
 export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
+    const draggable = createDraggable(props.code.code);
     const mainButtonPress = () => {
         clientManager.NoticeToUpdateKey(props.code)
     }
@@ -38,6 +47,10 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
     return (
 
         <button
+            //@ts-ignore
+            use:draggable
+            class="draggable"
+            classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
             className="SingleUsableKeyCode"

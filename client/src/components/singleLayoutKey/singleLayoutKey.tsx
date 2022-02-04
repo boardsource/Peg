@@ -8,6 +8,14 @@ import { ClientManager } from "../../logic/clientManager";
 import { ToolTip } from "../../logic/tooltip";
 import { KeyMap } from "../../logic/keymapManager";
 import { KeyCodes } from "../../logic/keycodes";
+import {
+    DragDropProvider,
+    DragDropSensors,
+    DragOverlay,
+    createDraggable,
+    createDroppable,
+} from "@thisbeyond/solid-dnd";
+
 const clientManager = ClientManager.getInstance()
 const toolTip = ToolTip.getInstance()
 type SingleLayoutKeyProps = {
@@ -15,20 +23,23 @@ type SingleLayoutKeyProps = {
     index: number;
     layer: number;
     layoutKey: LayoutKey
+    isLed: boolean
 };
 
 export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
-    const [state, setState] = createStore({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: props.code });
+    const droppable = createDroppable(`${props.layer}:${props.index}`);
+    const [state, setState] = createStore({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: props.code, subCode: props.code.subOne });
     const updateWaitingInfo = (_newClient: ClientManager) => {
-        setState({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: clientManager.keymap.keymap[props.layer][props.index] })
+        setState({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: clientManager.keymap.keymap[props.layer][props.index], subCode: clientManager.keymap.keymap[props.layer][props.index].subOne })
     }
+
     const subId = clientManager.Subscribe(updateWaitingInfo)
     onCleanup(() => {
         clientManager.Unsubscribe(subId)
     })
 
     const mainButtonPress = () => {
-        clientManager.NoticeThatKeyIsWaiting(props.index, props.layer, false)
+        clientManager.NoticeThatKeyIsWaiting(props.index, props.layer, props.isLed)
     }
     const clearButtonPress = () => {
         const keymap = KeyMap.getInstance()
@@ -43,8 +54,16 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         `
     }
     const mouseEnter = (event: Event) => {
+        const description = state.code.canHaveSub ?
+            //@ts-ignore
+            state.code.Description.replace("kc", state.subCode?.display !== "" ? state.subCode?.display : state.subCode?.code)
+            : state.code.Description
+        const title = state.code.canHaveSub ?
+            //@ts-ignore
+            (state.code.display !== "" ? state.code.display : state.code.code).replace("kc", state.subCode?.display !== "" ? state.subCode?.display : state.subCode?.code)
+            : state.code.display !== "" ? state.code.display : state.code.code
         //@ts-ignore
-        toolTip.Show(event.clientX, event.clientY, state.code.display !== "" ? state.code.display : state.code.code, state.code.Description)
+        toolTip.Show(event.clientX, event.clientY, title, description)
     }
     const mouseLeave = (event: Event) => {
         toolTip.Hide()
@@ -52,19 +71,25 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
 
 
     return (
-        <div className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === props.index ? "waitingKey" : ""}`}
+        <div
+            //@ts-ignore
+            use:droppable
+            class="droppable"
+            classList={{ "!droppable-accept": droppable.isActiveDroppable }}
+            className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === props.index ? "waitingKey" : ""}`}
             style={returnStyles()}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            <Show when={state.code.canHaveSub} fallback={""}>
-                <p>
-                    {state.code.subOne?.code}
-                </p>
-            </Show>
+
             <button onClick={mainButtonPress} className="singleLayoutKey__main">
+                <Show when={state.code.canHaveSub} fallback={""}>
+
+                    {state.code.display !== "" ? state.code.display : state.code.code}
+                    <br />
+                </Show>
                 {state.code.canHaveSub ?
-                    state.code.subOne?.display !== "" ? state.code.subOne?.display : state.code.subOne?.code
+                    state.subCode?.display !== "" ? state.subCode?.display : state.subCode?.code
                     : state.code.display !== "" ? state.code.display : state.code.code}
             </button>
             <Show when={state.code.canHaveSub} fallback={""}>

@@ -1,9 +1,11 @@
-import { Show, createSignal, onMount, For } from "solid-js";
+import { Show, createSignal, onMount, For, onCleanup } from "solid-js";
 import { KeyMap } from "../../logic/keymapManager";
 import { KeyCodes } from "../../logic/keycodes";
 import { KeyCode, LayoutKey } from "../../types/types"
 import UsableKeyCodes from "../usableKeyCodes/usableKeyCodes";
 import _ansi from "./layoutDisplays/ansi104.json"
+import { ClientManager } from "../../logic/clientManager";
+const clientManager = ClientManager.getInstance()
 const ansi = _ansi as LayoutKey[]
 const keycodes = KeyCodes.getInstance()
 type UsableKeyCodeDisplayProps = {
@@ -40,20 +42,38 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
             ["international", undefined]
         ]
     )
-    const [selectedKeyCodeName, setSelectedKeyCodeName] = createSignal("basic")
+    const [selectedKeyCodeName, setSelectedKeyCodeName] = createSignal("basic"),
+        [changesMade, SetChangesMade] = createSignal(clientManager.changesMade)
+    const updateLocalChangesMade = () => {
+        SetChangesMade(clientManager.changesMade)
+    }
+    const subId = clientManager.Subscribe(updateLocalChangesMade)
+    onCleanup(() => {
+        clientManager.Unsubscribe(subId)
+
+    })
+    const saveMap = () => {
+        clientManager.SaveMap()
+    }
     return (
         <div className="UsableKeyCodeDisplay">
             <div className="UsableKeyCodeDisplay__options">
                 <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
                     {(key) =>
-                        <button onClick={() => {
-                            //@ts-ignore
-                            setSelectedKeyCodeName(keyCodeOptions.get(key))
-                        }}>
+                        <button class="inline-block px-2 py-1 border-2 border-purple-600 text-purple-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                            onClick={() => {
+                                //@ts-ignore
+                                setSelectedKeyCodeName(keyCodeOptions.get(key))
+                            }}>
                             {key}
                         </button>
                     }
                 </For>
+                <button class={`${changesMade() ? "inline-block px-2 py-2 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" :
+                    "inline-block px-2 py-2 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out"}`}
+                    onClick={saveMap}>
+                    save
+                </button>
             </div>
 
             <div className="UsableKeyCodeDisplay__current">
@@ -66,3 +86,7 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
         </div>
     );
 }
+function updateLocalChanges(updateLocalChanges: any) {
+    throw new Error("Function not implemented.");
+}
+

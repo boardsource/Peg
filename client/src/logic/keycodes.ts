@@ -68,10 +68,18 @@ export class KeyCodes {
         return KeyCodes.instance;
     }
     addBlankSubKeys() {
-        const noKey = this.CodeForStringAndSet("KC.NO", this.basic);
+        const noKey: KeyCode = {
+            code: "KC.NO",
+            display: "no",
+            keybinding: "",
+            canHaveSub: false,
+            canHaveSubNumber: false,
+            subNumber: 0,
+            Description: "no key set yet"
+        }
         this.modifiers.forEach(keycode => {
             if (keycode.canHaveSub) {
-                keycode.subOne = noKey;
+                keycode.subOne = { ...noKey };
             }
         });
     }
