@@ -6,8 +6,9 @@ export default function Topbar() {
     return (
         <div className="topbar flex w-f flex-1 items-center justify-between">
             <Searchbar />
-            <div className="topbar__right flex items-center">
-                <div className="topbar__right__connectivitystatus mr-8">
+
+            <div className="topbar__right flex">
+                <div className="topbar__right__connectivitystatus self-center mr-6">
                     <ConnectivityStatus />
                 </div>
                 <AccountIcon />
