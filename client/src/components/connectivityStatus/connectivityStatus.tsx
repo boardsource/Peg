@@ -5,17 +5,6 @@ import { ProgramSettings } from '../../logic/programSettings'
 import StatusIndicator from './statusIndicator/statusIndicator'
 const clientManager = ClientManager.getInstance()
 const keymap = KeyMap.getInstance()
-type ConnectivityStatus = {
-    internetConnection: boolean,
-    boardConnected: boolean,
-    keyboard: string,
-}
-
-const connectivityStatus: ConnectivityStatus = {
-    internetConnection: true,
-    boardConnected: true,
-    keyboard: 'Corne LP'
-}
 
 export enum ConnectionStatus {
     BoardAndInternet,
@@ -27,10 +16,7 @@ export enum ConnectionStatus {
 
 
 export default function ConnectivityStatus() {
-
-
     const returnStatus = () => {
-
         if (keymap.keyLayout) {
             if (clientManager.isOnLine) {
                 return ConnectionStatus.BoardAndInternet
@@ -52,10 +38,9 @@ export default function ConnectivityStatus() {
     onCleanup(() => { keymap.Unsubscribe(subId) })
 
     return (
-
-        <StatusIndicator status={status()} keyboard={`${keymap.keyLayout?.features.creator}-${keymap.keyLayout?.features.name}`} />
-
-
-
+        <StatusIndicator
+            status={status()}
+            keyboard={`${keymap.keyLayout?.features.creator}-${keymap.keyLayout?.features.name}`}
+        />
     )
 }
