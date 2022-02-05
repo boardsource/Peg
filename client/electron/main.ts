@@ -14,8 +14,8 @@ const createWindow = async () => {
     minWidth: 1280,
     minHeight: 720,
     icon: `file://${__dirname}/../peg.png`,
-
-    // titleBarStyle: 'hiddenInset',
+    frame: false,
+    titleBarStyle: 'hiddenInset',
     // titleBarOverlay: {
     //   color: '#2f3241',
     //   symbolColor: '#74b1be'
@@ -175,6 +175,27 @@ ipcMain.on(ElectronEvents.FilePicker, async (event: Electron.IpcMainEvent, file:
   }
 }
 )
+
+
+ipcMain.on(ElectronEvents.WindowClose, (event: Electron.IpcMainEvent) => {
+  if (mainWindow !== null) {
+    mainWindow.close()
+  }
+}
+)
+ipcMain.on(ElectronEvents.WindowFullScreen, (event: Electron.IpcMainEvent) => {
+  if (mainWindow !== null) {
+    mainWindow.fullScreen = !mainWindow.fullScreen
+  }
+}
+)
+ipcMain.on(ElectronEvents.WindowMinimize, (event: Electron.IpcMainEvent) => {
+  if (mainWindow !== null) {
+    mainWindow.minimize()
+  }
+}
+)
+
 
 
 

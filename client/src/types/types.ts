@@ -55,5 +55,8 @@ export enum ElectronEvents {
     ReadSettings = "ReadSettings",
     ReadCustomCodes = "ReadCustomCodes",
     SaveSettings = "SaveSettings",
-    SaveCustomCodes = "SaveCustomCodes"
+    SaveCustomCodes = "SaveCustomCodes",
+    WindowClose = "WindowClose",
+    WindowFullScreen = "WindowFullScreen",
+    WindowMinimize = "WindowMinimize",
 }

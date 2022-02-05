@@ -1,16 +1,23 @@
+import { ClientManager } from "../../logic/clientManager"
+import { ElectronEvents } from "../../types/types"
+import "./menubar.sass"
+const clientManager = ClientManager.getInstance()
 export default function Menubar() {
 
     const minimizeWindow = () => {
+        clientManager.sendToBackend(ElectronEvents.WindowMinimize, "")
         //bird boi will make this minimize the window
     }
     const fullscreenWindow = () => {
+        clientManager.sendToBackend(ElectronEvents.WindowFullScreen, "")
         //bird boi will make this fullscreen the window
     }
     const exitWindow = () => {
+        clientManager.sendToBackend(ElectronEvents.WindowClose, "")
         //bird boi will make this exit the window
     }
     return (
-        <div className="menubar flex absolute w-full">
+        <div className="menubar flex absolute w-full bg-red">
             {/* <p>mac here</p> */}
             <div className="menubar__controls absolute flex right-0 mr-1 mt-1">
                 <button className='p-1 rounded-md hover:bg-black hover:bg-opacity-5 transition duration-200' onClick={minimizeWindow}>
