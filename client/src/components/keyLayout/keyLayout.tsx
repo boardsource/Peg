@@ -2,7 +2,7 @@ import "./keyLayout.css"
 import { Show, createSignal, onMount, For, createResource, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 import { KeyMap } from "../../logic/keymapManager";
-import { LayoutKey } from "../../types/types";
+import { KeyCode, LayoutKey } from "../../types/types";
 import SingleLayoutKey from "../singleLayoutKey/singleLayoutKey";
 import { magicNumbers } from "../../magicNumbers";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@thisbeyond/solid-dnd";
 import { KeyCodes } from "../../logic/keycodes";
 import { ClientManager } from "../../logic/clientManager";
+import { Color } from "../../logic/color";
 
 const keycodes = KeyCodes.getInstance()
 const keymap = KeyMap.getInstance()
@@ -29,7 +30,13 @@ export default function KeyLayout(props: KeyLayoutProps) {
     //@ts-ignore
     onDragEnd(({ draggable, droppable }) => {
         if (droppable) {
-            const code = keycodes.KeyCodeForString(draggable.id)
+            let code: KeyCode | Color
+            const isColor = Color.IsColor(draggable.id)
+            if (isColor !== undefined) {
+                code = isColor
+            } else {
+                code = keycodes.KeyCodeForString(draggable.id)
+            }
             const [layer, index] = droppable.id.split(":")
             clientManager.ForceKeyChange(layer, index, code)
         }

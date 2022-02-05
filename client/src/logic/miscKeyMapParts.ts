@@ -12,23 +12,13 @@ export class MiscKeymapParts {
         this.programSettings = ProgramSettings.getInstance();
     }
     returnLedDisplay(): string {
-        // var tempLedMap = new List<string>();
-        // foreach (var color in keymap.ledMap)
-        // {
-        //     var templeds = new List<string>();
-        //     templeds.Add((color.h*255).ToString());
-        //     templeds.Add((color.s * 255).ToString());
-        //     templeds.Add((color.v * 255).ToString());
-        //     var combinedColors = String.Join(String.Empty, templeds.ToArray());
-        //     tempLedMap.Add($"[{combinedColors}],");
-        // }
-        // String.Join(String.Empty, tempLedMap.ToArray())
-        return `ledDisplay=[${""}]`;
+        const ledmap = this.keymap.ledMap.map(color => color.toString()).join(",")
+        return `# ledmap\nledDisplay=[${ledmap}]\n# ledmap`;
     }
     public ReturnFileFooter(): string {
         if (this.settings.ble) {
             if (this.programSettings.seven) {
-                return "if __name__ == '__main__':\n    if supervisor.runtime.usb_connected:\n       keyboard.go(hid_type=HIDModes.USB)\n    else:\n        keyboard.go(hid_type = HIDModes.BLE)";
+                return `if __name__ == '__main__':\n    if supervisor.runtime.usb_connected:\n       keyboard.go(hid_type=HIDModes.USB)\n    else:\n        keyboard.go(hid_type = HIDModes.BLE)`;
             }
             else {
                 return "if __name__ == '__main__': \n    keyboard.go(hid_type = HIDModes.BLE)";
@@ -47,10 +37,8 @@ export class MiscKeymapParts {
         }
         if (this.settings.perkey || this.settings.underglow) {
             const ledMap = this.returnLedDisplay();
-
-            //todo num of pixels needs to be pulled from the layout;
             imports += "from kmk.extensions.rgb_matrix import Rgb_matrix\n";
-            baseCode += `${ledMap}\nsrgb_ext = RGB(pixel_pin=keyboard.rgb_pixel_pin, num_pixels=${this.settings.perkeyCount + this.settings.underglowCount},keyPos=keyboard.ledKeypos,ledDisplay=ledDisplay)\nkeyboard.extensions.append(rgb_ext)\n`;
+            baseCode += `${ledMap}\nrgb_ext = RGB(pixel_pin=keyboard.rgb_pixel_pin, num_pixels=${this.settings.perkeyCount + this.settings.underglowCount},brightness_limit=keyboard.brightness_limit,keyPos=keyboard.ledKeypos,ledDisplay=ledDisplay)\nkeyboard.extensions.append(rgb_ext)\n`;
         }
         if (this.settings.split) {
             imports += "from kmk.modules.split import Split, SplitSide, SplitType\n";

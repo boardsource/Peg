@@ -24,9 +24,9 @@ type SingleLayoutKeyProps = {
 
 export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     const droppable = createDroppable(`${props.layer}:${props.index}`);
-    const [state, setState] = createStore({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: props.code, subCode: props.code.subOne });
+    const [state, setState] = createStore({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: props.code, subCode: props.code.subOne, color: clientManager.keymap.ledMap[props.index] });
     const updateWaitingInfo = (_newClient: ClientManager) => {
-        setState({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: clientManager.keymap.keymap[props.layer][props.index], subCode: clientManager.keymap.keymap[props.layer][props.index].subOne })
+        setState({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: clientManager.keymap.keymap[props.layer][props.index], subCode: clientManager.keymap.keymap[props.layer][props.index].subOne, color: clientManager.keymap.ledMap[props.index] })
     }
 
     const subId = clientManager.Subscribe(updateWaitingInfo)
@@ -43,11 +43,15 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         keymap.ChangeKey(props.index, props.layer, codes.KeyCodeForString("KC.NO"));
     }
     const returnStyles = () => {
-        return `
-            left: ${props.layoutKey.x * magicNumbers.keyMultiplyer}px;
-            top: ${props.layoutKey.y * magicNumbers.keyMultiplyer}px;
-            width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
-        `
+        let styles = `
+        left: ${props.layoutKey.x * magicNumbers.keyMultiplyer}px;
+        top: ${props.layoutKey.y * magicNumbers.keyMultiplyer}px;
+        width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
+         `
+        if (clientManager.keymap.keyLayout?.features.perkey) {
+            styles += `color: rgb(${state.color.r},${state.color.g},${state.color.b});`
+        }
+        return styles
     }
     const mouseEnter = (event: Event) => {
         const description = state.code.canHaveSub ?

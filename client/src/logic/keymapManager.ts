@@ -2,6 +2,7 @@ import { KeyCodes } from "./keycodes";
 import { KeyCode, Layout } from "../types/types";
 import { MiscKeymapParts } from "./miscKeyMapParts";
 import { Subscribable } from "./subscribable";
+import { Color } from "./color";
 
 export class KeyMap extends Subscribable {
     private static instance: KeyMap;
@@ -12,7 +13,7 @@ export class KeyMap extends Subscribable {
     layout!: string;
     haveLayout: boolean = false;
     haveMap: boolean = false;
-    ledMap: string[] = [];
+    ledMap: Color[] = [];
     miscKeymapParts: MiscKeymapParts | undefined
     keymapStr: string[][] = []
     // parsing: boolean = false
@@ -72,21 +73,27 @@ export class KeyMap extends Subscribable {
         this.haveMap = true;
         const ledMap = baseMap.split("# ledmap");
         if (ledMap.length == 3) {
-
-            //todo update this to color class
-            const ledHeadderCharacterCount = 14;
-            const ledFooterCharacterCount = 3;
-            const tempLedMap = ledMap[1].substring(0, ledMap[1].length - ledFooterCharacterCount).substring(ledHeadderCharacterCount).split("],[")
-            this.ledMap = tempLedMap
+            const ledHeadderCharacterCount = 13;
+            const ledFooterCharacterCount = 9;
+            const tempLedMap = ledMap[1]
+                .replace(/(?:\r\n|\r|\n)/g, '')
+                .replace(" ", '')
+                .substring(0, ledMap[1].length - ledFooterCharacterCount)
+                .substring(ledHeadderCharacterCount)
+                .split("],[")
+            const colorLeds = tempLedMap.map(led => {
+                const singleLed = led.split(',')
+                return new Color(singleLed[0], singleLed[1], singleLed[2])
+            })
+            this.ledMap = colorLeds
 
         }
         console.log("just parsed keymap", this)
         this.updateSubScribers()
-        //     this.parsing = false
-        // }
 
-        // EmitSignal(nameof(UpdatedMap), this);
+
     }
+
     public ChangeKey(layer: number, pos: number, newKey: KeyCode) {
         // todo add in saving old changes for ctrl z 
         if (this.keymap[layer][pos].canHaveSub && newKey.code != "KC.NO") {
@@ -95,11 +102,16 @@ export class KeyMap extends Subscribable {
         else {
             this.keymap[layer][pos] = newKey;
         }
-        // console.log("just updatedKey", this.keymap[layer][pos])
         this.updateSubScribers()
-
-        // EmitSignal(nameof(UpdatedMap), this);
     }
+
+    public ChangeLed(_layer: number, pos: number, newColor: Color) {
+        // todo add in saving old changes for ctrl z 
+        this.ledMap[pos] = newColor;
+        this.updateSubScribers()
+    }
+
+
     keycodeToString(code: KeyCode) {
         if (code.canHaveSub) {
             return code.code.split("kc")[0] + code.subOne?.code + ")";
@@ -107,6 +119,7 @@ export class KeyMap extends Subscribable {
             return code.code
         }
     }
+
     keymapBackToString(): string {
         let keymapString: string[] = this.keymap.map(layer => {
 
@@ -117,6 +130,7 @@ export class KeyMap extends Subscribable {
         // console.log("layers=", keymapString)
         return `# keymap\nkeyboard.keymap = [ ${keymapString.join(", \n")} ] \n# keymap\n"`;
     }
+
     public toString(): string {
 
         const newLayers: string = this.keymapBackToString();

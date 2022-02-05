@@ -8,7 +8,8 @@
 .singleLayoutKey .singleLayoutKey__main{
     width:100%;
     height:100%;
-    background: crimson;
+    background: lightgray;
+    font-weight: bolder;
 }
 .singleLayoutKey .singleLayoutKey__clear{
     position:absolute;

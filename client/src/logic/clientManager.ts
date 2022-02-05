@@ -1,5 +1,6 @@
 import { ElectronEvents, KeyCode } from "../types/types";
 import { Color } from "./color";
+import { isKeyCode } from "./helpers";
 import { KeyMap } from "./keymapManager";
 import { ProgramSettings } from "./programSettings";
 import { Subscribable } from "./subscribable";
@@ -100,8 +101,9 @@ export class ClientManager extends Subscribable {
                 this.keymap.ChangeKey(this.waitingLayer, this.waitingIndex, newKeyCode);
 
             }
-            else {
-                console.log("I must be a color", newKeyCode)
+            else if ("r" in newKeyCode) {
+                // console.log("I must be a color", newKeyCode)
+                this.keymap.ChangeLed(this.waitingLayer, this.waitingIndex, newKeyCode)
                 //todo when you get here you the waiting key is waiting for LED input
             }
             this.waitingIndex = undefined;
@@ -112,8 +114,12 @@ export class ClientManager extends Subscribable {
 
         }
     }
-    public ForceKeyChange(layer: number, pos: number, newKey: KeyCode) {
-        this.keymap.ChangeKey(layer, pos, newKey);
+    public ForceKeyChange(layer: number, pos: number, newKey: KeyCode | Color) {
+        if (isKeyCode(newKey)) {
+            this.keymap.ChangeKey(layer, pos, newKey);
+        } else {
+            this.keymap.ChangeLed(layer, pos, newKey);
+        }
         this.changesMade = true
         this.updateSubScribers()
     }

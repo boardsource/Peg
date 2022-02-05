@@ -7,37 +7,51 @@ import { ToolTip } from "../../logic/tooltip";
 import {
     createDraggable,
 } from "@thisbeyond/solid-dnd";
+import { Color } from "../../logic/color";
+import { isColor, isKeyCode } from "../../logic/helpers";
 
 const clientManager = ClientManager.getInstance()
 const toolTip = ToolTip.getInstance()
 type SingleUsableKeyCodeProps = {
-    code: KeyCode;
+    code: KeyCode | Color;
     layoutKey: LayoutKey | undefined
+
 };
 
 export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
-    const draggable = createDraggable(props.code.code);
+    const draggable = createDraggable(isColor(props.code) ? props.code.toString() : props.code.code);
     const mainButtonPress = () => {
+
         clientManager.NoticeToUpdateKey(props.code)
+
+
     }
     const returnStyles = () => {
+        let style = ""
         if (props.layoutKey) {
-            return `
+            style = `
             left: ${props.layoutKey.x * magicNumbers.keyMultiplyer}px;
             top: ${props.layoutKey.y * magicNumbers.keyMultiplyer}px;
             width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
             position:absolute;
         `
         }
+        if (isColor(props.code)) {
+            style += `background: rgb(${props.code.r},${props.code.g},${props.code.b});`
+        }
+        return style
 
     }
     const mouseEnter = (event: Event) => {
-
-        //@ts-ignore
-        toolTip.Show(event.clientX, event.clientY, props.code.display !== "" ? props.code.display : props.code.code, props.code.Description)
+        if (isKeyCode(props.code)) {
+            //@ts-ignore
+            toolTip.Show(event.clientX, event.clientY, props.code.display !== "" ? props.code.display : props.code.code, props.code.Description)
+        }
     }
     const mouseLeave = (event: Event) => {
-        toolTip.Hide()
+        if (isKeyCode(props.code)) {
+            toolTip.Hide()
+        }
     }
 
     return (
@@ -53,7 +67,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            {props.code.display !== "" ? props.code.display : props.code.code}
+            {isKeyCode(props.code) ? props.code.display !== "" ? props.code.display : props.code.code : ""}
         </button>
     );
 }
