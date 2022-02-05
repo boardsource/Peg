@@ -1,4 +1,5 @@
 import testAvatar from '../../images/test_account_icon.png'
+import ConnectivityStatus from '../connectivityStatus/connectivityStatus'
 
 
 export default function AccountIcon() {
@@ -8,8 +9,8 @@ export default function AccountIcon() {
                 <img class='w-11' src={testAvatar} alt=" account avatar" />
             </div>
             <div className="accounticon__info">
-                <h4 class='text-[13px] leading-4'>Bolster Boi</h4>
-                <p class='text-[11px]'>Basic Account</p>
+                <h4 className='text-[13px] leading-4 '>Bolster Boi</h4>
+                <p className='text-[11px]'>Basic Account</p>
             </div>
         </div>
     )
