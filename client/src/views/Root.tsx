@@ -2,13 +2,13 @@ import './main.sass'
 import { Switch } from "solid-js";
 import { Router, Routes, Route, Link } from "solid-app-router";
 import KeymapEditView from "./keymapEditView/keymapEditView";
+import Navigation from '../components/navigation/navigation'
 import LED from './led/led'
 import OLED from './oled/oled'
 import Tester from './tester/tester'
 import Options from './options/options'
 import Account from './account/account'
 import NotFound from './NotFound';
-import Sidebar from '../components/sidebar/sidebar'
 import Topbar from '../components/topbar/topbar'
 import Menubar from '../components/menubar/menubar'
 import ToolTipDisplay from '../components/tooltipDisplay/tooltipDisplay';
@@ -22,7 +22,7 @@ export default function Root() {
       <div className="peg-wrapper relative font-sans">
         <Menubar />
         <div className="peg-wrapper__sidebar">
-          <Sidebar />
+          <Navigation />
         </div>
 
         <div className="peg-wrapper__views flex flex-1 flex-col m-5">
