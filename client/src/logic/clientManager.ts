@@ -15,8 +15,11 @@ export class ClientManager extends Subscribable {
     scaning: boolean = false
     programSettings: ProgramSettings
     changesMade: boolean = false;
+    platform: string
     private constructor() {
         super();
+        //@ts-ignore
+        this.platform = window.electron.platform;
         this.keymap = KeyMap.getInstance()
         this.programSettings = ProgramSettings.getInstance()
         this.lessonToEvent(ElectronEvents.UpdateLayout, (args: string) => {

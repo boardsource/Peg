@@ -3,7 +3,6 @@ import { ElectronEvents } from "../../types/types"
 import "./menubar.sass"
 const clientManager = ClientManager.getInstance()
 export default function Menubar() {
-
     const minimizeWindow = () => {
         clientManager.sendToBackend(ElectronEvents.WindowMinimize, "")
         //bird boi will make this minimize the window
@@ -19,7 +18,7 @@ export default function Menubar() {
     return (
         <div className="menubar flex absolute w-full bg-red">
             {/* <p>mac here</p> */}
-            <div className="menubar__controls absolute flex right-0 mr-1 mt-1">
+            <div className={`menubar__controls absolute flex right-0 mr-1 mt-1 ${clientManager.platform === "darwin" ? "hide" : ""}`}>
                 <button className='p-1 rounded-md hover:bg-black hover:bg-opacity-5 transition duration-200' onClick={minimizeWindow}>
                     <svg className='stroke-slate-500 hover:stroke-purple-600' xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6" />

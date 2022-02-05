@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require('electron');
-console.log("this ran")
 contextBridge.exposeInMainWorld('electron', {
+    platform: process.platform,
     ipcRenderer: {
 
         send(channel: string, data: any) {
