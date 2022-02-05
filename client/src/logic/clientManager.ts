@@ -4,6 +4,7 @@ import { isKeyCode } from "./helpers";
 import { KeyMap } from "./keymapManager";
 import { ProgramSettings } from "./programSettings";
 import { Subscribable } from "./subscribable";
+import axios from "axios"
 
 export class ClientManager extends Subscribable {
     private static instance: ClientManager;
@@ -16,6 +17,7 @@ export class ClientManager extends Subscribable {
     programSettings: ProgramSettings
     changesMade: boolean = false;
     platform: string
+    isOnLine: boolean = true
     private constructor() {
         super();
         //@ts-ignore
@@ -78,6 +80,7 @@ export class ClientManager extends Subscribable {
             }
 
         }, 2000);
+        this.pingServer()
 
 
     }
@@ -132,6 +135,16 @@ export class ClientManager extends Subscribable {
             this.sendToBackend(ElectronEvents.SaveMap, this.keymap.toString())
         }
 
+    }
+
+    async pingServer() {
+        try {
+            //todo change this to ping route
+            await axios.get(`${this.programSettings.apiUrl}boards`)
+            this.isOnLine = true
+        } catch (error) {
+            this.isOnLine = false
+        }
     }
 
     sendToBackend(key: ElectronEvents, data: any) {

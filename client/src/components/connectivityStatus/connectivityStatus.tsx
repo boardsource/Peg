@@ -1,6 +1,10 @@
-import { connect } from 'http2'
+import { createSignal, onCleanup } from 'solid-js'
+import { ClientManager } from '../../logic/clientManager'
+import { KeyMap } from '../../logic/keymapManager'
+import { ProgramSettings } from '../../logic/programSettings'
 import StatusIndicator from './statusIndicator/statusIndicator'
-
+const clientManager = ClientManager.getInstance()
+const keymap = KeyMap.getInstance()
 type ConnectivityStatus = {
     internetConnection: boolean,
     boardConnected: boolean,
@@ -13,33 +17,44 @@ const connectivityStatus: ConnectivityStatus = {
     keyboard: 'Corne LP'
 }
 
-
-const renderStatus = () => {
-    if (connectivityStatus.boardConnected) {
-        if (connectivityStatus.internetConnection) {
-            //internet and board connected
-            return <StatusIndicator status='board connected with internet' keyboard={connectivityStatus.keyboard} />
-        } else {
-            //no internet but board connected
-            return <StatusIndicator status='board connected without internet' />
-        }
-    } else {
-        if (connectivityStatus.internetConnection) {
-            //internet and no board connected
-            return <StatusIndicator status='no board connected with internet' />
-
-        } else {
-            //no internet and no board connected
-            return <StatusIndicator status='no board connected without internet' />
-        }
-    }
+export enum ConnectionStatus {
+    BoardAndInternet,
+    Board,
+    Internet,
+    NoConnection
 }
 
+
+
 export default function ConnectivityStatus() {
+
+
+    const returnStatus = () => {
+
+        if (keymap.keyLayout) {
+            if (clientManager.isOnLine) {
+                return ConnectionStatus.BoardAndInternet
+            } else {
+                return ConnectionStatus.Board
+            }
+        } else {
+            if (clientManager.isOnLine) {
+                return ConnectionStatus.Internet
+
+            } else {
+                return ConnectionStatus.NoConnection
+            }
+        }
+    }
+    const [status, setStatus] = createSignal(returnStatus())
+    const subId = keymap.Subscribe(() => setStatus(returnStatus()))
+
+    onCleanup(() => { keymap.Unsubscribe(subId) })
+
     return (
-        <>
-            {renderStatus()}
-        </>
+
+        <StatusIndicator status={status()} keyboard={`${keymap.keyLayout?.features.creator}-${keymap.keyLayout?.features.name}`} />
+
 
 
     )

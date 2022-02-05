@@ -1,6 +1,6 @@
 import { Show, createSignal, onMount, For } from "solid-js";
 import { KeyMap } from "../../logic/keymapManager";
-import { FileName, KeyCode } from "../../types/types"
+import { ElectronEvents, FileName, KeyCode } from "../../types/types"
 import SingleUsableKeyCode from "../singleUsableKeyCode/singleUsableKeyCode";
 import axios from "axios"
 import { ProgramSettings } from "../../logic/programSettings";
@@ -43,9 +43,9 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
     const setPath = (paths: string) => {
         if (paths !== "") {
             let drivePath = paths
-            clientManager.sendToBackend("Savefile", { fileData: fullServerBoard?.Kb, path: [drivePath, FileName.kb] })
-            clientManager.sendToBackend("Savefile", { fileData: fullServerBoard?.Main, path: [drivePath, FileName.main] })
-            clientManager.sendToBackend("Savefile", { fileData: fullServerBoard?.Layout, path: [drivePath, FileName.layout] })
+            clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: fullServerBoard?.Kb, path: [drivePath, FileName.kb] })
+            clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: fullServerBoard?.Main, path: [drivePath, FileName.main] })
+            clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: fullServerBoard?.Layout, path: [drivePath, FileName.layout] })
             // clientManager.sendToBackend("Scan", "")
         }
 
@@ -72,7 +72,7 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
             case SubViews.SelectDrive:
                 return (
                     <div className="NewBoardSetup__drive">
-                        <button onClick={() => clientManager.sendToBackend("FilePicker", "")}>
+                        <button onClick={() => clientManager.sendToBackend(ElectronEvents.FilePicker, "")}>
                             selectDrive
                         </button>
                     </div>)
