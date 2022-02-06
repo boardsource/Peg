@@ -18,22 +18,18 @@ import MakeCustomCodes from './makeCustomCodes/makeCustomCodes';
 export default function Root() {
   return (
     <>
-      {/* bg-gray-200 */}
-      <div className="peg-wrapper relative font-sans">
+      <div className="peg-wrapper relative flex h-full font-sans">
         <Menubar />
         <div className="peg-wrapper__sidebar">
           <Navigation />
         </div>
-
         <div className="peg-wrapper__views flex flex-1 flex-col m-5">
           <div className="peg-wrapper__views__topbar flex mb-5">
             <Topbar />
           </div>
-
           <div className="peg-wrapper__views__main flex flex-1 bg-white">
             <ToolTipDisplay />
             <Routes>
-              {/* i comment this out when i am working on stuff because it breaks widths */}
               <Route path="/index.html" element={<KeymapEditView isLed={false} />} />
               <Route path="/index.html/led" element={<KeymapEditView isLed={true} />} />
               <Route path="/index.html/oled" element={<OLED />} />
