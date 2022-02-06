@@ -1,5 +1,4 @@
 import { Router, Routes, Route, Link } from "solid-app-router";
-import Separator from './separator/separator'
 import bsLogo from '../../images/boardsource_logo.svg'
 import pegLogo from '../../images/peg_logo.svg'
 
