@@ -70,7 +70,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
         }
     }
     return (
-        <div className="keymapEditView">
+        <div className="keymapEditView" style="width:100%">
             <DragDropProvider>
                 <DragDropSensors>
                     {returnEditView()}

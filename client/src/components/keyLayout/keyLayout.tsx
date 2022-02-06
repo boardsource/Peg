@@ -1,4 +1,4 @@
-import "./keyLayout.css"
+import "./keyLayout.sass"
 import { Show, createSignal, onMount, For, createResource, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 import { KeyMap } from "../../logic/keymapManager";
@@ -21,9 +21,9 @@ type KeyLayoutProps = {
 };
 
 export default function KeyLayout(props: KeyLayoutProps) {
-
     const [keys, setKeys] = createSignal({ ...keymap.keyLayout })
         , [rowCount, setRowCount] = createSignal(3)
+        , [currentLayer, setCurrentLayer] = createSignal(0)
         //@ts-ignore
         , [_, { onDragEnd }] = useDragDropContext();
 
@@ -60,21 +60,31 @@ export default function KeyLayout(props: KeyLayoutProps) {
             return `height:${6 * magicNumbers.keyMultiplyer}px;`
         }
     }
-
-
-
+    //todo map over underglow leds and show that when layer === 4
     return (
-        <div className="KeyLayout" style={returnHeight()}>
-            <For each={keys().layout} fallback={<div>Loading...</div>}>
-                {(layoutKey, index) => (
-                    <SingleLayoutKey index={index()} layer={props.layer}
-                        code={keymap.keymap[props.layer][index()]}
-                        layoutKey={layoutKey}
-                        isLed={props.isLed}
-                    />)}
-            </For>
-            <div className="layers">
-                return layers here
+        <div className="keyLayout" style={returnHeight()}>
+            <div className=" keyLayout__keys">
+                <For each={keys().layout} fallback={<div>Loading...</div>}>
+                    {(layoutKey, index) => (
+                        <SingleLayoutKey index={index()} layer={currentLayer()}
+                            code={keymap.keymap[currentLayer()][index()]}
+                            layoutKey={layoutKey}
+                            isLed={props.isLed}
+                        />)}
+                </For>
+            </div>
+            <div className="keyLayout__layers">
+                <h3>Layers</h3>
+                <For each={Array.from(Array(props.isLed ? 5 : 4))} fallback={<div>Loading...</div>}>
+                    {(_, index) => (
+                        <button className={`$inline-block px-2 py-1 border-2  border-purple-600 ${currentLayer() === index() ? "bg-purple-600 text-white" : " text-purple-600"} font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out`}
+                            onClick={() => setCurrentLayer(index())}
+                        >
+                            {index() === 4 ? `underglow` : `layer ${index()}`}
+                        </button>
+                    )}
+                </For>
+
             </div>
         </div>
     );
