@@ -34,6 +34,7 @@ export interface Layout {
     features: LayoutFeatures;
     layout: LayoutKey[];
 }
+export type OledPixel = { x: number, y: number }
 
 export enum FileName {
     main = "main.py",

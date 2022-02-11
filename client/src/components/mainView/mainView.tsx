@@ -1,6 +1,6 @@
 // import anime from 'animejs/lib/anime.es.js';
 import { onMount } from 'solid-js'
-import { Transition } from 'solid-transition-group'
+// import { Transition } from 'solid-transition-group'
 import { createSignal } from 'solid-js'
 
 

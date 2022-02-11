@@ -3,6 +3,7 @@ import { KeyCode, Layout } from "../types/types";
 import { MiscKeymapParts } from "./miscKeyMapParts";
 import { Subscribable } from "./subscribable";
 import { Color } from "./color";
+import { Oled } from "./oled";
 
 export class KeyMap extends Subscribable {
     private static instance: KeyMap;
@@ -14,6 +15,7 @@ export class KeyMap extends Subscribable {
     haveLayout: boolean = false;
     haveMap: boolean = false;
     ledMap: Color[] = [];
+    oled: Oled | undefined
     miscKeymapParts: MiscKeymapParts | undefined
     keymapStr: string[][] = []
     // parsing: boolean = false
@@ -36,6 +38,9 @@ export class KeyMap extends Subscribable {
         this.haveLayout = true;
         this.miscKeymapParts = new MiscKeymapParts(this, this.keyLayout);
         this.layout = layoutJson;
+        if (this.keyLayout.features.oled) {
+            this.oled = new Oled();
+        }
         this.updateSubScribers()
         // EmitSignal(nameof(UpdatedMap), this);
         // OS.SetWindowTitle("Peg-" + this.KeyLayout.features.name + "-" + this.KeyLayout.features.creator);
@@ -89,6 +94,8 @@ export class KeyMap extends Subscribable {
 
         }
         console.log("just parsed keymap", this)
+
+        // check if there is an oled and if not make it
         this.updateSubScribers()
 
 

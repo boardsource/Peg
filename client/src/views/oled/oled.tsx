@@ -1,10 +1,15 @@
+import { createSignal } from 'solid-js'
 import MainView from '../../components/mainView/mainView'
+import OledDisplay from '../../components/oled/oledDisplay/oledDisplay'
+import OledImageUpLoader from '../../components/oled/oledImageUploader/oledImageUpLoader'
+import { Oled } from '../../types/types'
 
 export default function OLED() {
-    const description = 'Ut qui non aliqua non eiusmod ex ad quis eu deserunt incididunt velit do minim.'
+    const [oled, setOled] = createSignal<Oled>([])
     return (
-        <MainView title='OLED' description={description}>
-            <p>oled stuff will go here</p>
+        <MainView title='OLED' description={""}>
+            <OledDisplay oled={oled} />
+            <OledImageUpLoader setOled={setOled} />
         </MainView>
 
     )
