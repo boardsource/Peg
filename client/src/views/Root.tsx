@@ -13,11 +13,13 @@ import Topbar from '../components/topbar/topbar'
 import Menubar from '../components/menubar/menubar'
 import ToolTipDisplay from '../components/tooltipDisplay/tooltipDisplay';
 import MakeCustomCodes from './makeCustomCodes/makeCustomCodes';
+import NotificationDisplay from '../components/notificationDisplay/notificationDisplay'
 
 
 export default function Root() {
   return (
     <>
+      <NotificationDisplay />
       <div className="peg-wrapper relative flex h-full font-sans">
         <Menubar />
         <div className="peg-wrapper__sidebar">
