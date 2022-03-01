@@ -60,3 +60,10 @@ export enum ElectronEvents {
     WindowFullScreen = "WindowFullScreen",
     WindowMinimize = "WindowMinimize",
 }
+
+export enum NotificationColor {
+    Green = 'green',
+    Yellow = 'yellow',
+    Red = 'red',
+    Blue = 'blue',
+}
