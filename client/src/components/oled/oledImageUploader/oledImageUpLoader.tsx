@@ -1,13 +1,17 @@
 import { Show, createSignal, onMount, For, onCleanup } from "solid-js";
 import { KeyMap } from "../../../logic/keymapManager";
 import { OledPixel } from "../../../types/types";
+
 const keymap = KeyMap.getInstance()
 type OledImageUpLoaderProps = {
+    currentLayer: () => number
+
 };
 
 
 export default function OledImageUpLoader(props: OledImageUpLoaderProps) {
     let canvasEl: any = null
+
     const [selectedImage, setSelectedImage] = createSignal()
 
     const addImageToCanvas = (img: HTMLImageElement) => {
@@ -17,8 +21,9 @@ export default function OledImageUpLoader(props: OledImageUpLoaderProps) {
             const imageData = ctx.getImageData(0, 0, canvasEl.width, canvasEl.height);
             const data = imageData.data;
             if (keymap.oled) {
-                keymap.oled.DataToPegMap(data)
+                keymap.oled.DataToPegMap(data, props.currentLayer())
             }
+
         } else {
             console.log("duck this im out")
         }
@@ -34,15 +39,15 @@ export default function OledImageUpLoader(props: OledImageUpLoaderProps) {
         setTimeout(() => {
             addImageToCanvas(image)
         }, 500);
-
     }
+
     return (
         <div className="oledImageUpLoader">
-            <canvas ref={canvasEl} width="128" height="32"></canvas>
-            {/* <img src={selectedImage()} /> */}
+            <canvas ref={canvasEl} width="128" height="32" className="hidden "></canvas>
+
             <input type="file"
                 onChange={uploadImage}
-                accept="image/png, image/jpeg" />
+                accept="image/png, image/jpeg, image/bmp" />
         </div>
     );
 }

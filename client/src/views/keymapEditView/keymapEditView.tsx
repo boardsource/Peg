@@ -13,12 +13,14 @@ import {
     DragDropSensors,
 } from "@thisbeyond/solid-dnd";
 
+
 const clientManager = ClientManager.getInstance()
 const keyMap = KeyMap.getInstance()
 
 
 type KeymapEditViewProps = {
     isLed: boolean
+    isEncoder: boolean
 };
 
 export default function KeymapEditView(props: KeymapEditViewProps) {
@@ -60,7 +62,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
                             scan Again
                         </button>
                     </Show>
-                    <KeyLayout layer={0} isLed={props.isLed} />
+                    <KeyLayout layer={0} isLed={props.isLed} isEncoder={props.isEncoder} />
                     {props.isLed ?
                         <LedEdit /> : <UsableKeyCodeDisplay />
                     }
@@ -69,6 +71,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
             );
         }
     }
+
     return (
         <div className="keymapEditView" style="width:100%">
             <DragDropProvider>

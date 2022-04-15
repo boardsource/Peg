@@ -12,13 +12,16 @@ import NotFound from './NotFound';
 import Topbar from '../components/topbar/topbar'
 import Menubar from '../components/menubar/menubar'
 import ToolTipDisplay from '../components/tooltipDisplay/tooltipDisplay';
+import ModalDisplay from '../components/modalDisplay/modalDisplay';
 import MakeCustomCodes from './makeCustomCodes/makeCustomCodes';
+import ToastDisplay from '../components/toastDisplay/toastDisplay';
 
 
 export default function Root() {
   return (
     <>
       <div className="peg-wrapper relative flex h-full font-sans">
+        <ModalDisplay />
         <Menubar />
         <div className="peg-wrapper__sidebar">
           <Navigation />
@@ -29,9 +32,14 @@ export default function Root() {
           </div>
           <div className="peg-wrapper__views__main flex flex-1 bg-white">
             <ToolTipDisplay />
+            <ToastDisplay />
+
+
+
             <Routes>
-              <Route path="/index.html" element={<KeymapEditView isLed={false} />} />
-              <Route path="/index.html/led" element={<KeymapEditView isLed={true} />} />
+              <Route path="/index.html" element={<KeymapEditView isLed={false} isEncoder={false} />} />
+              <Route path="/index.html/led" element={<KeymapEditView isLed={true} isEncoder={false} />} />
+              <Route path="/index.html/encoder" element={<KeymapEditView isLed={false} isEncoder={true} />} />
               <Route path="/index.html/oled" element={<OLED />} />
               <Route path="/index.html/makeCustom" element={<MakeCustomCodes />} />
               <Route path="/index.html/tester" element={<Tester />} />

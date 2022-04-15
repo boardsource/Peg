@@ -22,7 +22,6 @@ export default function LedEdit(props: LedEditProps) {
     const subId = clientManager.Subscribe(updateLocalChangesMade)
     onCleanup(() => {
         clientManager.Unsubscribe(subId)
-
     })
     const setColor = () => {
         clientManager.NoticeToUpdateKey(new Color(currentColor.r, currentColor.g, currentColor.b))

@@ -1,7 +1,7 @@
 [
     {
-       "code": "KC.MT(1)",
-        "display": "MT(1)",
+        "code": "KC.MO(1)",
+        "display": "MO(1)",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -9,8 +9,8 @@
         "Description": "Momentarily activates layer, switches off when you let go"
     },
     {
-        "code": "KC.MT(2)",
-        "display": "MT(2)",
+        "code": "KC.MO(2)",
+        "display": "MO(2)",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -18,8 +18,8 @@
         "Description": "Momentarily activates layer, switches off when you let go"
     },
     {
-        "code": "KC.MT(3)",
-        "display": "MT(3)",
+        "code": "KC.MO(3)",
+        "display": "MO(3)",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
