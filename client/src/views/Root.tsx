@@ -3,7 +3,7 @@ import { Switch } from "solid-js";
 import { Router, Routes, Route, Link } from "solid-app-router";
 import KeymapEditView from "./keymapEditView/keymapEditView";
 import Navigation from '../components/navigation/navigation'
-import LED from './led/led'
+import CodeBlock from './codeBlock/codeBlock'
 import OLED from './oled/oled'
 import Tester from './tester/tester'
 import Options from './options/options'
@@ -42,6 +42,7 @@ export default function Root() {
               <Route path="/index.html/led" element={<KeymapEditView isLed={true} isEncoder={false} />} />
               <Route path="/index.html/encoder" element={<KeymapEditView isLed={false} isEncoder={true} />} />
               <Route path="/index.html/oled" element={<OLED />} />
+              <Route path="/index.html/codeblock" element={<CodeBlock />} />
               <Route path="/index.html/makeCustom" element={<MakeCustomCodes />} />
               <Route path="/index.html/tester" element={<Tester />} />
               <Route path="/index.html/options" element={<Options />} />

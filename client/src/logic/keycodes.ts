@@ -10,6 +10,7 @@ import _lessused from "../jsonKeycodes/lessused-keycodes.json"
 import _modifiers from "../jsonKeycodes/modifiers-keycodes.json"
 import _shifted from "../jsonKeycodes/shifted-keycodes.json"
 import { ClientManager } from "./clientManager";
+import { Toast } from "./toast";
 
 export class KeyCodes {
     private static instance: KeyCodes;
@@ -215,13 +216,13 @@ export class KeyCodes {
     public RemoveCustomCode(code: string) {
         this.customCodes.delete(code);
         this.saveCustomCodes();
-
+        Toast.Success(`Deleted ${code} reload if you still see it`)
     }
 
     public AddCustomCode(newCode: KeyCode) {
         this.customCodes.set(newCode.code, newCode);
         this.saveCustomCodes();
-
+        Toast.Success(`Added ${newCode} reload if you dont see it yet.`)
     }
 
     saveCustomCodes() {

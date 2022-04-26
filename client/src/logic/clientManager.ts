@@ -214,15 +214,12 @@ export class ClientManager extends Subscribable {
     }
 
     async pingServer() {
-        try {
-            //todo change this to ping route
-            await axios.get(`${this.programSettings.apiUrl}hp-check`)
+        axios.get(`${this.programSettings.apiUrl}hp-check`).then(() => {
             this.isOnLine = true
-        } catch (error) {
+        }).catch(() => {
             this.isOnLine = false
-        }
-        this.updateSubScribers()
-
+            this.updateSubScribers()
+        })
     }
 
     sendToBackend(key: ElectronEvents, data: any) {
@@ -236,7 +233,9 @@ export class ClientManager extends Subscribable {
             try {
                 callBack(arg)
             } catch (error) {
-                console.log("error in handeling event from backend", `event:${key}`, error)
+                Toast.Error(`error in handling event:${key}`)
+
+                console.log("error in handling event from backend", `event:${key}`, error)
             }
 
         })

@@ -4,7 +4,11 @@ export class ProgramSettings extends Subscribable {
     private static instance: ProgramSettings;
     private _seven: boolean = true
     private _tooltips: boolean = true;
+    //used to test off line mode
+    // private _apiUrl: string = "http://159.89.159.24:300/api/"
+    // " real server "
     private _apiUrl: string = "http://159.89.159.24:3000/api/"
+    // localhost for dev workk
     // private _apiUrl: string = "http://localhost:8080/api/"
 
     private _darkmode: boolean = true;

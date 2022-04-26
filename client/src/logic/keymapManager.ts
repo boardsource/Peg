@@ -222,14 +222,19 @@ export class KeyMap extends Subscribable {
             return code.code
         }
     }
-
-    keymapBackToString(): string {
+    layersToString() {
         let keymapString: string[] = this.keymap.map((layer, index) => {
             const tempLayer = this.encoderMap.length === 4 ? [...layer, ...this.encoderMap[index]] : layer
             const layerToString = tempLayer.map(keycode => this.keycodeToString(keycode)).join(",")
-            console.log("layerToString", layerToString)
             return `[${layerToString}]`;
         })
+        return keymapString
+    }
+
+
+    keymapBackToString(): string {
+        const keymapString = this.layersToString()
+
         // console.log("layers=", keymapString)
         return `${this.keyLayout.features.encoders ? `# encodercount\n# ${this.keyLayout.features.encoderCount}\n# encodercount` : ""}\n# keymap\nkeyboard.keymap = [ ${keymapString.join(", \n")} ] \n# keymap\n`;
     }

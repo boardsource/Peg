@@ -1,23 +1,29 @@
 import { Show, createSignal, onMount, For, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
+import { ClientManager } from "../../logic/clientManager";
 import { remoteContentPoster, ShareableFeatureToDisplayWord } from "../../logic/helpers";
+import { KeyCodes } from "../../logic/keycodes";
 import { KeyMap } from "../../logic/keymapManager";
 import { Modal } from "../../logic/modal";
-import { OledDisplayType, ShareableFeatureType } from "../../types/types";
+import { KeyCode, OledDisplayType, ShareableFeatureType } from "../../types/types";
 import Button from "../button/button";
 const keymap = KeyMap.getInstance()
+const keycodes = KeyCodes.getInstance()
+const clientManager = ClientManager.getInstance()
+
 type ShareFeatureProps = {
     featureType: ShareableFeatureType
+    keycode?: KeyCode
 };
 
-const returnCode = (featureType: ShareableFeatureType) => {
+const returnCode = (featureType: ShareableFeatureType, keycode?: KeyCode) => {
     switch (featureType) {
         case ShareableFeatureType.keyMaps:
-            return ""
+            return JSON.stringify(keymap.layersToString())
         case ShareableFeatureType.ledMaps:
-            return ""
+            return JSON.stringify(keymap.ledMap)
         case ShareableFeatureType.keyCodes:
-            return ""
+            return JSON.stringify(keycode)
         case ShareableFeatureType.oleds:
             const dataToReturn = {
                 display: keymap.oled?.displayType === OledDisplayType.image ?
@@ -26,12 +32,14 @@ const returnCode = (featureType: ShareableFeatureType) => {
             }
             return JSON.stringify(dataToReturn)
         case ShareableFeatureType.codeBlocks:
-            return ""
+            return JSON.stringify({ codeblock: keymap.codeBlock })
 
     }
 }
 type ShareModalProps = {
     featureType: ShareableFeatureType
+    keycode?: KeyCode
+    close: () => void
 
 }
 
@@ -99,25 +107,40 @@ const ShareModal = (props: ShareModalProps) => {
                     placeholder="Your description"
                 ></textarea>
             </div>
-            <Button selected={title() !== "" && description() !== ""} onClick={() => remoteContentPoster(title(), description(), returnCode(props.featureType), props.featureType)}>
+            <Button selected={title() !== "" && description() !== ""}
+                onClick={() => {
+                    remoteContentPoster(title(), description(), returnCode(props.featureType, props.keycode), props.featureType)
+                    props.close()
+                }}>
                 Save
             </Button>
         </div>)
 }
 
 export default function ShareFeature(props: ShareFeatureProps) {
+    const [isOnLine, setIsOnLine] = createSignal(clientManager.isOnLine)
 
+    const subId = clientManager.Subscribe(() => {
+        setIsOnLine(clientManager.isOnLine)
+    })
+
+    onCleanup(() => {
+        clientManager.Unsubscribe(subId)
+    })
     const share = () => {
         const modal = Modal.getInstance()
         modal.Open(`Share your ${ShareableFeatureToDisplayWord(props.featureType)}`, true, (
-            <ShareModal featureType={props.featureType} />))
+            <ShareModal featureType={props.featureType} keycode={props.keycode} close={() => modal.Close()} />))
     }
 
     return (
         <div className="ShareFeature">
-            <Button onClick={share} selected={true}>
-                share
-            </Button>
+            <Show when={isOnLine()} fallback={"You are currently off line and can not share."}>
+                <Button onClick={share} selected={true}>
+                    share
+                </Button>
+
+            </Show>
 
         </div>
 

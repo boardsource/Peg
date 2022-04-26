@@ -1,7 +1,7 @@
 import { Show, createSignal, onMount, onCleanup } from "solid-js";
 import KeyLayout from "../../components/keyLayout/keyLayout";
 import _basic from "../../jsonKeycodes/basic-keycodes.json"
-import { ElectronEvents, KeyCode } from "../../types/types";
+import { ElectronEvents, KeyCode, ShareableFeatureType } from "../../types/types";
 import { Router, Routes, Route, Link } from "solid-app-router";
 import UsableKeyCodeDisplay from "../../components/usableKeyCodeDisplay/usableKeyCodeDisplay";
 import NewBoardSetup from "../../components/newBoardSetup/newBoardSetup";
@@ -13,6 +13,7 @@ import {
     DragDropSensors,
 } from "@thisbeyond/solid-dnd";
 import Button from "../../components/button/button";
+import ShareFeature from "../../components/shareFeature/shareFeature";
 
 
 const clientManager = ClientManager.getInstance()
@@ -68,6 +69,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
                     {props.isLed ?
                         <LedEdit /> : <UsableKeyCodeDisplay />
                     }
+                    <ShareFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} />
 
                 </>
             );
