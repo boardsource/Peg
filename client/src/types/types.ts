@@ -110,3 +110,10 @@ export enum ToastLevel {
     debug,
 }
 
+
+export enum NotificationColor {
+    Green = 'green',
+    Yellow = 'yellow',
+    Red = 'red',
+    Blue = 'blue',
+}

@@ -20,6 +20,7 @@ import ToastDisplay from '../components/toastDisplay/toastDisplay';
 export default function Root() {
   return (
     <>
+      {/* <NotificationDisplay /> */}
       <div className="peg-wrapper relative flex h-full font-sans">
         <ModalDisplay />
         <Menubar />
