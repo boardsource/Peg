@@ -76,13 +76,13 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             use:droppable
             class="droppable"
             classList={{ "!droppable-accept": droppable.isActiveDroppable }}
-            className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === props.index ? "waitingKey" : ""}`}
+            className={`singleLayoutKey border border-black ${state.waitingLayer === props.layer && state.waitingIndex === props.index ? "waitingKey" : ""}`}
             style={returnStyles()}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
 
-            <button onClick={mainButtonPress} className="singleLayoutKey__main">
+            <button onClick={mainButtonPress} className="singleLayoutKey__main bg-gray-50">
                 <Show when={state.code.canHaveSub} fallback={""}>
 
                     {state.code.display !== "" ? state.code.display : state.code.code}
