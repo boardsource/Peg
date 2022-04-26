@@ -12,6 +12,7 @@ import {
     DragDropProvider,
     DragDropSensors,
 } from "@thisbeyond/solid-dnd";
+import Button from "../../components/button/button";
 
 
 const clientManager = ClientManager.getInstance()
@@ -58,9 +59,10 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
             return (
                 <>
                     <Show when={!haveMap()} fallback={""}>
-                        <button className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" onClick={scanAgain}>
+                        <Button onClick={scanAgain} selected={true}>
                             scan Again
-                        </button>
+                        </Button>
+
                     </Show>
                     <KeyLayout layer={0} isLed={props.isLed} isEncoder={props.isEncoder} />
                     {props.isLed ?

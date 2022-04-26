@@ -41,6 +41,7 @@ export default function KeyLayout(props: KeyLayoutProps) {
                 code = keycodes.KeyCodeForString(draggable.id)
             }
             const [index, encoder] = droppable.id.split(":")
+            console.log("drop", droppable.id, index, encoder)
             clientManager.ForceKeyChange(currentLayer(), index, code, encoder === "R")
         }
     });
@@ -73,15 +74,15 @@ export default function KeyLayout(props: KeyLayoutProps) {
         for (let index = 0; index < numberOfEncoders; index++) {
             tempEncoders.push({
                 w: 1,
-                y: index,
-                x: 0,
+                y: 0,
+                x: index,
                 h: 1
             })
             tempEncoders.push({
                 w: 1,
-                y: index,
-                x: 1
-                , h: 1
+                y: 1,
+                x: index,
+                h: 1
             })
 
         }
@@ -92,7 +93,7 @@ export default function KeyLayout(props: KeyLayoutProps) {
             return generateEncoders(keymap.keyLayout ? keymap.keyLayout.features.encoderCount : 1)
         }
         const layout = keys()
-        if (currentLayer() === 4 && layout.features.underglow && layout.underglow.length !== 0) {
+        if (currentLayer() === 1 && layout.features.underglow && layout.underglow.length !== 0 && props.isLed) {
             return layout.underglow
         } else {
             return layout.layout
@@ -100,10 +101,9 @@ export default function KeyLayout(props: KeyLayoutProps) {
     }
     const returnCurrentCode = (index: number) => {
         if (props.isEncoder && keymap.encoderMap.length > 0) {
-            console.log("encoders it is", keymap.encoderMap[currentLayer()][index].code)
             return keymap.encoderMap[currentLayer()][index]
         } else {
-            return currentLayer() === 4 ? ledCode : keymap.keymap[currentLayer()][index]
+            return currentLayer() === 1 && props.isLed ? ledCode : keymap.keymap[currentLayer()][index]
         }
     }
 

@@ -66,7 +66,7 @@ export class KeyCodes {
             canHaveSub: false,
             canHaveSubNumber: false,
             subNumber: 0,
-            Description: "just for peg internal use"
+            Description: "underglow led"
         })
 
 

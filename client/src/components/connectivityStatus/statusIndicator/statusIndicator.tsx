@@ -68,12 +68,11 @@ export default function StatusIndicator(props: StatusProps) {
         }
     }
 
-    const details = returnStatusDetails()
     return (
-        <div className={`${details.styles} statusindicator flex items-center px-3 py-1.5 border-2 font-medium text-xs leading-tight rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out`}>
-            {details.icon}
-            <p className='text-gray-400 text-[10px] ml-1'>{details.statusText}</p>
-            <p className='ml-2'>{details.board}</p>
+        <div className={`${returnStatusDetails().styles} statusindicator flex items-center px-3 py-1.5 border-2 font-medium text-xs leading-tight rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out`}>
+            {returnStatusDetails().icon}
+            <p className='text-gray-400 text-[10px] ml-1'>{returnStatusDetails().statusText}</p>
+            <p className='ml-2'>{returnStatusDetails().board}</p>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>

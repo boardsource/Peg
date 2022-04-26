@@ -146,14 +146,42 @@ export class Oled extends Subscribable {
     }
 
     public FromString(fromBoard: string) {
+        const cleanedString = `[${fromBoard}]`
+            .replaceAll("0:", '"0":')
+            .replaceAll("1:", '"1":')
+            .replaceAll("OledReactionType.STATIC", '"STATIC"')
+            .replaceAll("OledReactionType.LAYER", '"LAYER"')
         try {
-            const tempData = JSON.parse(fromBoard.replaceAll("0:", '"0":').replaceAll("1:", '"1":'))
+            const tempData = JSON.parse(cleanedString)
             if (this.displayType === OledDisplayType.text) {
                 this.textDisplay = tempData
             }
         } catch (error) {
             console.log("error parsing oled map", error)
         }
+    }
+
+    oledReactionTypeToString(reactionType: OledReactionType) {
+        switch (reactionType) {
+            case OledReactionType.layer:
+
+                return "OledReactionType.LAYER"
+
+            case OledReactionType.static:
+                return "OledReactionType.STATIC"
+        }
+    }
+
+    oledDisplayTypeToString(displayType: OledDisplayType) {
+        switch (displayType) {
+            case OledDisplayType.image:
+                return "OledDisplayMode.IMG"
+            case OledDisplayType.text:
+                return "OledDisplayMode.TXT"
+        }
+    }
+    stringToOledReactionType(strReactionType: string) {
+
     }
 
 
@@ -165,38 +193,40 @@ export class Oled extends Subscribable {
                 const currentClientManager = ClientManager.getInstance()
                 switch (this.imgReactionType) {
                     case OledReactionType.layer:
-                        pegmapString = ` [{0:"LAYER",1:["1.bmp","2.bmp","3.bmp","4.bmp"]}]`
+                        pegmapString = ` OledData(image={0:${this.oledReactionTypeToString(OledReactionType.layer)},1:["1.bmp","2.bmp","3.bmp","4.bmp"]})`
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[0], fileNumber: 1 })
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[1], fileNumber: 2 })
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[2], fileNumber: 3 })
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[3], fileNumber: 4 })
                         break
                     case OledReactionType.static:
-                        pegmapString = ` [{0:"STATIC",1:["1.bmp"]}]`
+                        pegmapString = ` OledData(image={0:${this.oledReactionTypeToString(OledReactionType.static)},1:["1.bmp"]})`
                         this.layers[0] = this.display
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[0], fileNumber: 1 })
                         break
                 }
                 break;
             case OledDisplayType.text:
+                const oledDataVariables = ["corner_one", "corner_two", "corner_three", "corner_four"]
                 try {
                     if (this.textDisplay) {
-                        const textMapStr = this.textDisplay.map(section => {
-                            return `{0:"${section[0]}",1:${JSON.stringify(section[1])}}`
+                        const textMapStr = this.textDisplay.map((section, index) => {
+
+                            return `${oledDataVariables[index]}={0:${this.oledReactionTypeToString(section[0])},1:${JSON.stringify(section[1])}}`
                         })
-                        pegmapString = `[${textMapStr.join(",")}]`
+                        pegmapString = `OledData(${textMapStr.join(",")})`
                     } else {
-                        pegmapString = `[{0:"LAYER",1:["error","2","3","4"]},{0:"LAYER",1:["in","2","3","4"]},{0:"LAYER",1:["making","2","3","4"]},{0:"LAYER",1:["display","2","3","4"]}]`
+                        pegmapString = `OledData(${oledDataVariables[0]}={0:OledReactionType.LAYER,1:["error","2","3","4"]},${oledDataVariables[1]}={0:OledReactionType.LAYER,1:["in","2","3","4"]},${oledDataVariables[2]}={0:OledReactionType.LAYER,1:["making","2","3","4"]},${oledDataVariables[3]}={0:OledReactionType.LAYER,1:["display","2","3","4"]})`
 
                     }
                 } catch (error) {
-                    pegmapString = `[{0:"LAYER",1:["error","2","3","4"]},{0:"LAYER",1:["in","2","3","4"]},{0:"LAYER",1:["making","2","3","4"]},{0:"LAYER",1:["display","2","3","4"]}]`
+                    pegmapString = `OledData(${oledDataVariables[0]}={0:OledReactionType.LAYER,1:["error","2","3","4"]},${oledDataVariables[1]}={0:OledReactionType.LAYER,1:["in","2","3","4"]},${oledDataVariables[2]}={0:OledReactionType.LAYER,1:["making","2","3","4"]},${oledDataVariables[3]}={0:OledReactionType.LAYER,1:["display","2","3","4"]})`
 
                 }
                 break;
         }
         // this is max level jank there is a extra spce in flip value so that true and flase are the same length
-        return `# oled\noled_ext = oled(keyboard,\n${pegmapString},toDisplay='${this.displayType}',flip=${this.flip ? " True" : "False"})\n# oled`
+        return `# oled\noled_ext = Oled(${pegmapString},toDisplay=${this.oledDisplayTypeToString(this.displayType)},flip=${this.flip ? " True" : "False"})\n# oled`
     }
 
 

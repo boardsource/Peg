@@ -62,6 +62,13 @@ export enum FileName {
     settings = "settings.json",
     customCodes = "customCodes.json"
 }
+export enum ShareableFeatureType {
+    keyCodes = "keycodes",
+    keyMaps = "keyMaps",
+    ledMaps = "ledMaps",
+    oleds = "oleds",
+    codeBlocks = "codeBlocks"
+}
 
 export enum ElectronEvents {
     UpdateLayout = "UpdateLayout",

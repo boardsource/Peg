@@ -216,11 +216,13 @@ export class ClientManager extends Subscribable {
     async pingServer() {
         try {
             //todo change this to ping route
-            await axios.get(`${this.programSettings.apiUrl}boards`)
+            await axios.get(`${this.programSettings.apiUrl}hp-check`)
             this.isOnLine = true
         } catch (error) {
             this.isOnLine = false
         }
+        this.updateSubScribers()
+
     }
 
     sendToBackend(key: ElectronEvents, data: any) {

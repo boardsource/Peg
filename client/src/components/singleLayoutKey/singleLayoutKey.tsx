@@ -44,11 +44,14 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         color: clientManager.keymap.ledMap[returnGlowindex()]
     })
     const updateWaitingInfo = (_newClient: ClientManager) => {
-
         setState({
             waitingLayer: clientManager.waitingLayer,
             waitingIndex: clientManager.waitingIndex,
-            code: props.code.code !== "LED" ? clientManager.keymap.keymap[props.layer][props.index] : props.code,
+            code: props.isEncoder ?
+                clientManager.keymap.encoderMap[props.layer][props.index] :
+                props.code.code !== "LED" ?
+                    clientManager.keymap.keymap[props.layer][props.index] :
+                    props.code,
             subCode: props.code.code !== "LED" ? clientManager.keymap.keymap[props.layer][props.index].subOne : props.code.subOne,
             color: clientManager.keymap.ledMap[returnGlowindex()]
         })

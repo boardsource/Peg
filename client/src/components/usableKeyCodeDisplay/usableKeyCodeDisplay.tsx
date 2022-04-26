@@ -5,6 +5,7 @@ import { KeyCode, LayoutKey } from "../../types/types"
 import UsableKeyCodes from "../usableKeyCodes/usableKeyCodes";
 import _ansi from "./layoutDisplays/ansi104.json"
 import { ClientManager } from "../../logic/clientManager";
+import Button from "../button/button";
 const clientManager = ClientManager.getInstance()
 const ansi = _ansi as LayoutKey[]
 const keycodes = KeyCodes.getInstance()
@@ -60,20 +61,21 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
             <div className="UsableKeyCodeDisplay__options">
                 <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
                     {(key) =>
-                        <button class="inline-block px-2 py-1 border-2 border-purple-600 text-purple-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                        <Button
+                            selected={selectedKeyCodeName() === keyCodeOptions.get(key)}
                             onClick={() => {
                                 //@ts-ignore
                                 setSelectedKeyCodeName(keyCodeOptions.get(key))
                             }}>
                             {key}
-                        </button>
+                        </Button>
+
                     }
                 </For>
-                <button class={`${changesMade() ? "inline-block px-2 py-2 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out" :
-                    "inline-block px-2 py-2 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out"}`}
-                    onClick={saveMap}>
+                <Button selected={changesMade()} onClick={saveMap} >
                     save
-                </button>
+                </Button>
+
             </div>
 
             <div className="UsableKeyCodeDisplay__current">

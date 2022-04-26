@@ -25,7 +25,6 @@ export class Toast extends Subscribable {
         this.visible = true
         this.updateSubScribers()
         this.hide(id, uptime)
-        console.log("showing message", id)
     }
     public Error(message: string, uptime: number = this.upTime) {
         this.show(message, ToastLevel.error)

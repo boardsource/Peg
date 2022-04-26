@@ -47,26 +47,25 @@ export class MiscKeymapParts {
         if (this.programSettings.seven) {
             imports += "import supervisor\n";
         }
+        if (this.keymap.codeBlock !== undefined) {
+            baseCode += `# codeblock\n${this.keymap.codeBlock}\n# codeblock\n`
+        }
         if (this.settings.oled && this.keymap.oled !== undefined) {
-            imports += "from kmk.extensions.peg_oledDisplay import oled\n";
+            imports += "from kmk.extensions.peg_oled_Display import Oled,OledDisplayMode,OledReactionType,OledData\n";
             baseCode += `${this.keymap.oled.ToString()}\nkeyboard.extensions.append(oled_ext)\n`
         }
-        console.log("length is", this.keymap.encoderMap.length, this.settings.encoders)
-        if (this.settings.encoders && this.keymap.encoderMap.length !== 0) {
-            imports += `from kmk.modules.encoder import EncoderHandler\n`
-            baseCode += `encoder_handler = EncoderHandler()\nencoder_handler.pins = ((keyboard.encoder_a, keyboard.encoder_b, None, False),)\nkeyboard.modules.append(encoder_handler)\n${this.returnEncoderMap()}`
-        }
+
         if (this.settings.perkey || this.settings.underglow) {
             const ledMap = this.returnLedDisplay();
             imports += "from kmk.extensions.peg_rgb_matrix import Rgb_matrix\n";
             if (this.settings.split) {
                 if (this.settings.rightSide) {
-                    baseCode += `# ledmap\nrgb_ext = Rgb_matrix(board=keyboard,ledDisplay=[${ledMap}],split=True,rightSide=True,disable_auto_write=True)\n# ledmap\n`
+                    baseCode += `# ledmap\nrgb_ext = Rgb_matrix(ledDisplay=[${ledMap}],split=True,rightSide=True,disable_auto_write=True)\n# ledmap\n`
                 } else {
-                    baseCode += `# ledmap\nrgb_ext = Rgb_matrix(board=keyboard,ledDisplay=[${ledMap}],split=True,rightSide=False,disable_auto_write=True)\n# ledmap\n`
+                    baseCode += `# ledmap\nrgb_ext = Rgb_matrix(ledDisplay=[${ledMap}],split=True,rightSide=False,disable_auto_write=True)\n# ledmap\n`
                 }
             } else {
-                baseCode += `# ledmap\nrgb_ext = Rgb_matrix(board=keyboard,ledDisplay=[${ledMap}],disable_auto_write=True)\n# ledmap\n`
+                baseCode += `# ledmap\nrgb_ext = Rgb_matrix(ledDisplay=[${ledMap}],disable_auto_write=True)\n# ledmap\n`
             }
             baseCode += `keyboard.extensions.append(rgb_ext)\n`;
         }

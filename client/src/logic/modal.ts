@@ -17,15 +17,12 @@ export class Modal extends Subscribable {
 
     public static getInstance(): Modal {
         if (!Modal.instance) {
-            console.log("setting up")
             Modal.instance = new Modal();
         }
-        console.log("give it to em")
         return Modal.instance;
     }
 
     public Open(title: string, canClose: boolean, render: solid.JSX.Element,) {
-        console.log("hello")
         this.render = render;
         this.visible = true
         this.canClose = canClose
