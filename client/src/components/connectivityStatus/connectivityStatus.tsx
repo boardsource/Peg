@@ -17,6 +17,7 @@ export enum ConnectionStatus {
 
 export default function ConnectivityStatus() {
     const returnStatus = () => {
+
         if (keymap.keyLayout) {
             if (clientManager.isOnLine) {
                 return ConnectionStatus.BoardAndInternet
@@ -33,9 +34,13 @@ export default function ConnectivityStatus() {
         }
     }
     const [status, setStatus] = createSignal(returnStatus())
-    const subId = keymap.Subscribe(() => setStatus(returnStatus()))
+    const subId = clientManager.Subscribe(() => setStatus(returnStatus()))
+    const subId2 = keymap.Subscribe(() => setStatus(returnStatus()))
 
-    onCleanup(() => { keymap.Unsubscribe(subId) })
+    onCleanup(() => {
+        clientManager.Unsubscribe(subId)
+        keymap.Unsubscribe(subId2)
+    })
 
     return (
         <StatusIndicator

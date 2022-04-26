@@ -20,13 +20,41 @@ type SingleLayoutKeyProps = {
     layer: number;
     layoutKey: LayoutKey
     isLed: boolean
+    isEncoder: boolean
 };
 
 export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
-    const droppable = createDroppable(`${props.layer}:${props.index}`);
-    const [state, setState] = createStore({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: props.code, subCode: props.code.subOne, color: clientManager.keymap.ledMap[props.index] });
+
+    const returnGlowindex = () => {
+        if (props.code.code === "LED") {
+            const ledIndex = clientManager.keymap.keyLayout.features.perkeyCount + props.index
+            // const underGlowLeds = clientManager.keymap.ledMap.slice(clientManager.keymap.keyLayout.features.underglowCount * -1)
+
+            return ledIndex
+        } else {
+            return props.index
+        }
+    }
+    const droppable = createDroppable(`${returnGlowindex()}:${props.isEncoder ? "R" : ""}`);
+    const [state, setState] = createStore({
+        waitingLayer: clientManager.waitingLayer,
+        waitingIndex: clientManager.waitingIndex,
+        code: props.code,
+        subCode: props.code.subOne,
+        color: clientManager.keymap.ledMap[returnGlowindex()]
+    })
     const updateWaitingInfo = (_newClient: ClientManager) => {
-        setState({ waitingLayer: clientManager.waitingLayer, waitingIndex: clientManager.waitingIndex, code: clientManager.keymap.keymap[props.layer][props.index], subCode: clientManager.keymap.keymap[props.layer][props.index].subOne, color: clientManager.keymap.ledMap[props.index] })
+        setState({
+            waitingLayer: clientManager.waitingLayer,
+            waitingIndex: clientManager.waitingIndex,
+            code: props.isEncoder ?
+                clientManager.keymap.encoderMap[props.layer][props.index] :
+                props.code.code !== "LED" ?
+                    clientManager.keymap.keymap[props.layer][props.index] :
+                    props.code,
+            subCode: props.code.code !== "LED" ? clientManager.keymap.keymap[props.layer][props.index].subOne : props.code.subOne,
+            color: clientManager.keymap.ledMap[returnGlowindex()]
+        })
     }
 
     const subId = clientManager.Subscribe(updateWaitingInfo)
@@ -35,12 +63,12 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     })
 
     const mainButtonPress = () => {
-        clientManager.NoticeThatKeyIsWaiting(props.index, props.layer, props.isLed)
+        clientManager.NoticeThatKeyIsWaiting(returnGlowindex(), props.isLed, props.isEncoder)
     }
     const clearButtonPress = () => {
         const keymap = KeyMap.getInstance()
         const codes = KeyCodes.getInstance()
-        keymap.ChangeKey(props.index, props.layer, codes.KeyCodeForString("KC.NO"));
+        keymap.ChangeKey(props.index, props.layer, codes.KeyCodeForString("KC.NO"), props.isEncoder);
     }
     const returnStyles = () => {
         let styles = `
@@ -48,8 +76,16 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         top: ${props.layoutKey.y * magicNumbers.keyMultiplyer}px;
         width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
          `
-        if (clientManager.keymap.keyLayout?.features.perkey) {
+        if (clientManager.keymap.keyLayout?.features.perkey && state.color) {
             styles += `color: rgb(${state.color.r},${state.color.g},${state.color.b});`
+        }
+        if (props.code.code === "LED") {
+            styles += `
+            background: rgb(${state.color.r},${state.color.g},${state.color.b});
+            border-radius: ${magicNumbers.keyMultiplyer}px;
+            `
+        } else {
+            styles += `background: lightgray;`
         }
         return styles
     }
@@ -76,7 +112,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             use:droppable
             class="droppable"
             classList={{ "!droppable-accept": droppable.isActiveDroppable }}
-            className={`singleLayoutKey border border-black ${state.waitingLayer === props.layer && state.waitingIndex === props.index ? "waitingKey" : ""}`}
+            className={`singleLayoutKey border border-black ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""}`}
             style={returnStyles()}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}

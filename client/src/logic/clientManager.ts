@@ -1,10 +1,12 @@
-import { ElectronEvents, KeyCode } from "../types/types";
+import { ElectronEvents, KeyCode, ModalDefault, SplitFlashStage } from "../types/types";
 import { Color } from "./color";
 import { isKeyCode } from "./helpers";
 import { KeyMap } from "./keymapManager";
 import { ProgramSettings } from "./programSettings";
 import { Subscribable } from "./subscribable";
 import axios from "axios"
+import { Modal } from "./modal";
+import { Toast } from "./toast";
 
 export class ClientManager extends Subscribable {
     private static instance: ClientManager;
@@ -12,37 +14,61 @@ export class ClientManager extends Subscribable {
     waitingLayer: number | undefined = undefined;
     waitingIndex: number | undefined = undefined;
     waitingKey: boolean = false;
+    waitingIsEncoder: boolean = false
     waitingIsLed: boolean = false;
     scaning: boolean = false
     programSettings: ProgramSettings
     changesMade: boolean = false;
+    ledChangesMadeAndIsSplit: boolean = false;
     platform: string
     isOnLine: boolean = true
+    dontOverRide: boolean = false
+    currentLayer: number = 0
+    SplitFlashDisplayState: SplitFlashStage = SplitFlashStage.MainSide
+
     private constructor() {
         super();
         //@ts-ignore
         this.platform = window.electron.platform;
         this.keymap = KeyMap.getInstance()
+
         this.programSettings = ProgramSettings.getInstance()
         this.lessonToEvent(ElectronEvents.UpdateLayout, (args: string) => {
+
             console.log("got updated layout")
             this.scaning = false
             this.updateSubScribers()
             this.keymap.ParceLayout(args)
+            if (this.SplitFlashDisplayState !== SplitFlashStage.MainSide) {
+                this.ChangeSplitFlashDisplayState(SplitFlashStage.OffSide)
+            }
+
         })
         this.lessonToEvent(ElectronEvents.UpdateKeyMap, (args: string) => {
             console.log("got updated map")
             this.scaning = false
+            if (!this.dontOverRide) {
+                this.keymap.StringToKeymap(args)
+            } else {
+                console.log("Im not over riding")
+                const ledBackup = [...this.keymap.ledMap]
+                const keymapBackup = [...this.keymap.keymap]
+                this.keymap.StringToKeymap(args)
+                this.keymap.ledMap = ledBackup
+                this.keymap.keymap = keymapBackup
+                this.ChangeSplitFlashDisplayState(SplitFlashStage.OffSide)
+            }
             this.updateSubScribers()
-            this.keymap.StringToKeymap(args)
         })
-        this.lessonToEvent(ElectronEvents.ScanAgain, () => {
+        this.lessonToEvent(ElectronEvents.ScanAgain, (_args: string) => {
             console.log("scaning again")
             this.scaning = true
             setTimeout(() => {
-
                 this.updateSubScribers()
             }, 2000);
+        })
+        this.lessonToEvent(ElectronEvents.UpdateOled, (args: { oledData: number[][], fileNumber: number | string }) => {
+            this.keymap.oled?.RecievImgDataFromBackEnd(args.oledData, Number(args.fileNumber))
         })
         this.lessonToEvent(ElectronEvents.ReadSettings, (settingsStr) => {
             try {
@@ -68,8 +94,16 @@ export class ClientManager extends Subscribable {
             } catch (error) {
                 console.log("error", error)
             }
-
         })
+
+        this.lessonToEvent(ElectronEvents.MapSaved, () => {
+            Toast.Success("keymap saved!")
+            console.log("todo notify that map was saved")
+            if (this.SplitFlashDisplayState === SplitFlashStage.OffSide) {
+                this.ChangeSplitFlashDisplayState(SplitFlashStage.Finished)
+            }
+        })
+
 
         this.programSettings.Subscribe(() => {
             this.sendToBackend(ElectronEvents.SaveSettings, JSON.stringify({ seven: this.programSettings.seven, darkmode: this.programSettings.darkmode, tooltips: this.programSettings.tooltips }))
@@ -84,6 +118,11 @@ export class ClientManager extends Subscribable {
 
 
     }
+    public ChangeLayer(newLayer: number) {
+        this.currentLayer = newLayer
+        this.updateSubScribers()
+
+    }
 
     public static getInstance(): ClientManager {
         if (!ClientManager.instance) {
@@ -91,11 +130,15 @@ export class ClientManager extends Subscribable {
         }
         return ClientManager.instance;
     }
+    public TellThemToUpdate() {
+        this.updateSubScribers()
+    }
 
-    public NoticeThatKeyIsWaiting(index: number, layer: number, isLed: boolean) {
+    public NoticeThatKeyIsWaiting(index: number, isLed: boolean, isEncoder: boolean) {
         this.waitingIndex = index;
-        this.waitingLayer = layer;
+        this.waitingLayer = this.currentLayer;
         this.waitingIsLed = isLed;
+        this.waitingIsEncoder = isEncoder
         this.waitingKey = true;
         this.updateSubScribers()
     }
@@ -104,13 +147,15 @@ export class ClientManager extends Subscribable {
         if (this.waitingKey && this.waitingIndex !== undefined && this.waitingLayer !== undefined) {
             this.changesMade = true
             if (!this.waitingIsLed && "code" in newKeyCode) {
-                this.keymap.ChangeKey(this.waitingLayer, this.waitingIndex, newKeyCode);
+                this.keymap.ChangeKey(this.waitingLayer, this.waitingIndex, newKeyCode, this.waitingIsEncoder);
 
             }
             else if ("r" in newKeyCode) {
                 // console.log("I must be a color", newKeyCode)
                 this.keymap.ChangeLed(this.waitingLayer, this.waitingIndex, newKeyCode)
-                //todo when you get here you the waiting key is waiting for LED input
+                if (this.keymap.keyLayout.features.split) {
+                    this.ledChangesMadeAndIsSplit = true
+                }
             }
             this.waitingIndex = undefined;
             this.waitingLayer = undefined;
@@ -120,12 +165,20 @@ export class ClientManager extends Subscribable {
 
         }
     }
-    public ForceKeyChange(layer: number, pos: number, newKey: KeyCode | Color) {
+    public ForceKeyChange(layer: number, pos: number, newKey: KeyCode | Color, isEncoder: boolean) {
         if (isKeyCode(newKey)) {
-            this.keymap.ChangeKey(layer, pos, newKey);
+            this.keymap.ChangeKey(layer, pos, newKey, isEncoder);
         } else {
             this.keymap.ChangeLed(layer, pos, newKey);
+            if (this.keymap.keyLayout.features.split) {
+                this.ledChangesMadeAndIsSplit = true
+            }
         }
+        this.changesMade = true
+        this.updateSubScribers()
+    }
+
+    public NoticeAChangeWasMade() {
         this.changesMade = true
         this.updateSubScribers()
     }
@@ -133,27 +186,60 @@ export class ClientManager extends Subscribable {
     public SaveMap() {
         if (this.changesMade) {
             this.sendToBackend(ElectronEvents.SaveMap, this.keymap.toString())
+            this.changesMade = false
+        }
+        if (this.ledChangesMadeAndIsSplit) {
+            const modal = Modal.getInstance()
+            modal.OpenDefault("Split Led Flashing", false, ModalDefault.SplitFlashManager)
+            this.dontOverRide = true
+
         }
 
+    }
+    public ChangeSplitFlashDisplayState = (newDisplayState: SplitFlashStage) => {
+        this.SplitFlashDisplayState = newDisplayState
+        switch (newDisplayState) {
+            case SplitFlashStage.Unplugged:
+                this.sendToBackend(ElectronEvents.FreshDriveScan, "")
+                break;
+            case SplitFlashStage.OffSide:
+                if (this.keymap.keyLayout.features.rightSide) {
+                    this.changesMade = true
+                    this.SaveMap()
+                }
+            default:
+                break;
+        }
+        this.updateSubScribers()
     }
 
     async pingServer() {
         try {
             //todo change this to ping route
-            await axios.get(`${this.programSettings.apiUrl}boards`)
+            await axios.get(`${this.programSettings.apiUrl}hp-check`)
             this.isOnLine = true
         } catch (error) {
             this.isOnLine = false
         }
+        this.updateSubScribers()
+
     }
 
     sendToBackend(key: ElectronEvents, data: any) {
         //@ts-ignore
         window.electron.ipcRenderer.send(key, data)
+
     }
-    lessonToEvent(key: string, callBack: (args: any) => void) {
+    lessonToEvent(key: ElectronEvents, callBack: (args: any) => void) {
         //@ts-ignore
-        window.electron.ipcRenderer.on(key, (arg: any) => callBack(arg))
+        window.electron.ipcRenderer.on(key, (arg: any) => {
+            try {
+                callBack(arg)
+            } catch (error) {
+                console.log("error in handeling event from backend", `event:${key}`, error)
+            }
+
+        })
     }
 
 }

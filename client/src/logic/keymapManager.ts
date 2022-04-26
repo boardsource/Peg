@@ -1,17 +1,21 @@
 import { KeyCodes } from "./keycodes";
-import { KeyCode, Layout } from "../types/types";
+import { ElectronEvents, KeyCode, Layout, OledDisplayType, OledReactionType } from "../types/types";
 import { MiscKeymapParts } from "./miscKeyMapParts";
 import { Subscribable } from "./subscribable";
 import { Color } from "./color";
 import { Oled } from "./oled";
+import { ClientManager } from "./clientManager";
+import { Toast } from "./toast";
 
 export class KeyMap extends Subscribable {
     private static instance: KeyMap;
 
     codes: KeyCodes
     keymap: KeyCode[][] = [];
+    encoderMap: KeyCode[][] = [];
     keyLayout!: Layout;
     layout!: string;
+    codeBlock!: string;
     haveLayout: boolean = false;
     haveMap: boolean = false;
     ledMap: Color[] = [];
@@ -38,31 +42,34 @@ export class KeyMap extends Subscribable {
         this.haveLayout = true;
         this.miscKeymapParts = new MiscKeymapParts(this, this.keyLayout);
         this.layout = layoutJson;
-        if (this.keyLayout.features.oled) {
+        if (this.keyLayout.features.oled && this.oled === undefined) {
             this.oled = new Oled();
         }
+        Toast.Info(`${this.keyLayout.features.name} connected`)
         this.updateSubScribers()
         // EmitSignal(nameof(UpdatedMap), this);
         // OS.SetWindowTitle("Peg-" + this.KeyLayout.features.name + "-" + this.KeyLayout.features.creator);
     }
 
     public StringToKeymap(baseMap: string) {
-        // if (!this.parsing) {
-        //     this.parsing = true
-        const headderCharacterCount = 20;
+        const headerCharacterCount = 20;
         const footerCharacterCount = 3;
 
         const justLayers = baseMap.split("# keymap")[1];
-        const remvedFooters = justLayers.substring(0, justLayers.length - footerCharacterCount);
-        const rawLayers = remvedFooters.substring(headderCharacterCount);
-        const layers = rawLayers.replace(/(?:\r\n|\r|\n)/g, '').split("],");
+        const removedFooters = justLayers.substring(0, justLayers.length - footerCharacterCount);
+        const rawLayers = removedFooters.substring(headerCharacterCount);
+        const layers = rawLayers.replaceAll(/(?:\r\n|\r|\n)/g, '').split("],");
+        const encoderMap = baseMap.split("# encodercount")
+        const encoderCount = encoderMap.length == 3 ? Number(encoderMap[1].replace("#", "")) : 0
+
 
         //todo rework to map
         layers.forEach((match: string) => {
-            this.keymapStr.push(match.replace("[", "").replace("]", "").replace(" ", "").split(","));
+            this.keymapStr.push(match.replaceAll("[", "").replaceAll("]", "").replaceAll(" ", "").split(","));
         });
 
         this.keymap = [];
+        this.encoderMap = []
         // todo can this be done in one loop
         //todo rework to map
         this.keymapStr.forEach(layer => {
@@ -72,20 +79,33 @@ export class KeyMap extends Subscribable {
                 const tempCode: KeyCode = this.codes.KeyCodeForString(code);
                 tempLayer.push(tempCode);
             });
+            if (encoderCount) {
+                const tempKeymapLayer = tempLayer.slice(0, tempLayer.length - encoderCount * 2)
+                const tempEncoderLayer = tempLayer.slice(tempLayer.length - encoderCount * 2, tempLayer.length)
+                this.keymap.push(tempKeymapLayer);
+                this.encoderMap.push(tempEncoderLayer);
+            } else {
+                this.keymap.push(tempLayer);
+            }
 
-            this.keymap.push(tempLayer);
         });
         this.haveMap = true;
+        //RGB MATRIX
         const ledMap = baseMap.split("# ledmap");
         if (ledMap.length == 3) {
-            const ledHeadderCharacterCount = 13;
-            const ledFooterCharacterCount = 9;
+            const ledHeaderCharacterCount = 32;
+            let ledFooterCharacterCount = 9;
+            if (ledMap[1].includes("split")) {
+                ledFooterCharacterCount = 58
+            }
             const tempLedMap = ledMap[1]
-                .replace(/(?:\r\n|\r|\n)/g, '')
-                .replace(" ", '')
+                .replaceAll(/(?:\r\n|\r|\n)/g, '')
+                .replaceAll(" ", '')
                 .substring(0, ledMap[1].length - ledFooterCharacterCount)
-                .substring(ledHeadderCharacterCount)
+                .substring(ledHeaderCharacterCount)
+                .replaceAll(/\s+/g, '')
                 .split("],[")
+            console.log(tempLedMap)
             const colorLeds = tempLedMap.map(led => {
                 const singleLed = led.split(',')
                 return new Color(singleLed[0], singleLed[1], singleLed[2])
@@ -93,17 +113,93 @@ export class KeyMap extends Subscribable {
             this.ledMap = colorLeds
 
         }
-        console.log("just parsed keymap", this)
+        //OLEDS
+        const oledMap = baseMap.split("# oled")
+        if (oledMap.length == 3) {
+            const currentDisplayType: OledDisplayType = Object.keys(OledDisplayType).filter((key) => {
+                //@ts-ignore
+                const typeInUse = oledMap[1].includes(OledDisplayType[key])
+                return typeInUse
+            }).map(key => {
+                //@ts-ignore
+                return OledDisplayType[key]
+            })[0]
 
-        // check if there is an oled and if not make it
+            const flipValue = oledMap[1].includes("flip= True") ? true : oledMap[1].includes("flip=False") ? false : false
+            const oledHeaderCharacterCount = 15;
+            const oledFooterCharacterCount = 46
+            const tempOledMap = oledMap[1]
+                .replace(/(?:\r\n|\r|\n)/g, '')
+                .replace(" ", '')
+                .substring(0, oledMap[1].length - oledFooterCharacterCount)
+                .substring(oledHeaderCharacterCount)
+                .replace("OledData(image=", "")
+                .replace("OledData(corner_one=", "")
+                .replace("corner_two=", "")
+                .replace("corner_three=", "")
+                .replace("corner_four=", "")
+
+            if (this.oled === undefined) {
+                this.oled = new Oled();
+            }
+            this.oled.displayType = currentDisplayType
+            this.oled.flip = flipValue
+            // this.oled.FromString(tempOledMap) to be used for strings not imgs
+            if (currentDisplayType === OledDisplayType.image) {
+                try {
+                    const tempData = JSON.parse(tempOledMap
+                        .replace("0:", '"0":')
+                        .replace("1:", '"1":')
+                        .replaceAll("OledReactionType.STATIC", '"STATIC"')
+                        .replaceAll("OledReactionType.LAYER", '"LAYER"')
+                    )
+                    if (tempData[0] === OledReactionType.layer) {
+                        this.oled.imgReactionType = OledReactionType.layer
+                        const currentClientManager = ClientManager.getInstance()
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 1)
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 2)
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 3)
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 4)
+                    } else {
+                        this.oled.imgReactionType = OledReactionType.static
+                        const currentClientManager = ClientManager.getInstance()
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 1)
+                    }
+                } catch (error) {
+                    Toast.Error(`error parsing oled map try reloading the default oled map and make sure you have the images in root`)
+
+                    console.log("error parsing oled map", error)
+                }
+            } else {
+                this.oled.FromString(tempOledMap)
+            }
+
+        }
+
+
+        //CODEBLOCK
+        const codeblock = baseMap.split("# codeblock")
+        if (codeblock.length == 3) {
+            this.codeBlock = codeblock[1]
+            console.log("code ", this.codeBlock)
+        }
+
+
+
+        Toast.Success(`Found your keyboard`)
         this.updateSubScribers()
+        console.log("parsed map", this)
+
 
 
     }
 
-    public ChangeKey(layer: number, pos: number, newKey: KeyCode) {
+    public ChangeKey(layer: number, pos: number, newKey: KeyCode, isEncoder: boolean) {
         // todo add in saving old changes for ctrl z 
-        if (this.keymap[layer][pos].canHaveSub && newKey.code != "KC.NO") {
+        if (isEncoder) {
+            console.log("changed kkkey", this)
+            this.encoderMap[layer][pos] = newKey;
+        } else if (this.keymap[layer][pos].canHaveSub && newKey.code != "KC.NO") {
             this.keymap[layer][pos].subOne = newKey;
         }
         else {
@@ -128,21 +224,21 @@ export class KeyMap extends Subscribable {
     }
 
     keymapBackToString(): string {
-        let keymapString: string[] = this.keymap.map(layer => {
-
-            const layerToString = layer.map(keycode => this.keycodeToString(keycode)).join(",")
+        let keymapString: string[] = this.keymap.map((layer, index) => {
+            const tempLayer = this.encoderMap.length === 4 ? [...layer, ...this.encoderMap[index]] : layer
+            const layerToString = tempLayer.map(keycode => this.keycodeToString(keycode)).join(",")
             console.log("layerToString", layerToString)
             return `[${layerToString}]`;
         })
         // console.log("layers=", keymapString)
-        return `# keymap\nkeyboard.keymap = [ ${keymapString.join(", \n")} ] \n# keymap\n"`;
+        return `${this.keyLayout.features.encoders ? `# encodercount\n# ${this.keyLayout.features.encoderCount}\n# encodercount` : ""}\n# keymap\nkeyboard.keymap = [ ${keymapString.join(", \n")} ] \n# keymap\n`;
     }
 
     public toString(): string {
 
         const newLayers: string = this.keymapBackToString();
-        let newHeader: string = ""
-        let newfooter: string = ""
+        let newHeader: string = ``
+        let newfooter: string = ``
         if (this.miscKeymapParts) {
             newHeader = this.miscKeymapParts.ReturnFileHeader();
             newfooter = this.miscKeymapParts.ReturnFileFooter();

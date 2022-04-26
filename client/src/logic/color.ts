@@ -22,7 +22,7 @@ export class Color {
     }
 
     toString(): string {
-        return `[${this.r},${this.g},${this.b}]`
+        return `[${this.r ? this.r : 0},${this.g ? this.g : 0},${this.b ? this.b : 0}]`
     }
     public static IsColor(colorString: string): Color | undefined {
         if (colorString.startsWith("[")) {

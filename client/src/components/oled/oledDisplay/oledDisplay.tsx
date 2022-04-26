@@ -4,9 +4,12 @@ import { createStore } from "solid-js/store";
 import { magicNumbers } from "../../../magicNumbers";
 import { OledPixel } from "../../../types/types";
 import { KeyMap } from "../../../logic/keymapManager";
+import { ClientManager } from "../../../logic/clientManager";
+import OledImageUpLoader from "../oledImageUploader/oledImageUpLoader";
+const clientManager = ClientManager.getInstance()
 const keymap = KeyMap.getInstance()
 type OledDisplayProps = {
-
+    currentLayer: () => number
 };
 
 
@@ -26,8 +29,6 @@ export default function OledDisplay(props: OledDisplayProps) {
 
     }
     const subId2 = currentOled ? currentOled.Subscribe(() => {
-        // setDisplayPixes(currentOled?.display)
-        // setDisplayPixes({ pixels: currentOled?.display })
         updates++
         prosessUpdates()
     }) : false
@@ -42,10 +43,11 @@ export default function OledDisplay(props: OledDisplayProps) {
     const drag = (row: number, col: number) => {
         if (displayPixes.mouseDown) {
             currentOled?.UpdateDisplayPixel(row, col)
+            clientManager.NoticeAChangeWasMade()
         }
     }
 
-    // never do this
+    // never do this. They think I cant force updates I'll show them
     const renderTheDirtyWay = () => {
         const pixels = currentOled ? currentOled.display : []
         const victomDiv = document.getElementsByClassName("oledDisplay__victom")
@@ -54,14 +56,16 @@ export default function OledDisplay(props: OledDisplayProps) {
                 const rowDiv = document.createElement('div');
                 rowDiv.classList.add("flex")
                 rowDiv.classList.add("oledDisplay__row")
-
                 row.forEach((col, colIndex) => {
                     const colButton = document.createElement('button');
                     colButton.classList.add("flex")
                     colButton.classList.add("oledDisplay__row__pixel")
                     colButton.classList.add(col === 0 ? "bg-black" : "bg-white")
                     colButton.id = `row-${rowIndex}-col-${colIndex}`
-                    colButton.addEventListener("click", () => { currentOled?.UpdateDisplayPixel(rowIndex, colIndex) })
+                    colButton.addEventListener("click", () => {
+                        currentOled?.UpdateDisplayPixel(rowIndex, colIndex)
+                        clientManager.NoticeAChangeWasMade()
+                    })
                     colButton.addEventListener("mouseenter", () => { drag(rowIndex, colIndex) })
                     colButton.style.width = `${magicNumbers.oledPixel}px`
                     rowDiv.appendChild(colButton)
@@ -96,26 +100,7 @@ export default function OledDisplay(props: OledDisplayProps) {
     return (
         <div className="oledDisplay flex flex-col" onMouseDown={() => setDisplayPixes({ mouseDown: true })} onMouseUp={() => setDisplayPixes({ mouseDown: false })}>
             <div className="oledDisplay__victom"></div>
-            {/* <Index each={displayPixes.pixels} fallback={<div>Loading...</div>}>
-                {(row, rowindex) => (
-                    <div className="oledDisplay__row flex ">
-                        <Index each={row()} fallback={<div>Loading...</div>}>
-                            {(col, colindex) => {
-                                // console.log("pixelis ", col(), colindex, rowindex)
-                                return (
-                                    <button className={`oledDisplay__row__pixel ${col() === 0 ? "bg-black" : "bg-white"}`}
-                                        onClick={() => currentOled?.UpdateDisplayPixel(rowindex, colindex)}
-                                        onMouseEnter={() => drag(rowindex, colindex)}
-                                        style={`width: ${magicNumbers.oledPixel}px;`}
-                                    >
-
-                                    </button>
-                                )
-                            }}
-                        </Index >
-                    </div>
-                )}
-            </Index> */}
+            <OledImageUpLoader currentLayer={props.currentLayer} />
         </div>
     );
 }

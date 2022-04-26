@@ -109,6 +109,18 @@ ipcMain.on(ElectronEvents.Scan, (event: Electron.IpcMainEvent, fileName: string,
   }
 }
 )
+ipcMain.on(ElectronEvents.FreshDriveScan, (event: Electron.IpcMainEvent, fileName: string,) => {
+  if (pegApp) {
+    pegApp.FreshScan(event, fileName)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.FreshScan(event, fileName)
+
+    }
+  }
+}
+)
 
 
 ipcMain.on(ElectronEvents.SaveMap, (event: Electron.IpcMainEvent, file: string,) => {
@@ -159,6 +171,31 @@ ipcMain.on(ElectronEvents.Savefile, (event: Electron.IpcMainEvent, data: { fileD
     if (mainWindow !== null) {
       const pegApp = new AppManager(mainWindow)
       pegApp.writeFile(event, data)
+
+    }
+  }
+}
+)
+
+ipcMain.on(ElectronEvents.SaveOled, (event: Electron.IpcMainEvent, data: { fileData: number[][], fileNumber: number | string }) => {
+  if (pegApp) {
+    pegApp.oledSave(event, data)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.oledSave(event, data)
+
+    }
+  }
+}
+)
+ipcMain.on(ElectronEvents.ReadOled, (event: Electron.IpcMainEvent, fileNumber: number) => {
+  if (pegApp) {
+    pegApp.oledread(event, fileNumber)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.oledread(event, fileNumber)
 
     }
   }

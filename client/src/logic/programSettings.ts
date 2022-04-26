@@ -5,7 +5,10 @@ export class ProgramSettings extends Subscribable {
     private _seven: boolean = true
     private _tooltips: boolean = true;
     private _apiUrl: string = "http://159.89.159.24:3000/api/"
+    // private _apiUrl: string = "http://localhost:8080/api/"
+
     private _darkmode: boolean = true;
+    version: string = "v0.1"
     private constructor() {
         super();
     }

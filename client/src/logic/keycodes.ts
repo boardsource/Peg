@@ -23,6 +23,7 @@ export class KeyCodes {
     layers: Map<string, KeyCode>;
     led: Map<string, KeyCode>;
     customCodes: Map<string, KeyCode>;
+    hackCodes: Map<string, KeyCode>;
 
     private constructor() {
 
@@ -57,6 +58,16 @@ export class KeyCodes {
         const shiftedKeycodes = _shifted as KeyCode[]
         this.shifted = new Map(shiftedKeycodes.map(i => [i.code, i]));
         this.addBlankSubKeys();
+        this.hackCodes = new Map()
+        this.hackCodes.set("LED", {
+            code: "LED",
+            display: "LED",
+            keybinding: "",
+            canHaveSub: false,
+            canHaveSubNumber: false,
+            subNumber: 0,
+            Description: "underglow led"
+        })
 
 
     }
@@ -90,6 +101,25 @@ export class KeyCodes {
         } else {
             return undefined
         }
+    }
+    public CodeForStringAndSetOrNO(code: string, searchingSet: Map<string, KeyCode>): KeyCode {
+        const tempCode = searchingSet.get(code)
+        if (tempCode !== undefined) {
+            return { ...tempCode }
+        } else {
+            return {
+                code: "KC.NO",
+                display: "no",
+                keybinding: "",
+                canHaveSub: false,
+                canHaveSubNumber: false,
+                subNumber: 0,
+                Description: "no key set yet"
+            }
+        }
+    }
+    public CodeOnTheFlyFromBaseCode(baseCode: KeyCode, newCode: string): KeyCode {
+        return { ...baseCode, code: newCode }
     }
     customCodeForString(dirtyCode: string, code: string): KeyCode | undefined {
         let tempCode = this.customCodes.get(code)

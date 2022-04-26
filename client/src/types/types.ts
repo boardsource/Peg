@@ -23,6 +23,10 @@ export interface LayoutFeatures {
     perkeyCount: number;
     underglowCount: number;
     split: boolean;
+    rightSide: boolean;
+    encoders: boolean;
+    encoderCount: number;
+    rx_tx: boolean
 }
 export interface LayoutKey {
     x: number;
@@ -33,8 +37,23 @@ export interface LayoutKey {
 export interface Layout {
     features: LayoutFeatures;
     layout: LayoutKey[];
+    underglow: LayoutKey[];
 }
 export type OledPixel = { x: number, y: number }
+export type ToastMessage = { message: string, toastLevel: ToastLevel, id: string }
+
+export enum OledDisplayType {
+    image = "IMG",
+    text = "TXT"
+}
+export enum OledReactionType {
+    static = "STATIC",
+    layer = "LAYER"
+}
+export interface OledTextSection {
+    0: OledReactionType,
+    1: string[]
+}
 
 export enum FileName {
     main = "main.py",
@@ -43,16 +62,28 @@ export enum FileName {
     settings = "settings.json",
     customCodes = "customCodes.json"
 }
+export enum ShareableFeatureType {
+    keyCodes = "keycodes",
+    keyMaps = "keyMaps",
+    ledMaps = "ledMaps",
+    oleds = "oleds",
+    codeBlocks = "codeBlocks"
+}
 
 export enum ElectronEvents {
     UpdateLayout = "UpdateLayout",
     UpdateKeyMap = "UpdateKeyMap",
+    UpdateOled = "UpdateOled",
     Scan = "Scan",
     SaveMap = "SaveMap",
     Savefile = "Savefile",
+    SaveOled = "SaveOled",
+    ReadOled = "ReadOled",
+    MapSaved = "MapSaved",
     FilePicker = "FilePicker",
     FilePickerClose = "FilePickerClose",
     ScanAgain = "ScanAgain",
+    FreshDriveScan = "FreshDriveScan",
     ReadSettings = "ReadSettings",
     ReadCustomCodes = "ReadCustomCodes",
     SaveSettings = "SaveSettings",
@@ -61,6 +92,24 @@ export enum ElectronEvents {
     WindowFullScreen = "WindowFullScreen",
     WindowMinimize = "WindowMinimize",
 }
+export enum SplitFlashStage {
+    MainSide,
+    Unplugged,
+    OffSide,
+    Finished
+}
+export enum ModalDefault {
+    None,
+    SplitFlashManager
+}
+export enum ToastLevel {
+    info,
+    error,
+    warn,
+    success,
+    debug,
+}
+
 
 export enum NotificationColor {
     Green = 'green',
