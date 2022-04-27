@@ -1,7 +1,8 @@
-.SingleUsableKeyCode{
-    width: var(--keyMultiplyer);
-    height: var(--keyMultiplyer);
+.SingleUsableKeyCode {
+    /* width: var(--keyMultiplyer); */
+    /* height: var(--keyMultiplyer); */
+    height: var(--usableKeyMultiplier);
     border: 1px solid black;
     margin: auto;
-    overflow:hidden;
+    overflow: hidden;
 }

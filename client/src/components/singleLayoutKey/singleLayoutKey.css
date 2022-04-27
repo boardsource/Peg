@@ -1,11 +1,10 @@
+/* move into tailwind for single key upper */
 .singleLayoutKey {
-
     height: var(--keyMultiplyer);
     /* moved this to tailwind */
     /* border: 1px solid black; */
     margin: auto;
     position: absolute;
-
 }
 
 .singleLayoutKey .singleLayoutKey__main {
