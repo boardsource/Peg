@@ -1,4 +1,5 @@
 import { createSignal, onCleanup, Show } from 'solid-js'
+import DownloadFeature from '../../components/downloadFeature/downloadFeature'
 import MainView from '../../components/mainView/mainView'
 import ShareFeature from '../../components/shareFeature/shareFeature'
 import { KeyMap } from '../../logic/keymapManager'
@@ -37,7 +38,7 @@ export default function LED() {
                     </code>
                 </p>
                 <ShareFeature featureType={ShareableFeatureType.codeBlocks} />
-
+                <DownloadFeature featureType={ShareableFeatureType.codeBlocks} />
             </Show>
 
 

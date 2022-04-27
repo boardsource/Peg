@@ -71,23 +71,51 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         keymap.ChangeKey(props.index, props.layer, codes.KeyCodeForString("KC.NO"), props.isEncoder);
     }
     const returnStyles = () => {
+        // inline styles that need to be set based off of app state in some way.
         let styles = `
         left: ${props.layoutKey.x * (magicNumbers.keyMultiplyer + 2)}px;
         top: ${props.layoutKey.y * (magicNumbers.keyMultiplyer + 2)}px;
         width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
          `
-        if (clientManager.keymap.keyLayout?.features.perkey && state.color) {
+        if (props.isLed && clientManager.keymap.keyLayout?.features.perkey && state.color) {
+            // if it is a normal keycode on the led tab. And the keyboard supports per key and we have a led map
             styles += `color: rgb(${state.color.r},${state.color.g},${state.color.b});`
         }
-        if (props.code.code === "LED") {
+        if (props.isLed && props.code.code === "LED") {
+            //if the key is on the led tab and it is a under glow led 
             styles += `
             background: rgb(${state.color.r},${state.color.g},${state.color.b});
             border-radius: ${magicNumbers.keyMultiplyer}px;
             `
         } else {
-            styles += `background: lightgray;`
+            // normal key not on the led tab 
+            // styles += `background: lightgray;`
         }
         return styles
+    }
+    const returnClasses = () => {
+        //classes you want to apply all the time
+        let classes = `
+        border border-black
+         `
+        if (props.isLed && props.code.code === "LED") {
+            // underglow led on the led tab
+            classes += `
+           
+            `
+        }
+        else if (props.isLed) {
+            // normal key on the led tab
+            classes += `
+           
+            `
+        } else {
+            // normal key not on the led tab 
+            classes += `
+            rounded-sm
+            `
+        }
+        return classes
     }
     const mouseEnter = (event: Event) => {
         const description = state.code.canHaveSub ?
@@ -112,7 +140,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             use:droppable
             class="droppable"
             classList={{ "!droppable-accept": droppable.isActiveDroppable }}
-            className={`singleLayoutKey border border-black ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""} rounded-sm `}
+            className={`singleLayoutKey  ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""} ${returnClasses()}  `}
             // style keys here for top layout top layout key styles
 
             style={returnStyles()}

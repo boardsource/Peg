@@ -41,7 +41,21 @@ export interface Layout {
 }
 export type OledPixel = { x: number, y: number }
 export type ToastMessage = { message: string, toastLevel: ToastLevel, id: string }
+export interface OledTextSection {
+    0: OledReactionType,
+    1: string[]
+}
+export interface FeatureResponse {
+    _id: string;
+    description: string;
+    featureType: ShareableFeatureType
+    keyboard: string;
+    path: string;
+    title: string;
+    universal: boolean
+    version: string
 
+}
 export enum OledDisplayType {
     image = "IMG",
     text = "TXT"
@@ -50,10 +64,7 @@ export enum OledReactionType {
     static = "STATIC",
     layer = "LAYER"
 }
-export interface OledTextSection {
-    0: OledReactionType,
-    1: string[]
-}
+
 
 export enum FileName {
     main = "main.py",
