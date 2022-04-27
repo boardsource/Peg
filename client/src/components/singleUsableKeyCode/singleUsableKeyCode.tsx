@@ -30,9 +30,9 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
         let style = ""
         if (props.layoutKey) {
             style = `
-            left: ${props.layoutKey.x * magicNumbers.keyMultiplyer}px;
-            top: ${props.layoutKey.y * magicNumbers.keyMultiplyer}px;
-            width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
+            left: ${props.layoutKey.x * (magicNumbers.usableKeyMultiplier + 2)}px;
+            top: ${props.layoutKey.y * (magicNumbers.usableKeyMultiplier + 2)}px;
+            width: ${props.layoutKey.w * (magicNumbers.usableKeyMultiplier)}px;
             position:absolute;
         `
         }

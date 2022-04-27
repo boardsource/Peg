@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer components {
- /* custom stuff goes here 
+  /* custom stuff goes here 
  @apply classes here */
 }
 
@@ -26,5 +26,6 @@ code {
 } */
 :root {
   --keyMultiplyer: 0px;
+  --usableKeyMultiplier: 0px;
   --oledPixel: 0px;
 }

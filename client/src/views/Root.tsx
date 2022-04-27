@@ -21,7 +21,7 @@ export default function Root() {
   return (
     <>
       {/* <NotificationDisplay /> */}
-      <div className="peg-wrapper relative flex h-full font-sans">
+      <div data-theme="light" className="peg-wrapper relative flex h-full font-sans bg-base-100">
         <ModalDisplay />
         <Menubar />
         <div className="peg-wrapper__sidebar">
@@ -31,7 +31,7 @@ export default function Root() {
           <div className="peg-wrapper__views__topbar flex mb-5">
             <Topbar />
           </div>
-          <div className="peg-wrapper__views__main flex flex-1 bg-white">
+          <div className="peg-wrapper__views__main relative flex flex-1 bg-white">
             <ToolTipDisplay />
             <ToastDisplay />
 
