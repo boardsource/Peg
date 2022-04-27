@@ -72,8 +72,8 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     }
     const returnStyles = () => {
         let styles = `
-        left: ${props.layoutKey.x * magicNumbers.keyMultiplyer}px;
-        top: ${props.layoutKey.y * magicNumbers.keyMultiplyer}px;
+        left: ${props.layoutKey.x * (magicNumbers.keyMultiplyer + 2)}px;
+        top: ${props.layoutKey.y * (magicNumbers.keyMultiplyer + 2)}px;
         width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
          `
         if (clientManager.keymap.keyLayout?.features.perkey && state.color) {
@@ -112,7 +112,9 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             use:droppable
             class="droppable"
             classList={{ "!droppable-accept": droppable.isActiveDroppable }}
-            className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""}`}
+            className={`singleLayoutKey border border-black ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""} rounded-sm `}
+            // style keys here for top layout top layout key styles
+
             style={returnStyles()}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}

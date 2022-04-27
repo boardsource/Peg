@@ -57,8 +57,8 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
         clientManager.SaveMap()
     }
     return (
-        <div className="UsableKeyCodeDisplay">
-            <div className="UsableKeyCodeDisplay__options">
+        <div className="UsableKeyCodeDisplay bg-green-400 flex flex-col flex-1 w-full">
+            <div className="UsableKeyCodeDisplay__options mb-3">
                 <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
                     {(key) =>
                         <Button

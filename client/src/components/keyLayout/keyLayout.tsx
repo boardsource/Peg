@@ -110,7 +110,8 @@ export default function KeyLayout(props: KeyLayoutProps) {
     //todo map over underglow leds and show that when layer === 4
 
     return (
-        <div className="keyLayout" style={returnHeight()}>
+        // keymap board container
+        <div className="keyLayout bg-orange-200 h-[340px]" style={returnHeight()}>
             <div className=" keyLayout__keys">
                 <For each={returnRenderLayout()} fallback={<div>Loading...</div>}>
                     {(layoutKey, index) => (
@@ -124,8 +125,8 @@ export default function KeyLayout(props: KeyLayoutProps) {
                         />)}
                 </For>
             </div>
-            <div className="keyLayout__layers">
-                <h3>Layers</h3>
+            <div className="keyLayout__layers absolute right-0 top-0 self-end">
+                {/* <h3>Layers</h3> */}
                 <LayerSelector isLed={props.isLed} />
             </div>
         </div>

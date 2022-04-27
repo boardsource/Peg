@@ -1,23 +1,26 @@
-.singleLayoutKey{
-
+/* move into tailwind for single key upper */
+.singleLayoutKey {
     height: var(--keyMultiplyer);
-    border: 1px solid black;
+    /* moved this to tailwind */
+    /* border: 1px solid black; */
     margin: auto;
-    position:absolute;
-
+    position: absolute;
 }
-.singleLayoutKey .singleLayoutKey__main{
-    width:100%;
-    height:100%;
+
+.singleLayoutKey .singleLayoutKey__main {
+    width: 100%;
+    height: 100%;
     /* background: lightgray; */
     font-weight: bolder;
 }
-.singleLayoutKey .singleLayoutKey__clear{
-    position:absolute;
-    right:-5px;
-    top:-5px;
-    z-index:2;
+
+.singleLayoutKey .singleLayoutKey__clear {
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    z-index: 2;
 }
-.waitingKey .singleLayoutKey__main{
+
+.waitingKey .singleLayoutKey__main {
     background: aquamarine;
 }
