@@ -25,6 +25,7 @@ export class KeyCodes {
     led: Map<string, KeyCode>;
     customCodes: Map<string, KeyCode>;
     hackCodes: Map<string, KeyCode>;
+    bonusCodes: Map<string, KeyCode>;
 
     private constructor() {
 
@@ -58,8 +59,10 @@ export class KeyCodes {
         //@ts-ignore
         const shiftedKeycodes = _shifted as KeyCode[]
         this.shifted = new Map(shiftedKeycodes.map(i => [i.code, i]));
-        this.addBlankSubKeys();
         this.hackCodes = new Map()
+        this.bonusCodes = new Map()
+        this.addBlankSubKeys();
+        this.makeBonusSet()
         this.hackCodes.set("LED", {
             code: "LED",
             display: "LED",
@@ -69,6 +72,7 @@ export class KeyCodes {
             subNumber: 0,
             Description: "underglow led"
         })
+
 
 
     }
@@ -211,6 +215,16 @@ export class KeyCodes {
             console.log("returning a shit code")
             return errorCode;
         }
+    }
+    makeBonusSet() {
+        const wantedBonusStrings = ["KC.TRNS", "KC.NO", "KC.MO(1)", "KC.MO(2)", "KC.LCTRL", "KC.LGUI", "KC.LSHIFT", "KC.LALT", "KC.SPACE", "KC.ENTER", "KC.BSPC"]
+        wantedBonusStrings.forEach(keycode => {
+            this.bonusCodes.set(keycode,
+                this.KeyCodeForString(keycode)
+            )
+        })
+
+
     }
 
     public RemoveCustomCode(code: string) {
