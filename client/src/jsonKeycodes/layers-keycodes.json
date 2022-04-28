@@ -1,5 +1,14 @@
 [
     {
+        "code": "KC.MO(0)",
+        "display": "MO(0)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer, switches off when you let go"
+    },
+    {
         "code": "KC.MO(1)",
         "display": "MO(1)",
         "keybinding": "",
@@ -20,6 +29,42 @@
     {
         "code": "KC.MO(3)",
         "display": "MO(3)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer, switches off when you let go"
+    },
+    {
+        "code": "KC.MO(4)",
+        "display": "MO(4)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer, switches off when you let go"
+    },
+    {
+        "code": "KC.MO(5)",
+        "display": "MO(5)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer, switches off when you let go"
+    },
+    {
+        "code": "KC.MO(6)",
+        "display": "MO(6)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer, switches off when you let go"
+    },
+    {
+        "code": "KC.MO(7)",
+        "display": "MO(7)",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -56,6 +101,42 @@
     {
         "code": "KC.DF(3)",
         "display": "DF(3)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Switches the default layer"
+    },
+    {
+        "code": "KC.DF(4)",
+        "display": "DF(4)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Switches the default layer"
+    },
+    {
+        "code": "KC.DF(5)",
+        "display": "DF(5)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Switches the default layer"
+    },
+    {
+        "code": "KC.DF(6)",
+        "display": "DF(6)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Switches the default layer"
+    },
+    {
+        "code": "KC.DF(7)",
+        "display": "DF(7)",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -135,6 +216,42 @@
         "Description": "Activates layer and deactivates all other layers"
     },
     {
+        "code": "KC.TO(4)",
+        "display": "TO(4)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Activates layer and deactivates all other layers"
+    },
+    {
+        "code": "KC.TO(5)",
+        "display": "TO(5)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Activates layer and deactivates all other layers"
+    },
+    {
+        "code": "KC.TO(6)",
+        "display": "TO(6)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Activates layer and deactivates all other layers"
+    },
+    {
+        "code": "KC.TO(7)",
+        "display": "TO(7)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Activates layer and deactivates all other layers"
+    },
+    {
         "code": "KC.TT(0)",
         "display": "TT(0)",
         "keybinding": "",
@@ -164,6 +281,42 @@
     {
         "code": "KC.TT(3)",
         "display": "TT(3)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer if held, toggles it if tapped repeatedly"
+    },
+    {
+        "code": "KC.TT(4)",
+        "display": "TT(4)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer if held, toggles it if tapped repeatedly"
+    },
+    {
+        "code": "KC.TT(5)",
+        "display": "TT(5)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer if held, toggles it if tapped repeatedly"
+    },
+    {
+        "code": "KC.TT(6)",
+        "display": "TT(6)",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Momentarily activates layer if held, toggles it if tapped repeatedly"
+    },
+    {
+        "code": "KC.TT(7)",
+        "display": "TT(7)",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,

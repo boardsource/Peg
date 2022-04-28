@@ -54,6 +54,8 @@ export interface FeatureResponse {
     title: string;
     universal: boolean
     version: string
+    code?: string
+    downloads: number
 
 }
 export enum OledDisplayType {

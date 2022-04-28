@@ -14,6 +14,7 @@ import {
 } from "@thisbeyond/solid-dnd";
 import Button from "../../components/button/button";
 import ShareFeature from "../../components/shareFeature/shareFeature";
+import DownloadFeature from "../../components/downloadFeature/downloadFeature";
 
 
 const clientManager = ClientManager.getInstance()
@@ -70,6 +71,8 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
                         <LedEdit /> : <UsableKeyCodeDisplay />
                     }
                     <ShareFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} />
+                    <DownloadFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} />
+
 
                 </>
             );

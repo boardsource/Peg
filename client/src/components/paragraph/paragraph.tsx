@@ -8,7 +8,7 @@ type ParagraphProps = {
 
 export default function Paragraph(props: ParagraphProps) {
     const returnText = () => {
-        if (props.truncate !== undefined) {
+        if (props.truncate !== undefined && props.children.length > props.truncate) {
 
             //trim the string to the maximum length
             let trimmedString = props.children.substring(0, props.truncate);

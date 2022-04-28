@@ -26,6 +26,7 @@ const returnCode = (featureType: ShareableFeatureType, keycode?: KeyCode) => {
             return JSON.stringify(keycode)
         case ShareableFeatureType.oleds:
             const dataToReturn = {
+                displayType: keymap.oled?.displayType,
                 display: keymap.oled?.displayType === OledDisplayType.image ?
                     keymap.oled?.layers : keymap.oled?.textDisplay,
                 imgReactionType: keymap.oled?.imgReactionType

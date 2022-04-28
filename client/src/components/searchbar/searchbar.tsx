@@ -1,4 +1,12 @@
-export default function Searchbar() {
+type SearchbarProps = {
+    onChange: (event: any) => void,
+    name: string
+    placeholder: string
+    value: string
+    enterPressed: () => void
+}
+
+export default function Searchbar(props: SearchbarProps) {
     return (
         <div className="searchbar flex flex-1">
             <label class="relative block">
@@ -8,7 +16,18 @@ export default function Searchbar() {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </span>
-                <input class="placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-2 pl-9 pr-40 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm" placeholder="Search keyboards..." type="text" name="search" />
+                <input class="placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-2 pl-9 pr-40 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                    placeholder={`Search ${props.placeholder}...`}
+                    type="text"
+                    name={props.name}
+                    value={props.value}
+                    onChange={e => props.onChange(e)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            props.enterPressed()
+                        }
+                    }}
+                />
             </label>
         </div>
     )

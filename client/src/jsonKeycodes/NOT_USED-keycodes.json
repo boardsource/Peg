@@ -1,0 +1,201 @@
+[
+    {
+       "code": "KC.RGB_TOG",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Toggles RGB"
+    },
+    {
+       "code": "KC.RGB_HUI",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Increase Hue"
+    },
+    {
+       "code": "KC.RGB_HUD",
+        "display": "",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": "Decrease Hue"
+    },
+    {
+        "code": "KC.RGB_SAI",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Increase Saturation"
+     },
+     {
+        "code": "KC.RGB_SAD",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Decrease Saturation"
+     },
+     {
+        "code": "KC.RGB_VAI",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Increase Value"
+     },
+     {
+        "code": "KC.RGB_VAD",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Decrease Value"
+     },
+     {
+        "code": "KC.RGB_ANI",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Increase animation speed"
+     },
+     {
+        "code": "KC.RGB_AND",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Decrease animation speed"
+     },
+     {
+        "code": "KC.RGB_MODE_PLAIN",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Static RGB"
+     },
+     {
+        "code": "KC.RGB_MODE_BREATHE",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Breathing animation"
+     },
+     {
+        "code": "KC.RGB_MODE_RAINBOW",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Rainbow animation"
+     },
+     {
+        "code": "KC.RGB_MODE_BREATHE_RAINBOW",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Breathing rainbow animation"
+     },
+     {
+        "code": "KC.RGB_MODE_KNIGHT",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Knightrider animation"
+     },
+     {
+        "code": "KC.RGB_MODE_SWIRL",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Swirl animation"
+     },
+     {
+        "code": "KC.LED_TOG",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Toggles LED's"
+     },
+     {
+        "code": "KC.LED_INC",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Increase Brightness"
+     },
+     {
+        "code": "KC.LED_DEC",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Decrease Brightness"
+     },
+     {
+        "code": "KC.LED_ANI",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Increase animation speed"
+     },
+     {
+        "code": "KC.LED_AND",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Decrease animation speed"
+     },
+     {
+        "code": "KC.LED_MODE_PLAIN",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Static LED's"
+     },
+     {
+        "code": "KC.LED_MODE_BREATHE",
+         "display": "",
+         "keybinding": "",
+         "canHaveSub": false,
+         "canHaveNumber": false,
+         "subNumber": 0,
+         "Description": "Breathing animation"
+     }
+
+]

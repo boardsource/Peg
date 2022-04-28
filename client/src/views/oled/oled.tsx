@@ -1,5 +1,6 @@
 import { createSignal, For, onCleanup, Show } from 'solid-js'
 import Button from '../../components/button/button'
+import DownloadFeature from '../../components/downloadFeature/downloadFeature'
 import LayerSelector from '../../components/layerSelector/layerSelector'
 import LoopOverEnum from '../../components/loopOverEnum/loopOverEnum'
 import MainView from '../../components/mainView/mainView'
@@ -81,6 +82,8 @@ export default function OLED() {
                 save
             </Button>
             <ShareFeature featureType={ShareableFeatureType.oleds} />
+            <DownloadFeature featureType={ShareableFeatureType.oleds} />
+
 
         </MainView>
 
