@@ -73,7 +73,9 @@ export default function MakeCustomCodes() {
     }
 
     return (
-        <MainView title="Custom Keycodes" supported={true} featureType={ShareableFeatureType.keyCodes} >
+        <MainView title="Custom Keycodes" description={`Custom keycode can be like macros and just send a whole word with a single keypress. 
+        Or you can get into some more complex things and send a keycode on a tap and a totally different keycode when held. 
+        This view will let you configure this feature`} supported={true} featureType={ShareableFeatureType.keyCodes} >
             <div className="flex">
                 <div className="MakeCustomCodes flex flex-col">
                     <label>

@@ -43,13 +43,17 @@ export default function MainView(props: MainViewProps) {
         }
     }
     const mouseEnter = (event: Event) => {
-        const description = props.description
-        const title = props.title
-        //@ts-ignore
-        toolTip.Show(event.clientX, event.clientY, title, description)
+        if (props.description) {
+            const description = props.description
+            const title = props.title
+            //@ts-ignore
+            toolTip.Show(event.clientX, event.clientY, title, description)
+        }
     }
     const mouseLeave = (event: Event) => {
-        toolTip.Hide()
+        if (props.description) {
+            toolTip.Hide()
+        }
     }
 
     return (
