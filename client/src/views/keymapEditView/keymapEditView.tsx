@@ -13,7 +13,8 @@ import {
     DragDropSensors,
 } from "@thisbeyond/solid-dnd";
 import Button from "../../components/button/button";
-import ShareFeature from "../../components/shareFeature/shareFeature";
+import MainView from '../../components/mainView/mainView'
+// import ShareFeature from "../../components/shareFeature/shareFeature";
 
 
 const clientManager = ClientManager.getInstance()
@@ -69,7 +70,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
                     {props.isLed ?
                         <LedEdit /> : <UsableKeyCodeDisplay />
                     }
-                    <ShareFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} />
+                    {/* <ShareFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} /> */}
 
                 </>
             );
@@ -77,13 +78,16 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
     }
 
     return (
-        <div className="keymapEditView flex flex-col bg-purple-500 w-full h-full">
-            <DragDropProvider>
-                <DragDropSensors>
-                    {returnEditView()}
-                </DragDropSensors>
-            </DragDropProvider>
-        </div>
+        <MainView title='Keymap Editor' description={""}>
+            <div className="keymapEditView flex flex-col bg-purple-500 w-full h-full">
+                <DragDropProvider>
+                    <DragDropSensors>
+                        {returnEditView()}
+                    </DragDropSensors>
+                </DragDropProvider>
+            </div>
+        </MainView>
+
     );
 
 
