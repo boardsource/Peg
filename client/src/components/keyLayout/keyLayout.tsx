@@ -22,6 +22,7 @@ type KeyLayoutProps = {
     isLed: boolean
     isEncoder: boolean
 };
+import ShareFeature from "../../components/shareFeature/shareFeature";
 
 export default function KeyLayout(props: KeyLayoutProps) {
     const [keys, setKeys] = createSignal({ ...keymap.keyLayout })
@@ -111,7 +112,7 @@ export default function KeyLayout(props: KeyLayoutProps) {
 
     return (
         // keymap board container
-        <div className="keyLayout bg-orange-200 h-[340px]" style={returnHeight()}>
+        <div className="keyLayout relative h-[320px]" style={returnHeight()}>
             <div className=" keyLayout__keys">
                 <For each={returnRenderLayout()} fallback={<div>Loading...</div>}>
                     {(layoutKey, index) => (
@@ -129,6 +130,11 @@ export default function KeyLayout(props: KeyLayoutProps) {
                 {/* <h3>Layers</h3> */}
                 <LayerSelector isLed={props.isLed} />
             </div>
+            {/* moved keymap edit share here for now, probably need a more permanent spot in the future, maybe the nav, put a papa on it only for positioning */}
+            <div className="keyLayout__share absolute right-0 bottom-0">
+                <ShareFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} />
+            </div>
+
         </div>
     );
 }

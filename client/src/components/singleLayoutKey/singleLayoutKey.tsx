@@ -1,4 +1,4 @@
-import "./singleLayoutKey.css"
+import "./singleLayoutKey.sass"
 import { Show, createSignal, onMount, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 import { KeyCode } from "../../types/types";
@@ -93,10 +93,34 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         }
         return styles
     }
+    // adjust these to change font size of layout key text based on char length break points defined below
+    const returnFontSize = (keyDisplayCode: string, keyCode: string) => {
+        const keyDisplayCodeLength = keyDisplayCode.length
+        const keyCodeLength = keyCode.length
+        const baseSize = 75
+        let length = 0
+        if (keyDisplayCode !== '') {
+            length = keyDisplayCodeLength
+        } else if (keyDisplayCode == '' && keyCode !== '') {
+            length = keyCodeLength
+        } else {
+            return baseSize
+        }
+        if (length > 0 && length <= 2) {
+            return 190
+        } else if (length >= 3 && length <= 5) {
+            return 130
+        } else if (length >= 6 && length <= 8) {
+            return 90
+        } else {
+            return baseSize
+        }
+    }
+
     const returnClasses = () => {
         //classes you want to apply all the time
         let classes = `
-        border border-black
+        border border-black rounded-[.275rem] hover:rounded-lg transition-all
          `
         if (props.isLed && props.code.code === "LED") {
             // underglow led on the led tab
@@ -112,7 +136,6 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         } else {
             // normal key not on the led tab 
             classes += `
-            rounded-sm
             `
         }
         return classes
@@ -142,21 +165,36 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             classList={{ "!droppable-accept": droppable.isActiveDroppable }}
             className={`singleLayoutKey  ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""} ${returnClasses()}  `}
             // style keys here for top layout top layout key styles
-
             style={returnStyles()}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
 
-            <button onClick={mainButtonPress} className="singleLayoutKey__main">
+            <button onClick={mainButtonPress} className={`singleLayoutKey__main w-full k${state.code.display}`}>
                 <Show when={state.code.canHaveSub} fallback={""}>
 
                     {state.code.display !== "" ? state.code.display : state.code.code}
                     <br />
                 </Show>
-                {state.code.canHaveSub ?
-                    state.subCode?.display !== "" ? state.subCode?.display : state.subCode?.code
-                    : state.code.display !== "" ? state.code.display : state.code.code}
+                <svg width="100%"
+                    height="100%"
+                    viewBox="0 0 500 100"
+                    preserveAspectRatio="xMinYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" className=''>
+                    <text
+                        x="50%"
+                        y="50%"
+                        dominant-baseline="middle"
+                        text-anchor="middle"
+                        fill="black"
+                        font-size={returnFontSize(state.code.display, state.code.code)}
+                    >  {state.code.canHaveSub ?
+                        state.subCode?.display !== "" ? state.subCode?.display : state.subCode?.code
+                        : state.code.display !== "" ? state.code.display : state.code.code}
+                    </text>
+                </svg>
+
             </button>
             <Show when={state.code.canHaveSub} fallback={""}>
                 <button onClick={clearButtonPress} className="singleLayoutKey__clear">

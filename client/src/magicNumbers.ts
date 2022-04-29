@@ -1,7 +1,7 @@
 const root = document.documentElement;
 export const magicNumbers = {
     keyMultiplyer: 42,
-    usableKeyMultiplier: 34,
+    usableKeyMultiplier: 32,
     oledPixel: 5
 }
 root.style.setProperty('--keyMultiplyer', magicNumbers.keyMultiplyer + "px");

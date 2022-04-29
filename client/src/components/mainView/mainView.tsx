@@ -58,8 +58,9 @@ export default function MainView(props: MainViewProps) {
 
     return (
         <div className="mainview flex flex-col bg-red-100 flex-1 items-start">
+
             <div className="flex">
-                <h1 className="flex mb-4 text-xl text-[22px] mb-0 tracking-wide truncate">
+                <h1 className="flex mb-4 text-xl text-[22px] mb-3 tracking-wide truncate">
                     {props.title}
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="h-4 w-4 fill-slate-300 ml-1 mt-.75"

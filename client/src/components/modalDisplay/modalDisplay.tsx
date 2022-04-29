@@ -5,6 +5,7 @@ import { createStore } from "solid-js/store";
 import { Modal } from "../../logic/modal";
 import { ModalDefault } from "../../types/types";
 import { SplitFlashManager } from "../splitFlashManager/splitFlashManager";
+import { Transition } from 'solid-transition-group'
 
 
 
@@ -48,28 +49,42 @@ export default function ModalDisplay(props: ModalDisplayDisplayProps) {
     }
 
     return (
-        <Show when={state.visable} fallback={""}>
-            <div id="defaultModal" tabindex="-1" aria-hidden="true" class=" overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-                <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                    {/* <!-- Modal content --> */}
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        {/* <!-- Modal header --> */}
-                        <div class="flex justify-between items-start p-5 rounded-t border-b dark:border-gray-600">
-                            <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
-                                {state.title}
-                            </h3>
-                            {returnClose()}
-                        </div>
-                        {/* <!-- Modal body --> */}
-                        <div class="">
-                            {returnContent()}
+        <Transition
+            onEnter={(el, done) => {
+                const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+                    duration: 400
+                });
+                a.finished.then(done);
+            }}
+            onExit={(el, done) => {
+                const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+                    duration: 400
+                });
+                a.finished.then(done);
+            }}
+        >
+            <Show when={state.visable} fallback={""}>
+
+                <div id="defaultModal" tabindex="-1" aria-hidden="true" class="flex flex-col justify-center align-center items-center content-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full backdrop-blur-sm">
+                    <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+                        {/* <!-- Modal content --> */}
+                        <div class="relative bg-base-100 rounded-lg shadow dark:bg-gray-700 !rounded-2xl overflow-hidden p-5">
+                            {/* <!-- Modal header --> */}
+                            <div class="flex justify-between items-start border-b dark:border-gray-600 mb-2">
+                                <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
+                                    {state.title}
+                                </h3>
+                                {returnClose()}
+                            </div>
+                            {/* <!-- Modal body --> */}
+                            <div class="">
+                                {returnContent()}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </Show>
+            </Show >
+        </Transition>
     );
-
-
 
 }
