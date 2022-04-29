@@ -5,6 +5,8 @@ import { ClientManager } from "../../logic/clientManager";
 import { KeyCodes } from "../../logic/keycodes";
 import ShareFeature from "../../components/shareFeature/shareFeature";
 import Button from "../../components/button/button";
+import DownloadFeature from "../../components/downloadFeature/downloadFeature";
+import MainView from "../../components/mainView/mainView";
 const clientManager = ClientManager.getInstance()
 const keycodes = KeyCodes.getInstance()
 
@@ -71,67 +73,70 @@ export default function MakeCustomCodes() {
     }
 
     return (
-        <div className="flex">
-            <div className="MakeCustomCodes flex flex-col">
-                <label>
-                    Display text:
-                    <input type="text" name="display" onChange={onChange} value={state.display} />
-                </label>
-                <label>
-                    String to send text:
-                    <input type="text" name="code" onChange={onChange} value={state.code} />
-                </label>
-                <label>
-                    Description text:
-                    <input type="text" name="description" onChange={onChange} value={state.description} />
-                </label>
-                <button className="border-solid border-2 border-sky-500" onClick={saveKey}>
-                    Save Key
-                </button>
-                <button className="border-solid border-2 border-sky-500" onClick={() => setState({ showImport: !state.showImport })}>
-                    {!state.showImport ? " Show Import Key Codes" : "Hide Import Key Codes"}
-                </button>
-                {renderImport()}
-                <button className="border-solid border-2 border-sky-500" onClick={() => { setState({ showExport: !state.showExport }); exportCodes() }}>
-                    {!state.showExport ? " Show Export Key Codes" : "Hide Export Key Codes"}
-                </button>
-                {renderExport()}
+        <MainView title="Custom Keycodes" supported={true} featureType={ShareableFeatureType.keyCodes} >
+            <div className="flex">
+                <div className="MakeCustomCodes flex flex-col">
+                    <label>
+                        Display text:
+                        <input type="text" name="display" onChange={onChange} value={state.display} />
+                    </label>
+                    <label>
+                        String to send text:
+                        <input type="text" name="code" onChange={onChange} value={state.code} />
+                    </label>
+                    <label>
+                        Description text:
+                        <input type="text" name="description" onChange={onChange} value={state.description} />
+                    </label>
+                    <button className="border-solid border-2 border-sky-500" onClick={saveKey}>
+                        Save Key
+                    </button>
+                    <button className="border-solid border-2 border-sky-500" onClick={() => setState({ showImport: !state.showImport })}>
+                        {!state.showImport ? " Show Import Key Codes" : "Hide Import Key Codes"}
+                    </button>
+                    {renderImport()}
+                    <button className="border-solid border-2 border-sky-500" onClick={() => { setState({ showExport: !state.showExport }); exportCodes() }}>
+                        {!state.showExport ? " Show Export Key Codes" : "Hide Export Key Codes"}
+                    </button>
+                    {renderExport()}
 
 
-            </div>
-            <div className="flex flex-col">
 
-                custom codes
-                <For each={Array.from(keycodes.customCodes.values())} fallback={<div>Loading...</div>}>
-                    {(key) =>
-                        <div>
-                            <p>
-                                code: {key.code}
-                            </p>
-                            <p>
-                                display: {key.display}
-                            </p>
-                            <p>
-                                Description: {key.Description}
-                            </p>
-                            <div className="flex">
-                                <ShareFeature featureType={ShareableFeatureType.keyCodes} keycode={key} />
-                                <Button
-                                    selected={true}
-                                    onClick={() => {
-                                        //@ts-ignore
-                                        keycodes.RemoveCustomCode(key.code)
-                                    }}>
-                                    delete
-                                </Button>
+                </div>
+                <div className="flex flex-col">
+
+                    custom codes
+                    <For each={Array.from(keycodes.customCodes.values())} fallback={<div>Loading...</div>}>
+                        {(key) =>
+                            <div>
+                                <p>
+                                    code: {key.code}
+                                </p>
+                                <p>
+                                    display: {key.display}
+                                </p>
+                                <p>
+                                    Description: {key.Description}
+                                </p>
+                                <div className="flex">
+                                    <ShareFeature featureType={ShareableFeatureType.keyCodes} keycode={key} />
+                                    <Button
+                                        selected={true}
+                                        onClick={() => {
+                                            //@ts-ignore
+                                            keycodes.RemoveCustomCode(key.code)
+                                        }}>
+                                        delete
+                                    </Button>
+                                </div>
+
                             </div>
+                        }
+                    </For>
+                </div>
 
-                        </div>
-                    }
-                </For>
             </div>
-
-        </div>
+        </MainView>
     );
 
 

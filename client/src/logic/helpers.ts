@@ -8,19 +8,38 @@ import { Toast } from "./toast";
 
 export const isColor = (color: any): color is Color => "r" in color
 export const isKeyCode = (keyCode: any): keyCode is KeyCode => "code" in keyCode
-export const ShareableFeatureToDisplayWord = (featureType: ShareableFeatureType) => {
+export const ShareableFeatureToDisplayWord = (featureType: ShareableFeatureType, plural?: boolean) => {
     switch (featureType) {
         case ShareableFeatureType.keyMaps:
-            return "Key Map"
+            if (plural) {
+                return "Key Maps"
+            } else {
+                return "Key Map"
+            }
         case ShareableFeatureType.ledMaps:
-            return "Led Map"
+            if (plural) {
+                return "Led Maps"
+            } else {
+                return "Led Map"
+            }
         case ShareableFeatureType.keyCodes:
-            return "Keycode"
+            if (plural) {
+                return "Keycodes"
+            } else {
+                return "Keycode"
+            }
         case ShareableFeatureType.oleds:
-            return "Oled"
+            if (plural) {
+                return "Oleds"
+            } else {
+                return "Oled"
+            }
         case ShareableFeatureType.codeBlocks:
-            return "Code Block"
-
+            if (plural) {
+                return "Code Blocks"
+            } else {
+                return "Code Block"
+            }
     }
 
 }

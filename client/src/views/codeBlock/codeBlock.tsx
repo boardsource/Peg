@@ -26,7 +26,10 @@ export default function LED() {
         )
     }
     return (
-        <MainView title="Code Block">
+        <MainView title="Code Block" description={`A code block is a way for you to run some custom code and keep it around. 
+        Is there a feature you want but not supported by PEG? 
+        configure it though code and keep it in your keymap as you configure everything else with PEG.
+         This  view will let you see your code block `} supported={true} featureType={ShareableFeatureType.codeBlocks}>
             <Show when={codeBlock()} fallback={fallBack()}>
                 <p>
                     Your current code block is:
@@ -37,8 +40,7 @@ export default function LED() {
                         # codeblock
                     </code>
                 </p>
-                <ShareFeature featureType={ShareableFeatureType.codeBlocks} />
-                <DownloadFeature featureType={ShareableFeatureType.codeBlocks} />
+
             </Show>
 
 
