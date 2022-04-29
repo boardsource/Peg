@@ -38,9 +38,9 @@ export default function Root() {
 
 
             <Routes>
-              <Route path="/index.html" element={<KeymapEditView isLed={false} isEncoder={false} />} />
-              <Route path="/index.html/led" element={<KeymapEditView isLed={true} isEncoder={false} />} />
-              <Route path="/index.html/encoder" element={<KeymapEditView isLed={false} isEncoder={true} />} />
+              <Route path="/index.html" element={<KeymapEditView isLed={false} isEncoder={false} title="Keymap" />} />
+              <Route path="/index.html/led" element={<KeymapEditView isLed={true} isEncoder={false} title="LED" />} />
+              <Route path="/index.html/encoder" element={<KeymapEditView isLed={false} isEncoder={true} title="Encoder" />} />
               <Route path="/index.html/oled" element={<OLED />} />
               <Route path="/index.html/codeblock" element={<CodeBlock />} />
               <Route path="/index.html/makeCustom" element={<MakeCustomCodes />} />

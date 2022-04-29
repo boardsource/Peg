@@ -1,191 +1,191 @@
 [
     {
-        "code": "KC.TILDE",
-        "display": "~",
+        "code": "KC.RGB_HUI",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "~"
+        "Description": "Increase Hue"
     },
     {
-        "code": "KC.EXCLAIM",
-        "display": "!",
+        "code": "KC.RGB_HUD",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "!"
+        "Description": "Decrease Hue"
     },
     {
-        "code": "KC.AT",
-        "display": "@",
+        "code": "KC.RGB_SAI",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "@"
+        "Description": "Increase Saturation"
     },
     {
-        "code": "KC.HASH",
-        "display": "#",
+        "code": "KC.RGB_SAD",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "#"
+        "Description": "Decrease Saturation"
     },
     {
-        "code": "KC.DOLLAR",
-        "display": "$",
+        "code": "KC.RGB_VAI",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "$"
+        "Description": "Increase Value"
     },
     {
-        "code": "KC.PERCENT",
-        "display": "%",
+        "code": "KC.RGB_VAD",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "%"
+        "Description": "Decrease Value"
     },
     {
-        "code": "KC.CIRCUMFLEX",
-        "display": "^",
+        "code": "KC.RGB_ANI",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "^"
+        "Description": "Increase animation speed"
     },
     {
-        "code": "KC.AMPERSAND",
-        "display": "&",
+        "code": "KC.RGB_AND",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "&"
+        "Description": "Decrease animation speed"
     },
     {
-        "code": "KC.ASTERISK",
-        "display": "*",
+        "code": "KC.RGB_MODE_PLAIN",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "*"
+        "Description": "Static RGB"
     },
     {
-        "code": "KC.LEFT_PAREN",
-        "display": "(",
+        "code": "KC.RGB_MODE_BREATHE",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "("
+        "Description": "Breathing animation"
     },
     {
-        "code": "KC.RIGHT_PAREN",
-        "display": ")",
+        "code": "KC.RGB_MODE_RAINBOW",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": ")"
+        "Description": "Rainbow animation"
     },
     {
-        "code": "KC.UNDERSCORE",
-        "display": "_",
+        "code": "KC.RGB_MODE_BREATHE_RAINBOW",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "_"
+        "Description": "Breathing rainbow animation"
     },
     {
-        "code": "KC.PLUS",
-        "display": "+",
+        "code": "KC.RGB_MODE_KNIGHT",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "+"
+        "Description": "Knightrider animation"
     },
     {
-        "code": "KC.LEFT_CURLY_BRACE",
-        "display": "{",
+        "code": "KC.RGB_MODE_SWIRL",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "{"
+        "Description": "Swirl animation"
     },
     {
-        "code": "KC.RIGHT_CURLY_BRACE",
-        "display": "}",
+        "code": "KC.LED_TOG",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "}"
+        "Description": "Toggles LED's"
     },
     {
-        "code": "KC.PIPE",
-        "display": "|",
+        "code": "KC.LED_INC",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "|"
+        "Description": "Increase Brightness"
     },
     {
-        "code": "KC.COLON",
-        "display": ":",
+        "code": "KC.LED_DEC",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": ":"
+        "Description": "Decrease Brightness"
     },
     {
-        "code": "KC.DOUBLE_QUOTE",
-        "display": "\"",
+        "code": "KC.LED_ANI",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "KC.DQT"
+        "Description": "Increase animation speed"
     },
     {
-        "code": "KC.LEFT_ANGLE_BRACKET",
-        "display": "<",
+        "code": "KC.LED_AND",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "KC.LT"
+        "Description": "Decrease animation speed"
     },
     {
-        "code": "KC.RIGHT_ANGLE_BRACKET",
-        "display": ">",
+        "code": "KC.LED_MODE_PLAIN",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "KC.GT"
+        "Description": "Static LED's"
     },
     {
-        "code": "KC.QUESTION",
-        "display": "?",
+        "code": "KC.LED_MODE_BREATHE",
+        "display": "",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "?"
+        "Description": "Breathing animation"
     }
 ]

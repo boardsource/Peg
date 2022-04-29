@@ -160,6 +160,10 @@ export class KeyMap extends Subscribable {
                         currentClientManager.sendToBackend(ElectronEvents.ReadOled, 2)
                         currentClientManager.sendToBackend(ElectronEvents.ReadOled, 3)
                         currentClientManager.sendToBackend(ElectronEvents.ReadOled, 4)
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 5)
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 6)
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 7)
+                        currentClientManager.sendToBackend(ElectronEvents.ReadOled, 8)
                     } else {
                         this.oled.imgReactionType = OledReactionType.static
                         const currentClientManager = ClientManager.getInstance()

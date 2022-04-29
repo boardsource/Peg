@@ -1,5 +1,6 @@
 import { createSignal, For, onCleanup, Show } from 'solid-js'
 import Button from '../../components/button/button'
+import DownloadFeature from '../../components/downloadFeature/downloadFeature'
 import LayerSelector from '../../components/layerSelector/layerSelector'
 import LoopOverEnum from '../../components/loopOverEnum/loopOverEnum'
 import MainView from '../../components/mainView/mainView'
@@ -68,7 +69,9 @@ export default function OLED() {
         }
     }
     return (
-        <MainView title='OLED' description={""}>
+        <MainView title='OLED' description={`
+        Oles are small displays that can be installed on your keyboard, They can do a wide range of things from show a picture or your current layer. This view will let you configure this feature
+        `} supported={keymap.keyLayout && keymap.keyLayout.features.oled} featureType={ShareableFeatureType.oleds}>
             <Toggle label="flipDisplay" name="flip" value={flip()} onChange={flipDisplay} />
             <div className="flex flex-row">
                 <LoopOverEnum enum={OledDisplayType} buttonOnClick={changeOledDisplayType} selected={OledType()} defaultButtons />
@@ -80,7 +83,8 @@ export default function OLED() {
             <Button selected={changesMade()} onClick={saveMap} >
                 save
             </Button>
-            <ShareFeature featureType={ShareableFeatureType.oleds} />
+
+
 
         </MainView>
 

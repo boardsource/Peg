@@ -3,7 +3,7 @@ import { ClientManager } from "./clientManager"
 import { Subscribable } from "./subscribable"
 export class Oled extends Subscribable {
     display: number[][]
-    layers: number[][][] = [[], [], [], []]
+    layers: number[][][] = [[], [], [], [], [], [], [], []]
     displayType: OledDisplayType = OledDisplayType.image
     imgReactionType: OledReactionType = OledReactionType.layer
     currentSelectedLayer: number = 0
@@ -23,10 +23,10 @@ export class Oled extends Subscribable {
 
     makeTextDisplayBlank() {
         this.textDisplay = [
-            { 0: OledReactionType.layer, 1: ["", "", "", ""] },
-            { 0: OledReactionType.layer, 1: ["", "", "", ""] },
-            { 0: OledReactionType.layer, 1: ["", "", "", ""] },
-            { 0: OledReactionType.layer, 1: ["", "", "", ""] },
+            { 0: OledReactionType.layer, 1: ["", "", "", "", "", "", "", ""] },
+            { 0: OledReactionType.layer, 1: ["", "", "", "", "", "", "", ""] },
+            { 0: OledReactionType.layer, 1: ["", "", "", "", "", "", "", ""] },
+            { 0: OledReactionType.layer, 1: ["", "", "", "", "", "", "", ""] },
         ]
     }
     returnBlackScreen() {
@@ -198,6 +198,10 @@ export class Oled extends Subscribable {
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[1], fileNumber: 2 })
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[2], fileNumber: 3 })
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[3], fileNumber: 4 })
+                        currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[4], fileNumber: 5 })
+                        currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[5], fileNumber: 6 })
+                        currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[6], fileNumber: 7 })
+                        currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[7], fileNumber: 8 })
                         break
                     case OledReactionType.static:
                         pegmapString = ` OledData(image={0:${this.oledReactionTypeToString(OledReactionType.static)},1:["1.bmp"]})`
