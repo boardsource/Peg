@@ -36,8 +36,11 @@ export class ProgramSettings extends Subscribable {
         return this._apiUrl;
     }
     public set PPP(newValue: boolean) {
-        this._PPP = newValue
-        this.updateSubScribers()
+        if (this._PPP !== newValue) {
+            this._PPP = newValue
+            this.updateSubScribers()
+        }
+
     }
     public get PPP() {
         return this._PPP;
