@@ -111,7 +111,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
                     </DragDropSensors>
                 </DragDropProvider>
             </div>
-        </MainView
+        </MainView>
     );
 
 

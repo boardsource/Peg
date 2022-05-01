@@ -10,7 +10,8 @@ const createWindow = async () => {
     show: false,
     width: 1280,
     height: 720,
-
+    maxWidth: 1280,
+    maxHeight: 720,
     minWidth: 1280,
     minHeight: 720,
     icon: `file://${__dirname}/../peg.png`,
@@ -201,6 +202,20 @@ ipcMain.on(ElectronEvents.ReadOled, (event: Electron.IpcMainEvent, fileNumber: n
   }
 }
 )
+
+ipcMain.on(ElectronEvents.SetProPlan, (event: Electron.IpcMainEvent, id: string) => {
+  if (pegApp) {
+    pegApp.saveProPlan(event, id)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.saveProPlan(event, id)
+
+    }
+  }
+}
+)
+
 
 
 ipcMain.on(ElectronEvents.FilePicker, async (event: Electron.IpcMainEvent, file: string,) => {

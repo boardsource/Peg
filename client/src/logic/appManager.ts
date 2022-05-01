@@ -8,6 +8,7 @@ export class AppManager {
     constructor(bWin: Electron.BrowserWindow) {
         this.diskManager = new DiskManager(this)
         this.win = bWin;
+        this.diskManager.readProPlan()
     }
 
     run() {
@@ -51,6 +52,10 @@ export class AppManager {
 
     public writeFile(event: Electron.IpcMainEvent, data: { fileData: string, path: string[] }) {
         this.diskManager.writeData(data)
+    }
+
+    public saveProPlan(event: Electron.IpcMainEvent, id: string) {
+        this.diskManager.setProPlan(id)
     }
 
     public SendMiscEvent(event: ElectronEvents, data: any) {

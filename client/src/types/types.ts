@@ -101,6 +101,8 @@ export enum ElectronEvents {
     ReadCustomCodes = "ReadCustomCodes",
     SaveSettings = "SaveSettings",
     SaveCustomCodes = "SaveCustomCodes",
+    SetProPlan = "SetProPlan",
+    IsProPlan = "IsProPlan",
     WindowClose = "WindowClose",
     WindowFullScreen = "WindowFullScreen",
     WindowMinimize = "WindowMinimize",

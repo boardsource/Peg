@@ -1,9 +1,10 @@
-import { KeyCode, ShareableFeatureType } from "../types/types";
+import { ElectronEvents, KeyCode, ShareableFeatureType } from "../types/types";
 import { Color } from "./color";
 import { KeyMap } from "./keymapManager";
 import { ProgramSettings } from "./programSettings";
 import axios from "axios"
 import { Toast } from "./toast";
+import { ClientManager } from "./clientManager";
 
 
 export const isColor = (color: any): color is Color => "r" in color
@@ -88,5 +89,25 @@ export const remoteContentPoster = async (title: string,
         Toast.Error(`Error in posting your ${displayWord}`)
     })
 
+
+}
+
+
+export const logIn = (email: string, password: string) => {
+    const programSettings = ProgramSettings.getInstance()
+
+    axios.post(`${programSettings.apiUrl}account/login`, { email, password }).then(response => {
+        if (response.status === 200) {
+            const clientManager = ClientManager.getInstance()
+            clientManager.sendToBackend(ElectronEvents.SetProPlan, response.data.id)
+            Toast.Success(`Signed in`)
+        } else {
+            Toast.Error(`Error when signing in`)
+
+        }
+    }).catch(error => {
+        console.log("error in posting ")
+        Toast.Error(`Error when signing in`)
+    })
 
 }

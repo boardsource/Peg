@@ -228,7 +228,7 @@ export class KeyMap extends Subscribable {
     }
     layersToString() {
         let keymapString: string[] = this.keymap.map((layer, index) => {
-            const tempLayer = this.encoderMap.length === 4 ? [...layer, ...this.encoderMap[index]] : layer
+            const tempLayer = this.encoderMap.length > 0 ? [...layer, ...this.encoderMap[index]] : layer
             const layerToString = tempLayer.map(keycode => this.keycodeToString(keycode)).join(",")
             return `[${layerToString}]`;
         })

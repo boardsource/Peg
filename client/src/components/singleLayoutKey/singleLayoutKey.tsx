@@ -29,7 +29,6 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         if (props.code.code === "LED") {
             const ledIndex = clientManager.keymap.keyLayout.features.perkeyCount + props.index
             // const underGlowLeds = clientManager.keymap.ledMap.slice(clientManager.keymap.keyLayout.features.underglowCount * -1)
-
             return ledIndex
         } else {
             return props.index

@@ -8,8 +8,9 @@ export class ProgramSettings extends Subscribable {
     // private _apiUrl: string = "http://159.89.159.24:300/api/"
     // " real server "
     private _apiUrl: string = "http://159.89.159.24:3000/api/"
-    // localhost for dev workk
+    // localhost for dev work
     // private _apiUrl: string = "http://localhost:8080/api/"
+    private _PPP: boolean = false
 
     private _darkmode: boolean = true;
     version: string = "v0.1"
@@ -32,6 +33,13 @@ export class ProgramSettings extends Subscribable {
     }
     public get apiUrl() {
         return this._apiUrl;
+    }
+    public set PPP(newValue: boolean) {
+        this._PPP = newValue
+        this.updateSubScribers()
+    }
+    public get PPP() {
+        return this._PPP;
     }
     public set apiUrl(newValue: string) {
         this._apiUrl = newValue

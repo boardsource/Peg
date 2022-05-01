@@ -103,6 +103,9 @@ export class ClientManager extends Subscribable {
                 this.ChangeSplitFlashDisplayState(SplitFlashStage.Finished)
             }
         })
+        this.lessonToEvent(ElectronEvents.IsProPlan, () => {
+            this.programSettings.PPP = true
+        })
 
 
         this.programSettings.Subscribe(() => {

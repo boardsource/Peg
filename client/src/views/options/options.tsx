@@ -3,6 +3,9 @@ import { For, createSignal } from 'solid-js'
 import { Notification } from "../../logic/notification";
 import { NotificationColor } from '../../types/types'
 import { Modal } from "../../logic/modal";
+import PppChecker from '../../components/pppChecker/pppChecker';
+import Button from '../../components/button/button';
+import { logIn } from '../../logic/helpers';
 
 const notification = Notification.getInstance()
 
@@ -86,8 +89,10 @@ const openModal = () => {
 
 
 export default function Options() {
+
+  const [email, setEmail] = createSignal(""), [password, setPassword] = createSignal("")
   return (
-   <MainView title="Options" supported={true}>
+    <MainView title="Options" supported={true}>
       <p>options will go here</p>
       <p>testisfng</p>
       <button onClick={() => notification.Show('TESTING', 'this is a test notifiasdfkjsadlfjsadlfjcation', NotificationColor.Green, 5000)}>TEST SHOW</button>
@@ -112,6 +117,33 @@ export default function Options() {
         </div>
 
         <button onClick={openModal}>OPEN MODAL</button>
+
+
+        <PppChecker false>
+          <h2>
+            Log in to gain pro plan features
+          </h2>
+          email:
+          <br />
+          <input type="text" value={email()} onChange={(e) => {
+            //@ts-ignore
+            setEmail(e.target.value)
+          }} />
+          <br />
+          password:
+          <br />
+          <input type="password" value={password()} onChange={(e) => {
+            //@ts-ignore
+            setPassword(e.target.value)
+          }} />
+          <br />
+
+          <Button selected={email() !== "" && password() !== ""} onClick={() => logIn(email(), password())}>
+            Sign in
+          </Button>
+
+
+        </PppChecker>
       </div>
     </MainView >
   )

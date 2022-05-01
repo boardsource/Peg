@@ -93,6 +93,35 @@ export class DiskManager {
         }
 
     }
+    async readProPlan() {
+        console.log("reading proplan")
+        try {
+            const tmpPath = path.join(app.getPath("temp"), 'ppp.temp')
+            const data = await fs.readFile(tmpPath, 'utf8');
+            console.log("data", data)
+            this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
+
+
+        } catch (error) {
+            console.log("error in reading pro plan", error)
+            return ""
+        }
+    }
+
+    async setProPlan(id: string) {
+        try {
+
+            console.log("settings pro plan", id)
+            const data = id
+            const tmpPath = path.join(app.getPath("temp"), 'ppp.temp')
+            const newFile = await fs.writeFile(tmpPath, data, 'utf8');
+            this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
+
+            // console.log("newFile from cache", newFile)
+        } catch (error) {
+            console.log("error in writing pro plan", error)
+        }
+    }
 
     async readCache(): Promise<string> {
         try {

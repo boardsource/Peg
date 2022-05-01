@@ -5,7 +5,8 @@ import AccountIcon from '../accountIcon/accountIcon'
 export default function Topbar() {
     return (
         <div className="topbar flex w-f flex-1 items-center justify-between">
-            <Searchbar />
+            <div></div>
+            {/* <Searchbar /> */}
 
             <div className="topbar__right flex">
                 <div className="topbar__right__connectivitystatus self-center mr-6">
