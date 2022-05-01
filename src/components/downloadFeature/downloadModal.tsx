@@ -1,10 +1,13 @@
 import { createSignal, For, onCleanup, onMount, Show } from "solid-js"
 import { isKeyCode, ShareableFeatureToDisplayWord } from "../../logic/helpers"
+import { ProgramSettings } from "../../logic/programSettings"
 import { RemoteContentManager } from "../../logic/remoteContentManager"
 import { FeatureResponse, KeyCode, ShareableFeatureType } from "../../types/types"
 import Button from "../button/button"
 import Paragraph from "../paragraph/paragraph"
+import PppChecker from "../pppChecker/pppChecker"
 import Searchbar from "../searchbar/searchbar"
+const programSettings = ProgramSettings.getInstance()
 
 type ShareModalProps = {
     featureType: ShareableFeatureType
@@ -207,9 +210,19 @@ export default function DownloadModal(props: ShareModalProps) {
     }
 
     return (
-
-        <div className="DownloadModal">
-            {returnCorrectView()}
-        </div>
+        <PppChecker fallback={(
+            <div>
+                <h2>Pro Account Feature</h2>
+                <p>
+                    This feature is limited to pro accounts, pick up a pro account
+                    <a href={programSettings.PppBuyLink} target="blank"> here</a> to unlock the ability to download {ShareableFeatureToDisplayWord(props.featureType)}
+                    and many more features.
+                </p>
+            </div>
+        )}>
+            <div className="DownloadModal">
+                {returnCorrectView()}
+            </div>
+        </PppChecker>
     )
 }

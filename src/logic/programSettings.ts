@@ -11,6 +11,7 @@ export class ProgramSettings extends Subscribable {
     // localhost for dev work
     // private _apiUrl: string = "http://localhost:8080/api/"
     private _PPP: boolean = false
+    PppBuyLink: string = "https://boardsource.xyz/store/5f2efc462902de7151495057"
 
     private _darkmode: boolean = true;
     version: string = "v0.1"

@@ -42,11 +42,12 @@
   },
   "scripts": {
     "start": "solid-scripts start",
-    "build": "solid-scripts build",
+    "solid-build": "solid-scripts build",
     "test": "solid-scripts test",
-    "postinstall": "electron-builder install-app-deps",
     "electron:dev": "concurrently \"cross-env BROWSER=none npm run start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
-    "electron:build": "npm run build && tsc -p electron && electron-builder"
+    "electron:build": "npm run solid-build && tsc -p electron && electron-builder",
+    "build": "npm run solid-build && tsc -p electron",
+    "postinstall": "electron-builder install-app-deps"
   },
   "build": {
     "extends": null,
