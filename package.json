@@ -1,6 +1,6 @@
 {
   "name": "caring-client",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "homepage": ".",
   "main": "build/electron/main.js",
