@@ -78,7 +78,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
          `
         if (props.isLed && clientManager.keymap.keyLayout?.features.perkey && state.color) {
             // if it is a normal keycode on the led tab. And the keyboard supports per key and we have a led map
-            styles += `color: rgb(${state.color.r},${state.color.g},${state.color.b});`
+            styles += `fill: rgb(${state.color.r},${state.color.g},${state.color.b});`
         }
         if (props.isLed && props.code.code === "LED") {
             //if the key is on the led tab and it is a under glow led 
@@ -91,6 +91,14 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             // styles += `background: lightgray;`
         }
         return styles
+    }
+    const returnSVGColor = () => {
+        if (props.isLed && clientManager.keymap.keyLayout?.features.perkey && state.color) {
+            // if it is a normal keycode on the led tab. And the keyboard supports per key and we have a led map
+            return ` rgb(${state.color.r},${state.color.g},${state.color.b});`
+        } else {
+            return "black"
+        }
     }
     // adjust these to change font size of layout key text based on char length break points defined below
     const returnFontSize = (keyDisplayCode: string, keyCode: string) => {
@@ -180,13 +188,14 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
                     viewBox="0 0 500 100"
                     preserveAspectRatio="xMinYMid meet"
                     xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" className=''>
+                    className=''>
+                    {/*@ts-ignore*/}
                     <text
                         x="50%"
                         y="50%"
                         dominant-baseline="middle"
                         text-anchor="middle"
-                        fill="black"
+                        fill={returnSVGColor()}
                         font-size={returnFontSize(state.code.display, state.code.code)}
                     >  {state.code.canHaveSub ?
                         state.subCode?.display !== "" ? state.subCode?.display : state.subCode?.code

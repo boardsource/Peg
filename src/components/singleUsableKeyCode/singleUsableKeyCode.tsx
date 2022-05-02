@@ -103,7 +103,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
                     viewBox="0 0 1000 1000"
                     preserveAspectRatio="xMinYMid meet"
                     xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" className=''>
+                    className=''>
                     <text
                         x="50%"
                         y="50%"
