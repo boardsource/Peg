@@ -53,27 +53,33 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             toolTip.Hide()
         }
     }
-    const returnFontSize = (keyDisplayCode: string, keyCode: string) => {
-        const keyDisplayCodeLength = keyDisplayCode.length
-        console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
-        const keyCodeLength = keyCode.length
-        console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
-        const baseSize = 'bg-purple-500'
-        let length = 0
-        if (keyDisplayCode !== '') {
-            length = keyDisplayCodeLength
-        } else if (keyDisplayCode == '' && keyCode !== '') {
-            length = keyCodeLength
-        } else {
-            return baseSize
+    const returnFontSize = () => {
+        if (!isColor(props.code)) {
+            const keyDisplayCode = props.code.display, keyCode = props.code.code
+            const keyDisplayCodeLength = keyDisplayCode.length
+            console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
+            const keyCodeLength = keyCode.length
+            console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
+            const baseSize = 'bg-purple-500'
+            let length = 0
+            if (keyDisplayCode !== '') {
+                length = keyDisplayCodeLength
+            } else if (keyDisplayCode == '' && keyCode !== '') {
+                length = keyCodeLength
+            } else {
+                return baseSize
+            }
+            if (length > 0 && length <= 3) {
+                return 300
+            } else if (length >= 4 && length <= 5) {
+                return 300
+            } else if (length >= 6 && length <= 8) {
+                return 300
+            } else {
+                return 300
+            }
         }
-        if (length > 0 && length <= 3) {
-            return 300
-        } else if (length >= 4 && length <= 5) {
-            return 300
-        } else if (length >= 6 && length <= 8) {
-            return 300
-        } else {
+        else {
             return 300
         }
     }
@@ -87,7 +93,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
-            className={`SingleUsableKeyCode rounded-sm hover:rounded-md transition-all flex ${returnFontSize(props.code.display, props.code.code)}`}
+            className={`SingleUsableKeyCode rounded-sm hover:rounded-md transition-all flex ${returnFontSize()}`}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
