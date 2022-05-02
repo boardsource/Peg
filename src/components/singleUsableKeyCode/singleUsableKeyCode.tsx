@@ -53,6 +53,30 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             toolTip.Hide()
         }
     }
+    const returnFontSize = (keyDisplayCode: string, keyCode: string) => {
+        const keyDisplayCodeLength = keyDisplayCode.length
+        console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
+        const keyCodeLength = keyCode.length
+        console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
+        const baseSize = 'bg-purple-500'
+        let length = 0
+        if (keyDisplayCode !== '') {
+            length = keyDisplayCodeLength
+        } else if (keyDisplayCode == '' && keyCode !== '') {
+            length = keyCodeLength
+        } else {
+            return baseSize
+        }
+        if (length > 0 && length <= 3) {
+            return 300
+        } else if (length >= 4 && length <= 5) {
+            return 300
+        } else if (length >= 6 && length <= 8) {
+            return 300
+        } else {
+            return 300
+        }
+    }
 
     return (
 
@@ -63,11 +87,31 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
-            className="SingleUsableKeyCode"
+            className={`SingleUsableKeyCode rounded-sm hover:rounded-md transition-all flex ${returnFontSize(props.code.display, props.code.code)}`}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            {isKeyCode(props.code) ? props.code.display !== "" ? props.code.display : props.code.code : ""}
+            <div className='codeContainer'>
+                <svg width="100%"
+                    height='100%'
+                    viewBox="0 0 1000 1000"
+                    preserveAspectRatio="xMinYMid meet"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" className=''>
+                    <text
+                        x="50%"
+                        y="50%"
+                        dominant-baseline="middle"
+                        text-anchor="middle"
+                        fill="black"
+                        font-size='120'
+                    >
+
+                        {isKeyCode(props.code) ? props.code.display !== "" ? props.code.display : props.code.code : ""}
+                    </text>
+                </svg>
+            </div>
+
         </button>
     );
 }
