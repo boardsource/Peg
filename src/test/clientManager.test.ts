@@ -19,13 +19,14 @@ describe("tests for client manager", () => {
 
         const clientManger = ClientManager.getInstance()
         const index = 1
-        const layer = 1
         const isLed = true
-        clientManger.NoticeThatKeyIsWaiting(index, layer, isLed)
+        const isEncoder = true
+        clientManger.NoticeThatKeyIsWaiting(index, isLed, isEncoder)
 
         expect(clientManger.waitingIndex).toBe(index);
-        expect(clientManger.waitingLayer).toBe(layer);
         expect(clientManger.waitingIsLed).toBe(isLed);
+        expect(clientManger.waitingIsEncoder).toBe(isEncoder);
+
     });
     it("is a singleton", () => {
         //@ts-ignore
@@ -40,12 +41,13 @@ describe("tests for client manager", () => {
 
         const secondManger = ClientManager.getInstance()
         const index = 1
-        const layer = 1
         const isLed = true
-        clientManger.NoticeThatKeyIsWaiting(index, layer, isLed)
+        const isEncoder = true
+        clientManger.NoticeThatKeyIsWaiting(index, isLed, isEncoder)
         expect(secondManger.waitingIndex).toBe(index);
-        expect(secondManger.waitingLayer).toBe(layer);
         expect(secondManger.waitingIsLed).toBe(isLed);
+        expect(secondManger.waitingIsEncoder).toBe(isEncoder);
+
     });
     it("you can subscribe to changes", () => {
 
@@ -64,9 +66,9 @@ describe("tests for client manager", () => {
         const clientManger = ClientManager.getInstance()
         clientManger.Subscribe(changeTestValueOnUpDate)
         const index = 1
-        const layer = 1
         const isLed = true
-        clientManger.NoticeThatKeyIsWaiting(index, layer, isLed)
+        const isEncoder = true
+        clientManger.NoticeThatKeyIsWaiting(index, isLed, isEncoder)
         expect(testValue).toBe(1);
     });
     it("you can unsubscribe to changes", () => {
@@ -87,9 +89,9 @@ describe("tests for client manager", () => {
         const subId = clientManger.Subscribe(changeTestValueOnUpDate)
         clientManger.Unsubscribe(subId)
         const index = 1
-        const layer = 1
         const isLed = true
-        clientManger.NoticeThatKeyIsWaiting(index, layer, isLed)
+        const isEncoder = true
+        clientManger.NoticeThatKeyIsWaiting(index, isLed, isEncoder)
         expect(testValue).toBe(0);
     });
 

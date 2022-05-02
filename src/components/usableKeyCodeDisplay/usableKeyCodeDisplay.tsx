@@ -58,7 +58,7 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
     }
     return (
         <div className="UsableKeyCodeDisplay bg-green-400 flex flex-col flex-1 w-full">
-            <div className="UsableKeyCodeDisplay__options mb-3">
+            <div className="UsableKeyCodeDisplay__options mb-3 flex flex-wrap">
                 <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
                     {(key) =>
                         <Button

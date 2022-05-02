@@ -34,7 +34,10 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             top: ${props.layoutKey.y * (magicNumbers.usableKeyMultiplier + 2)}px;
             width: ${props.layoutKey.w * (magicNumbers.usableKeyMultiplier)}px;
             position:absolute;
+            display: flex
         `
+        } else {
+            style += `width: ${magicNumbers.usableKeyMultiplier}px;`
         }
         if (isColor(props.code)) {
             style += `background: rgb(${props.code.r},${props.code.g},${props.code.b});`
@@ -93,7 +96,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
-            className={`SingleUsableKeyCode rounded-sm hover:rounded-md transition-all flex ${returnFontSize()}`}
+            className={`SingleUsableKeyCode rounded-sm hover:rounded-md transition-all  ${returnFontSize()}`}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >

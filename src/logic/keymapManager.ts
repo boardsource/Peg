@@ -105,7 +105,7 @@ export class KeyMap extends Subscribable {
                 .substring(ledHeaderCharacterCount)
                 .replaceAll(/\s+/g, '')
                 .split("],[")
-            console.log(tempLedMap)
+            // console.log(tempLedMap)
             const colorLeds = tempLedMap.map(led => {
                 const singleLed = led.split(',')
                 return new Color(singleLed[0], singleLed[1], singleLed[2])
@@ -185,7 +185,7 @@ export class KeyMap extends Subscribable {
         const codeblock = baseMap.split("# codeblock")
         if (codeblock.length == 3) {
             this.codeBlock = codeblock[1]
-            console.log("code ", this.codeBlock)
+            // console.log("code ", this.codeBlock)
         }
 
 
@@ -201,7 +201,7 @@ export class KeyMap extends Subscribable {
     public ChangeKey(layer: number, pos: number, newKey: KeyCode, isEncoder: boolean) {
         // todo add in saving old changes for ctrl z 
         if (isEncoder) {
-            console.log("changed kkkey", this)
+            // console.log("changed kkkey", this)
             this.encoderMap[layer][pos] = newKey;
         } else if (this.keymap[layer][pos].canHaveSub && newKey.code != "KC.NO") {
             this.keymap[layer][pos].subOne = newKey;

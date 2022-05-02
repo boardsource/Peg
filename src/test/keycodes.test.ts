@@ -23,11 +23,6 @@ describe("tests for keycodes", () => {
         const keycodeString = "KC.QK"
         const code = keyCodes.KeyCodeForString(keycodeString)
         expect(code.code).toBe(noCode);
-
-
-
-
-
     });
     // it("you can change the time", () => {
 
