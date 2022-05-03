@@ -1,4 +1,6 @@
+import { Color } from "../logic/color";
 import { KeyMap } from "../logic/keymapManager";
+import { OledDisplayType } from "../types/types";
 const mainPy = `
 from kb import KMKKeyboard
 from kmk.keys import KC
@@ -437,6 +439,7 @@ describe("tests for keycodes", () => {
 
     beforeEach(() => {
         keymap = KeyMap.getInstance()
+
     });
     afterEach(() => {
 
@@ -446,18 +449,41 @@ describe("tests for keycodes", () => {
         keymap.ParceLayout(layoutJson)
         expect(keymap.keyLayout).toBeDefined();
     });
+
     it("will parce a keymap", () => {
         keymap.StringToKeymap(mainPy)
         expect(keymap.keymap.length).toBe(8);
         expect(keymap.keymap[0].length).toBe(58);
     });
 
+    it("will parce a keymap with encoders, leds and oleds", () => {
+        keymap.StringToKeymap(mainPy)
+        expect(keymap.encoderMap.length).toBe(8);
+        expect(keymap.encoderMap[0].length).toBe(4);
+        expect(keymap.ledMap.length).toBe(70);
+        expect(keymap.oled?.displayType).toBe(OledDisplayType.text);
+    });
     it("you can change any key", () => {
         const newCode = "KC.Q"
         keymap.StringToKeymap(mainPy)
         expect(keymap.keymap[0][0].code).not.toBe(newCode);
         keymap.ChangeKey(0, 0, keymap.codes.KeyCodeForString(newCode), false)
         expect(keymap.keymap[0][0].code).toBe(newCode);
+    });
+    it("you can change an encoder", () => {
+        const newCode = "KC.Q"
+        keymap.StringToKeymap(mainPy)
+        expect(keymap.encoderMap[0][0].code).not.toBe(newCode);
+        keymap.ChangeKey(0, 0, keymap.codes.KeyCodeForString(newCode), true)
+        expect(keymap.encoderMap[0][0].code).toBe(newCode);
+    });
+
+    it("you can change any led", () => {
+        const newColor = Color.Orange()
+        keymap.StringToKeymap(mainPy)
+        expect(keymap.ledMap[0]).not.toBe(newColor);
+        keymap.ChangeLed(0, 0, newColor)
+        expect(keymap.ledMap[0]).toBe(newColor);
     });
 
     it("can go back to a string", () => {

@@ -60,9 +60,9 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
         if (!isColor(props.code)) {
             const keyDisplayCode = props.code.display, keyCode = props.code.code
             const keyDisplayCodeLength = keyDisplayCode.length
-            console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
+            // console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
             const keyCodeLength = keyCode.length
-            console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
+            // console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
             const baseSize = 'bg-purple-500'
             let length = 0
             if (keyDisplayCode !== '') {

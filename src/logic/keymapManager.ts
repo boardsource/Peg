@@ -63,13 +63,14 @@ export class KeyMap extends Subscribable {
         const encoderCount = encoderMap.length == 3 ? Number(encoderMap[1].replace("#", "")) : 0
 
 
+        this.keymapStr = new Array();
         //todo rework to map
         layers.forEach((match: string) => {
             this.keymapStr.push(match.replaceAll("[", "").replaceAll("]", "").replaceAll(" ", "").split(","));
         });
 
-        this.keymap = [];
-        this.encoderMap = []
+        this.keymap = new Array();
+        this.encoderMap = new Array()
         // todo can this be done in one loop
         //todo rework to map
         this.keymapStr.forEach(layer => {
@@ -89,6 +90,7 @@ export class KeyMap extends Subscribable {
             }
 
         });
+
         this.haveMap = true;
         //RGB MATRIX
         const ledMap = baseMap.split("# ledmap");
@@ -192,7 +194,7 @@ export class KeyMap extends Subscribable {
 
         Toast.Success(`Found your keyboard`)
         this.updateSubScribers()
-        console.log("parsed map", this)
+        // console.log("parsed map", this)
 
 
 

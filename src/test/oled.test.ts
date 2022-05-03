@@ -1,5 +1,6 @@
 //@ts-ignore
 import { Oled } from "../logic/oled";
+import { OledDisplayType, OledReactionType } from "../types/types";
 const oledTestData = `{
     "0": 0,
     "1": 0,
@@ -20571,7 +20572,6 @@ describe("tests for keycodes", () => {
             },
         }
         const uploadDataObj = JSON.parse(oledTestData)
-
         const uploadData: Uint8ClampedArray = new Uint8ClampedArray(Object.values(uploadDataObj))
         const displayExample = JSON.parse(pegDisplayData)
         const layer = 0
@@ -20582,8 +20582,63 @@ describe("tests for keycodes", () => {
 
 
     });
-    it("will return a no code for string that cant be a code", () => {
-        expect(4).toBe(5);
+    it("will let you change a single pixle", () => {
+        // display should start black
+
+        expect(oled.display[0][0]).toStrictEqual(0);
+        oled.UpdateDisplayPixel(0, 0)
+        // should now be changed
+
+        expect(oled.display[0][0]).toStrictEqual(1);
+    });
+    it("will let you change layer", () => {
+        // display should start black
+        expect(oled.display[0][0]).toStrictEqual(0);
+        oled.UpdateDisplayPixel(0, 0)
+        // should now be changed
+        expect(oled.display[0][0]).toStrictEqual(1);
+        oled.ChangeLayer(0, 1)
+        // display should be black again
+        expect(oled.display[0][0]).toStrictEqual(0);
+        // layer 0 should be changed
+        expect(oled.layers[0][0][0]).toStrictEqual(1)
+    });
+    it("will let you wipe the display", () => {
+        // display should start black
+        expect(oled.display[0][0]).toStrictEqual(0);
+        oled.UpdateDisplayPixel(0, 0)
+        // should now be changed
+        expect(oled.display[0][0]).toStrictEqual(1);
+        oled.DisplayBlack()
+        // should be black again
+        expect(oled.display[0][0]).toStrictEqual(0);
+    });
+    it("will parce a string", () => {
+        oled.displayType = OledDisplayType.text
+        const stringFromBoard = `{0:OledReactionType.STATIC,1:["layer"]},{0:OledReactionType.LAYER,1:["1","2","3","4","5","6","7","8"]},{0:OledReactionType.LAYER,1:["base","raise","lower","adjust","5","6","7","8"]},{0:OledReactionType.LAYER,1:["qwerty","nums","shifted","leds","5","6","7","8"]}`
+        oled.FromString(stringFromBoard)
+        //@ts-ignore
+        expect(oled.textDisplay[0][0]).toBe("STATIC");
+        //@ts-ignore
+        expect(oled.textDisplay[0][1][0]).toBe("layer");
+    });
+    it("will let you update a text display", () => {
+        oled.displayType = OledDisplayType.text
+        const testWord = "test"
+        oled.UpdateTextDisplaySection(0, testWord)
+        //@ts-ignore
+        expect(oled.textDisplay[0][0]).toBe("LAYER");
+        //@ts-ignore
+        expect(oled.textDisplay[0][1][0]).toBe(testWord);
+    });
+    it("will let you update a text display reaction type", () => {
+        oled.displayType = OledDisplayType.text
+        //@ts-ignore default 
+        expect(oled.textDisplay[0][0]).toBe("LAYER");
+        oled.UpdateTextDisplaySectionReactionType(0, OledReactionType.static)
+        //@ts-ignore updated
+        expect(oled.textDisplay[0][0]).toBe("STATIC");
+
     });
     // it("you can change the time", () => {
 
