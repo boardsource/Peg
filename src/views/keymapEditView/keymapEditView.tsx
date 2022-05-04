@@ -104,7 +104,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
 
         <MainView title={props.title} supported={isSupported()} description={returnDescription()} featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps}>
 
-            <div className="keymapEditView flex flex-col bg-purple-500 w-full h-full">
+            <div className="keymapEditView flex flex-col w-full h-full">
                 <DragDropProvider>
                     <DragDropSensors>
                         {returnEditView()}

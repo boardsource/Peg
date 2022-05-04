@@ -72,13 +72,17 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     const returnStyles = () => {
         // inline styles that need to be set based off of app state in some way.
         let styles = `
-        left: ${props.layoutKey.x * (magicNumbers.keyMultiplyer + 2)}px;
-        top: ${props.layoutKey.y * (magicNumbers.keyMultiplyer + 2)}px;
+        left: ${props.layoutKey.x * (magicNumbers.keyMultiplyer + 4)}px;
+        top: ${props.layoutKey.y * (magicNumbers.keyMultiplyer + 4)}px;
         width: ${props.layoutKey.w * magicNumbers.keyMultiplyer}px;
          `
         if (props.isLed && clientManager.keymap.keyLayout?.features.perkey && state.color) {
             // if it is a normal keycode on the led tab. And the keyboard supports per key and we have a led map
-            styles += `fill: rgb(${state.color.r},${state.color.g},${state.color.b});`
+            // change this down below also for LED border color
+            styles += `
+            fill: rgb(${state.color.r},${state.color.g},${state.color.b});
+            border: 1px solid rgb(${state.color.r},${state.color.g},${state.color.b}) !important;
+            `
         }
         if (props.isLed && props.code.code === "LED") {
             //if the key is on the led tab and it is a under glow led 
@@ -95,9 +99,9 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     const returnSVGColor = () => {
         if (props.isLed && clientManager.keymap.keyLayout?.features.perkey && state.color) {
             // if it is a normal keycode on the led tab. And the keyboard supports per key and we have a led map
-            return ` rgb(${state.color.r},${state.color.g},${state.color.b});`
+            return `text-[rgb(${state.color.r},${state.color.g},${state.color.b})];`
         } else {
-            return "black"
+            return "border-base-content"
         }
     }
     // adjust these to change font size of layout key text based on char length break points defined below
@@ -127,12 +131,11 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     const returnClasses = () => {
         //classes you want to apply all the time
         let classes = `
-        border border-black rounded-[.275rem] hover:rounded-lg transition-all
+        rounded-lg hover:scale-90 overflow-hidden transition-all border border-base-300
          `
         if (props.isLed && props.code.code === "LED") {
             // underglow led on the led tab
             classes += `
-           
             `
         }
         else if (props.isLed) {
@@ -170,7 +173,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             use:droppable
             class="droppable"
             classList={{ "!droppable-accept": droppable.isActiveDroppable }}
-            className={`singleLayoutKey  ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""} ${returnClasses()}  `}
+            className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""} ${returnClasses()}  `}
             // style keys here for top layout top layout key styles
             style={returnStyles()}
             onMouseEnter={mouseEnter}
@@ -195,7 +198,8 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
                         y="50%"
                         dominant-baseline="middle"
                         text-anchor="middle"
-                        fill={returnSVGColor()}
+                        // fill={returnSVGColor()}
+                        className={returnSVGColor()}
                         font-size={returnFontSize(state.code.display, state.code.code)}
                     >  {state.code.canHaveSub ?
                         state.subCode?.display !== "" ? state.subCode?.display : state.subCode?.code
