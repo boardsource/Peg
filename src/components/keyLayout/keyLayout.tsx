@@ -35,11 +35,12 @@ export default function KeyLayout(props: KeyLayoutProps) {
     onDragEnd(({ draggable, droppable }) => {
         if (droppable) {
             let code: KeyCode | Color
-            const isColor = Color.IsColor(draggable.id)
+            const draggable_id = draggable.id.split(":")[1]
+            const isColor = Color.IsColor(draggable_id)
             if (isColor !== undefined) {
                 code = isColor
             } else {
-                code = keycodes.KeyCodeForString(draggable.id)
+                code = keycodes.KeyCodeForString(draggable_id)
             }
             const [index, encoder] = droppable.id.split(":")
             console.log("drop", droppable.id, index, encoder)

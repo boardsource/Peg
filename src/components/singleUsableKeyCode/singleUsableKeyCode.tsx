@@ -15,10 +15,11 @@ const toolTip = ToolTip.getInstance()
 type SingleUsableKeyCodeProps = {
     code: KeyCode | Color;
     layoutKey: LayoutKey | undefined
+    index: number
 
 };
 export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
-    const draggable = createDraggable(isColor(props.code) ? props.code.toString() : props.code.code);
+    const draggable = createDraggable(isColor(props.code) ? `${props.index}:${props.code.toString()}` : `${props.index}:${props.code.code}`);
     const mainButtonPress = () => {
         clientManager.NoticeToUpdateKey(props.code)
     }
@@ -91,7 +92,8 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
-            className={`SingleUsableKeyCode rounded-sm hover:rounded-md transition-all  ${returnFontSize()}`}
+            className={`SingleUsableKeyCode rounded-sm hover:rounded-md hover:transition-all ${returnFontSize()}`}
+            // transition-all this class is making dnd super laggy 
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >

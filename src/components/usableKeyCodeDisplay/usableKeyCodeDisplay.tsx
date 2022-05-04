@@ -78,12 +78,25 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
 
             </div>
 
-            <div className="UsableKeyCodeDisplay__current">
+            <div className="UsableKeyCodeDisplay__current flex">
                 <UsableKeyCodes
                     //@ts-ignore
                     keycodes={Array.from(keycodes[selectedKeyCodeName()].values())}
                     layout={usesLayout.get(selectedKeyCodeName())}
+                    className="w-3/4"
                 />
+                <div className="flex flex-col w-1/4">
+                    {/* this looks funky but it works maybe just remove the title */}
+                    <h3>Highly used codes</h3>
+                    <UsableKeyCodes
+                        //@ts-ignore
+                        keycodes={Array.from(keycodes.bonusCodes.values())}
+                        layout={undefined}
+                        className="w-full"
+
+                    />
+                </div>
+
             </div>
         </div>
     );
