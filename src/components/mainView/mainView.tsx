@@ -1,13 +1,16 @@
 // import anime from 'animejs/lib/anime.es.js';
-import { onMount } from 'solid-js'
+import { onCleanup, onMount } from 'solid-js'
 // import { Transition } from 'solid-transition-group'
 import { createSignal } from 'solid-js'
+import { ClientManager } from '../../logic/clientManager'
 import { ToolTip } from '../../logic/tooltip'
 import { ShareableFeatureType } from '../../types/types'
+import Button from '../button/button'
 import DownloadFeature from '../downloadFeature/downloadFeature'
 import ShareFeature from '../shareFeature/shareFeature'
 
 const toolTip = ToolTip.getInstance()
+const clientManager = ClientManager.getInstance()
 
 type MainViewProps = {
     title: string,
@@ -18,6 +21,18 @@ type MainViewProps = {
 }
 
 export default function MainView(props: MainViewProps) {
+    const [changesMade, SetChangesMade] = createSignal(clientManager.changesMade)
+    const updateLocalChangesMade = () => {
+        SetChangesMade(clientManager.changesMade)
+    }
+    const subId = clientManager.Subscribe(updateLocalChangesMade)
+    onCleanup(() => {
+        clientManager.Unsubscribe(subId)
+
+    })
+    const saveMap = () => {
+        clientManager.SaveMap()
+    }
     const renderIfCan = () => {
         if (props.supported) {
             return props.children
@@ -33,11 +48,22 @@ export default function MainView(props: MainViewProps) {
                 return (<>
                     <ShareFeature featureType={props.featureType} />
                     <DownloadFeature featureType={props.featureType} />
+                    <div>
+                        <Button selected={changesMade()} onClick={saveMap} >
+                            save changes to board
+                        </Button>
+                    </div>
                 </>)
             } else {
-                return (
+                return (<>
                     <DownloadFeature featureType={props.featureType} />
 
+                    <div>
+                        <Button selected={changesMade()} onClick={saveMap} >
+                            Save Changes to Board
+                        </Button>
+                    </div>
+                </>
                 )
             }
         }
@@ -73,6 +99,7 @@ export default function MainView(props: MainViewProps) {
                     </svg>
                 </h1>
                 {returnShare()}
+
             </div>
             {/* <p className='text-slate-400 text-sm'>{props.description}</p> */}
             {renderIfCan()}
