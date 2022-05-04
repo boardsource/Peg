@@ -172,15 +172,17 @@ export class DiskManager {
     public async scanDrives(dontUpdate: boolean = false) {
         try {
             const disks = await nodeDiskInfo.getDiskInfo()
-            // console.log("platform = ", process.platform)
             for (const disk of disks) {
                 if (process.platform !== "win32") {
-                    if (!disk.mounted.startsWith("/")) {
-                        console.log("not fucking with ", disk)
+                    if (!disk.mounted.startsWith("/") || disk.mounted.startsWith("/Volumes") || disk.used === 0) {
+                        console.log("not messing with ", disk)
                         continue
                     }
                 }
-
+                if (disk.used === 0) {
+                    console.log("not messing with ", disk)
+                    continue
+                }
                 const files = await fs.readdir(disk.mounted);
                 if (files.includes("main.py") && files.includes("layout.json")) {
                     this.kbDrive = `${disk.mounted}/`;
@@ -217,7 +219,7 @@ export class DiskManager {
             }
 
         } catch (err) {
-            console.error(err);
+            console.error("err in  scanDrives: ", err);
         }
 
     }
