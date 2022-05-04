@@ -81,15 +81,26 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             // change this down below also for LED border color
             styles += `
             fill: rgb(${state.color.r},${state.color.g},${state.color.b});
-            border: 1px solid rgb(${state.color.r},${state.color.g},${state.color.b}) !important;
+            box-shadow: 0px 0px 7px -1px rgb(${state.color.r},${state.color.g},${state.color.b});
             `
+            // set to default border color if no color is selected for the key
+            // old border
+            // border: 1px solid rgb(${state.color.r},${state.color.g},${state.color.b}) !important;
         }
         if (props.isLed && props.code.code === "LED") {
-            //if the key is on the led tab and it is a under glow led 
+            //if the key is on the led tab and it is a under glow led
             styles += `
-            background: rgb(${state.color.r},${state.color.g},${state.color.b});
-            border-radius: ${magicNumbers.keyMultiplyer}px;
-            `
+                background: rgb(${state.color.r},${state.color.g},${state.color.b}); 
+                border-radius: 100% !important;
+                box-shadow: 0px 0px 20px 7px rgb(${state.color.r},${state.color.g},${state.color.b});
+                transform: scale(0.4) !important;
+                `
+            // scale only takes effect after clicked, it's okay if we can't have this i will change it later
+
+            // styles += `
+            // background: rgb(${state.color.r},${state.color.g},${state.color.b});
+            // border-radius: ${magicNumbers.keyMultiplyer}px;
+            // `
         } else {
             // normal key not on the led tab 
             // styles += `background: lightgray;`
@@ -141,7 +152,6 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         else if (props.isLed) {
             // normal key on the led tab
             classes += `
-           
             `
         } else {
             // normal key not on the led tab 
@@ -173,7 +183,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             use:droppable
             class="droppable"
             classList={{ "!droppable-accept": droppable.isActiveDroppable }}
-            className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey" : ""} ${returnClasses()}  `}
+            className={`singleLayoutKey ${state.waitingLayer === props.layer && state.waitingIndex === returnGlowindex() ? "waitingKey transition-all bg-g bg-gray-300 scale-90 bg-opacity-70" : ""} ${returnClasses()}  `}
             // style keys here for top layout top layout key styles
             style={returnStyles()}
             onMouseEnter={mouseEnter}

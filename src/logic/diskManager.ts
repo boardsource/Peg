@@ -174,7 +174,7 @@ export class DiskManager {
             const disks = await nodeDiskInfo.getDiskInfo()
             for (const disk of disks) {
                 if (process.platform !== "win32") {
-                    if (!disk.mounted.startsWith("/") || disk.mounted.startsWith("/Volumes") || disk.used === 0) {
+                    if (!disk.mounted.startsWith("/") || disk.used === 0) {
                         console.log("not messing with ", disk)
                         continue
                     }

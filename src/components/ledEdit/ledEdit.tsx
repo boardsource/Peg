@@ -35,7 +35,7 @@ export default function LedEdit(props: LedEditProps) {
         clientManager.SaveMap()
     }
     return (
-        <div className="LedEdit" >
+        <div className="LedEdit flex bg-green-300" >
             <Button selected={changesMade()} onClick={saveMap}>
                 save
             </Button>

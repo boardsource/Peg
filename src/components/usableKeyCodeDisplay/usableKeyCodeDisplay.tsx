@@ -13,6 +13,7 @@ type UsableKeyCodeDisplayProps = {
 
 };
 
+
 export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
     // disply name : logic name
     const keyCodeOptions = new Map(
@@ -58,7 +59,23 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
     }
     return (
         <div className="UsableKeyCodeDisplay flex flex-col flex-1 w-full">
-            <div className="UsableKeyCodeDisplay__options mb-3 flex flex-wrap">
+            <div className="UsableKeyCodeDisplay__options mb-3 flex flex-wrap tabs tabs-boxed self-start">
+                <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
+                    {(key) =>
+                        <a
+                            className={`tab transition-all tab-sm ${selectedKeyCodeName() === keyCodeOptions.get(key) ? 'tab-active' : ''}`}
+                            onClick={() => {
+                                //@ts-ignore
+                                setSelectedKeyCodeName(keyCodeOptions.get(key))
+                            }}
+                        >
+                            {key}</a>
+                    }
+                </For>
+            </div>
+
+            {/* old button tab layout  */}
+            {/* <div className="UsableKeyCodeDisplay__options mb-3 flex flex-wrap">
                 <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
                     {(key) =>
                         <Button
@@ -76,14 +93,22 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
                     save
                 </Button>
 
-            </div>
+            </div> */}
 
-            <div className="UsableKeyCodeDisplay__current">
+
+
+            <div className="UsableKeyCodeDisplay__current relative">
                 <UsableKeyCodes
                     //@ts-ignore
                     keycodes={Array.from(keycodes[selectedKeyCodeName()].values())}
                     layout={usesLayout.get(selectedKeyCodeName())}
                 />
+                {/* <div className="UsableKeyCodeDisplay__current__save absolute right-0 top-0">
+                    <Button selected={changesMade()} onClick={saveMap} >
+                        save
+                    </Button>
+                </div> */}
+
             </div>
         </div>
     );
