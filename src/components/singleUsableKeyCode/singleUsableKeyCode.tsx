@@ -17,14 +17,10 @@ type SingleUsableKeyCodeProps = {
     layoutKey: LayoutKey | undefined
 
 };
-
 export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
     const draggable = createDraggable(isColor(props.code) ? props.code.toString() : props.code.code);
     const mainButtonPress = () => {
-
         clientManager.NoticeToUpdateKey(props.code)
-
-
     }
     const returnStyles = () => {
         let style = ""
@@ -34,7 +30,6 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             top: ${props.layoutKey.y * (magicNumbers.usableKeyMultiplier + 2)}px;
             width: ${props.layoutKey.w * (magicNumbers.usableKeyMultiplier)}px;
             position:absolute;
-            display: flex
         `
         } else {
             style += `width: ${magicNumbers.usableKeyMultiplier}px;`
