@@ -172,6 +172,7 @@ export class DiskManager {
     public async scanDrives(dontUpdate: boolean = false) {
         try {
             const disks = await nodeDiskInfo.getDiskInfo()
+
             for (const disk of disks) {
                 if (process.platform !== "win32") {
                     if (!disk.mounted.startsWith("/") || disk.used === 0) {
@@ -179,17 +180,20 @@ export class DiskManager {
                         continue
                     }
                 }
-                if (disk.used === 0) {
-                    console.log("not messing with ", disk)
+
+                try {
+                    const files = await fs.readdir(disk.mounted);
+                    if (files.includes("main.py") && files.includes("layout.json")) {
+                        this.kbDrive = `${disk.mounted}/`;
+                        this.hasKeymap = `${this.kbDrive}main.py`
+                        this.hasLayout = `${this.kbDrive}layout.json`
+                        break
+                    }
+                } catch {
+                    console.log("this is not the drive you are looking for")
                     continue
                 }
-                const files = await fs.readdir(disk.mounted);
-                if (files.includes("main.py") && files.includes("layout.json")) {
-                    this.kbDrive = `${disk.mounted}/`;
-                    this.hasKeymap = `${this.kbDrive}main.py`
-                    this.hasLayout = `${this.kbDrive}layout.json`
-                    break
-                }
+
             }
             if (this.kbDrive !== "") {
                 this.didNotFindDrive = false;

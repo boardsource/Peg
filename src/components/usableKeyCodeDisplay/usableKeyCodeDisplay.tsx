@@ -95,19 +95,27 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
 
             </div> */}
 
+            <div className="UsableKeyCodeDisplay__current flex relative">
 
-
-            <div className="UsableKeyCodeDisplay__current relative">
                 <UsableKeyCodes
                     //@ts-ignore
                     keycodes={Array.from(keycodes[selectedKeyCodeName()].values())}
                     layout={usesLayout.get(selectedKeyCodeName())}
+                    className="w-3/4"
                 />
-                {/* <div className="UsableKeyCodeDisplay__current__save absolute right-0 top-0">
-                    <Button selected={changesMade()} onClick={saveMap} >
-                        save
-                    </Button>
-                </div> */}
+
+                <div className="flex flex-col w-1/4">
+                    {/* this looks funky but it works maybe just remove the title */}
+                    <h3>Highly used codes</h3>
+                    <UsableKeyCodes
+                        //@ts-ignore
+                        keycodes={Array.from(keycodes.bonusCodes.values())}
+                        layout={undefined}
+                        className="w-full"
+
+                    />
+                </div>
+
 
             </div>
         </div>
