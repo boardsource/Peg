@@ -27,13 +27,15 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
         let style = ""
         if (props.layoutKey) {
             style = `
-            left: ${props.layoutKey.x * (magicNumbers.usableKeyMultiplier + 2)}px;
-            top: ${props.layoutKey.y * (magicNumbers.usableKeyMultiplier + 2)}px;
+            left: ${props.layoutKey.x * (magicNumbers.usableKeyMultiplier + 3)}px;
+            top: ${props.layoutKey.y * (magicNumbers.usableKeyMultiplier + 3)}px;
             width: ${props.layoutKey.w * (magicNumbers.usableKeyMultiplier)}px;
             position:absolute;
         `
         } else {
-            style += `width: ${magicNumbers.usableKeyMultiplier}px;`
+            style += `
+            margin-right: 5px;
+            `
         }
         if (isColor(props.code)) {
             style += `background: rgb(${props.code.r},${props.code.g},${props.code.b});`
@@ -52,6 +54,9 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             toolTip.Hide()
         }
     }
+    const returnMaxHeight = () => {
+        return `max-height: ${magicNumbers.usableKeyMultiplier}px`
+    }
     const returnFontSize = () => {
         if (!isColor(props.code)) {
             const keyDisplayCode = props.code.display, keyCode = props.code.code
@@ -59,8 +64,8 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             // console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
             const keyCodeLength = keyCode.length
             // console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
-            const baseSize = 'bg-purple-500'
-            let length = 0
+            const baseSize = '150'
+            // let length = 0
             if (keyDisplayCode !== '') {
                 length = keyDisplayCodeLength
             } else if (keyDisplayCode == '' && keyCode !== '') {
@@ -73,7 +78,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             } else if (length >= 4 && length <= 5) {
                 return 300
             } else if (length >= 6 && length <= 8) {
-                return 300
+                return 180
             } else {
                 return 300
             }
@@ -92,16 +97,17 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
-            className={`SingleUsableKeyCode rounded-sm hover:rounded-md hover:transition-all ${returnFontSize()}`}
-            // transition-all this class is making dnd super laggy 
+            className={`SingleUsableKeyCode bg-base-200 shadow-md rounded-sm hover:scale-110`}
+            // transition-all this class is making dnd super laggy
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            <div className='codeContainer'>
+            <div className='codeContainer flex self-start h-full content-center'>
                 <svg width="100%"
                     height='100%'
                     viewBox="0 0 1000 1000"
                     preserveAspectRatio="xMinYMid meet"
+                    style={returnMaxHeight()}
                     xmlns="http://www.w3.org/2000/svg"
                     className=''>
                     <text
@@ -110,7 +116,8 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
                         dominant-baseline="middle"
                         text-anchor="middle"
                         fill="black"
-                        font-size='120'
+                        // font-size='200'
+                        font-size={returnFontSize()}
                     >
 
                         {isKeyCode(props.code) ? props.code.display !== "" ? props.code.display : props.code.code : ""}

@@ -46,18 +46,21 @@ export default function MainView(props: MainViewProps) {
         if (props.featureType) {
             if (props.featureType !== ShareableFeatureType.keyCodes) {
                 return (<>
+
                     <ShareFeature featureType={props.featureType} />
-                    <DownloadFeature featureType={props.featureType} />
-                    <div>
-                        <Button selected={changesMade()} onClick={saveMap} >
-                            save changes to board
-                        </Button>
+                    <div className="ml-4">
+                        <DownloadFeature featureType={props.featureType} />
                     </div>
+
+                    {/* <div>
+                        <Button selected={changesMade()} onClick={saveMap} >
+                            Save Changes to Board
+                        </Button>
+                    </div> */}
                 </>)
             } else {
                 return (<>
                     <DownloadFeature featureType={props.featureType} />
-
                     <div>
                         <Button selected={changesMade()} onClick={saveMap} >
                             Save Changes to Board
@@ -84,7 +87,7 @@ export default function MainView(props: MainViewProps) {
 
     return (
         <div className="mainview flex flex-col flex-1 items-start">
-            <div className="flex">
+            <div className="flex flex-col">
                 <h1 className="flex mb-4 text-xl text-[22px] mb-3 tracking-wide truncate">
                     {props.title}
                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +100,9 @@ export default function MainView(props: MainViewProps) {
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
                     </svg>
                 </h1>
-                {returnShare()}
+                <div className="communityFeatures flex mb-5 origin-left btn-size-override-xxs">
+                    {returnShare()}
+                </div>
 
             </div>
             {/* <p className='text-slate-400 text-sm'>{props.description}</p> */}
