@@ -39,8 +39,8 @@ export class Toast extends Subscribable {
     public Success(message: string, uptime: number = this.upTime) {
         this.show(message, ToastLevel.success)
     }
-    public Debug(message: string, uptime: number = this.upTime) {
-        this.show(message, ToastLevel.debug)
+    public Debug(message: string, uptime: number = this.upTime * 100) {
+        this.show(message, ToastLevel.debug, uptime)
     }
     public static Info(message: string) {
         Toast.getInstance().Info(message)

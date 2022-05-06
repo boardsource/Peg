@@ -109,7 +109,13 @@ export class ClientManager extends Subscribable {
 
 
         this.programSettings.Subscribe(() => {
-            this.sendToBackend(ElectronEvents.SaveSettings, JSON.stringify({ seven: this.programSettings.seven, darkmode: this.programSettings.darkmode, tooltips: this.programSettings.tooltips }))
+            this.sendToBackend(ElectronEvents.SaveSettings,
+                JSON.stringify({
+                    seven: this.programSettings.seven,
+                    theme: this.programSettings.theme,
+                    tooltips: this.programSettings.tooltips,
+                    debug: this.programSettings.debug
+                }))
         })
         setTimeout(() => {
             if (!this.scaning && this.keymap.layout === undefined) {

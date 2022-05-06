@@ -1,6 +1,4 @@
 import { For } from "solid-js";
-import { AllEnums } from "../../types/types";
-
 type LoopOverEnumProps = {
     className?: string;
     enum: any
