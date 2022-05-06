@@ -66,7 +66,9 @@ export class KeyMap extends Subscribable {
         this.keymapStr = new Array();
         //todo rework to map
         layers.forEach((match: string) => {
-            this.keymapStr.push(match.replaceAll("[", "").replaceAll("]", "").replaceAll(" ", "").split(","));
+            const cleanedMatch = this.codes.SwapCustoms(match.replaceAll("[", "").replaceAll("]", ""))
+
+            this.keymapStr.push(cleanedMatch.split(","));
         });
 
         this.keymap = new Array();
@@ -85,11 +87,16 @@ export class KeyMap extends Subscribable {
                 const tempEncoderLayer = tempLayer.slice(tempLayer.length - encoderCount * 2, tempLayer.length)
                 this.keymap.push(tempKeymapLayer);
                 this.encoderMap.push(tempEncoderLayer);
+                Toast.Debug(`encoderMap length ${this.encoderMap.length}`)
+                Toast.Debug(`keymap length ${this.keymap.length}`)
             } else {
                 this.keymap.push(tempLayer);
             }
 
         });
+
+
+        Toast.Debug(``)
 
         this.haveMap = true;
         //RGB MATRIX
@@ -113,6 +120,7 @@ export class KeyMap extends Subscribable {
                 return new Color(singleLed[0], singleLed[1], singleLed[2])
             })
             this.ledMap = colorLeds
+            Toast.Debug(`ledMap length ${this.ledMap.length}`)
 
         }
         //OLEDS
@@ -146,6 +154,9 @@ export class KeyMap extends Subscribable {
             }
             this.oled.displayType = currentDisplayType
             this.oled.flip = flipValue
+            Toast.Debug(`oled.flip ${this.oled.flip}`)
+            Toast.Debug(`oled.displayType ${currentDisplayType}`)
+
             // this.oled.FromString(tempOledMap) to be used for strings not imgs
             if (currentDisplayType === OledDisplayType.image) {
                 try {
@@ -187,6 +198,8 @@ export class KeyMap extends Subscribable {
         const codeblock = baseMap.split("# codeblock")
         if (codeblock.length == 3) {
             this.codeBlock = codeblock[1]
+            Toast.Debug(`code block found ${codeblock[1]}`)
+
             // console.log("code ", this.codeBlock)
         }
 

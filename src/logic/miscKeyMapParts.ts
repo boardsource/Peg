@@ -85,7 +85,7 @@ export class MiscKeymapParts {
                     baseCode += "split = Split(split_type=Split.BLE,split_side = split_side)\n";
                 }
             } else if (this.settings.rx_tx) {
-                baseCode += "split = Split(split_side = split_side,data_pin=keyboard.rx, data_pin2=keyboard.tx, uart_flip=False)\n";
+                baseCode += `split = Split(split_side = split_side,data_pin=keyboard.rx, data_pin2=keyboard.tx, uart_flip=${this.settings.uartFlip ? "True" : "False"})\n`;
             }
             else {
                 baseCode += "split = Split(split_side = split_side)\n";

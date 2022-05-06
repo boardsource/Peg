@@ -12,11 +12,10 @@ export default function Toggle(props: ToggleProps) {
     // this works but the css is wack 
 
     return (
-
-
-        <div class="flex justify-center">
-            <div class="form-check form-switch">
-                <input class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text">{props.label}</span>
+                <input type="checkbox" class="toggle toggle-primary"
                     name={props.name}
                     checked={props.value}
                     onChange={(e) => {
@@ -29,10 +28,11 @@ export default function Toggle(props: ToggleProps) {
                     }
 
                     }
-                    type="checkbox" role="switch" id="flexSwitchCheckDefault" />
-                <label class="form-check-label inline-block text-gray-800" for="flexSwitchCheckDefault">{props.label}</label>
-            </div>
+                />
+            </label>
         </div>
+
+
 
     );
 }
