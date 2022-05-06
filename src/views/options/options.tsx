@@ -51,7 +51,7 @@ export default function Options() {
               <option disabled selected>Theme</option>
               <For each={Object.keys(Theme)} fallback={<div>Loading...</div>}>
                 {(key) => {
-                  if (key === Theme.light || key === Theme.dark) {
+                  if (key === Theme.light || key === Theme.dark || Theme.cupcake) {
                     return (
                       <>
                         <option >{key}</option>
@@ -65,7 +65,7 @@ export default function Options() {
             </select>
           )}>
             <select class="select select-primary w-full max-w-xs" onChange={updateTheme}>
-              <option disabled selected>Theme</option>
+              <option disabled selected>Themes</option>
               <For each={Object.keys(Theme)} fallback={<div>Loading...</div>}>
                 {(key) => (
                   <>
