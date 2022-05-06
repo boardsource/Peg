@@ -84,18 +84,18 @@ export default function Navigation() {
   ]
   return (
     <div className="navigation flex flex-col">
-      <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-50 text-gray-800">
+      <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased text-base-content">
         <div class="flex flex-col flex-1 top-0 left-0 w-60 bg-white h-full border-r">
-          <div class="flex items-center justify-center h-20 border-b p-4">
+          <div class="bg-base-200 flex items-center justify-center h-20 border-b p-4">
             <img class='flex h-full' src={pegLogo} alt="peg application logo" />
           </div>
-          <div class="overflow-y-auto overflow-x-hidden flex-grow">
+          <div class="bg-base-200 overflow-y-auto overflow-x-hidden flex-grow">
             <ul class="flex flex-col py-4 space-y-1">
               <For each={navArray}>
                 {(navItem) => (
                   navItem.path ? (
                     <li>
-                      <NavLink href={navItem.path} class={`relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6 ${useLocation().pathname === navItem.path ? "bg-gray-50 text-gray-800 border-indigo-500" : ""}`}>
+                      <NavLink href={navItem.path} class={`relative flex flex-row items-center h-11 focus:outline-none hover:bg-base-100 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary pr-6 ${useLocation().pathname === navItem.path ? "bg-base-100 text-gray-800 border-primary" : ""}`}>
                         <span class="inline-flex justify-center items-center ml-4">
                           {navItem.icon}
                         </span>
@@ -115,15 +115,18 @@ export default function Navigation() {
               </For>
             </ul>
           </div>
-          <div className="navigation__bottom flex flex-col w-8/12 ml-5 mb-4">
-            <img src={bsLogo} alt="boardsource.xyz logo" />
-            <div className="flex self-end"> <a class="text-gray-500 text-[12px] font-thin" href="boardsource.xyz">boardsource.xyz</a>
-              {/* <img class="fill-blue-500" src={iconExternalLink} alt="exernal link icon" /></div> */}
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-gray-400 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-              </svg>
+          <div className="bg-base-200 navigation__bottom flex flex-col pl-5 pb-5 w-full">
+            <div className="">
+              <img src={bsLogo} className='w-36' alt="boardsource.xyz logo" />
+              <div className="flex self-end"> <a class="text-gray-500 text-[12px] font-thin" href="boardsource.xyz">boardsource.xyz</a>
+                {/* <img class="fill-blue-500" src={iconExternalLink} alt="exernal link icon" /></div> */}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 fill-gray-400 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                  <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                </svg>
+              </div>
             </div>
+
           </div>
         </div>
 

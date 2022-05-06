@@ -27,11 +27,11 @@ export default function Root() {
         <div className="peg-wrapper__sidebar">
           <Navigation />
         </div>
-        <div className="peg-wrapper__views flex flex-1 flex-col m-5">
-          <div className="peg-wrapper__views__topbar flex mb-5">
+        <div className="peg-wrapper__views flex flex-1 flex-col m-5  relative">
+          <div className="peg-wrapper__views__topbar flex mb-5 absolute right-0 top-0">
             <Topbar />
           </div>
-          <div className="peg-wrapper__views__main relative flex flex-1 bg-white">
+          <div className="peg-wrapper__views__main relative flex flex-1">
             <ToolTipDisplay />
             <ToastDisplay />
 
