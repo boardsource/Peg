@@ -142,7 +142,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     const returnClasses = () => {
         //classes you want to apply all the time
         let classes = `
-        rounded-lg hover:scale-90 overflow-hidden transition-all border border-base-300
+        rounded-lg hover:scale-90 hover:bg-base-300 overflow-hidden transition-all border border-base-300
          `
         if (props.isLed && props.code.code === "LED") {
             // underglow led on the led tab

@@ -97,12 +97,12 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
-            className={`SingleUsableKeyCode bg-base-200 shadow-md rounded-sm hover:scale-110`}
+            className={`SingleUsableKeyCode bg-base-100`}
             // transition-all this class is making dnd super laggy
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            <div className='codeContainer flex self-start h-full content-center'>
+            <div className='codeContainer flex self-start h-full content-center hover:transition-all hover:scale-90 shadow rounded-md hover:shadow-lg hover:bg-base-200'>
                 <svg width="100%"
                     height='100%'
                     viewBox="0 0 1000 1000"

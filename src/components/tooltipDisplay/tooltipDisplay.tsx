@@ -1,4 +1,4 @@
-import "./tooltip.sass"
+// import "./tooltip.sass"
 import { Show, createSignal, onMount, For, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 
@@ -22,15 +22,15 @@ export default function ToolTipDisplay(props: ToolTipDisplayProps) {
     })
     const returnStyles = () => {
         return `
-            left: ${state.x - 450}px;
+            left: ${state.x - 420}px;
             top: ${state.y - 70}px;
          
         `
     }
 
     return (
-        <div className="ToolTipDisplay">
-            <div className={`ToolTipDisplay__main ${state.visable ? "ToolTipDisplay__main__show" : "ToolTipDisplay__main__hide"}`} style={returnStyles()}>
+        <div className="ToolTipDisplay relative">
+            <div className={`ToolTipDisplay__main text-sm p-5 pointer-events-none rounded-lg shadow-xl bg-base-200 z-10 absolute border ${state.visable ? "ToolTipDisplay__main__show" : "ToolTipDisplay__main__hide"}`} style={returnStyles()}>
                 <h5>{state.title}</h5>
                 <div className="ToolTipDisplay__main_body" >
                     <p>

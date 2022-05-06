@@ -21,7 +21,7 @@ export default function LayerSelector(props: LayerSelectorProps) {
     })
     //todo map over underglow leds and show that when layer === 4
     return (
-        <div className="layer-selector flex flex-col items-end">
+        <div className="layer-selector flex flex-col items-end scale-90 origin-top mr-3">
             <h3>Layers</h3>
             <For each={Array.from(Array(props.isLed ? 2 : 8))} fallback={<div>Loading...</div>}>
                 {(_, index) => (

@@ -59,7 +59,7 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
     }
     return (
         <div className="UsableKeyCodeDisplay flex flex-col flex-1 w-full">
-            <div className="UsableKeyCodeDisplay__options mb-3 flex flex-wrap tabs tabs-boxed self-start">
+            <div className="UsableKeyCodeDisplay__options mb-4 flex flex-wrap tabs tabs-boxed self-start">
                 <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
                     {(key) =>
                         <a
@@ -104,9 +104,9 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
                     className="w-3/4"
                 />
 
-                <div className="flex flex-col w-1/4">
+                <div className="flex flex-col w-1/6 absolute right-0">
                     {/* this looks funky but it works maybe just remove the title */}
-                    <h3>Highly used codes</h3>
+                    <h2 className='mt-1 mb-2'>Commonly Used</h2>
                     <UsableKeyCodes
                         //@ts-ignore
                         keycodes={Array.from(keycodes.bonusCodes.values())}
@@ -114,6 +114,8 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
                         className="w-full"
 
                     />
+
+
                 </div>
 
 
