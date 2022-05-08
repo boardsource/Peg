@@ -16,6 +16,7 @@ type SingleUsableKeyCodeProps = {
     code: KeyCode | Color;
     layoutKey: LayoutKey | undefined
     index: number
+    layout: String | undefined
 
 };
 export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
@@ -42,6 +43,19 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
         }
         return style
 
+    }
+    const returnClasses = () => {
+        let classes = ''
+        if (props.layoutKey || props.layout === undefined) {
+            classes += `bg-base-100 border border-base-300 hover:transition-all hover:scale-90 shadow shadow-base-300 rounded-md hover:shadow-lg hover:bg-base-100`
+        }
+        if (props.layout === 'colors') {
+            classes += ''
+        }
+        if (isColor(props.code)) {
+            classes += `bg-[rgb(${props.code.r},${props.code.g},${props.code.b})] rounded-full border-none scale-90`
+        }
+        return classes
     }
     const mouseEnter = (event: Event) => {
         if (isKeyCode(props.code)) {
@@ -97,12 +111,11 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
-            className={`SingleUsableKeyCode bg-base-100`}
-            // transition-all this class is making dnd super laggy
+            className={`SingleUsableKeyCode ${returnClasses()}`}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            <div className='codeContainer flex self-start h-full content-center hover:transition-all hover:scale-90 shadow rounded-md hover:shadow-lg hover:bg-base-200'>
+            <div className='codeContainer flex self-start h-full content-center'>
                 <svg width="100%"
                     height='100%'
                     viewBox="0 0 1000 1000"
@@ -116,6 +129,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
                         dominant-baseline="middle"
                         text-anchor="middle"
                         fill="black"
+                        className='fill-base-content'
                         // font-size='200'
                         font-size={returnFontSize()}
                     >

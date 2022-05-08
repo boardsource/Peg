@@ -112,7 +112,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             // if it is a normal keycode on the led tab. And the keyboard supports per key and we have a led map
             return `text-[rgb(${state.color.r},${state.color.g},${state.color.b})];`
         } else {
-            return "border-base-content"
+            return "fill-base-content"
         }
     }
     // adjust these to change font size of layout key text based on char length break points defined below
@@ -208,8 +208,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
                         y="50%"
                         dominant-baseline="middle"
                         text-anchor="middle"
-                        // fill={returnSVGColor()}
-                        className={returnSVGColor()}
+                        className={`${returnSVGColor()}`}
                         font-size={returnFontSize(state.code.display, state.code.code)}
                     >  {state.code.canHaveSub ?
                         state.subCode?.display !== "" ? state.subCode?.display : state.subCode?.code
