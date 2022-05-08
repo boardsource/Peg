@@ -102,7 +102,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            <div className='codeContainer flex self-start h-full content-center hover:transition-all hover:scale-90 shadow rounded-md hover:shadow-lg hover:bg-base-200'>
+            <div className='codeContainer flex self-start h-full content-center hover:transition-all hover:scale-90 shadow shadow-base-300 border border-base-300 rounded-md hover:shadow-lg hover:bg-base-100'>
                 <svg width="100%"
                     height='100%'
                     viewBox="0 0 1000 1000"
@@ -116,6 +116,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
                         dominant-baseline="middle"
                         text-anchor="middle"
                         fill="black"
+                        className='fill-base-content'
                         // font-size='200'
                         font-size={returnFontSize()}
                     >

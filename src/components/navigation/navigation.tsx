@@ -85,8 +85,8 @@ export default function Navigation() {
   return (
     <div className="navigation flex flex-col">
       <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased text-base-content">
-        <div class="flex flex-col flex-1 top-0 left-0 w-60 bg-white h-full border-r">
-          <div class="bg-base-200 flex items-center justify-center h-20 border-b p-4">
+        <div class="flex flex-col flex-1 top-0 left-0 w-60 bg-white h-full border-r border-base-300">
+          <div class="bg-base-200 flex items-center justify-center h-20 border-b border-base-300 p-4">
             <img class='flex h-full' src={pegLogo} alt="peg application logo" />
           </div>
           <div class="bg-base-200 overflow-y-auto overflow-x-hidden flex-grow">
@@ -95,7 +95,7 @@ export default function Navigation() {
                 {(navItem) => (
                   navItem.path ? (
                     <li>
-                      <NavLink href={navItem.path} class={`relative flex flex-row items-center h-11 focus:outline-none hover:bg-base-100 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-primary pr-6 ${useLocation().pathname === navItem.path ? "bg-base-100 text-gray-800 border-primary" : ""}`}>
+                      <NavLink href={navItem.path} class={`relative flex flex-row items-center h-11 focus:outline-none hover:bg-base-100 text-gray-600 hover:text-primary border-l-4 border-transparent hover:border-primary pr-6 ${useLocation().pathname === navItem.path ? "bg-base-100 text-primary border-primary" : ""}`}>
                         <span class="inline-flex justify-center items-center ml-4">
                           {navItem.icon}
                         </span>
