@@ -10,7 +10,7 @@ type UableLedColorsProps = {
 
 };
 
-export default function UableLedColors(props: UableLedColorsProps) {
+export default function UsableLedColors(props: UableLedColorsProps) {
     const colorsInUse = () => {
         let tempcolorsInUse: Set<string> = new Set()
         keymap.ledMap.forEach(color => {
@@ -33,9 +33,9 @@ export default function UableLedColors(props: UableLedColorsProps) {
         keymap.Unsubscribe(subId)
     })
     return (
-        <div className="UableLedColors" >
+        <div className="UsableLedColors flex flex-wrap" >
             <For each={currentColors()} fallback={<div>Loading...</div>}>
-                {(key) => <SingleUsableKeyCode code={key} layoutKey={undefined} />}
+                {(key) => <SingleUsableKeyCode code={key} layout='colors' layoutKey={undefined} />}
             </For>
         </div>
     );
