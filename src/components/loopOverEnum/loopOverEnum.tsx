@@ -1,4 +1,6 @@
 import { For } from "solid-js";
+import Button from '../../components/button/button'
+
 type LoopOverEnumProps = {
     className?: string;
     enum: any
@@ -15,19 +17,14 @@ export default function LoopOverEnum(props: LoopOverEnumProps) {
     const renderDefault = (key: string) => {
         if (props.defaultButtons) {
 
-            return (<button className={`$inline-block px-2 py-1 border-2  border-purple-600 
-            ${//@ts-ignore
-                props.selected === props.enum[key] ? "bg-purple-600 text-white" : " text-purple-600"} 
-            font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 
-            focus:outline-none focus:ring-0 transition duration-150 ease-in-out`}
+            return (<Button selected={props.selected === props.enum[key]}
                 onClick={() => {
-                    //@ts-ignore
                     props.buttonOnClick(props.enum[key])
-
-                }}
-            >
+                }}>
                 {key}
-            </button>)
+            </Button>)
+
+
         } else {
             return (<div className={`loopOverEnum__single 
             
