@@ -11,6 +11,8 @@ import Toggle from '../../components/toggle/toggle'
 import { ClientManager } from '../../logic/clientManager'
 import { KeyMap } from '../../logic/keymapManager'
 import { OledDisplayType, OledReactionType, ShareableFeatureType } from '../../types/types'
+import HelpTooltip from '../../components/helpTooltip/helpTooltip'
+
 const clientManager = ClientManager.getInstance()
 
 const keymap = KeyMap.getInstance()
@@ -71,13 +73,26 @@ export default function OLED() {
   return (
     <MainView title='OLED' description={`
         OLEDs are displays used on keyboards. OLEDs can display a wide range of items, examples are displaying the current layer or a static image of your choosing.`} supported={keymap.keyLayout && keymap.keyLayout.features.oled} featureType={ShareableFeatureType.oleds}>
-      <Toggle label="flipDisplay" name="flip" value={flip()} onChange={flipDisplay} />
-      <div className="flex flex-row">
-        <LoopOverEnum enum={OledDisplayType} buttonOnClick={changeOledDisplayType} selected={OledType()} defaultButtons />
+      <div className="flex flex-col flex-1 bg-red-300 w-full relative">
+        <div className="flex flex-col">
+          <div className="flex">
+            <h3>OLED Display Mode</h3><HelpTooltip>testing</HelpTooltip>
+          </div>
+          <LoopOverEnum enum={OledDisplayType} buttonOnClick={changeOledDisplayType} selected={OledType()} defaultButtons /> <div className="flex mb-[60px]">
+          </div>
+        </div>
+        <div className="flex w-4/6 flex-col">
+          <div className="blackHole flex w-f w-[640px] h-[160px]">
+            {renderOledEditor()}
+          </div>
+        </div>
+        <div className="flex justify-self-end absolute right-0 top-0">
+          <LayerSelector isLed={false} />
+        </div>
       </div>
-      <div className="flex flex-row flex-1 bg-red-300 w-full">
-        {renderOledEditor()}
-        <LayerSelector isLed={false} />
+      <Toggle label="flipDisplay" name="flip" value={flip()} onChange={flipDisplay} />
+      <div className="flex flex-col">
+
       </div>
       {/* <Button selected={changesMade()} onClick={saveMap} >
         SAVE
