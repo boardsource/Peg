@@ -35,7 +35,7 @@ export default function UsableLedColors(props: UableLedColorsProps) {
     return (
         <div className="UsableLedColors flex flex-wrap" >
             <For each={currentColors()} fallback={<div>Loading...</div>}>
-                {(key) => <SingleUsableKeyCode code={key} layout='colors' layoutKey={undefined} />}
+                {(key, index) => <SingleUsableKeyCode index={index()} code={key} layoutKey={undefined} />}
             </For>
         </div>
     );

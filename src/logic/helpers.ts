@@ -46,6 +46,7 @@ export const ShareableFeatureToDisplayWord = (featureType: ShareableFeatureType,
 }
 export const remoteContentPoster = async (title: string,
     description: string,
+    creator: string,
     code: string,
     featureType: ShareableFeatureType
 ) => {
@@ -70,6 +71,7 @@ export const remoteContentPoster = async (title: string,
     const payload = {
         title,
         description,
+        author: creator,
         keyboard,
         universal,
         code,
@@ -110,4 +112,11 @@ export const logIn = (email: string, password: string) => {
         Toast.Error(`Error when signing in`)
     })
 
+}
+
+export const randomNameGen = () => {
+    const nameOptions = ["John Doe", "Jane Doe", "Wall-e", "Hal 9000", "Neo", "Morpheus", "Agent Smith", "Harry Potter", "Harry Styles", "Kevin Flynn", "Rick Deckard", "Tyler Durden", "Captain Jack Sparrow",
+        "Patrick Bateman", "Inigo Montoya", "Westley", "Anonymous", "dread pirate roberts", "Ross Ulbricht", "Peter Pan", "Alice", "Red Queen", "Leon S. Kennedy", "Cthulhu", "Yog-Sothoth",
+        "Azathoth", "Shoggoth", "Sargeras", "Jaina", "Kael’thas", "Illidan", "Fenris", "Thrall", "Rexxar", "Anduin", "OP", "Everybody", "iNeed2p", "ChopSuey", "Bread Pitt", "LOWERCASE"]
+    return nameOptions[Math.floor(Math.random() * nameOptions.length)];
 }

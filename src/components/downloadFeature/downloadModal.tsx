@@ -93,6 +93,9 @@ export default function DownloadModal(props: ShareModalProps) {
                                 {feature.title}
                             </h3>
                             <p>
+                                Creator: {feature.author}
+                            </p>
+                            <p>
                                 Downloads: {feature.downloads}
                             </p>
                             <p>

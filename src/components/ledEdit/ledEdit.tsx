@@ -8,6 +8,8 @@ import { ClientManager } from "../../logic/clientManager";
 import { Color } from "../../logic/color";
 import UsableLedColors from "../usableLedColors/usableLedColors";
 import Button from "../button/button";
+import { ProgramSettings } from "../../logic/programSettings";
+const programSettings = ProgramSettings.getInstance()
 const clientManager = ClientManager.getInstance()
 type LedEditProps = {
 
@@ -26,13 +28,14 @@ export default function LedEdit(props: LedEditProps) {
     const setColor = () => {
         clientManager.NoticeToUpdateKey(new Color(currentColor.r, currentColor.g, currentColor.b))
     }
+    const setAllToColor = () => {
+        clientManager.ForceAllLedChange(new Color(currentColor.r, currentColor.g, currentColor.b))
+    }
     const colorChange = (e: any) => {
         const [r, g, b] = e.detail.value.substring(0, e.detail.value.length - 1).substring(4).split(",")
         setCurrentColor({ r, g, b })
     }
-    const saveMap = () => {
-        clientManager.SaveMap()
-    }
+
     return (
         <div className="LedEdit flex flex-1" >
             {/* <Button selected={changesMade()} onClick={saveMap}>
@@ -54,10 +57,14 @@ export default function LedEdit(props: LedEditProps) {
             </div>
             <div className="flex flex-col">
                 <div className="flex flex-1">
-                    <div className="LedEdit__control mx-5" >
-                        <Button onClick={setColor} selected={true}>
+                    <div className="LedEdit__control mx-5 flex flex-col">
+                        <Button onClick={setColor} selected={true} disabled={!programSettings.PPP}>
                             Apply
                         </Button>
+                        <Button onClick={setAllToColor} selected={true}>
+                            Apply To All
+                        </Button>
+
 
                     </div>
                     <div className="LedEdit__usable flex flex-col flex-1" >

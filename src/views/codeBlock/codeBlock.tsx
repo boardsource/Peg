@@ -1,4 +1,4 @@
-import { createSignal, onCleanup, Show } from 'solid-js'
+import { createSignal, For, onCleanup, Show } from 'solid-js'
 import DownloadFeature from '../../components/downloadFeature/downloadFeature'
 import MainView from '../../components/mainView/mainView'
 import ShareFeature from '../../components/shareFeature/shareFeature'
@@ -8,10 +8,10 @@ import { ShareableFeatureType } from '../../types/types'
 const keymap = KeyMap.getInstance()
 
 export default function LED() {
-    const [codeBlock, setcodeBlock] = createSignal(keymap.codeBlock)
+    const [codeBlocks, setCodeBlock] = createSignal(keymap.codeBlock)
 
     const subId2 = keymap.Subscribe(() => {
-        setcodeBlock(keymap.codeBlock)
+        setCodeBlock(keymap.codeBlock)
     })
 
     onCleanup(() => {
@@ -30,18 +30,27 @@ export default function LED() {
         Is there a feature you want but not supported by PEG? 
         configure it though code and keep it in your keymap as you configure everything else with PEG.
          This  view will let you see your code block `} supported={true} featureType={ShareableFeatureType.codeBlocks}>
-            <Show when={codeBlock()} fallback={fallBack()}>
-                <p>
-                    Your current code block is:
-                    <br />
-                    <code style="white-space: pre-wrap">
-                        # codeblock
-                        {codeBlock()}
-                        # codeblock
-                    </code>
-                </p>
 
-            </Show>
+            <For each={codeBlocks()} fallback={fallBack()}>
+                {(codeBlock, i) => (
+                    <div className="mb-3">
+                        <h3>
+                            Code block {i() + 1} is:
+                        </h3>
+                        <p>
+                            <br />
+                            <code style="white-space: pre-wrap">
+                                # codeblock
+                                {codeBlock}
+                                # codeblock
+                            </code>
+                        </p>
+                        <ShareFeature featureType={ShareableFeatureType.codeBlocks} codeBlock={codeBlock} />
+                    </div>
+                )}
+
+            </For>
+
 
 
         </MainView>

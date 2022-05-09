@@ -50,6 +50,7 @@ export interface FeatureResponse {
     _id: string;
     description: string;
     featureType: ShareableFeatureType
+    author: string,
     keyboard: string;
     path: string;
     title: string;

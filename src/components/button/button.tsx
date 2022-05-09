@@ -1,16 +1,30 @@
+import { Toast } from "../../logic/toast";
 
 
 type ButtonProps = {
     selected: boolean
     onClick: () => void
     children: any
+    disabled?: boolean
+    className?: string
 };
 
 export default function Button(props: ButtonProps) {
     return (
-        <button className={`btn btn-sm btn-outline btn-primary`}
+        <button className={`btn btn-sm btn-outline btn-primary ${props.className}`}
             onClick={() => {
-                props.onClick()
+                if (props.disabled !== undefined) {
+                    if (props.disabled === false) {
+                        props.onClick()
+                    } else {
+                        Toast.Debug("Button Disabled")
+                    }
+                } else {
+                    props.onClick()
+                }
+
+
+
             }}
         >
             {props.children}

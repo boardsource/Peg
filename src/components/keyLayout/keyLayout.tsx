@@ -101,6 +101,7 @@ export default function KeyLayout(props: KeyLayoutProps) {
             return layout.layout
         }
     }
+
     const returnCurrentCode = (index: number) => {
         if (props.isEncoder && keymap.encoderMap.length > 0) {
             return keymap.encoderMap[currentLayer()][index]
