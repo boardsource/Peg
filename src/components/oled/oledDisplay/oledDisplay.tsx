@@ -98,10 +98,19 @@ export default function OledDisplay(props: OledDisplayProps) {
     renderTheDirtyWay()
   }, 500)
   return (
-    <div className="oledDisplay flex flex-col flex-1" onMouseDown={() => setDisplayPixels({ mouseDown: true })} onMouseUp={() => setDisplayPixels({ mouseDown: false })}>
-      <div className="oledDisplay__victim"></div>
-      {/* <OledImageUpLoader currentLayer={props.currentLayer} /> */}
+    <div className="flex flex-col">
+      <div className="flex flex-col">
+        <div className="oledDisplay flex flex-col flex-1 rounded-lg w-[640px] h-[160px] overflow-hidden" onMouseDown={() => setDisplayPixels({ mouseDown: true })} onMouseUp={() => setDisplayPixels({ mouseDown: false })}>
+          <div className="oledDisplay__victim"></div>
+        </div>
+      </div>
+      <div className="mt-2.5">
+        <OledImageUpLoader currentLayer={props.currentLayer} />
+      </div>
+
     </div>
+
+
   );
 }
 

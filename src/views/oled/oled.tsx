@@ -73,7 +73,7 @@ export default function OLED() {
   return (
     <MainView title='OLED' description={`
         OLEDs are displays used on keyboards. OLEDs can display a wide range of items, examples are displaying the current layer or a static image of your choosing.`} supported={keymap.keyLayout && keymap.keyLayout.features.oled} featureType={ShareableFeatureType.oleds}>
-      <div className="flex flex-col flex-1 bg-red-300 w-full relative">
+      <div className="flex flex-col flex-1 w-full relative">
         <div className="flex flex-col">
           <div className="flex">
             <h3>OLED Display Mode</h3><HelpTooltip>testing</HelpTooltip>
@@ -82,7 +82,7 @@ export default function OLED() {
           </div>
         </div>
         <div className="flex w-4/6 flex-col">
-          <div className="blackHole flex w-f w-[640px] h-[160px]">
+          <div className="blackHole flex bg-black w-f w-[640px] h-[160px] rounded-lg">
             {renderOledEditor()}
           </div>
         </div>
@@ -90,7 +90,27 @@ export default function OLED() {
           <LayerSelector isLed={false} />
         </div>
       </div>
-      <Toggle label="flipDisplay" name="flip" value={flip()} onChange={flipDisplay} />
+      <div className="oled__info w-full">
+        <h3 className='text-xl mb-1'>Options</h3>
+        <div className="mb-1.5">
+          <Toggle label="Flip Display" name="flip" value={flip()} onChange={flipDisplay} />
+        </div>
+        <h4 className='text-md text-base-content mb-1.5'>OLED Display Mode</h4>
+        <p className='text-xs text-neutral mb-1'>
+          <span className='badge badge-primary badge-outline badge-sm mr-1'>IMAGE</span>
+          is when Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi error expedita.</p>
+        <p className='text-xs text-neutral mb-1'>
+          <span className='badge badge-primary badge-outline badge-sm mr-1'>TEXT</span>
+          is when Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi error expedita.</p>
+        <h4 className='text-md text-base-content mb-1.5'>Text Options</h4>
+        <p className='text-xs text-neutral mb-1'>
+          <span className='badge badge-warning badge-outline badge-sm mr-1'>LAYER</span>
+          Is Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus esse doloribus.</p>
+        <p className='text-xs text-neutral mb-1'>
+          <span className='badge badge-warning badge-outline badge-sm mr-1'>STATIC</span>
+          Et magnam nihil labore quis, neque iusto fuga autem accusantium! END END END</p>
+      </div>
+
       <div className="flex flex-col">
 
       </div>

@@ -4,11 +4,36 @@ type ButtonProps = {
     selected: boolean
     onClick: () => void
     children: any
+    selectOne?: boolean
+    tinyButtons?: boolean
 };
 
 export default function Button(props: ButtonProps) {
+    const returnClasses = () => {
+        let classes = `btn`
+        if (props.selectOne) {
+            classes += ` btn-warning mr-1`
+            if (props.selected) {
+                classes += ' btn-warning'
+            } else {
+                classes += ` btn-outline`
+            }
+        }
+        else {
+            classes += ` btn-primary btn-outline`
+        }
+        return classes += returnButtonSizes()
+    }
+    const returnButtonSizes = () => {
+        let btnSize = ``
+        if (props.tinyButtons) {
+            return ` btn-xs`
+        } else {
+            return ` btn-sm`
+        }
+    }
     return (
-        <button className={`btn btn-sm btn-outline btn-primary`}
+        <button className={`${returnClasses()}`}
             onClick={() => {
                 props.onClick()
             }}
