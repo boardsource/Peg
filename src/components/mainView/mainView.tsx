@@ -49,7 +49,7 @@ export default function MainView(props: MainViewProps) {
                 return (<>
 
                     <ShareFeature featureType={props.featureType} />
-                    <div className="ml-4">
+                    <div className="ml-2">
                         <DownloadFeature featureType={props.featureType} />
                     </div>
 

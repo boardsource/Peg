@@ -91,24 +91,24 @@ export default function OLED() {
         </div>
       </div>
       <div className="oled__info w-full">
-        <h3 className='text-xl mb-1'>Options</h3>
-        <div className="mb-1.5">
-          <Toggle label="Flip Display" name="flip" value={flip()} onChange={flipDisplay} />
+        <h3 className='text-xl'>Options</h3>
+        <div className="flex mb-1.5">
+          <Toggle label="Flip Display" name="flip" value={flip()} onChange={flipDisplay} /><HelpTooltip>Toggle Flip Display to ON in order to rotate the image/layout of your OLED by 180°</HelpTooltip>
         </div>
-        <h4 className='text-md text-base-content mb-1.5'>OLED Display Mode</h4>
+        <h4 className='text-md text-base-content mb-1.5  mt-2'>OLED Display Mode</h4>
         <p className='text-xs text-neutral mb-1'>
           <span className='badge badge-primary badge-outline badge-sm mr-1'>IMAGE</span>
           is when Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi error expedita.</p>
         <p className='text-xs text-neutral mb-1'>
           <span className='badge badge-primary badge-outline badge-sm mr-1'>TEXT</span>
           is when Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi error expedita.</p>
-        <h4 className='text-md text-base-content mb-1.5'>Text Options</h4>
-        <p className='text-xs text-neutral mb-1'>
-          <span className='badge badge-warning badge-outline badge-sm mr-1'>LAYER</span>
-          Is Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus esse doloribus.</p>
+        <h4 className='text-md text-base-content mb-1.5 mt-2'>Text Options</h4>
         <p className='text-xs text-neutral mb-1'>
           <span className='badge badge-warning badge-outline badge-sm mr-1'>STATIC</span>
           Et magnam nihil labore quis, neque iusto fuga autem accusantium! END END END</p>
+        <p className='text-xs text-neutral mb-1'>
+          <span className='badge badge-warning badge-outline badge-sm mr-1'>LAYER</span>
+          Is Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus esse doloribus.</p>
       </div>
 
       <div className="flex flex-col">

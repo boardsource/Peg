@@ -59,7 +59,7 @@ export default function TextOledDisplay(props: TextOledDisplayProps) {
         return (<div className="textOledDisplay__corner flex relative w-2/4">
             <Show when={pos < 2} fallback={""}>
                 <div className="flex translate-y-[-2rem] translate-x-[1rem]">
-                    <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateTextDisplaySectionReactionType(pos, newValue)} selected={state.reactionType[pos]} defaultButtons selectOne tinyButtons />
+                    <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateTextDisplaySectionReactionType(pos, newValue)} selected={state.reactionType[pos]} defaultButtons oledInfo tinyButtons />
                 </div>
             </Show>
             <div className="textOledDisplay__corner__input absolute w-full h-full">
@@ -67,7 +67,7 @@ export default function TextOledDisplay(props: TextOledDisplayProps) {
             </div>
             <Show when={pos > 1} fallback={""}>
                 <div className="flex translate-y-[5.5rem] translate-x-[1rem]">
-                    <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateTextDisplaySectionReactionType(pos, newValue)} selected={state.reactionType[pos]} defaultButtons selectOne tinyButtons />
+                    <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateTextDisplaySectionReactionType(pos, newValue)} selected={state.reactionType[pos]} defaultButtons oledInfo tinyButtons />
                 </div>
             </Show>
         </div>)

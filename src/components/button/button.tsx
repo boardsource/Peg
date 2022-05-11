@@ -4,24 +4,14 @@ type ButtonProps = {
     selected: boolean
     onClick: () => void
     children: any
-    selectOne?: boolean
+    oledInfo?: boolean
     tinyButtons?: boolean
+    oneOffClasses?: string
 };
 
 export default function Button(props: ButtonProps) {
     const returnClasses = () => {
-        let classes = `btn`
-        if (props.selectOne) {
-            classes += ` btn-warning mr-1`
-            if (props.selected) {
-                classes += ' btn-warning'
-            } else {
-                classes += ` btn-outline`
-            }
-        }
-        else {
-            classes += ` btn-primary btn-outline`
-        }
+        let classes = `btn mr-1`
         return classes += returnButtonSizes()
     }
     const returnButtonSizes = () => {
@@ -32,8 +22,17 @@ export default function Button(props: ButtonProps) {
             return ` btn-sm`
         }
     }
+    const returnColor = () => {
+        let color = ``
+        if (props.oledInfo) {
+            color += ` btn-warning`
+        } else {
+            return ` btn-primary`
+        }
+        return color
+    }
     return (
-        <button className={`${returnClasses()}`}
+        <button className={`${returnClasses()} ${props.selected ? `${returnColor()}` : ' btn-outline'} ${props.oneOffClasses}`}
             onClick={() => {
                 props.onClick()
             }}

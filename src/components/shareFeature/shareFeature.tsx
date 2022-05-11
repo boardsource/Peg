@@ -108,7 +108,7 @@ const ShareModal = (props: ShareModalProps) => {
                     placeholder="Your description"
                 ></textarea>
             </div>
-            <Button selected={title() !== "" && description() !== ""}
+            <Button oneOffClasses={'btn-outline'} selected={title() !== "" && description() !== ""}
                 onClick={() => {
                     remoteContentPoster(title(), description(), returnCode(props.featureType, props.keycode), props.featureType)
                     props.close()
@@ -137,8 +137,8 @@ export default function ShareFeature(props: ShareFeatureProps) {
     return (
         <div className="ShareFeature">
             <Show when={isOnLine()} fallback={"You are currently off line and can not share."}>
-                <Button onClick={share} selected={true}>
-                    share
+                <Button oneOffClasses={'btn-outline'} onClick={share} selected={true}>
+                    Share
                 </Button>
 
             </Show>

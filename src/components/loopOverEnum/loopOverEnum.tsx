@@ -10,8 +10,8 @@ type LoopOverEnumProps = {
   childrenClassName?: string;
   childrenSelectedClassName?: string;
   buttonOnClick?: (selectedValue: any) => void;
-  selectOne?: boolean
   tinyButtons?: boolean
+  oledInfo?: boolean
 };
 
 
@@ -19,7 +19,7 @@ export default function LoopOverEnum(props: LoopOverEnumProps) {
   const renderDefault = (key: string) => {
     if (props.defaultButtons) {
 
-      return (<Button selectOne={props.selectOne} tinyButtons={props.tinyButtons} selected={props.selected === props.enum[key]}
+      return (<Button tinyButtons={props.tinyButtons} oledInfo={props.oledInfo} selected={props.selected === props.enum[key]}
         onClick={() => {
           props.buttonOnClick(props.enum[key])
         }}>
