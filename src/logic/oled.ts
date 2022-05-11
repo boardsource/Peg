@@ -46,13 +46,13 @@ export class Oled extends Subscribable {
 
     displayFromNestedArray(data: number[][]) {
         this.DisplayBlack()
-        let tempDisplayPixes = [...this.display]
+        let tempDisplayPixels = [...this.display]
         data.forEach((row, rowIndex) => {
             row.forEach((col, colIndex) => {
-                tempDisplayPixes[rowIndex][col] = 1
+                tempDisplayPixels[rowIndex][col] = 1
             });
         });
-        this.display = tempDisplayPixes
+        this.display = tempDisplayPixels
         this.updateSubScribers()
     }
 
@@ -63,7 +63,7 @@ export class Oled extends Subscribable {
         return { x, y }
     }
 
-    oledPixeslToNestedArray = (pixels: OledPixel[], layer: number) => {
+    oledPixelsToNestedArray = (pixels: OledPixel[], layer: number) => {
         let finalArray = Array(32).fill(false)
         pixels.forEach(pixel => {
             if (!finalArray[pixel.y - 1]) {
@@ -131,7 +131,7 @@ export class Oled extends Subscribable {
                 continue
             }
         }
-        const cleanedArray = this.oledPixeslToNestedArray(oledArray, layer)
+        const cleanedArray = this.oledPixelsToNestedArray(oledArray, layer)
         this.displayFromNestedArray(cleanedArray)
         const currentClientManager = ClientManager.getInstance()
         currentClientManager.NoticeAChangeWasMade()

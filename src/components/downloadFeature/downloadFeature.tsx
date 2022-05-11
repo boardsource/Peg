@@ -31,7 +31,7 @@ export default function DownloadFeature(props: DownloadFeatureProps) {
     return (
         <div className="DownloadFeature">
             <Show when={isOnLine()} fallback={`You are currently off line and can not download any ${ShareableFeatureToDisplayWord(props.featureType)}.`}>
-                <Button onClick={viewOptions} selected={true}>
+                <Button oneOffClasses={'btn-outline'} onClick={viewOptions} selected={true}>
                     Download more {ShareableFeatureToDisplayWord(props.featureType, true)}
                 </Button>
 

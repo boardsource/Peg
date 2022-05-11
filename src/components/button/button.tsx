@@ -5,13 +5,39 @@ type ButtonProps = {
     selected: boolean
     onClick: () => void
     children: any
+
+    oledInfo?: boolean
+    tinyButtons?: boolean
+
     disabled?: boolean
     className?: string
+
 };
 
 export default function Button(props: ButtonProps) {
+    const returnClasses = () => {
+        let classes = `btn mr-1`
+        return classes += returnButtonSizes()
+    }
+    const returnButtonSizes = () => {
+        let btnSize = ``
+        if (props.tinyButtons) {
+            return ` btn-xs`
+        } else {
+            return ` btn-sm`
+        }
+    }
+    const returnColor = () => {
+        let color = ``
+        if (props.oledInfo) {
+            color += ` btn-warning`
+        } else {
+            return ` btn-primary`
+        }
+        return color
+    }
     return (
-        <button className={`btn btn-sm btn-outline btn-primary ${props.className}`}
+        <button className={`${returnClasses()} ${props.selected ? `${returnColor()}` : ' btn-outline'} ${props.className}`}
             onClick={() => {
                 if (props.disabled !== undefined) {
                     if (props.disabled === false) {
