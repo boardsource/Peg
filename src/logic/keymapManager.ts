@@ -15,7 +15,7 @@ export class KeyMap extends Subscribable {
     encoderMap: KeyCode[][] = [];
     keyLayout!: Layout;
     layout!: string;
-    codeBlock!: string;
+    codeBlock!: string[];
     haveLayout: boolean = false;
     haveMap: boolean = false;
     ledMap: Color[] = [];
@@ -195,10 +195,24 @@ export class KeyMap extends Subscribable {
 
 
         //CODEBLOCK
-        const codeblock = baseMap.split("# codeblock")
-        if (codeblock.length == 3) {
-            this.codeBlock = codeblock[1]
-            Toast.Debug(`code block found ${codeblock[1]}`)
+        const codeblocks = baseMap.split("# codeblock")
+
+
+        if (codeblocks.length > 0) {
+            this.codeBlock = []
+
+            for (let i = 1; i < codeblocks.length - 1; i++) {
+                const codeblock = codeblocks[i];
+                if (codeblock !== "\n") {
+                    this.codeBlock.push(codeblock)
+                    Toast.Debug(`code block found ${codeblock}`)
+                }
+            }
+            Toast.Debug(`number of code blocks found ${this.codeBlock.length}`)
+
+            console.log(`number of code blocks found ${this.codeBlock.length}`, this.codeBlock)
+            // this.codeBlock = codeblock[1]
+
 
             // console.log("code ", this.codeBlock)
         }
@@ -230,6 +244,13 @@ export class KeyMap extends Subscribable {
     public ChangeLed(_layer: number, pos: number, newColor: Color) {
         // todo add in saving old changes for ctrl z 
         this.ledMap[pos] = newColor;
+        this.updateSubScribers()
+    }
+    public ChangeAllLeds(newColor: Color) {
+        // todo add in saving old changes for ctrl z 
+        this.ledMap.forEach((_color, index) => {
+            this.ledMap[index] = newColor;
+        });
         this.updateSubScribers()
     }
 

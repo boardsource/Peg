@@ -186,6 +186,14 @@ export class ClientManager extends Subscribable {
         this.changesMade = true
         this.updateSubScribers()
     }
+    public ForceAllLedChange(newColor: Color) {
+        this.keymap.ChangeAllLeds(newColor)
+        if (this.keymap.keyLayout.features.split) {
+            this.ledChangesMadeAndIsSplit = true
+        }
+        this.changesMade = true
+        this.updateSubScribers()
+    }
 
     public NoticeAChangeWasMade() {
         this.changesMade = true
@@ -193,6 +201,7 @@ export class ClientManager extends Subscribable {
     }
 
     public SaveMap() {
+        console.log("saving key map")
         if (this.changesMade) {
             this.sendToBackend(ElectronEvents.SaveMap, this.keymap.toString())
             this.changesMade = false

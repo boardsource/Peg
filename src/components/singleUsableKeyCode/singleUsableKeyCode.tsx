@@ -16,7 +16,7 @@ type SingleUsableKeyCodeProps = {
     code: KeyCode | Color;
     layoutKey: LayoutKey | undefined
     index: number
-    layout: String | undefined
+
 
 };
 export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
@@ -46,14 +46,17 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
     }
     const returnClasses = () => {
         let classes = ''
-        if (props.layoutKey || props.layout === undefined) {
-            classes += `bg-base-100 border border-base-300 hover:transition-all hover:scale-90 shadow shadow-base-300 rounded-md hover:shadow-lg hover:bg-base-100`
+        if (props.layoutKey) {
+            // this is only to style keys on ansi layout 
         }
-        if (props.layout === 'colors') {
-            classes += ''
-        }
+
         if (isColor(props.code)) {
-            classes += `bg-[rgb(${props.code.r},${props.code.g},${props.code.b})] rounded-full border-none scale-90`
+            // scale-90 breaks dnd so I removed it
+            // bg-[rgb(${props.code.r},${props.code.g},${props.code.b})] does not seem to do anything because its being set with inline styles and that has a higher priority so I removed it
+            classes += `  rounded-full  border-none `
+        } else {
+            //hover:scale-90 breaks dnd so I removed it
+            classes += `bg-base-100 border border-base-300 rounded-md shadow shadow-base-300 hover:shadow-lg hover:bg-base-100 hover:transition-all`
         }
         return classes
     }
@@ -123,6 +126,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
                     style={returnMaxHeight()}
                     xmlns="http://www.w3.org/2000/svg"
                     className=''>
+                    {/*@ts-ignore*/}
                     <text
                         x="50%"
                         y="50%"

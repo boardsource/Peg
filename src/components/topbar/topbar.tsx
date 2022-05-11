@@ -1,5 +1,5 @@
 import Searchbar from '../searchbar/searchbar'
-import { Show, createSignal } from "solid-js";
+import { Show, createSignal, onCleanup } from "solid-js";
 import ConnectivityStatus from '../connectivityStatus/connectivityStatus'
 import AccountIcon from '../accountIcon/accountIcon'
 import Button from "../button/button";
@@ -13,12 +13,21 @@ export default function Topbar() {
     const saveMap = () => {
         clientManager.SaveMap()
     }
+    const updateLocalChanges = () => {
+        SetChangesMade(clientManager.changesMade)
+    }
+    const subId = clientManager.Subscribe(updateLocalChanges)
+    onCleanup(() => {
+        clientManager.Unsubscribe(subId)
+
+
+    })
     return (
         <div className="topbar flex w-f flex-1 items-center justify-between">
             {/* <Searchbar /> */}
             <Show when={true} fallback={<div>Make Changes To Save Map...</div>}>
-                <div className="saveButton">
-                    <Button selected={changesMade()} onClick={saveMap} >
+                <div className="saveButton z-50" >
+                    <Button selected={changesMade()} onClick={saveMap}>
                         <kbd class="kbd kbd-xs">shift</kbd>
                         &nbsp + &nbsp
                         <kbd class="kbd kbd-xs">⌘</kbd>

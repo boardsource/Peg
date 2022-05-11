@@ -130,7 +130,11 @@ export class RemoteContentManager extends Subscribable {
                     case ShareableFeatureType.codeBlocks:
 
                         const codeBlock = JSON.parse(this.selectedFeature?.code).codeblock
-                        keymap.codeBlock = codeBlock
+                        if (keymap.codeBlock === undefined) {
+                            keymap.codeBlock = []
+                        }
+
+                        keymap.codeBlock.push(codeBlock)
                         break;
 
 

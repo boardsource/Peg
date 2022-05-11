@@ -7,6 +7,7 @@ import ShareFeature from "../../components/shareFeature/shareFeature";
 import Button from "../../components/button/button";
 import DownloadFeature from "../../components/downloadFeature/downloadFeature";
 import MainView from "../../components/mainView/mainView";
+import Input from "../../components/input/input";
 const clientManager = ClientManager.getInstance()
 const keycodes = KeyCodes.getInstance()
 
@@ -78,28 +79,40 @@ export default function MakeCustomCodes() {
         This view will let you configure this feature`} supported={true} featureType={ShareableFeatureType.keyCodes} >
             <div className="flex">
                 <div className="MakeCustomCodes flex flex-col">
-                    <label>
-                        Display text:
-                        <input type="text" name="display" onChange={onChange} value={state.display} />
-                    </label>
-                    <label>
-                        String to send text:
-                        <input type="text" name="code" onChange={onChange} value={state.code} />
-                    </label>
-                    <label>
-                        Description text:
-                        <input type="text" name="description" onChange={onChange} value={state.description} />
-                    </label>
-                    <button className="border-solid border-2 border-sky-500" onClick={saveKey}>
+                    <Input
+                        label="Display text:"
+                        onChange={onChange} value={state.display}
+                        name="display"
+                        placeholder="Display text for UI"
+                    />
+                    <Input
+                        label="String to send text:"
+                        name="code" onChange={onChange} value={state.code}
+                        placeholder="Key output"
+                    />
+                    <Input
+                        label="Description text:"
+                        name="description" onChange={onChange} value={state.description}
+                        placeholder="For tool tip"
+                    />
+
+
+                    <Button onClick={saveKey} selected={state.description !== "" && state.code !== "" && state.display !== ""}>
+
                         Save Key
-                    </button>
-                    <button className="border-solid border-2 border-sky-500" onClick={() => setState({ showImport: !state.showImport })}>
+                    </Button>
+
+                    <Button onClick={() => setState({ showImport: !state.showImport })} selected={state.showImport}>
+
                         {!state.showImport ? " Show Import Key Codes" : "Hide Import Key Codes"}
-                    </button>
+                    </Button>
+
                     {renderImport()}
-                    <button className="border-solid border-2 border-sky-500" onClick={() => { setState({ showExport: !state.showExport }); exportCodes() }}>
+                    <Button onClick={() => { setState({ showExport: !state.showExport }); exportCodes() }} selected={state.showExport}>
+
                         {!state.showExport ? " Show Export Key Codes" : "Hide Export Key Codes"}
-                    </button>
+                    </Button>
+
                     {renderExport()}
 
 

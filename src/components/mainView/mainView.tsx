@@ -31,9 +31,6 @@ export default function MainView(props: MainViewProps) {
         clientManager.Unsubscribe(subId)
 
     })
-    const saveMap = () => {
-        clientManager.SaveMap()
-    }
     const renderIfCan = () => {
         if (props.supported) {
             return props.children
@@ -45,7 +42,7 @@ export default function MainView(props: MainViewProps) {
     }
     const returnShare = () => {
         if (props.featureType) {
-            if (props.featureType !== ShareableFeatureType.keyCodes) {
+            if (props.featureType !== ShareableFeatureType.keyCodes && props.featureType !== ShareableFeatureType.codeBlocks) {
                 return (<>
 
                     <ShareFeature featureType={props.featureType} />
@@ -53,20 +50,11 @@ export default function MainView(props: MainViewProps) {
                         <DownloadFeature featureType={props.featureType} />
                     </div>
 
-                    {/* <div>
-                        <Button selected={changesMade()} onClick={saveMap} >
-                            Save Changes to Board
-                        </Button>
-                    </div> */}
+
                 </>)
             } else {
                 return (<>
                     <DownloadFeature featureType={props.featureType} />
-                    <div>
-                        <Button selected={changesMade()} onClick={saveMap} >
-                            Save Changes to Board
-                        </Button>
-                    </div>
                 </>
                 )
             }
