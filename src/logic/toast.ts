@@ -6,9 +6,9 @@ import { nanoid } from 'nanoid/non-secure'
 
 export class Toast extends Subscribable {
     private static instance: Toast;
-    visible: boolean = false
+    visible: boolean = true
     messages: Map<string, ToastMessage> = new Map()
-    upTime: number = 2000
+    upTime: number = 200000
     private constructor() {
         super()
     }
