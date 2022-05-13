@@ -101,7 +101,7 @@ export default function ToastDisplay(props: ToastProps) {
 
 
 
-        <div class="fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full mt-3">
+        <div class="fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full mt-3 pointer-events-none">
 
 
             <For each={messages()} fallback={""}>
