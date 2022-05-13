@@ -8,7 +8,7 @@ export class Toast extends Subscribable {
     private static instance: Toast;
     visible: boolean = true
     messages: Map<string, ToastMessage> = new Map()
-    upTime: number = 200000
+    upTime: number = 2000
     private constructor() {
         super()
     }
