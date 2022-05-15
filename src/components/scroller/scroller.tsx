@@ -1,4 +1,4 @@
-import { For } from "solid-js";
+import { For, Show } from "solid-js";
 import { proxyDescriptor } from "solid-js/store/types/store";
 import { PropAliases } from "solid-js/web";
 import Button from '../button/button'
@@ -9,6 +9,7 @@ type ScrollerProps = {
   stickySide?: string;
   size: string;
   children?: any
+  title?: string,
 }
 
 export default function Scroller(props: ScrollerProps) {
@@ -43,13 +44,21 @@ export default function Scroller(props: ScrollerProps) {
     <div className={`
         ${props.direction ? props.direction === 'vertical' ? 'flex-col' : '' : ''}
         ${props.stickySide !== undefined ? returnStickySide() : 'right-0'}
-        scrollerContainer flex absolute h-full p-4`}
+        scrollerContainer flex absolute h-full pb-4 pl-4 pr-4 w-full overflow-scroll`}
       style={`
           ${props.size !== undefined ? returnStyles() : ''}
     `}
-    ><div className="relative">
+    >
+      <Show when={props.title} fallback={''}>
+        <div className="flex z-10 sticky top-0 w-full bg-base-100 pt-4 pb-1 mb-1.5">
+          <h3 className='text-lg'>{props.title}</h3>
+        </div>
+      </Show>
+
+      <div className="relative">
         {props.children}
       </div>
+
     </div>
   )
 }

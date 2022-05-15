@@ -12,6 +12,8 @@ type ButtonProps = {
     disabled?: boolean
     className?: string
 
+    icon?: boolean
+
 };
 
 export default function Button(props: ButtonProps) {
@@ -20,7 +22,7 @@ export default function Button(props: ButtonProps) {
         if (props.oledInfo) {
             classes += ` hover:btn-warning`
         } else {
-            classes += ` hover:btn-primary`
+            classes += ` `
         }
         return classes += returnButtonSizes()
     }

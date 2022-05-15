@@ -61,62 +61,30 @@ export default function MakeCustomCodes() {
   const renderImport = () => {
     if (state.showImport) {
       return (
-        <>
-          {/* <textarea name="importString" cols="30" rows="10" value={state.importString} onChange={onChange}></textarea> */}
-          <p>IMPORT IMPORT</p>
+        <div className="flex w-full h-full bg-yellow-200">
+          <textarea className='bg-red-200' name="importString" value={state.importString} onChange={onChange}></textarea>
+          {/* <p>IMPORT IMPORT</p> */}
           <button onClick={importCodes}>
             import
           </button>
-        </>
+        </div>
+
       )
     }
   }
   const renderExport = () => {
     if (state.showExport) {
       return (
-        // <textarea name="ExportString" cols="30" rows="10" value={state.exportString}></textarea>
-        <p>testing export</p>
+        <div className="flex w-full h-full">
+          <textarea className='w-full border-none resize-none' name="ExportString" value={state.exportString}></textarea>
+        </div>
+
       )
     }
   }
   const returnHaxorClasses = () => {
     return `tab tab-xs`
   }
-  // const renderHaxorDiv = () => {
-  //   if (state.showImport) {
-  //     return (
-  //       <>
-  //         <Transition
-  //           onEnter={(el, done) => {
-  //             const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-  //               duration: 600
-  //             });
-  //             a.finished.then(done);
-  //           }}
-  //           onExit={(el, done) => {
-  //             const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-  //               duration: 600
-  //             });
-  //             a.finished.then(done);
-  //           }}
-  //         >
-  //           <Show when={state.showImport === true} fallback={""}>
-  //             <p>IMPORT IMPORT IMPORT</p>
-  //           </Show >
-  //         </Transition>
-  //         <textarea name="importString" cols="30" rows="10" value={state.importString} onChange={onChange}></textarea>
-  //         <button onClick={importCodes}>
-  //           import
-  //         </button>
-  //       </>
-  //     )
-  //   } else {
-  //     return (
-  //       <textarea name="ExportString" cols="30" rows="10" value={state.exportString}></textarea>
-  //     )
-  //   }
-
-  // }
 
   return (
     <MainView title="Custom Keycodes" description={`Custom keycode can be like macros and just send a whole word with a single keypress. 
@@ -161,7 +129,7 @@ export default function MakeCustomCodes() {
                 <a class={`${returnHaxorClasses()} ${state.showImport ? 'tab-active' : ''}`} onClick={() => { setState({ showImport: true, showExport: false }) }}>IMPORT</a>
               </div>
               {/* {renderHaxorDiv()} */}
-              <div className="importExportContainer flex rounded-lg shadow border flex-1 w-full">
+              <div className="importExportContainer flex rounded-lg shadow border flex-1 w-full overflow-hidden">
                 {renderImport()}
                 {renderExport()}
                 {/* {renderHaxorDiv()} */}
@@ -180,51 +148,66 @@ export default function MakeCustomCodes() {
             {renderExport()} */}
           </div>
         </div>
-        <div className="flex w-[300px] h-full relative overflow-scroll">
-          {/* custom codes */}
-          <Scroller stickySide='right'>
-            <For each={Array.from(keycodes.customCodes.values())} fallback={<div>Loading...</div>}>
-              {(key) =>
 
-                <div className="flex mb-4 shadow shadow-md p-2 rounded rounded-lg">
-                  <div className='flex flex-col w-full'>
-                    <p>
-                      Display: {key.display}
-                    </p>
-                    <div className="flex flex-col">
-                      <p>
-                        Code
+
+        <div className="flex w-[300px] relative">
+          {/* custom codes */}
+          <div className="flex flex-col w-full">
+            {/* <h3 className='bg-red-200 ml-4 text-lg w-full'>My Keycodes</h3> */}
+            <Scroller stickySide='right' title='My Keycodes'>
+              <For each={Array.from(keycodes.customCodes.values())} fallback={<div>Loading...</div>}>
+                {(key) =>
+                  <div className="flex mb-4 shadow shadow-md p-2 rounded rounded-lg">
+                    <div className='flex flex-col w-full'>
+                      <p className='text-[1.1rem] p-[.3rem]'>
+                        {key.display}
                       </p>
-                      <div className="flex w-full bg-base-300 rounded rounded-md">{key.code}</div>
-                    </div>
-                    <p>
-                      Description: {key.Description}
-                    </p>
-                    <div className="flex">
-                      <ShareFeature featureType={ShareableFeatureType.keyCodes} keycode={key} />
-                      <Button
-                        selected={true}
-                        onClick={() => {
-                          //@ts-ignore
-                          keycodes.RemoveCustomCode(key.code)
-                        }}>
-                        delete
-                      </Button>
+                      <div className="flex flex-col">
+                        <div className="flex flex-col w-full bg-base-300 rounded rounded-md p-[.4rem]">
+                          <p className="text-[.8rem] text-primary-content">
+                            Code
+                          </p>
+                          <span className="text-[.95rem]">{key.code}code here</span>
+                        </div>
+                      </div>
+                      <p className={`p-[.28rem] text-[.7rem] border rounded-md my-1.5`}>
+                        {key.Description}
+                      </p>
+                      <div className="flex mt-1">
+                        <div className="w-1/2">
+                          <ShareFeature featureType={ShareableFeatureType.keyCodes} keycode={key} fullWidthButton iconButton tinyButtons btnClasses='btn-outline' />
+                        </div>
+                        <span className="w-[15px]" />
+                        <div className="w-1/2">
+                          <Button
+                            selected={true}
+                            onClick={() => {
+                              //@ts-ignore
+                              keycodes.RemoveCustomCode(key.code)
+                            }}
+                            className='w-full btn-outline btn-error hover:btn-error gap-2'
+                            icon
+                            tinyButtons
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-[1.1rem] h-[1.1rem]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Delete
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              }
-            </For>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem officia aliquid placeat provident ratione dolore modi maiores, earum alias vero. Laborum maxime eius nobis fugiat tenetur, sunt ullam dolores voluptate.
-              Perferendis mollitia eius ipsa praesentium quidem. Alias soluta odio libero molestiae voluptatibus ut exercitationem id perferendis, quasi obcaecati totam consectetur necessitatibus possimus. Magni natus nobis laboriosam deserunt! Ad, similique provident.
-              Repudiandae, repellat perspiciatis? Suscipit, amet? Non similique atque vitae quam ratione. Natus obcaecati repellat impedit at omnis voluptatum, porro ducimus expedita possimus iste sed totam velit eius doloribus facilis cum?
-              In eos a repellendus eligendi temporibus non, quis optio error, itaque, inventore impedit aut velit vero. Quae unde fugit voluptatum, ad at enim aliquid atque adipisci dolor, cumque numquam quos?
-              Eaque omnis reprehenderit ab aperiam officia, ex consequatur quo, voluptas veritatis sequi temporibus? Beatae architecto, soluta dolorum numquam placeat voluptatum animi dolores tempora vero obcaecati corrupti minima sunt dolorem tempore!
-              Cupiditate aliquid quidem reiciendis sed at? Placeat omnis vel similique porro, natus id suscipit! Suscipit, sint. Quibusdam, quidem alias delectus soluta veniam iste asperiores similique, eius praesentium eveniet accusamus recusandae?
-              Vero placeat quo odit earum. Sequi tempora facere minus fuga dolorem quos eligendi cumque? Sed, deserunt neque magni voluptatibus pariatur nihil facilis quod nostrum, maiores, repudiandae quia porro vitae autem!
-              Blanditiis, sunt repellat. Aperiam deleniti delectus assumenda incidunt dolores aliquid id similique dolorem, placeat explicabo est, cum quisquam! Ducimus quia eos unde? Adipisci iusto minus, corporis laborum accusamus et molestiae!</p>
-          </Scroller>
+                }
+              </For>
+            </Scroller>
+          </div>
+
         </div>
+
+
+
+
       </div>
     </MainView>
   );
