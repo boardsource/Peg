@@ -106,7 +106,6 @@ export default function ToastDisplay(props: ToastProps) {
 
             <For each={messages()} fallback={""}>
                 {(message: ToastMessage, _index) => (
-
                     returnToast(message)
                 )
                 }
