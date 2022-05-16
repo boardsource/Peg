@@ -68,7 +68,7 @@ export default function ModalDisplay(props: ModalDisplayDisplayProps) {
                 <div id="defaultModal" tabindex="-1" aria-hidden="true" class="flex flex-col justify-center align-center items-center content-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full backdrop-blur-sm">
                     <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
                         {/* <!-- Modal content --> */}
-                        <div class="relative bg-base-100 rounded-lg shadow dark:bg-gray-700 !rounded-2xl overflow-hidden p-5">
+                        <div class="relative bg-base-100 rounded-lg shadow !rounded-2xl overflow-hidden p-5">
                             {/* <!-- Modal header --> */}
                             <div class="flex justify-between items-start border-b dark:border-gray-600 mb-2">
                                 <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl dark:text-white">
