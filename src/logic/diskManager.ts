@@ -1,6 +1,7 @@
 import { KeyMap } from "./keymapManager";
 import { app } from 'electron';
 import { readdir } from 'fs/promises';
+import { download } from "electron-dl"
 //@ts-ignore
 import { AppManager } from "./AppManager";
 const nodeDiskInfo = require('node-disk-info')
@@ -9,6 +10,10 @@ const bitmapManipulation = require("bitmap-manipulation");
 import * as fs from 'fs/promises';
 import path from 'path'
 import { ElectronEvents, FileName } from "../types/types";
+import { ProgramSettings } from "./programSettings";
+//@ts-ignore
+import DecompressZip from 'decompress-zip'
+const programSettings = ProgramSettings.getInstance()
 type DiskInfo = {
     filesystem: string
     blocks: number
@@ -23,6 +28,7 @@ export class DiskManager {
     kbDrive: string = "";
     hasKeymap: string = "";
     hasLayout: string = "";
+    kmkPath: string = ""
     didNotFindDrive: boolean = false;
     keepLooking: boolean = true;
     isScaning: boolean = false;
@@ -33,6 +39,7 @@ export class DiskManager {
         this.appManager = appManager
         console.log("setting up diskmanager")
         this.loadFromCacheIfCan()
+        this.kmkPath = path.join(app.getPath("temp"), 'kmk.zip')
     }
     async loadFromCacheIfCan() {
         const dataStr = await this.readCache()
@@ -59,7 +66,60 @@ export class DiskManager {
         this.isScaning = false;
         this.cacheData("")
         this.manageDriveScan()
-        console.log("cleaned up", this)
+    }
+
+    public async DownloadAndInstallLib(BoardName: string, drivePath: string) {
+        download(this.appManager.win, `${programSettings.apiUrl}lib/${BoardName}.zip`, {
+            directory: app.getPath("temp"),
+            filename: `${BoardName}.zip`,
+            onCompleted: (file: any) => {
+                try {
+                    const srcPath = path.join(app.getPath("temp"), `${BoardName}.zip`)
+                    const zip = new DecompressZip(srcPath);
+                    zip.extract({
+                        path: drivePath,
+                    });
+                } catch (error) {
+                    console.log("error extracting libs", error)
+                }
+            }
+        }).catch((error: Error) => { console.log("error downloading libs", error) })
+
+
+    }
+
+    public async DownloadKmk() {
+        download(this.appManager.win, `${programSettings.apiUrl}kmk.zip`, {
+            directory: app.getPath("temp"),
+            filename: "kmk.zip",
+            onCompleted: (file: any) => { console.log(file, "file") }
+
+        }).catch((error: Error) => { console.log("Error", error) })
+    }
+
+
+
+    public async InstallKmk(drivePath: string) {
+        try {
+
+
+            console.log(" the  path I got is", drivePath)
+
+            const zip = new DecompressZip(this.kmkPath);
+
+            zip.extract({
+                path: drivePath,
+
+            });
+        } catch (error) {
+            console.log("erro extracting", error)
+        }
+
+        // fs.copyFile(this.kmkPath, destPath).then(()=>{
+        //     // extract 
+        // }).catch(error =>{
+        //     console.log("error installing kmk",error)
+        // })
     }
     public async manageDriveScan() {
         try {

@@ -9,6 +9,7 @@ import { logIn } from '../../logic/helpers';
 import { createStore } from 'solid-js/store';
 import { ProgramSettings } from '../../logic/programSettings';
 import Toggle from '../../components/toggle/toggle';
+
 const programSettings = ProgramSettings.getInstance()
 
 

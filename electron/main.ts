@@ -178,6 +178,31 @@ ipcMain.on(ElectronEvents.Savefile, (event: Electron.IpcMainEvent, data: { fileD
 }
 )
 
+ipcMain.on(ElectronEvents.InstallKmk, (event: Electron.IpcMainEvent, path: string) => {
+  if (pegApp) {
+    pegApp.InstallKmk(path)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.InstallKmk(path)
+
+    }
+  }
+}
+)
+
+ipcMain.on(ElectronEvents.DownLoadAndInstallLib, (event: Electron.IpcMainEvent, data: { boardName: string, path: string, }) => {
+  if (pegApp) {
+    pegApp.DownloadAndInstallLib(data.boardName, data.path)
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.DownloadAndInstallLib(data.boardName, data.path)
+    }
+  }
+}
+)
+
 ipcMain.on(ElectronEvents.SaveOled, (event: Electron.IpcMainEvent, data: { fileData: number[][], fileNumber: number | string }) => {
   if (pegApp) {
     pegApp.oledSave(event, data)
@@ -202,6 +227,20 @@ ipcMain.on(ElectronEvents.ReadOled, (event: Electron.IpcMainEvent, fileNumber: n
   }
 }
 )
+
+ipcMain.on(ElectronEvents.DownLoadKmk, (event: Electron.IpcMainEvent) => {
+  if (pegApp) {
+    pegApp.DownloadKmk()
+  } else {
+    if (mainWindow !== null) {
+      const pegApp = new AppManager(mainWindow)
+      pegApp.DownloadKmk()
+
+    }
+  }
+}
+)
+
 
 ipcMain.on(ElectronEvents.SetProPlan, (event: Electron.IpcMainEvent, id: string) => {
   if (pegApp) {

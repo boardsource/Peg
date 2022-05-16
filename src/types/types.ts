@@ -56,7 +56,7 @@ export interface FeatureResponse {
     title: string;
     universal: boolean
     version: string
-    code?: string
+    code?: any
     downloads: number
 
 }
@@ -97,6 +97,9 @@ export enum ElectronEvents {
     MapSaved = "MapSaved",
     FilePicker = "FilePicker",
     FilePickerClose = "FilePickerClose",
+    DownLoadKmk = "DownLoadKmk",
+    DownLoadAndInstallLib = "DownLoadAndInstallLib",
+    InstallKmk = "InstallKmk",
     ScanAgain = "ScanAgain",
     FreshDriveScan = "FreshDriveScan",
     ReadSettings = "ReadSettings",

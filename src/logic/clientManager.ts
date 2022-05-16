@@ -107,7 +107,6 @@ export class ClientManager extends Subscribable {
             this.programSettings.PPP = true
         })
 
-
         this.programSettings.Subscribe(() => {
             this.sendToBackend(ElectronEvents.SaveSettings,
                 JSON.stringify({

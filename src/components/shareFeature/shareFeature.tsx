@@ -94,7 +94,7 @@ const ShareModal = (props: ShareModalProps) => {
 
             <Button selected={title() !== "" && description() !== "" && creator() !== ""} disabled={title() === "" || description() === "" || creator() === ""}
 
-          className={'btn-outline'}
+                className={'btn-outline'}
                 onClick={() => {
                     remoteContentPoster(title(), description(), creator(), returnCode(props.featureType, description(), title(), props.keycode, props.codeBlock), props.featureType)
                     props.close()
@@ -123,7 +123,7 @@ export default function ShareFeature(props: ShareFeatureProps) {
     return (
         <div className="ShareFeature">
             <Show when={isOnLine()} fallback={"You are currently off line and can not share."}>
-                <Button oneOffClasses={'btn-outline'} onClick={share} selected={true}>
+                <Button className={'btn-outline'} onClick={share} selected={true}>
                     Share
                 </Button>
 

@@ -43,7 +43,6 @@ export class RemoteContentManager extends Subscribable {
     public GetFeature(feature: FeatureResponse) {
         axios.get(`${this.programSettings.apiUrl}feature/single/${feature._id}`).then(response => {
             if (response.status === 200) {
-                console.log("res is ", response, feature)
                 this.selectedFeature = { ...feature, code: response.data }
                 this.updateSubScribers()
             } else {

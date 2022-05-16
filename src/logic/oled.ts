@@ -122,6 +122,11 @@ export class Oled extends Subscribable {
         }
     }
 
+    public UpdateImageReactionType(newReactionType: OledReactionType) {
+        this.imgReactionType = newReactionType
+        console.log(this)
+        this.changesMade()
+    }
     public DataToPegMap(data: Uint8ClampedArray, layer: number) {
         let oledArray = []
         for (var i = 0; i < data.length; i += 4) {

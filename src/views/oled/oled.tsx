@@ -1,12 +1,9 @@
 import { createSignal, For, onCleanup, Show } from 'solid-js'
-import Button from '../../components/button/button'
-import DownloadFeature from '../../components/downloadFeature/downloadFeature'
 import LayerSelector from '../../components/layerSelector/layerSelector'
 import LoopOverEnum from '../../components/loopOverEnum/loopOverEnum'
 import MainView from '../../components/mainView/mainView'
 import OledDisplay from '../../components/oled/oledDisplay/oledDisplay'
 import TextOledDisplay from '../../components/oled/textOledDisplay/textOledDisplay'
-import ShareFeature from '../../components/shareFeature/shareFeature'
 import Toggle from '../../components/toggle/toggle'
 import { ClientManager } from '../../logic/clientManager'
 import { KeyMap } from '../../logic/keymapManager'
@@ -21,8 +18,9 @@ export default function OLED() {
   let currentOled = keymap.oled
   const [currentLayer, setCurrentLayer] = createSignal(clientManager.currentLayer),
     [OledType, SetOledType] = createSignal(currentOled ? currentOled.displayType : OledDisplayType.image),
+    [imgReactionType, setImgReactionType] = createSignal(currentOled ? currentOled.imgReactionType : OledReactionType.layer),
     [flip, setflip] = createSignal(currentOled ? currentOled.flip : false),
-    [changesMade, SetChangesMade] = createSignal(clientManager.changesMade)
+    [supportsOled, setSupportsOled] = createSignal(keymap.keyLayout && keymap.keyLayout.features.oled)
   const changeLayer = (newLayer: number) => {
     if (newLayer !== currentLayer()) {
       currentOled?.ChangeLayer(currentLayer(), newLayer)
@@ -33,7 +31,7 @@ export default function OLED() {
     if (clientManager.currentLayer !== currentLayer()) {
       changeLayer(clientManager.currentLayer)
     }
-    SetChangesMade(clientManager.changesMade)
+
     if (currentOled) {
       setflip(currentOled.flip)
     }
@@ -44,8 +42,27 @@ export default function OLED() {
     }
   }
   const subId = clientManager.Subscribe(updateLocalChangesMade)
+  const subId2 = currentOled ? currentOled.Subscribe(() => {
+    setImgReactionType(currentOled ? currentOled.imgReactionType : OledReactionType.layer)
+  }) : false
+  const subId3 = keymap.Subscribe(() => {
+    setSupportsOled(keymap.keyLayout && keymap.keyLayout.features.oled)
+    currentOled = keymap.oled
+    if (currentOled) {
+      setImgReactionType(currentOled.imgReactionType)
+      setflip(currentOled.flip)
+      SetOledType(currentOled.displayType)
+      console.log("supportsOled", supportsOled())
+    }
+  })
+
+
   onCleanup(() => {
     clientManager.Unsubscribe(subId)
+    keymap.Unsubscribe(subId3)
+    if (subId2 && currentOled) {
+      currentOled.Unsubscribe(subId2)
+    }
   })
 
 
@@ -56,9 +73,7 @@ export default function OLED() {
     }
     clientManager.NoticeAChangeWasMade()
   }
-  const saveMap = () => {
-    clientManager.SaveMap()
-  }
+
   const renderOledEditor = () => {
     if (OledType() === OledDisplayType.image) {
       return (
@@ -72,7 +87,9 @@ export default function OLED() {
   }
   return (
     <MainView title='OLED' description={`
-        OLEDs are displays used on keyboards. OLEDs can display a wide range of items, examples are displaying the current layer or a static image of your choosing.`} supported={keymap.keyLayout && keymap.keyLayout.features.oled} featureType={ShareableFeatureType.oleds}>
+        OLEDs are displays used on keyboards. OLEDs can display a wide range of items, examples are displaying the current layer or a static image of your choosing.`}
+      supported={supportsOled()}
+      featureType={ShareableFeatureType.oleds}>
       <div className="flex flex-col flex-1 w-full relative">
         <div className="flex flex-col">
           <div className="flex">
@@ -87,7 +104,9 @@ export default function OLED() {
           </div>
         </div>
         <div className="flex justify-self-end absolute right-0 top-0">
-          <LayerSelector isLed={false} />
+          <Show when={OledType() === OledDisplayType.text || imgReactionType() === OledReactionType.layer}>
+            <LayerSelector isLed={false} />
+          </Show>
         </div>
       </div>
       <div className="oled__info w-full">

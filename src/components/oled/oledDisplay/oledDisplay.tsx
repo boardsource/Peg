@@ -2,10 +2,12 @@ import "./oledDisplay.sass"
 import { Show, createSignal, onMount, For, onCleanup, createReaction, Index } from "solid-js";
 import { createStore } from "solid-js/store";
 import { magicNumbers } from "../../../magicNumbers";
-import { OledPixel } from "../../../types/types";
+import { OledReactionType } from "../../../types/types";
 import { KeyMap } from "../../../logic/keymapManager";
 import { ClientManager } from "../../../logic/clientManager";
 import OledImageUpLoader from "../oledImageUploader/oledImageUpLoader";
+import LoopOverEnum from "../../loopOverEnum/loopOverEnum";
+import Button from "../../button/button";
 const clientManager = ClientManager.getInstance()
 const keymap = KeyMap.getInstance()
 type OledDisplayProps = {
@@ -14,7 +16,9 @@ type OledDisplayProps = {
 
 
 export default function OledDisplay(props: OledDisplayProps) {
+
   let currentOled = keymap.oled
+  const [imgReactionType, setImgReactionType] = createSignal(currentOled ? currentOled.imgReactionType : OledReactionType.layer)
   const subId = keymap.Subscribe(() => { currentOled = keymap.oled })
   // const [displayPixels, setDisplayPixels] = createSignal(currentOled?.display)
   const [displayPixels, setDisplayPixels] = createStore({ pixels: currentOled?.display, mouseDown: false })
@@ -31,6 +35,7 @@ export default function OledDisplay(props: OledDisplayProps) {
   const subId2 = currentOled ? currentOled.Subscribe(() => {
     updates++
     prosessUpdates()
+    setImgReactionType(currentOled ? currentOled.imgReactionType : OledReactionType.layer)
   }) : false
 
   onCleanup(() => {
@@ -40,6 +45,13 @@ export default function OledDisplay(props: OledDisplayProps) {
     }
 
   })
+  const clearDisplay = () => {
+    if (currentOled) {
+      currentOled.DisplayBlack()
+      currentOled.changesMade()
+    }
+  }
+
   const drag = (row: number, col: number) => {
     if (displayPixels.mouseDown) {
       currentOled?.UpdateDisplayPixel(row, col)
@@ -100,12 +112,18 @@ export default function OledDisplay(props: OledDisplayProps) {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col">
+
         <div className="oledDisplay flex flex-col flex-1 rounded-lg w-[640px] h-[160px] overflow-hidden" onMouseDown={() => setDisplayPixels({ mouseDown: true })} onMouseUp={() => setDisplayPixels({ mouseDown: false })}>
           <div className="oledDisplay__victim"></div>
         </div>
       </div>
       <div className="mt-2.5">
+        <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateImageReactionType(newValue)} selected={imgReactionType()} defaultButtons oledInfo tinyButtons />
+        <Button onClick={clearDisplay} selected={false}>
+          Clear Display
+        </Button>
         <OledImageUpLoader currentLayer={props.currentLayer} />
+
       </div>
 
     </div>

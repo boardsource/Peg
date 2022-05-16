@@ -17,11 +17,13 @@ import MakeCustomCodes from './makeCustomCodes/makeCustomCodes';
 import ToastDisplay from '../components/toastDisplay/toastDisplay';
 
 
+
 export default function Root() {
   return (
     <>
       {/* <NotificationDisplay /> */}
       <div className="peg-wrapper relative flex h-full font-sans bg-base-100">
+
         <ModalDisplay />
         <Menubar />
         <div className="peg-wrapper__sidebar">
@@ -34,9 +36,6 @@ export default function Root() {
           <div className="peg-wrapper__views__main relative flex flex-1">
             <ToolTipDisplay />
             <ToastDisplay />
-
-
-
             <Routes>
               <Route path="/index.html" element={<KeymapEditView isLed={false} isEncoder={false} title="Keymap" />} />
               <Route path="/index.html/led" element={<KeymapEditView isLed={true} isEncoder={false} title="LED" />} />
