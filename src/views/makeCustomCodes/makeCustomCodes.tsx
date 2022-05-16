@@ -1,6 +1,6 @@
 import { Show, createSignal, onMount, onCleanup, For } from "solid-js";
 import { createStore } from "solid-js/store";
-import { KeyCode, ShareableFeatureType } from "../../types/types";
+import { KeyCode, ScrollerSides, ShareableFeatureType } from "../../types/types";
 import { ClientManager } from "../../logic/clientManager";
 import { KeyCodes } from "../../logic/keycodes";
 import ShareFeature from "../../components/shareFeature/shareFeature";
@@ -12,6 +12,7 @@ import Scroller from '../../components/scroller/scroller'
 import HelpTooltip from "../../components/helpTooltip/helpTooltip";
 import Textarea from '../../components/textarea/textarea'
 import { Transition } from 'solid-transition-group'
+import { Toast } from "../../logic/toast";
 
 const clientManager = ClientManager.getInstance()
 const keycodes = KeyCodes.getInstance()
@@ -19,8 +20,16 @@ const keycodes = KeyCodes.getInstance()
 
 export default function MakeCustomCodes() {
 
-  const [state, setState] = createStore({ display: "", code: "", description: "", showExport: true, showImport: false, importString: "", exportString: "" });
+  const [state, setState] = createStore({ display: "", code: "", description: "", showExport: true, showImport: false, importString: "", exportString: "", customCodes: Array.from(keycodes.customCodes.values()) });
+  const updateLocalState = () => {
+    setState({ customCodes: Array.from(keycodes.customCodes.values()) })
+    exportCodes()
+  }
+  const subId = clientManager.Subscribe(updateLocalState)
+  onCleanup(() => {
+    clientManager.Unsubscribe(subId);
 
+  })
   const onChange = (e: Event) => {
     //@ts-ignore
     setState({ [e.target.name]: e.target.value })
@@ -42,8 +51,9 @@ export default function MakeCustomCodes() {
         Description: state.description
       }
       keycodes.AddCustomCode(newCode)
+      updateLocalState()
     } else {
-      // todo error
+      Toast.Error("Keycode is missing a something")
     }
   }
   const importCodes = () => {
@@ -55,7 +65,7 @@ export default function MakeCustomCodes() {
 
   }
   const exportCodes = () => {
-    const exportJsonString = JSON.stringify(Array.from(keycodes.customCodes.values()))
+    const exportJsonString = JSON.stringify(Array.from(keycodes.customCodes.values()), null, 2)
     setState({ exportString: exportJsonString })
   }
   const renderImport = () => {
@@ -113,11 +123,7 @@ export default function MakeCustomCodes() {
           <Textarea label="Description:"
             name="description" onChange={onChange} value={state.description}
             placeholder="Enter helpful reminders of what this keycode does..." />
-          {/* <Input
-            label="Description:"
-            name="description" onChange={onChange} value={state.description}
-            placeholder="Enter helpful reminders of what this keycode does..."
-          /> */}
+
           <Button className={`btn-block mt-3`} onClick={saveKey} selected={state.description !== "" && state.code !== "" && state.display !== ""}>
             Save Key
           </Button>
@@ -125,7 +131,10 @@ export default function MakeCustomCodes() {
           <div className="xXx_haxor_Display_xXx flex-grow self-center mt-4 w-full">
             <div className="flex flex-col items-center h-full">
               <div class="tabs tabs-boxed mb-3">
-                <a class={`${returnHaxorClasses()} ${state.showExport ? 'tab-active' : ''}`} onClick={() => { setState({ showImport: false, showExport: true }) }}>EXPORT</a>
+                <a class={`${returnHaxorClasses()} ${state.showExport ? 'tab-active' : ''}`} onClick={() => {
+                  setState({ showImport: false, showExport: true })
+                  exportCodes()
+                }}>EXPORT</a>
                 <a class={`${returnHaxorClasses()} ${state.showImport ? 'tab-active' : ''}`} onClick={() => { setState({ showImport: true, showExport: false }) }}>IMPORT</a>
               </div>
               {/* {renderHaxorDiv()} */}
@@ -138,14 +147,6 @@ export default function MakeCustomCodes() {
 
             </div>
 
-            {/* <Button onClick={() => setState({ showImport: !state.showImport })} selected={state.showImport}>
-              {!state.showImport ? " Show Import Key Codes" : "Hide Import Key Codes"}
-            </Button>
-            {renderImport()}
-            <Button onClick={() => { setState({ showExport: !state.showExport }); exportCodes() }} selected={state.showExport}>
-              {!state.showExport ? " Show Export Key Codes" : "Hide Export Key Codes"}
-            </Button>
-            {renderExport()} */}
           </div>
         </div>
 
@@ -153,9 +154,9 @@ export default function MakeCustomCodes() {
         <div className="flex w-[300px] relative">
           {/* custom codes */}
           <div className="flex flex-col w-full">
-            {/* <h3 className='bg-red-200 ml-4 text-lg w-full'>My Keycodes</h3> */}
-            <Scroller stickySide='right' title='My Keycodes'>
-              <For each={Array.from(keycodes.customCodes.values())} fallback={<div>Loading...</div>}>
+
+            <Scroller stickySide={ScrollerSides.Right} title='My Keycodes'>
+              <For each={state.customCodes} fallback={<div>Loading...</div>}>
                 {(key) =>
                   <div className="flex mb-4 shadow shadow-md p-2 rounded rounded-lg">
                     <div className='flex flex-col w-full'>
@@ -167,7 +168,7 @@ export default function MakeCustomCodes() {
                           <p className="text-[.8rem] text-primary-content">
                             Code
                           </p>
-                          <span className="text-[.95rem]">{key.code}code here</span>
+                          <span className="text-[.95rem]">{key.code}</span>
                         </div>
                       </div>
                       <p className={`p-[.28rem] text-[.7rem] border rounded-md my-1.5`}>

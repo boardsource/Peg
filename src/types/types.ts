@@ -112,6 +112,17 @@ export enum ElectronEvents {
     WindowFullScreen = "WindowFullScreen",
     WindowMinimize = "WindowMinimize",
 }
+export enum ScrollerSides {
+    Right = "right",
+    Left = "left",
+    Top = "top",
+    Bottom = "bottom"
+
+}
+export enum ScrollerDirection {
+    Vertical = "vertical",
+    Horizontal = "horizontal"
+}
 export enum SplitFlashStage {
     MainSide,
     Unplugged,

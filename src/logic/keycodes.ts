@@ -253,7 +253,7 @@ export class KeyCodes {
         Toast.Debug(`old custom code amt ${this.customCodes.size}`)
         this.customCodes.set(newCode.code, newCode);
         this.saveCustomCodes();
-        Toast.Success(`Added ${newCode.code} reload if you dont see it yet.`)
+        Toast.Success(`Added ${newCode.code}.`)
         Toast.Debug(`new custom code amt ${this.customCodes.size}`)
     }
 
