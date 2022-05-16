@@ -9,7 +9,7 @@ export class ProgramSettings extends Subscribable {
     //used to test off line mode
     // private _apiUrl: string = "http://159.89.159.24:300/api/"
     // " real server "
-    private _apiUrl: string = "http://159.89.159.24:3000/api/"
+    private _apiUrl: string = "https://getpeg.xyz/api/"
     // localhost for dev work
     // private _apiUrl: string = "http://localhost:8080/api/"
     private _PPP: boolean = false

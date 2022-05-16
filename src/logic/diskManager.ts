@@ -101,25 +101,14 @@ export class DiskManager {
 
     public async InstallKmk(drivePath: string) {
         try {
-
-
-            console.log(" the  path I got is", drivePath)
-
             const zip = new DecompressZip(this.kmkPath);
-
             zip.extract({
                 path: drivePath,
-
             });
         } catch (error) {
             console.log("erro extracting", error)
         }
 
-        // fs.copyFile(this.kmkPath, destPath).then(()=>{
-        //     // extract 
-        // }).catch(error =>{
-        //     console.log("error installing kmk",error)
-        // })
     }
     public async manageDriveScan() {
         try {
@@ -154,13 +143,11 @@ export class DiskManager {
 
     }
     async readProPlan() {
-        console.log("reading proplan")
         try {
             const tmpPath = path.join(app.getPath("temp"), 'ppp.temp')
             const data = await fs.readFile(tmpPath, 'utf8');
             console.log("data", data)
             this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
-
 
         } catch (error) {
             console.log("error in reading pro plan", error)
