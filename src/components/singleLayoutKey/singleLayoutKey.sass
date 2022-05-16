@@ -1,15 +1,12 @@
 /* move into tailwind for single key upper */
 .singleLayoutKey
     height: var(--keyMultiplyer)
-    /* moved this to tailwind */
-    /* border: 1px solid black; */
     margin: auto
     position: absolute
 
 .singleLayoutKey .singleLayoutKey__main
     width: 100%
     height: 100%
-    /* background: lightgray; */
     font-weight: bolder
 
 .singleLayoutKey .singleLayoutKey__clear
@@ -17,30 +14,3 @@
     right: -5px
     top: -5px
     z-index: 2
-
-.waitingKey .singleLayoutKey__main
-    background: aquamarine
-
-// individual key font sizes
-// because font size is set to scale from a maximum downward we are setting the 'smaller' keys to a larger font size manually, all colors and other styling is still done via tailwind */
-
-// .singleLayoutKey__main
-//     //alphas
-//     &.kA, &.kB, &.kC, &.kD, &.kE, &.kF, &.kG, &.kH, &.kI, &.kJ, &.kK, &.kL, &.kM, &.kN, &.kO, &.kP, &.kQ, &.kR, &.kS, &.kT, &.kU, &.kV, &.kW, &.kX, &.kY, &.kZ
-//         svg
-//             text
-//                 font-size: 160px
-//     &.k1, &.k2, &.k3, &.k4, &.k5, &.k6, &.k7, &.k8, &.k9, &.k0
-//         svg
-//             text
-//                 font-size: 160px
-//     &.kESC
-//         svg
-//             text
-//                 font-size: 120px
-
-// //default/all    
-// .singleLayoutKey__main
-//     svg
-//         text
-//             font-size: 75px

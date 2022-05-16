@@ -13,6 +13,7 @@ type UsableKeyCodeDisplayProps = {
 
 };
 
+
 export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
     // disply name : logic name
     const keyCodeOptions = new Map(
@@ -57,8 +58,24 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
         clientManager.SaveMap()
     }
     return (
-        <div className="UsableKeyCodeDisplay bg-green-400 flex flex-col flex-1 w-full">
-            <div className="UsableKeyCodeDisplay__options mb-3">
+        <div className="UsableKeyCodeDisplay flex flex-col flex-1 w-full">
+            <div className="UsableKeyCodeDisplay__options mb-4 flex flex-wrap tabs tabs-boxed self-start">
+                <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
+                    {(key) =>
+                        <a
+                            className={`tab transition-all tab-sm ${selectedKeyCodeName() === keyCodeOptions.get(key) ? 'tab-active' : ''}`}
+                            onClick={() => {
+                                //@ts-ignore
+                                setSelectedKeyCodeName(keyCodeOptions.get(key))
+                            }}
+                        >
+                            {key}</a>
+                    }
+                </For>
+            </div>
+
+            {/* old button tab layout  */}
+            {/* <div className="UsableKeyCodeDisplay__options mb-3 flex flex-wrap">
                 <For each={Array.from(keyCodeOptions.keys())} fallback={<div>Loading...</div>}>
                     {(key) =>
                         <Button
@@ -76,14 +93,32 @@ export default function UsableKeyCodeDisplay(props: UsableKeyCodeDisplayProps) {
                     save
                 </Button>
 
-            </div>
+            </div> */}
 
-            <div className="UsableKeyCodeDisplay__current">
+            <div className="UsableKeyCodeDisplay__current flex relative">
+
                 <UsableKeyCodes
                     //@ts-ignore
                     keycodes={Array.from(keycodes[selectedKeyCodeName()].values())}
                     layout={usesLayout.get(selectedKeyCodeName())}
+                    className="w-3/4"
                 />
+
+                <div className="flex flex-col w-1/6 absolute right-0">
+                    {/* this looks funky but it works maybe just remove the title */}
+                    <h2 className='mt-1 mb-2'>Commonly Used</h2>
+                    <UsableKeyCodes
+                        //@ts-ignore
+                        keycodes={Array.from(keycodes.bonusCodes.values())}
+                        layout={undefined}
+                        className="w-full"
+
+                    />
+
+
+                </div>
+
+
             </div>
         </div>
     );

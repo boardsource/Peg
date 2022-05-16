@@ -48,7 +48,9 @@ export class MiscKeymapParts {
             imports += "import supervisor\n";
         }
         if (this.keymap.codeBlock !== undefined) {
-            baseCode += `# codeblock\n${this.keymap.codeBlock}\n# codeblock\n`
+            this.keymap.codeBlock.forEach(codeBlock => {
+                baseCode += `# codeblock${codeBlock}# codeblock\n`
+            })
         }
         if (this.settings.oled && this.keymap.oled !== undefined) {
             imports += "from kmk.extensions.peg_oled_Display import Oled,OledDisplayMode,OledReactionType,OledData\n";
@@ -85,7 +87,7 @@ export class MiscKeymapParts {
                     baseCode += "split = Split(split_type=Split.BLE,split_side = split_side)\n";
                 }
             } else if (this.settings.rx_tx) {
-                baseCode += "split = Split(split_side = split_side,data_pin=keyboard.rx, data_pin2=keyboard.tx, uart_flip=False)\n";
+                baseCode += `split = Split(split_side = split_side,data_pin=keyboard.rx, data_pin2=keyboard.tx, uart_flip=${this.settings.uartFlip ? "True" : "False"})\n`;
             }
             else {
                 baseCode += "split = Split(split_side = split_side)\n";

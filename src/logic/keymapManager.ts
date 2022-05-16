@@ -15,7 +15,7 @@ export class KeyMap extends Subscribable {
     encoderMap: KeyCode[][] = [];
     keyLayout!: Layout;
     layout!: string;
-    codeBlock!: string;
+    codeBlock!: string[];
     haveLayout: boolean = false;
     haveMap: boolean = false;
     ledMap: Color[] = [];
@@ -63,13 +63,16 @@ export class KeyMap extends Subscribable {
         const encoderCount = encoderMap.length == 3 ? Number(encoderMap[1].replace("#", "")) : 0
 
 
+        this.keymapStr = new Array();
         //todo rework to map
         layers.forEach((match: string) => {
-            this.keymapStr.push(match.replaceAll("[", "").replaceAll("]", "").replaceAll(" ", "").split(","));
+            const cleanedMatch = this.codes.SwapCustoms(match.replaceAll("[", "").replaceAll("]", ""))
+
+            this.keymapStr.push(cleanedMatch.split(","));
         });
 
-        this.keymap = [];
-        this.encoderMap = []
+        this.keymap = new Array();
+        this.encoderMap = new Array()
         // todo can this be done in one loop
         //todo rework to map
         this.keymapStr.forEach(layer => {
@@ -84,11 +87,17 @@ export class KeyMap extends Subscribable {
                 const tempEncoderLayer = tempLayer.slice(tempLayer.length - encoderCount * 2, tempLayer.length)
                 this.keymap.push(tempKeymapLayer);
                 this.encoderMap.push(tempEncoderLayer);
+                Toast.Debug(`encoderMap length ${this.encoderMap.length}`)
+                Toast.Debug(`keymap length ${this.keymap.length}`)
             } else {
                 this.keymap.push(tempLayer);
             }
 
         });
+
+
+        Toast.Debug(``)
+
         this.haveMap = true;
         //RGB MATRIX
         const ledMap = baseMap.split("# ledmap");
@@ -105,12 +114,13 @@ export class KeyMap extends Subscribable {
                 .substring(ledHeaderCharacterCount)
                 .replaceAll(/\s+/g, '')
                 .split("],[")
-            console.log(tempLedMap)
+            // console.log(tempLedMap)
             const colorLeds = tempLedMap.map(led => {
                 const singleLed = led.split(',')
                 return new Color(singleLed[0], singleLed[1], singleLed[2])
             })
             this.ledMap = colorLeds
+            Toast.Debug(`ledMap length ${this.ledMap.length}`)
 
         }
         //OLEDS
@@ -144,6 +154,9 @@ export class KeyMap extends Subscribable {
             }
             this.oled.displayType = currentDisplayType
             this.oled.flip = flipValue
+            Toast.Debug(`oled.flip ${this.oled.flip}`)
+            Toast.Debug(`oled.displayType ${currentDisplayType}`)
+
             // this.oled.FromString(tempOledMap) to be used for strings not imgs
             if (currentDisplayType === OledDisplayType.image) {
                 try {
@@ -182,17 +195,33 @@ export class KeyMap extends Subscribable {
 
 
         //CODEBLOCK
-        const codeblock = baseMap.split("# codeblock")
-        if (codeblock.length == 3) {
-            this.codeBlock = codeblock[1]
-            console.log("code ", this.codeBlock)
+        const codeblocks = baseMap.split("# codeblock")
+
+
+        if (codeblocks.length > 0) {
+            this.codeBlock = []
+
+            for (let i = 1; i < codeblocks.length - 1; i++) {
+                const codeblock = codeblocks[i];
+                if (codeblock !== "\n") {
+                    this.codeBlock.push(codeblock)
+                    Toast.Debug(`code block found ${codeblock}`)
+                }
+            }
+            Toast.Debug(`number of code blocks found ${this.codeBlock.length}`)
+
+            console.log(`number of code blocks found ${this.codeBlock.length}`, this.codeBlock)
+            // this.codeBlock = codeblock[1]
+
+
+            // console.log("code ", this.codeBlock)
         }
 
 
 
         Toast.Success(`Found your keyboard`)
         this.updateSubScribers()
-        console.log("parsed map", this)
+        // console.log("parsed map", this)
 
 
 
@@ -201,7 +230,7 @@ export class KeyMap extends Subscribable {
     public ChangeKey(layer: number, pos: number, newKey: KeyCode, isEncoder: boolean) {
         // todo add in saving old changes for ctrl z 
         if (isEncoder) {
-            console.log("changed kkkey", this)
+            // console.log("changed kkkey", this)
             this.encoderMap[layer][pos] = newKey;
         } else if (this.keymap[layer][pos].canHaveSub && newKey.code != "KC.NO") {
             this.keymap[layer][pos].subOne = newKey;
@@ -215,6 +244,13 @@ export class KeyMap extends Subscribable {
     public ChangeLed(_layer: number, pos: number, newColor: Color) {
         // todo add in saving old changes for ctrl z 
         this.ledMap[pos] = newColor;
+        this.updateSubScribers()
+    }
+    public ChangeAllLeds(newColor: Color) {
+        // todo add in saving old changes for ctrl z 
+        this.ledMap.forEach((_color, index) => {
+            this.ledMap[index] = newColor;
+        });
         this.updateSubScribers()
     }
 

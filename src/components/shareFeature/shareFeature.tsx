@@ -1,12 +1,13 @@
 import { Show, createSignal, onMount, For, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 import { ClientManager } from "../../logic/clientManager";
-import { remoteContentPoster, ShareableFeatureToDisplayWord } from "../../logic/helpers";
+import { randomNameGen, remoteContentPoster, ShareableFeatureToDisplayWord } from "../../logic/helpers";
 import { KeyCodes } from "../../logic/keycodes";
 import { KeyMap } from "../../logic/keymapManager";
 import { Modal } from "../../logic/modal";
 import { KeyCode, OledDisplayType, ShareableFeatureType } from "../../types/types";
 import Button from "../button/button";
+import Input from "../input/input";
 const keymap = KeyMap.getInstance()
 const keycodes = KeyCodes.getInstance()
 const clientManager = ClientManager.getInstance()
@@ -14,9 +15,16 @@ const clientManager = ClientManager.getInstance()
 type ShareFeatureProps = {
     featureType: ShareableFeatureType
     keycode?: KeyCode
+    codeBlock?: string,
+    className?: string,
+    fullWidthButton?: boolean,
+    iconButton?: boolean,
+    tinyButtons?: boolean
+    btnClasses?: string,
+
 };
 
-const returnCode = (featureType: ShareableFeatureType, keycode?: KeyCode) => {
+const returnCode = (featureType: ShareableFeatureType, description: string, title: string, keycode?: KeyCode, codeBlock?: string) => {
     switch (featureType) {
         case ShareableFeatureType.keyMaps:
             return JSON.stringify(keymap.layersToString())
@@ -33,84 +41,67 @@ const returnCode = (featureType: ShareableFeatureType, keycode?: KeyCode) => {
             }
             return JSON.stringify(dataToReturn)
         case ShareableFeatureType.codeBlocks:
-            return JSON.stringify({ codeblock: keymap.codeBlock })
+            return JSON.stringify({ codeblock: `\n"""\n${title}\n${description}\n"""\n${codeBlock}` })
 
     }
 }
 type ShareModalProps = {
     featureType: ShareableFeatureType
     keycode?: KeyCode
+    codeBlock?: string
     close: () => void
 
 }
 
 const ShareModal = (props: ShareModalProps) => {
-    const [title, setTitle] = createSignal(""), [description, setDescription] = createSignal("")
+    const [title, setTitle] = createSignal(""), [creator, setCreator] = createSignal(""), [description, setDescription] = createSignal("")
     return (
         <div>
             <div class="mb-3 xl:w-96">
-                <label for="title" class="form-label inline-block mb-2 text-gray-700">
-                    Title
-                </label>
-                <input
-                    type="text"
-                    class="
-        form-control
-        block
-        w-full
-        px-3
-        py-1.5
-        text-base
-        font-normal
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-      "
-                    id="title"
+                <Input
+                    label="Title:"
+                    name="Title"
+
+                    value={title()}
                     placeholder={`My Awesome ${ShareableFeatureToDisplayWord(props.featureType)}`}
-                    onChange={e => {//@ts-ignore
+                    onChange={(e: any) => {//@ts-ignore
                         setTitle(e.target.value)
                     }}
                 />
+
+                <Input
+                    label="Creator:"
+                    name="Creator"
+                    value={creator()}
+                    placeholder={randomNameGen()}
+                    onChange={(e: any) => {//@ts-ignore
+                        setCreator(e.target.value)
+                    }}
+                />
+
+
             </div>
 
             <br />
-            <div class="mb-3 xl:w-96">
-                <label for="description" class="form-label inline-block mb-2 text-gray-700">
-                    Description
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Description:</span>
+
                 </label>
                 <textarea
                     onChange={e => {//@ts-ignore
                         setDescription(e.target.value)
                     }}
-                    class="form-control
-        block
-        w-full
-        px-3
-        py-1.5
-        text-base
-        font-normal
-        text-gray-700
-        bg-white bg-clip-padding
-        border border-solid border-gray-300
-        rounded
-        transition
-        ease-in-out
-        m-0
-        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    id="description"
-                    rows="3"
-                    placeholder="Your description"
-                ></textarea>
+                    class="textarea textarea-primary" placeholder="Your description"></textarea>
+
             </div>
-            <Button selected={title() !== "" && description() !== ""}
+
+
+            <Button selected={title() !== "" && description() !== "" && creator() !== ""} disabled={title() === "" || description() === "" || creator() === ""}
+
+                className={'btn-outline'}
                 onClick={() => {
-                    remoteContentPoster(title(), description(), returnCode(props.featureType, props.keycode), props.featureType)
+                    remoteContentPoster(title(), description(), creator(), returnCode(props.featureType, description(), title(), props.keycode, props.codeBlock), props.featureType)
                     props.close()
                 }}>
                 Save
@@ -131,14 +122,19 @@ export default function ShareFeature(props: ShareFeatureProps) {
     const share = () => {
         const modal = Modal.getInstance()
         modal.Open(`Share your ${ShareableFeatureToDisplayWord(props.featureType)}`, true, (
-            <ShareModal featureType={props.featureType} keycode={props.keycode} close={() => modal.Close()} />))
+            <ShareModal featureType={props.featureType} keycode={props.keycode} codeBlock={props.codeBlock} close={() => modal.Close()} />))
     }
 
     return (
         <div className="ShareFeature">
             <Show when={isOnLine()} fallback={"You are currently off line and can not share."}>
-                <Button onClick={share} selected={true}>
-                    share
+                <Button className={`${props.fullWidthButton ? 'w-full' : ''} ${props.iconButton ? 'gap-2' : ''}} ${props.btnClasses}`} tinyButtons={props.tinyButtons} onClick={share} selected={true}>
+                    <Show when={props.iconButton} fallback={''}>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-[.45rem]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                    </Show>
+                    Share
                 </Button>
 
             </Show>

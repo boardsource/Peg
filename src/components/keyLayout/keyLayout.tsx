@@ -35,11 +35,12 @@ export default function KeyLayout(props: KeyLayoutProps) {
     onDragEnd(({ draggable, droppable }) => {
         if (droppable) {
             let code: KeyCode | Color
-            const isColor = Color.IsColor(draggable.id)
+            const draggable_id = draggable.id.split(":")[1]
+            const isColor = Color.IsColor(draggable_id)
             if (isColor !== undefined) {
                 code = isColor
             } else {
-                code = keycodes.KeyCodeForString(draggable.id)
+                code = keycodes.KeyCodeForString(draggable_id)
             }
             const [index, encoder] = droppable.id.split(":")
             console.log("drop", droppable.id, index, encoder)
@@ -100,6 +101,7 @@ export default function KeyLayout(props: KeyLayoutProps) {
             return layout.layout
         }
     }
+
     const returnCurrentCode = (index: number) => {
         if (props.isEncoder && keymap.encoderMap.length > 0) {
             return keymap.encoderMap[currentLayer()][index]
@@ -130,10 +132,7 @@ export default function KeyLayout(props: KeyLayoutProps) {
                 {/* <h3>Layers</h3> */}
                 <LayerSelector isLed={props.isLed} />
             </div>
-            {/* moved keymap edit share here for now, probably need a more permanent spot in the future, maybe the nav, put a papa on it only for positioning */}
-            <div className="keyLayout__share absolute right-0 bottom-0">
-                <ShareFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} />
-            </div>
+
 
         </div>
     );

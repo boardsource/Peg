@@ -31,6 +31,7 @@ export default function DownloadModal(props: ShareModalProps) {
     const subId = remoteContentManager.Subscribe(() => {
         setListOfFeatures(remoteContentManager.listOfFeatures)
         setSelectedFeature(remoteContentManager.selectedFeature)
+        console.log("feature", selectedFeature())
         filterResults()
     })
     onMount(() => {
@@ -93,6 +94,9 @@ export default function DownloadModal(props: ShareModalProps) {
                                 {feature.title}
                             </h3>
                             <p>
+                                Creator: {feature.author}
+                            </p>
+                            <p>
                                 Downloads: {feature.downloads}
                             </p>
                             <p>
@@ -137,20 +141,28 @@ export default function DownloadModal(props: ShareModalProps) {
             case ShareableFeatureType.ledMaps:
                 return ""
             case ShareableFeatureType.keyCodes:
-                const code = selectedFeature()?.code
-                if (code && isKeyCode(code)) {
-                    const keycode: KeyCode = code
-                    return (<p>
-                        code: {keycode.code}
-                        <br />
-                        display: {keycode.display}
-                        <br />
-                        Description: {keycode.Description}
+                try {
+                    const code = JSON.parse(selectedFeature()?.code)
+                    if (code && isKeyCode(code)) {
+                        const keycode: KeyCode = code
+                        return (<p>
+                            code: {keycode.code}
+                            <br />
+                            display: {keycode.display}
+                            <br />
+                            Description: {keycode.Description}
 
-                    </p>)
-                } else {
+                        </p>)
+                    } else {
+                        return ""
+                    }
+
+                } catch (error) {
+
+                    console.log("error in rendering key code", error)
                     return ""
                 }
+
 
             case ShareableFeatureType.oleds:
                 return ""

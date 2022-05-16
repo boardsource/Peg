@@ -1,6 +1,9 @@
+
 import { DiskManager } from "./diskManager";
 import Electron, { app, ipcMain, BrowserWindow } from 'electron';
 import { ElectronEvents, FileName } from "../types/types";
+
+
 
 export class AppManager {
     diskManager: DiskManager;
@@ -16,7 +19,21 @@ export class AppManager {
             console.log("running on main thread")
             this.diskManager.manageDriveScan()
         }, 1000);
-
+    }
+    public async DownloadKmk() {
+        if (this.diskManager !== undefined) {
+            this.diskManager.DownloadKmk()
+        }
+    }
+    public async InstallKmk(path: string) {
+        if (this.diskManager !== undefined) {
+            this.diskManager.InstallKmk(path)
+        }
+    }
+    public async DownloadAndInstallLib(BoardName: string, path: string) {
+        if (this.diskManager !== undefined) {
+            this.diskManager.DownloadAndInstallLib(BoardName, path)
+        }
     }
     public Scan(_event: Electron.IpcMainEvent, _fileName: string,) {
         if (this.diskManager !== undefined) {

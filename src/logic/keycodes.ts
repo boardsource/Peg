@@ -72,10 +72,8 @@ export class KeyCodes {
             subNumber: 0,
             Description: "underglow led"
         })
-
-
-
     }
+
 
     public static getInstance(): KeyCodes {
         if (!KeyCodes.instance) {
@@ -98,6 +96,14 @@ export class KeyCodes {
                 keycode.subOne = { ...noKey };
             }
         });
+    }
+    public SwapCustoms(layerString: string) {
+        let tempLayer = `${layerString}`
+        const customCodes = [...this.customCodes.entries()]
+        customCodes.forEach(code => {
+            tempLayer = tempLayer.replaceAll(code[0], code[1].display)
+        });
+        return tempLayer.replaceAll(" ", "")
     }
     public CodeForStringAndSet(code: string, searchingSet: Map<string, KeyCode>): KeyCode | undefined {
         const tempCode = searchingSet.get(code)
@@ -127,17 +133,23 @@ export class KeyCodes {
         return { ...baseCode, code: newCode }
     }
     customCodeForString(dirtyCode: string, code: string): KeyCode | undefined {
-        let tempCode = this.customCodes.get(code)
+        const tempCustomCodes = [...this.customCodes.values()]
+        let tempCode = tempCustomCodes.find(findCode => findCode.display === dirtyCode || findCode.display === code)
         if (tempCode !== undefined) {
-
             return { ...tempCode }
         } else {
-
-            tempCode = this.customCodes.get(dirtyCode)
+            tempCode = this.customCodes.get(code)
             if (tempCode !== undefined) {
+
                 return { ...tempCode }
+            } else {
+
+                tempCode = this.customCodes.get(dirtyCode)
+                if (tempCode !== undefined) {
+                    return { ...tempCode }
+                }
+                return undefined
             }
-            return undefined
         }
     }
 
@@ -228,15 +240,21 @@ export class KeyCodes {
     }
 
     public RemoveCustomCode(code: string) {
+        Toast.Debug(`old custom code amt ${this.customCodes.size}`)
         this.customCodes.delete(code);
         this.saveCustomCodes();
         Toast.Success(`Deleted ${code} reload if you still see it`)
+        Toast.Debug(`new custom code amt ${this.customCodes.size}`)
+
+
     }
 
     public AddCustomCode(newCode: KeyCode) {
+        Toast.Debug(`old custom code amt ${this.customCodes.size}`)
         this.customCodes.set(newCode.code, newCode);
         this.saveCustomCodes();
-        Toast.Success(`Added ${newCode} reload if you dont see it yet.`)
+        Toast.Success(`Added ${newCode.code}.`)
+        Toast.Debug(`new custom code amt ${this.customCodes.size}`)
     }
 
     saveCustomCodes() {

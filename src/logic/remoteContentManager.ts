@@ -43,7 +43,6 @@ export class RemoteContentManager extends Subscribable {
     public GetFeature(feature: FeatureResponse) {
         axios.get(`${this.programSettings.apiUrl}feature/single/${feature._id}`).then(response => {
             if (response.status === 200) {
-                console.log("res is ", response, feature)
                 this.selectedFeature = { ...feature, code: response.data }
                 this.updateSubScribers()
             } else {
@@ -73,13 +72,15 @@ export class RemoteContentManager extends Subscribable {
             try {
                 switch (this.featureType) {
                     case ShareableFeatureType.keyMaps:
+                        Toast.Debug(`old keymap length ${keymap.keymap.length}`)
                         if (layout.name === this.selectedFeature.keyboard) {
                             const keymap = JSON.parse(this.selectedFeature?.code)
                             const fullKeymap = keymap.map((layerString: String) => {
-                                const strCodesForLayer = layerString.replaceAll("[", "").replaceAll("]", "").replaceAll(" ", "").split(",")
+                                const strCodesForLayer = keycodes.SwapCustoms(layerString.replaceAll("[", "").replaceAll("]", "")).split(",")
                                 return strCodesForLayer.map(stringCode => keycodes.KeyCodeForString(stringCode))
                             })
                             keymap.keymap = fullKeymap
+                            Toast.Debug(`new keymap length ${keymap.keymap.length}`)
                         } else {
                             Toast.Error(`Currently we dont support adding a keymap from another keyboard.`)
                         }
@@ -88,9 +89,11 @@ export class RemoteContentManager extends Subscribable {
                         break;
 
                     case ShareableFeatureType.ledMaps:
+                        Toast.Debug(`old ledMap length ${keymap.ledMap.length}`)
                         if (layout.name === this.selectedFeature.keyboard && layout.perkey) {
                             const ledmap = JSON.parse(this.selectedFeature?.code)
                             keymap.ledMap = ledmap
+                            Toast.Debug(`new ledMap length ${keymap.ledMap.length}`)
                         } else {
                             Toast.Error(`Currently we dont support adding a ledmap from another keyboard.`)
                         }
@@ -126,7 +129,11 @@ export class RemoteContentManager extends Subscribable {
                     case ShareableFeatureType.codeBlocks:
 
                         const codeBlock = JSON.parse(this.selectedFeature?.code).codeblock
-                        keymap.codeBlock = codeBlock
+                        if (keymap.codeBlock === undefined) {
+                            keymap.codeBlock = []
+                        }
+
+                        keymap.codeBlock.push(codeBlock)
                         break;
 
 

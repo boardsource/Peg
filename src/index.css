@@ -17,15 +17,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
 } */
 :root {
   --keyMultiplyer: 0px;
   --usableKeyMultiplier: 0px;
   --oledPixel: 0px;
+}
+
+.btn-size-override-xxs {
+  transform: scale(0.8)
 }

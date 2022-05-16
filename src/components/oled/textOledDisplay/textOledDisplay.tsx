@@ -1,4 +1,3 @@
-import "./textOledDisplay.sass"
 import { Show, createSignal, onMount, For, onCleanup, createReaction, Index } from "solid-js";
 import { createStore } from "solid-js/store";
 import { magicNumbers } from "../../../magicNumbers";
@@ -40,34 +39,41 @@ export default function TextOledDisplay(props: TextOledDisplayProps) {
         }
 
     })
+    //9 characters fit
     const oledTextInput = (pos: 0 | 1 | 2 | 3) => {
-
+        const classes = 'flex w-full font-mono bg-black text-white text-[38pt] border border-[base-300] scale-90 pl-[.4rem] rounded-[.2rem]'
         switch (state.reactionType[pos]) {
             case OledReactionType.static:
-                return (<input type="text" value={state.textDisplay[pos][1][0]} onChange={(e) => {
+                return (<input className={classes} type="text" value={state.textDisplay[pos][1][0]} onChange={(e) => {
                     //@ts-ignore
                     currentOled?.UpdateTextDisplaySection(pos, e.target.value)
                 }} />)
             case OledReactionType.layer:
-                return (<input type="text" value={state.textDisplay[pos][1][props.currentLayer()]} onChange={(e) => {
+                return (<input className={`${classes}`} type="text" value={state.textDisplay[pos][1][props.currentLayer()]} onChange={(e) => {
                     //@ts-ignore
                     currentOled?.UpdateTextDisplaySection(pos, e.target.value)
                 }} />)
         }
     }
     const oledCorner = (pos: 0 | 1 | 2 | 3) => {
-        return (<div className="textOledDisplay__corner flex flex-col">
+        return (<div className="textOledDisplay__corner flex relative w-2/4">
             <Show when={pos < 2} fallback={""}>
-                <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateTextDisplaySectionReactionType(pos, newValue)} selected={state.reactionType[pos]} defaultButtons />
+                <div className="flex translate-y-[-2rem] translate-x-[1rem]">
+                    <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateTextDisplaySectionReactionType(pos, newValue)} selected={state.reactionType[pos]} defaultButtons oledInfo tinyButtons />
+                </div>
             </Show>
-            {oledTextInput(pos)}
+            <div className="textOledDisplay__corner__input absolute w-full h-full">
+                {oledTextInput(pos)}
+            </div>
             <Show when={pos > 1} fallback={""}>
-                <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateTextDisplaySectionReactionType(pos, newValue)} selected={state.reactionType[pos]} defaultButtons />
+                <div className="flex translate-y-[5.5rem] translate-x-[1rem]">
+                    <LoopOverEnum enum={OledReactionType} buttonOnClick={(newValue: OledReactionType) => currentOled?.UpdateTextDisplaySectionReactionType(pos, newValue)} selected={state.reactionType[pos]} defaultButtons oledInfo tinyButtons />
+                </div>
             </Show>
         </div>)
     }
     return (
-        <div className="textOledDisplay flex ">
+        <div className="textOledDisplay flex flex-wrap w-full">
             {oledCorner(0)}
             {oledCorner(1)}
             {oledCorner(2)}

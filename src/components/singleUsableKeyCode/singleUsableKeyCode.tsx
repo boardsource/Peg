@@ -15,32 +15,50 @@ const toolTip = ToolTip.getInstance()
 type SingleUsableKeyCodeProps = {
     code: KeyCode | Color;
     layoutKey: LayoutKey | undefined
+    index: number
+
 
 };
-
 export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
-    const draggable = createDraggable(isColor(props.code) ? props.code.toString() : props.code.code);
+    const draggable = createDraggable(isColor(props.code) ? `${props.index}:${props.code.toString()}` : `${props.index}:${props.code.code}`);
     const mainButtonPress = () => {
-
         clientManager.NoticeToUpdateKey(props.code)
-
-
     }
     const returnStyles = () => {
         let style = ""
         if (props.layoutKey) {
             style = `
-            left: ${props.layoutKey.x * (magicNumbers.usableKeyMultiplier + 2)}px;
-            top: ${props.layoutKey.y * (magicNumbers.usableKeyMultiplier + 2)}px;
+            left: ${props.layoutKey.x * (magicNumbers.usableKeyMultiplier + 3)}px;
+            top: ${props.layoutKey.y * (magicNumbers.usableKeyMultiplier + 3)}px;
             width: ${props.layoutKey.w * (magicNumbers.usableKeyMultiplier)}px;
             position:absolute;
         `
+        } else {
+            style += `
+            margin-right: 5px;
+            `
         }
         if (isColor(props.code)) {
             style += `background: rgb(${props.code.r},${props.code.g},${props.code.b});`
         }
         return style
 
+    }
+    const returnClasses = () => {
+        let classes = ''
+        if (props.layoutKey) {
+            // this is only to style keys on ansi layout 
+        }
+
+        if (isColor(props.code)) {
+            // scale-90 breaks dnd so I removed it
+            // bg-[rgb(${props.code.r},${props.code.g},${props.code.b})] does not seem to do anything because its being set with inline styles and that has a higher priority so I removed it
+            classes += `  rounded-full  border-none `
+        } else {
+            //hover:scale-90 breaks dnd so I removed it
+            classes += `bg-base-100 border border-base-300 rounded-md shadow shadow-base-300 hover:shadow-lg hover:bg-base-100 hover:transition-all`
+        }
+        return classes
     }
     const mouseEnter = (event: Event) => {
         if (isKeyCode(props.code)) {
@@ -53,6 +71,39 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             toolTip.Hide()
         }
     }
+    const returnMaxHeight = () => {
+        return `max-height: ${magicNumbers.usableKeyMultiplier}px`
+    }
+    const returnFontSize = () => {
+        if (!isColor(props.code)) {
+            const keyDisplayCode = props.code.display, keyCode = props.code.code
+            const keyDisplayCodeLength = keyDisplayCode.length
+            // console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
+            const keyCodeLength = keyCode.length
+            // console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
+            const baseSize = '150'
+            // let length = 0
+            if (keyDisplayCode !== '') {
+                length = keyDisplayCodeLength
+            } else if (keyDisplayCode == '' && keyCode !== '') {
+                length = keyCodeLength
+            } else {
+                return baseSize
+            }
+            if (length > 0 && length <= 3) {
+                return 300
+            } else if (length >= 4 && length <= 5) {
+                return 300
+            } else if (length >= 6 && length <= 8) {
+                return 180
+            } else {
+                return 300
+            }
+        }
+        else {
+            return 300
+        }
+    }
 
     return (
 
@@ -63,11 +114,35 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             classList={{ "opacity-25": draggable.isActiveDraggable }}
             onClick={mainButtonPress}
             style={returnStyles()}
-            className="SingleUsableKeyCode"
+            className={`SingleUsableKeyCode ${returnClasses()}`}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            {isKeyCode(props.code) ? props.code.display !== "" ? props.code.display : props.code.code : ""}
+            <div className='codeContainer flex self-start h-full content-center'>
+                <svg width="100%"
+                    height='100%'
+                    viewBox="0 0 1000 1000"
+                    preserveAspectRatio="xMinYMid meet"
+                    style={returnMaxHeight()}
+                    xmlns="http://www.w3.org/2000/svg"
+                    className=''>
+                    {/*@ts-ignore*/}
+                    <text
+                        x="50%"
+                        y="50%"
+                        dominant-baseline="middle"
+                        text-anchor="middle"
+                        fill="black"
+                        className='fill-base-content'
+                        // font-size='200'
+                        font-size={returnFontSize()}
+                    >
+
+                        {isKeyCode(props.code) ? props.code.display !== "" ? props.code.display : props.code.code : ""}
+                    </text>
+                </svg>
+            </div>
+
         </button>
     );
 }

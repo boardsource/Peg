@@ -27,6 +27,7 @@ export interface LayoutFeatures {
     encoders: boolean;
     encoderCount: number;
     rx_tx: boolean
+    uartFlip: boolean
 }
 export interface LayoutKey {
     x: number;
@@ -49,12 +50,13 @@ export interface FeatureResponse {
     _id: string;
     description: string;
     featureType: ShareableFeatureType
+    author: string,
     keyboard: string;
     path: string;
     title: string;
     universal: boolean
     version: string
-    code?: string
+    code?: any
     downloads: number
 
 }
@@ -95,6 +97,9 @@ export enum ElectronEvents {
     MapSaved = "MapSaved",
     FilePicker = "FilePicker",
     FilePickerClose = "FilePickerClose",
+    DownLoadKmk = "DownLoadKmk",
+    DownLoadAndInstallLib = "DownLoadAndInstallLib",
+    InstallKmk = "InstallKmk",
     ScanAgain = "ScanAgain",
     FreshDriveScan = "FreshDriveScan",
     ReadSettings = "ReadSettings",
@@ -106,6 +111,17 @@ export enum ElectronEvents {
     WindowClose = "WindowClose",
     WindowFullScreen = "WindowFullScreen",
     WindowMinimize = "WindowMinimize",
+}
+export enum ScrollerSides {
+    Right = "right",
+    Left = "left",
+    Top = "top",
+    Bottom = "bottom"
+
+}
+export enum ScrollerDirection {
+    Vertical = "vertical",
+    Horizontal = "horizontal"
 }
 export enum SplitFlashStage {
     MainSide,
@@ -131,4 +147,35 @@ export enum NotificationColor {
     Yellow = 'yellow',
     Red = 'red',
     Blue = 'blue',
+}
+export enum Theme {
+    light = "light",
+    dark = "dark",
+    cupcake = "cupcake",
+    bumblebee = "bumblebee",
+    emerald = "emerald",
+    corporate = "corporate",
+    synthwave = "synthwave",
+    retro = "retro",
+    cyberpunk = "cyberpunk",
+    valentine = "valentine",
+    halloween = "halloween",
+    garden = "garden",
+    forest = "forest",
+    aqua = "aqua",
+    lofi = "lofi",
+    pastel = "pastel",
+    fantasy = "fantasy",
+    wireframe = "wireframe",
+    black = "black",
+    luxury = "luxury",
+    dracula = "dracula",
+    cmyk = "cmyk",
+    autumn = "autumn",
+    business = "business",
+    acid = "acid",
+    lemonade = "lemonade",
+    night = "night",
+    coffee = "coffee",
+    winter = "winter"
 }

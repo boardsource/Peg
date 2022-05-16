@@ -1,8 +1,17 @@
 .SingleUsableKeyCode {
-    /* width: var(--keyMultiplyer); */
-    /* height: var(--keyMultiplyer); */
     height: var(--usableKeyMultiplier);
-    border: 1px solid black;
-    margin: auto;
+    /* width: var(--usableKeyMultiplier) !important; */
+    /* border: 1px solid black; */
+    /* margin: auto; */
     overflow: hidden;
+    /* display: flex; */
+    /* width: 100%; */
 }
+
+/* .SingleUsableKeyCode,
+p {
+    color: red;
+    flex-wrap: wrap;
+    background: orange;
+    max-width: 100%;
+} */
