@@ -9,12 +9,20 @@ import { logIn } from '../../logic/helpers';
 import { createStore } from 'solid-js/store';
 import { ProgramSettings } from '../../logic/programSettings';
 import Toggle from '../../components/toggle/toggle';
-
+import { Toast } from '../../logic/toast'
 const programSettings = ProgramSettings.getInstance()
+
+const toast = Toast.getInstance()
 
 
 
 export default function Options() {
+  // toast.Info('yay you did a think')
+  // toast.Success('lulu by Boardsource successfully connected')
+  // toast.Warn(`This is a warning that your cars extended warranty is about to expire. Lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ab quasi alias? Asperiores, ea adipisci velit reprehenderit ratione nobis harum ipsam delectus rerum ipsum corrupti odit porro. Ipsum, dignissimos in!`)
+  // toast.Error(`Sadly you've encountered an error and it will result in your repurchasing PPP`)
+  // toast.Debug(`Yeah that's a pretty gross bug tbh just going to have to tough it out on that one.`)
+
 
   const [email, setEmail] = createSignal(""),
     [password, setPassword] = createSignal(""),

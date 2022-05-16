@@ -24,7 +24,7 @@ export default function HelpTooltip(props: HelpTooltipProps) {
   return (
     <div className="flex self-center">
       <svg xmlns="http://www.w3.org/2000/svg"
-        class="h-4 w-4 fill-slate-300 ml-1 mt-.75"
+        class="h-4 w-4 fill-slate-300 ml-1 mt-.75 cursor-pointer"
         viewBox="0 0 20 20"
         fill="currentColor"
         onMouseEnter={mouseEnter}

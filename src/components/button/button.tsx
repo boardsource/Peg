@@ -12,11 +12,18 @@ type ButtonProps = {
     disabled?: boolean
     className?: string
 
+    icon?: boolean
+
 };
 
 export default function Button(props: ButtonProps) {
     const returnClasses = () => {
         let classes = `btn mr-1`
+        if (props.oledInfo) {
+            classes += ` hover:btn-warning`
+        } else {
+            classes += ` `
+        }
         return classes += returnButtonSizes()
     }
     const returnButtonSizes = () => {
