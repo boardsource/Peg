@@ -31,7 +31,6 @@ export default function DownloadModal(props: ShareModalProps) {
     const subId = remoteContentManager.Subscribe(() => {
         setListOfFeatures(remoteContentManager.listOfFeatures)
         setSelectedFeature(remoteContentManager.selectedFeature)
-        console.log("feature", selectedFeature())
         filterResults()
     })
     onMount(() => {

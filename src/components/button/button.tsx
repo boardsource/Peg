@@ -55,9 +55,6 @@ export default function Button(props: ButtonProps) {
                 } else {
                     props.onClick()
                 }
-
-
-
             }}
         >
             {props.children}

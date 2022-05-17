@@ -74,16 +74,17 @@ export default function KeyLayout(props: KeyLayoutProps) {
     const generateEncoders = (numberOfEncoders: number) => {
         let tempEncoders = []
         for (let index = 0; index < numberOfEncoders; index++) {
+            const even = index % 2 == 0
             tempEncoders.push({
                 w: 1,
-                y: 0,
-                x: index,
+                y: 1,
+                x: even ? index : index + 4,
                 h: 1
             })
             tempEncoders.push({
                 w: 1,
                 y: 1,
-                x: index,
+                x: even ? index + 1 : index + 5,
                 h: 1
             })
 

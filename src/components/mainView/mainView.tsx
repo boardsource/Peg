@@ -9,9 +9,13 @@ import Button from '../button/button'
 import DownloadFeature from '../downloadFeature/downloadFeature'
 import ShareFeature from '../shareFeature/shareFeature'
 import HelpTooltip from '../../components/helpTooltip/helpTooltip'
+import PppChecker from '../pppChecker/pppChecker'
+import { ProgramSettings } from '../../logic/programSettings'
 
 const toolTip = ToolTip.getInstance()
 const clientManager = ClientManager.getInstance()
+const programSettings = ProgramSettings.getInstance()
+
 
 type MainViewProps = {
     title: string,
@@ -19,6 +23,7 @@ type MainViewProps = {
     children: any
     supported: boolean
     featureType?: ShareableFeatureType
+    ppp?: boolean
 }
 
 export default function MainView(props: MainViewProps) {
@@ -33,7 +38,17 @@ export default function MainView(props: MainViewProps) {
     })
     const renderIfCan = () => {
         if (props.supported) {
-            return props.children
+            if (props.ppp) {
+                return (<PppChecker fallback={(<p>
+                    Pro Account Feature
+                    This feature is limited to pro accounts, pick up a pro account <a href={programSettings.PppBuyLink} target="blank"> here </a>to unlock this and many more features.
+                </p>)} >
+                    {props.children}
+                </PppChecker>)
+            } else {
+                return props.children
+            }
+
         } else {
             return (<p>
                 This feature is supported by PEG but is not supported by your current keyboard.
@@ -41,6 +56,7 @@ export default function MainView(props: MainViewProps) {
         }
     }
     const returnShare = () => {
+
         if (props.featureType) {
             if (props.featureType !== ShareableFeatureType.keyCodes && props.featureType !== ShareableFeatureType.codeBlocks) {
                 return (<>
@@ -98,14 +114,17 @@ export default function MainView(props: MainViewProps) {
 
             </div>
             {/* <p className='text-slate-400 text-sm'>{props.description}</p> */}
+
+
             {renderIfCan()}
+
 
             {/* {show() && ( */}
 
             {/* )} */}
             {/* </Transition> */}
 
-        </div>
+        </div >
     )
 }
 
