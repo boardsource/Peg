@@ -9,6 +9,7 @@ import { Color } from "../../logic/color";
 import UsableLedColors from "../usableLedColors/usableLedColors";
 import Button from "../button/button";
 import { ProgramSettings } from "../../logic/programSettings";
+import { Toast } from "../../logic/toast";
 const programSettings = ProgramSettings.getInstance()
 const clientManager = ClientManager.getInstance()
 type LedEditProps = {
@@ -58,9 +59,13 @@ export default function LedEdit(props: LedEditProps) {
             <div className="flex flex-col">
                 <div className="flex flex-1">
                     <div className="LedEdit__control mx-5 flex flex-col">
-                        <Button onClick={setColor} selected={true} disabled={!programSettings.PPP}>
+                        <Button onClick={setColor} selected={!programSettings.PPP} disabled={!programSettings.PPP} disabledOnClick={() => {
+                            Toast.Warn("Single key changes can only be made with a pro account")
+                        }}>
                             Apply
                         </Button>
+
+                        <br />
                         <Button onClick={setAllToColor} selected={true}>
                             Apply To All
                         </Button>
