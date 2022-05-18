@@ -207,7 +207,7 @@ export class ClientManager extends Subscribable {
         }
         if (this.ledChangesMadeAndIsSplit) {
             const modal = Modal.getInstance()
-            modal.OpenDefault("Split Led Flashing", false, ModalDefault.SplitFlashManager)
+            modal.OpenDefault("Split LED Flashing", false, ModalDefault.SplitFlashManager)
             this.dontOverRide = true
 
         }

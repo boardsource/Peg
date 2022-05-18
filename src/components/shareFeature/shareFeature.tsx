@@ -8,6 +8,8 @@ import { Modal } from "../../logic/modal";
 import { KeyCode, OledDisplayType, ShareableFeatureType } from "../../types/types";
 import Button from "../button/button";
 import Input from "../input/input";
+import Textarea from '../textarea/textarea'
+
 const keymap = KeyMap.getInstance()
 const keycodes = KeyCodes.getInstance()
 const clientManager = ClientManager.getInstance()
@@ -61,7 +63,7 @@ const ShareModal = (props: ShareModalProps) => {
                 <Input
                     label="Title:"
                     name="Title"
-
+                    className='input-primary'
                     value={title()}
                     placeholder={`My Awesome ${ShareableFeatureToDisplayWord(props.featureType)}`}
                     onChange={(e: any) => {//@ts-ignore
@@ -72,6 +74,7 @@ const ShareModal = (props: ShareModalProps) => {
                 <Input
                     label="Creator:"
                     name="Creator"
+                    className='input-primary'
                     value={creator()}
                     placeholder={randomNameGen()}
                     onChange={(e: any) => {//@ts-ignore
@@ -81,31 +84,35 @@ const ShareModal = (props: ShareModalProps) => {
 
 
             </div>
-
-            <br />
             <div class="form-control">
                 <label class="label">
                     <span class="label-text">Description:</span>
 
                 </label>
-                <textarea
+                <Textarea
                     onChange={e => {//@ts-ignore
                         setDescription(e.target.value)
                     }}
-                    class="textarea textarea-primary" placeholder="Your description"></textarea>
+                    className="textarea textarea-primary" placeholder="Your description"></Textarea>
 
             </div>
 
+            <div className="flex w-full justify-end">
+                <Button selected={title() !== "" && description() !== "" && creator() !== ""} disabled={title() === "" || description() === "" || creator() === ""}
+                    icon
+                    className={`btn-outline, mt-4 w-[200px] ${title() !== "" && description() !== "" && creator() !== "" ? 'btn-success btn-outline' : 'btn-outline'}`}
+                    onClick={() => {
+                        remoteContentPoster(title(), description(), creator(), returnCode(props.featureType, description(), title(), props.keycode, props.codeBlock), props.featureType)
+                        props.close()
+                    }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-[.45rem]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
 
-            <Button selected={title() !== "" && description() !== "" && creator() !== ""} disabled={title() === "" || description() === "" || creator() === ""}
+                    Share
+                </Button>
+            </div>
 
-                className={'btn-outline'}
-                onClick={() => {
-                    remoteContentPoster(title(), description(), creator(), returnCode(props.featureType, description(), title(), props.keycode, props.codeBlock), props.featureType)
-                    props.close()
-                }}>
-                Save
-            </Button>
         </div>)
 }
 
@@ -121,7 +128,7 @@ export default function ShareFeature(props: ShareFeatureProps) {
     })
     const share = () => {
         const modal = Modal.getInstance()
-        modal.Open(`Share your ${ShareableFeatureToDisplayWord(props.featureType)}`, true, (
+        modal.Open(`Share Your ${ShareableFeatureToDisplayWord(props.featureType)}`, true, (
             <ShareModal featureType={props.featureType} keycode={props.keycode} codeBlock={props.codeBlock} close={() => modal.Close()} />))
     }
 
