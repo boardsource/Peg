@@ -44,7 +44,7 @@ export default function Button(props: ButtonProps) {
         return color
     }
     return (
-        <button className={`${returnClasses()} ${props.selected ? `${returnColor()}` : ' btn-outline'} ${props.className}`}
+        <button className={`${returnClasses()} ${props.selected ? `${returnColor()}` : ' btn-outline'} ${props.className} ${props.disabled ? 'btn-error cursor-not-allowed' : ''}`}
             onClick={() => {
                 if (props.disabled !== undefined) {
                     if (props.disabled === false) {

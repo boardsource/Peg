@@ -58,21 +58,21 @@ export default function LedEdit(props: LedEditProps) {
             <div className="flex flex-col">
                 <div className="flex flex-1">
                     <div className="LedEdit__control mx-5 flex flex-col">
-                        <Button onClick={setColor} selected={true} disabled={!programSettings.PPP}>
-                            Apply
+                        <Button className='mb-2 btn-outline' onClick={setColor} selected={true} disabled={!programSettings.PPP}>
+                            Set Key
                         </Button>
-                        <Button onClick={setAllToColor} selected={true}>
+                        <Button className='btn-outline' onClick={setAllToColor} selected={true}>
                             Apply To All
                         </Button>
 
 
                     </div>
-                    <div className="LedEdit__usable flex flex-col flex-1" >
+                    <div className="LedEdit__usable flex flex-col flex-1 border rounded rounded-xl p-4" >
                         <h2 className='text-lg mb-3'>Applied Colors</h2>
                         <UsableLedColors />
                     </div>
                 </div>
-                <div className="ml-5">
+                <div className="ml-5 mt-2">
                     <HelpText>
                         Select a Key from Layout, choose or input color code into color picker and click 'APPLY' to begin setting individual key colors. Select 'U' from the Layer Selector panel to set Underglow LED colors.
                     </HelpText>
