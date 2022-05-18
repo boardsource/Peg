@@ -28,6 +28,7 @@ export interface LayoutFeatures {
     encoderCount: number;
     rx_tx: boolean
     uartFlip: boolean
+    splitPico: boolean
 }
 export interface LayoutKey {
     x: number;

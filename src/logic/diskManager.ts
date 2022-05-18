@@ -69,6 +69,13 @@ export class DiskManager {
     }
 
     public async DownloadAndInstallLib(BoardName: string, drivePath: string) {
+        try {
+            const libDir = path.join(drivePath, "lib")
+            await fs.rm(libDir, { recursive: true });
+            console.log(`${libDir} is deleted!`);
+        } catch (error) {
+            console.log("error removing old libs", error)
+        }
         download(this.appManager.win, `${programSettings.apiUrl}lib/${BoardName}.zip`, {
             directory: app.getPath("temp"),
             filename: `${BoardName}.zip`,
@@ -310,7 +317,14 @@ export class DiskManager {
             const writepath = path.join(...data.path)
             const newFile = await fs.writeFile(writepath, data.fileData, 'utf8');
             console.log("force write data")
-
+            if (data.path[1] === FileName.main) {
+                const codePyPath = path.join(data.path[0], "code.py")
+                const files = await fs.readdir(data.path[0]);
+                if (files.includes("code.py")) {
+                    console.log("removing code.py")
+                    fs.unlink(codePyPath)
+                }
+            }
         } catch (error) {
             console.log("error in writing map", error)
             //todo alaert user map did not update
