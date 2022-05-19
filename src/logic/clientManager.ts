@@ -193,6 +193,10 @@ export class ClientManager extends Subscribable {
         this.changesMade = true
         this.updateSubScribers()
     }
+    public RemoveCodeBlock(index: number) {
+        this.keymap.RemoveCodeBlock(index)
+        this.NoticeAChangeWasMade()
+    }
 
     public NoticeAChangeWasMade() {
         this.changesMade = true

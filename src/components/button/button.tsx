@@ -5,10 +5,8 @@ type ButtonProps = {
     selected: boolean
     onClick: () => void
     children: any
-
     oledInfo?: boolean
     tinyButtons?: boolean
-
     disabled?: boolean
     disabledOnClick?: () => void
     className?: string
