@@ -8,6 +8,8 @@ import { ClientManager } from "../../logic/clientManager";
 import Button from "../button/button";
 import { Toast } from "../../logic/toast";
 import Toggle from "../toggle/toggle";
+import pegSquareLogo from '../../images/peg_square_logo.svg'
+
 const programSettings = ProgramSettings.getInstance()
 const clientManager = ClientManager.getInstance()
 type NewBoardSetupProps = {
@@ -35,7 +37,8 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
         [currentView, SetCurrentView] = createSignal(SubViews.Waiting),
         [kmk, setKmk] = createSignal(true),
         [boardName, setBoardName] = createSignal(""),
-        [lib, setLib] = createSignal(true)
+        [lib, setLib] = createSignal(true),
+        [initialBoardSetupOptions, setInitialBoardSetupOptions] = createSignal(false)
     let fullServerBoard: FullServerBoard | undefined = undefined;
     const fetchServerBoards = async () => {
         clientManager.sendToBackend(ElectronEvents.DownLoadKmk, "")
@@ -106,11 +109,31 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
         }
     }
     return (
-        <div className="NewBoardSetup">
-            <h2>We cant find your board....Want to set one up?</h2>
-            <Toggle label="Install Kmk?" name="kmk" value={kmk()} onChange={(e: any) => { setKmk(e.target.value) }} />
-            <Toggle label="Install required libs?" name="lib" value={lib()} onChange={(e: any) => { setLib(e.target.value) }} />
-            {renderSubViews()}
+        <div className="NewBoardSetup flex flex-col w-full h-full justify-center relative">
+            {/* <div className="squarething flex w-[220px] h-[220px] bg-red-300">
+
+            </div> */}
+            <div className="flex flex-col items-center">
+                <img class='flex h-[11rem] mb-[1rem] self-center' src={pegSquareLogo} alt="peg application logo" />
+                <h4 className='mb-[3rem] animate-pulse text-base-300'>Scanning...</h4>
+            </div>
+
+            <div className="flex flex-col items-center self-center absolute bottom-[.5rem]">
+                <h2 className='text-[.9rem]'>Board Not Appearing?</h2>
+                <p className='text-[.8rem] mb-2'>You may need to configure your board to work with Peg.</p>
+                <Button className={`btn-success btn-xs mt-1 mb-3`} onClick={() => { setInitialBoardSetupOptions(true) }} >
+                    Setup New Board
+                </Button>
+                <p className='text-[.75rem]'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam dolorum rerum, iste <span className='text-primary'> molestiae ea</span> ut modi.</p>
+                {renderSubViews()}
+            </div>
+
+            {/* <Show when={initialBoardSetupOptions()} fallback={<div>Loading...</div>}>
+                <Toggle label="Install Kmk?" name="kmk" value={kmk()} onChange={(e: any) => { setKmk(e.target.value) }} />
+                <Toggle label="Install required libs?" name="lib" value={lib()} onChange={(e: any) => { setLib(e.target.value) }} />
+            </Show> */}
+
+
         </div>
     );
 }

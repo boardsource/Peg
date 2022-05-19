@@ -18,7 +18,7 @@ export default function StatusIndicator(props: StatusProps) {
                 return (
                     //internet and board connected 
                     {
-                        styles: 'border-green-500 text-green-500',
+                        styles: 'border border-success text-success',
                         statusText: 'INTERNET CONNECTED',
                         board: keyboard,
                         icon: (<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -32,7 +32,7 @@ export default function StatusIndicator(props: StatusProps) {
                 return (
                     //board connected no internet
                     {
-                        styles: 'border-lime-400 text-lime-400',
+                        styles: 'border border-info text-info',
                         statusText: 'NO INTERNET',
                         board: keyboard,
                         icon: (<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 stroke-gray-400" fill="none" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@ export default function StatusIndicator(props: StatusProps) {
                 return (
                     //internet connected no board
                     {
-                        styles: 'border-orange-400 text-orange-400',
+                        styles: 'border border-warning text-warning',
                         statusText: 'INTERNET CONNECTED',
                         board: keyboard,
                         icon: (<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -57,10 +57,10 @@ export default function StatusIndicator(props: StatusProps) {
                 return (
                     //NO INTERNET NO BOARD
                     {
-                        styles: 'border-rose-500 text-rose-500',
+                        styles: 'border border-error text-error',
                         statusText: 'NO INTERNET',
                         board: keyboard,
-                        icon: (<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        icon: (<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
                         </svg>),
                     }
@@ -73,9 +73,9 @@ export default function StatusIndicator(props: StatusProps) {
             {returnStatusDetails().icon}
             <p className='text-gray-400 text-[10px] ml-1'>{returnStatusDetails().statusText}</p>
             <p className='ml-2'>{returnStatusDetails().board}</p>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {/* <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            </svg> */}
 
             {/* this is the old way we did it delete if you're cool with it*/}
             {/* {renderStatusIndicator()} */}

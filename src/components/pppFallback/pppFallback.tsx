@@ -1,14 +1,21 @@
+import { onMount, createSignal } from 'solid-js'
+import { PropAliases } from 'solid-js/web'
 import Button from '../../components/button/button'
 import pegLogo from '../../images/peg_logo.svg'
 
 type PppFallbackProps = {
-
+  modal: boolean
 }
+
+// const [modal, setModal] = createSignal()
+// onCleanup(() => {
+//   remoteContentManager.Unsubscribe(subId)
+// })
 
 export default function PppFallback(props: PppFallbackProps) {
   return (
-    <div className="flex flex-col w-full h-full items-center justify-center border border-base-300 bg-base-200 rounded rounded-xl">
-      <div className="flex flex-col justify-center items-center content-center  bg-base-100 p-[4rem] rounded rounded-xl relative">
+    <div className={`border border-base-300 bg-base-200 flex flex-col w-full h-full items-center justify-center rounded rounded-xl`}>
+      <div className={`bg-base-100 p-[4rem] rounded rounded-xl flex flex-col justify-center items-center content-center relative`}>
         <img src={pegLogo} className='w-[12.5rem] mb-8' alt="peg logo" />
         <h3 className='text-[1.2rem] mb-1'>Peg Pro Account Feature</h3>
         <h4 className='mb-[3.5rem] text-[.9rem] max-w-[26rem] text-center'>In order to use this feature of Peg you must upgrade your account and purchase a license.</h4>
