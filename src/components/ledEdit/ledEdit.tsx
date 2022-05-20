@@ -66,7 +66,7 @@ export default function LedEdit(props: LedEditProps) {
                         </Button>
 
                         <br />
-                        <Button  className='btn-outline' onClick={setAllToColor} selected={true}
+                        <Button className='btn-outline' onClick={setAllToColor} selected={true}>
                             Apply To All
                         </Button>
 

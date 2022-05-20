@@ -35,7 +35,7 @@ export default function PppFallback(props: PppFallbackProps) {
           Upgrade Your Account
         </Button>
 
-        <p className='text-[.75rem] mt-[1rem]'>To learn more about our pricing, features, and licenses please visit <span className='text-primary'>peg.software</span>.</p>
+        <p className='text-[.75rem] mt-[1rem]'>To learn more about our pricing, features, and licenses please visit <a href='#' className='link link-primary' target='_blank'>peg.software</a>.</p>
       </div>
 
     </div >
