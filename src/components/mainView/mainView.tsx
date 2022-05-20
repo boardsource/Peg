@@ -11,6 +11,7 @@ import ShareFeature from '../shareFeature/shareFeature'
 import HelpTooltip from '../../components/helpTooltip/helpTooltip'
 import PppChecker from '../pppChecker/pppChecker'
 import { ProgramSettings } from '../../logic/programSettings'
+import PppFallback from '../../components/pppFallback/pppFallback'
 
 const toolTip = ToolTip.getInstance()
 const clientManager = ClientManager.getInstance()
@@ -39,10 +40,11 @@ export default function MainView(props: MainViewProps) {
     const renderIfCan = () => {
         if (props.supported) {
             if (props.ppp) {
-                return (<PppChecker fallback={(<p>
+                return (<PppChecker fallback={PppFallback} >
+                    {/* return (<PppChecker fallback={(<p>
                     Pro Account Feature
                     This feature is limited to pro accounts, pick up a pro account <a href={programSettings.PppBuyLink} target="blank"> here </a>to unlock this and many more features.
-                </p>)} >
+                </p>)} > */}
                     {props.children}
                 </PppChecker>)
             } else {
@@ -61,7 +63,7 @@ export default function MainView(props: MainViewProps) {
             if (props.featureType !== ShareableFeatureType.keyCodes && props.featureType !== ShareableFeatureType.codeBlocks) {
                 return (<>
 
-                    <ShareFeature featureType={props.featureType} />
+                    <ShareFeature iconButton featureType={props.featureType} />
                     <div className="ml-2">
                         <DownloadFeature featureType={props.featureType} />
                     </div>

@@ -241,7 +241,6 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
                         : state.code.display !== "" ? state.code.display : state.code.code}
                     </text>
                 </svg>
-
             </button>
             <Show when={state.code.canHaveSub} fallback={""}>
                 <button onClick={clearButtonPress} className="singleLayoutKey__clear">

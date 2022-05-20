@@ -65,7 +65,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
                 <>
                     <Show when={!haveMap()} fallback={""}>
                         <Button onClick={scanAgain} selected={true}>
-                            scan Again
+                            Scan Again
                         </Button>
 
                     </Show>

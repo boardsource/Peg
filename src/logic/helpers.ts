@@ -13,15 +13,15 @@ export const ShareableFeatureToDisplayWord = (featureType: ShareableFeatureType,
     switch (featureType) {
         case ShareableFeatureType.keyMaps:
             if (plural) {
-                return "Key Maps"
+                return "Keymaps"
             } else {
-                return "Key Map"
+                return "Keymap"
             }
         case ShareableFeatureType.ledMaps:
             if (plural) {
-                return "Led Maps"
+                return "LED Maps"
             } else {
-                return "Led Map"
+                return "LED Map"
             }
         case ShareableFeatureType.keyCodes:
             if (plural) {
@@ -31,9 +31,9 @@ export const ShareableFeatureToDisplayWord = (featureType: ShareableFeatureType,
             }
         case ShareableFeatureType.oleds:
             if (plural) {
-                return "Oleds"
+                return "OLEDS"
             } else {
-                return "Oled"
+                return "OLED"
             }
         case ShareableFeatureType.codeBlocks:
             if (plural) {
