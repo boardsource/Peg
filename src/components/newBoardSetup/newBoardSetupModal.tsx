@@ -37,7 +37,6 @@ type FullServerBoard = {
     Main: string
 }
 enum SubViews {
-
     PickBoard = "PickBoard",
     SelectDrive = "SelectDrive",
     Waiting = "Waiting"
@@ -188,9 +187,9 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
         switch (currentView()) {
             case SubViews.PickBoard:
                 return (
-                    <div className="NewBoardSetup__boards flex flex-col">
-                        <div >
-                            <div className="flex flex-col">
+                    <div className="NewBoardSetup__boards flex flex-col h-[550px]">
+                        <div className='flex flex-col w-full h-full bg-yellow-200' >
+                            <div className="flex flex-col bg-red-200">
                                 <For each={Array.from(serverBoardFilters().keys())} fallback={<div>Loading...</div>}>
                                     {(category) => {
                                         const filters = serverBoardFilters().get(category)
@@ -219,39 +218,42 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                                     }
                                 </For>
                             </div>
-                            <table className="table w-full">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <td>creator</td>
-                                        <td>name</td>
-                                        <td>controller</td>
-                                        <td>config</td>
-                                        <td>side</td>
-                                        <td></td>
-                                    </tr>
-                                </thead>
-                                <tbody className="overflow-y-scroll">
-                                    <For each={serverBoards()} fallback={<div>Loading...</div>}>
-                                        {(board, index) =>
+                            <div className="flex flex-1 items-start w-full bg-green-200 overflow-scroll">
+                                <table className="table max-w-[100%] w-full">
+                                    <thead>
+                                        <tr>
+                                            {/* <th></th> */}
+                                            <td>creator</td>
+                                            <td>name</td>
+                                            <td>controller</td>
+                                            <td>config</td>
+                                            <td>side</td>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="">
+                                        <For each={serverBoards()} fallback={<div>Loading...</div>}>
+                                            {(board, index) =>
 
-                                        (<tr>
-                                            <th>{index() + 1}</th>
-                                            <td>{board.creator}</td>
-                                            <td>{board.name}</td>
-                                            <td>{board.controller}</td>
-                                            <td>{board.config}</td>
-                                            <td>{board.side}</td>
-                                            <td>
-                                                <Button onClick={() => selectServerBoard(board._id, board.fullName)} selected={false}>
-                                                    select
-                                                </Button>
-                                            </td>
-                                        </tr>)
-                                        }
-                                    </For>
-                                </tbody>
-                            </table>
+                                            (<tr>
+                                                {/* <th>{index() + 1}</th> */}
+                                                <td>{board.creator}</td>
+                                                <td>{board.name}</td>
+                                                <td>{board.controller}</td>
+                                                <td>{board.config}</td>
+                                                <td>{board.side}</td>
+                                                <td>
+                                                    <Button onClick={() => selectServerBoard(board._id, board.fullName)} selected={false}>
+                                                        select
+                                                    </Button>
+                                                </td>
+                                            </tr>)
+                                            }
+                                        </For>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
                     </div>)
             case SubViews.SelectDrive:
@@ -267,14 +269,15 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                     </div>)
             default:
 
-                return (<div className="NewBoardSetup__buttons flex">
-                    <p>
-                        Plug in your circuitpython drive. When you can see a small external storage plugged into your computer click next
-                    </p>
-                    <Button onClick={() => SetCurrentView(SubViews.PickBoard)} selected={true}>
-                        Next
-                    </Button>
-                </div>)
+                return (
+                    <div className="NewBoardSetup__buttons flex flex-col justify-center items-center">
+                        <p>
+                            Plug in your CircuitPython Drive. When you see the drive mount in your system click the Next button below.
+                        </p>
+                        <Button className='btn-success w-full mt-5' onClick={() => SetCurrentView(SubViews.PickBoard)} selected={false}>
+                            Next
+                        </Button>
+                    </div>)
         }
     }
     return (

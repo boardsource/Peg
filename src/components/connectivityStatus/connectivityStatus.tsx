@@ -44,7 +44,7 @@ export default function ConnectivityStatus() {
     return (
         <StatusIndicator
             status={status()}
-            keyboard={keymap.keyLayout ? `${keymap.keyLayout?.features.creator}-${keymap.keyLayout?.features.name}` : "Peg - No keyboard"}
+            keyboard={keymap.keyLayout ? `${keymap.keyLayout?.features.creator}-${keymap.keyLayout?.features.name}` : "Peg - No Keyboard"}
         />
     )
 }
