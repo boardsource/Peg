@@ -5,11 +5,10 @@ type ButtonProps = {
     selected: boolean
     onClick: () => void
     children: any
-
     oledInfo?: boolean
     tinyButtons?: boolean
-
     disabled?: boolean
+    disabledOnClick?: () => void
     className?: string
 
     icon?: boolean
@@ -51,6 +50,10 @@ export default function Button(props: ButtonProps) {
                         props.onClick()
                     } else {
                         Toast.Debug("Button Disabled")
+                        if (props.disabledOnClick !== undefined) {
+
+                            props.disabledOnClick()
+                        }
                     }
                 } else {
                     props.onClick()

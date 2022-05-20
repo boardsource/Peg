@@ -105,6 +105,12 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             // normal key not on the led tab 
             // styles += `background: lightgray;`
         }
+
+        if (props.isEncoder) {
+            // only if its an encoder will these styles be used
+            styles += `
+            `
+        }
         return styles
     }
     const returnSVGColor = () => {
@@ -142,7 +148,7 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
     const returnClasses = () => {
         //classes you want to apply all the time
         let classes = `
-        rounded-lg hover:scale-90 hover:bg-base-300 overflow-hidden transition-all border border-base-300
+        rounded-lg hover:scale-90 hover:bg-base-300  transition-all border border-base-300
          `
         if (props.isLed && props.code.code === "LED") {
             // underglow led on the led tab
@@ -157,6 +163,26 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
             // normal key not on the led tab 
             classes += `
             `
+        }
+
+        if (props.isEncoder) {
+            // only if its an encoder will these classes be used
+            classes += `
+
+            `
+            const even = props.index % 2 == 0
+            if (even) {
+                classes += `
+                before:content-['_↺'] before:absolute before:bottom-10 before:text-[50px]
+                `
+            } else {
+
+                classes += `
+                before:content-['_↻'] before:absolute before:bottom-10 before:text-[50px]
+
+                `
+            }
+
         }
         return classes
     }

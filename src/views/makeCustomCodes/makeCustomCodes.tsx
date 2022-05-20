@@ -92,9 +92,6 @@ export default function MakeCustomCodes() {
       )
     }
   }
-  const returnHaxorClasses = () => {
-    return `tab tab-xs`
-  }
 
   return (
     <MainView title="Custom Keycodes" description={`Custom keycode can be like macros and just send a whole word with a single keypress. 
@@ -131,17 +128,17 @@ export default function MakeCustomCodes() {
           <div className="xXx_haxor_Display_xXx flex-grow self-center mt-4 w-full">
             <div className="flex flex-col items-center h-full">
               <div class="tabs tabs-boxed mb-3">
-                <a class={`${returnHaxorClasses()} ${state.showExport ? 'tab-active' : ''}`} onClick={() => {
+                <a class={`tab tab-xs ${state.showExport ? 'tab-active' : ''}`} onClick={() => {
                   setState({ showImport: false, showExport: true })
                   exportCodes()
                 }}>EXPORT</a>
-                <a class={`${returnHaxorClasses()} ${state.showImport ? 'tab-active' : ''}`} onClick={() => { setState({ showImport: true, showExport: false }) }}>IMPORT</a>
+                <a class={`tab tab-xs ${state.showImport ? 'tab-active' : ''}`} onClick={() => { setState({ showImport: true, showExport: false }) }}>IMPORT</a>
               </div>
-              {/* {renderHaxorDiv()} */}
+
               <div className="importExportContainer flex rounded-lg shadow border flex-1 w-full overflow-hidden">
                 {renderImport()}
                 {renderExport()}
-                {/* {renderHaxorDiv()} */}
+
               </div>
 
 

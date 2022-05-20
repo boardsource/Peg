@@ -9,6 +9,7 @@ import { Color } from "../../logic/color";
 import UsableLedColors from "../usableLedColors/usableLedColors";
 import Button from "../button/button";
 import { ProgramSettings } from "../../logic/programSettings";
+import { Toast } from "../../logic/toast";
 const programSettings = ProgramSettings.getInstance()
 const clientManager = ClientManager.getInstance()
 type LedEditProps = {
@@ -17,13 +18,13 @@ type LedEditProps = {
 
 export default function LedEdit(props: LedEditProps) {
     const [currentColor, setCurrentColor] = createStore({ r: 0, g: 0, b: 0 }),
-        [changesMade, SetChangesMade] = createSignal(clientManager.changesMade)
+        [ppp, SetPpp] = createSignal(programSettings.PPP)
     const updateLocalChangesMade = () => {
-        SetChangesMade(clientManager.changesMade)
+        SetPpp(programSettings.PPP)
     }
-    const subId = clientManager.Subscribe(updateLocalChangesMade)
+    const subId = programSettings.Subscribe(updateLocalChangesMade)
     onCleanup(() => {
-        clientManager.Unsubscribe(subId)
+        programSettings.Unsubscribe(subId)
     })
     const setColor = () => {
         clientManager.NoticeToUpdateKey(new Color(currentColor.r, currentColor.g, currentColor.b))
@@ -58,10 +59,14 @@ export default function LedEdit(props: LedEditProps) {
             <div className="flex flex-col">
                 <div className="flex flex-1">
                     <div className="LedEdit__control mx-5 flex flex-col">
-                        <Button className='mb-2 btn-outline' onClick={setColor} selected={true} disabled={!programSettings.PPP}>
-                            Set Key
+                        <Button className='mb-2 btn-outline' onClick={setColor} selected={ppp()} disabled={!ppp()} disabledOnClick={() => {
+                            Toast.Warn("Single key changes can only be made with a pro account")
+                        }}>
+                            Apply
                         </Button>
-                        <Button className='btn-outline' onClick={setAllToColor} selected={true}>
+
+                        <br />
+                        <Button  className='btn-outline' onClick={setAllToColor} selected={true}
                             Apply To All
                         </Button>
 

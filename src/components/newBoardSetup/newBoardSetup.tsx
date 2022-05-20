@@ -1,7 +1,7 @@
 import { Show, createSignal, onMount, For } from "solid-js";
-import { KeyMap } from "../../logic/keymapManager";
+
 import { ElectronEvents, FileName, KeyCode } from "../../types/types"
-import SingleUsableKeyCode from "../singleUsableKeyCode/singleUsableKeyCode";
+
 import axios from "axios"
 import { ProgramSettings } from "../../logic/programSettings";
 import { ClientManager } from "../../logic/clientManager";

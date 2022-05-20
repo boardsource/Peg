@@ -77,13 +77,13 @@ export default function KeyLayout(props: KeyLayoutProps) {
             const even = index % 2 == 0
             tempEncoders.push({
                 w: 1,
-                y: 1,
+                y: index > 4 ? 2 : 1,
                 x: even ? index : index + 4,
                 h: 1
             })
             tempEncoders.push({
                 w: 1,
-                y: 1,
+                y: index > 4 ? 2 : 1,
                 x: even ? index + 1 : index + 5,
                 h: 1
             })
