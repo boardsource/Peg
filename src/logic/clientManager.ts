@@ -61,7 +61,6 @@ export class ClientManager extends Subscribable {
             this.updateSubScribers()
         })
         this.lessonToEvent(ElectronEvents.ScanAgain, (_args: string) => {
-            console.log("scaning again")
             this.scaning = true
             setTimeout(() => {
                 this.updateSubScribers()

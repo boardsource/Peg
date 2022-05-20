@@ -10,12 +10,9 @@ import DownloadFeature from '../downloadFeature/downloadFeature'
 import ShareFeature from '../shareFeature/shareFeature'
 import HelpTooltip from '../../components/helpTooltip/helpTooltip'
 import PppChecker from '../pppChecker/pppChecker'
-import { ProgramSettings } from '../../logic/programSettings'
 import PppFallback from '../../components/pppFallback/pppFallback'
-
-const toolTip = ToolTip.getInstance()
-const clientManager = ClientManager.getInstance()
-const programSettings = ProgramSettings.getInstance()
+import { KeyMap } from '../../logic/keymapManager'
+import LoadingBoard from '../loadingBoard/loadingBoard'
 
 
 type MainViewProps = {
@@ -25,30 +22,31 @@ type MainViewProps = {
     supported: boolean
     featureType?: ShareableFeatureType
     ppp?: boolean
+    showNoBoardFallBack?: boolean
 }
 
 export default function MainView(props: MainViewProps) {
-    const [changesMade, SetChangesMade] = createSignal(clientManager.changesMade)
-    const updateLocalChangesMade = () => {
-        SetChangesMade(clientManager.changesMade)
-    }
-    const subId = clientManager.Subscribe(updateLocalChangesMade)
-    onCleanup(() => {
-        clientManager.Unsubscribe(subId)
 
-    })
+    const renderNoBoard = () => {
+        if (props.showNoBoardFallBack) {
+            return (
+                <LoadingBoard>
+                    {props.children}
+                </LoadingBoard>
+            )
+        } else {
+            return props.children
+        }
+    }
+
     const renderIfCan = () => {
         if (props.supported) {
             if (props.ppp) {
-                return (<PppChecker fallback={PppFallback} >
-                    {/* return (<PppChecker fallback={(<p>
-                    Pro Account Feature
-                    This feature is limited to pro accounts, pick up a pro account <a href={programSettings.PppBuyLink} target="blank"> here </a>to unlock this and many more features.
-                </p>)} > */}
-                    {props.children}
+                return (<PppChecker fallback={<PppFallback />} >
+                    {renderNoBoard()}
                 </PppChecker>)
             } else {
-                return props.children
+                return renderNoBoard()
             }
 
         } else {
@@ -78,19 +76,7 @@ export default function MainView(props: MainViewProps) {
             }
         }
     }
-    const mouseEnter = (event: Event) => {
-        if (props.description) {
-            const description = props.description
-            const title = props.title
-            //@ts-ignore
-            toolTip.Show(event.clientX, event.clientY, title, description)
-        }
-    }
-    const mouseLeave = (event: Event) => {
-        if (props.description) {
-            toolTip.Hide()
-        }
-    }
+
 
     return (
         <div className="mainview flex flex-col flex-1 items-start">
@@ -100,32 +86,14 @@ export default function MainView(props: MainViewProps) {
                     <HelpTooltip title={props.title}>
                         {props.description}
                     </HelpTooltip>
-                    {/* <svg xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 fill-slate-300 ml-1 mt-.75"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        onMouseEnter={mouseEnter}
-                        onMouseLeave={mouseLeave}
-                    >
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                    </svg> */}
+
                 </h1>
                 <div className="communityFeatures flex mb-5 origin-left btn-size-override-xxs">
                     {returnShare()}
                 </div>
 
             </div>
-            {/* <p className='text-slate-400 text-sm'>{props.description}</p> */}
-
-
             {renderIfCan()}
-
-
-            {/* {show() && ( */}
-
-            {/* )} */}
-            {/* </Transition> */}
-
         </div >
     )
 }

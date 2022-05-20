@@ -35,12 +35,12 @@ export default function DownloadModal(props: ShareModalProps) {
         setSelectedFeature(remoteContentManager.selectedFeature)
         filterResults()
     })
-    // onMount(() => {
-    //     remoteContentManager.GetFeatureList()
-    // })
-    // onCleanup(() => {
-    //     remoteContentManager.Unsubscribe(subId)
-    // })
+    onMount(() => {
+        remoteContentManager.GetFeatureList()
+    })
+    onCleanup(() => {
+        remoteContentManager.Unsubscribe(subId)
+    })
     const backToListView = () => {
         SetCurrentView(Views.ListView)
 
@@ -237,8 +237,6 @@ export default function DownloadModal(props: ShareModalProps) {
 
             //tried to use the modal bool here
             <PppFallback modal={true} />
-
-
         )}>
             <div className="DownloadModal">
                 {returnCorrectView()}

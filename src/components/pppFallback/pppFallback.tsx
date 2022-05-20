@@ -2,9 +2,11 @@ import { onMount, createSignal } from 'solid-js'
 import { PropAliases } from 'solid-js/web'
 import Button from '../../components/button/button'
 import pegLogo from '../../images/peg_logo.svg'
+import { ProgramSettings } from '../../logic/programSettings'
+const programSettings = ProgramSettings.getInstance()
 
 type PppFallbackProps = {
-  modal: boolean
+  modal?: boolean
 }
 
 // const [modal, setModal] = createSignal()
@@ -16,11 +18,10 @@ export default function PppFallback(props: PppFallbackProps) {
   return (
 
     //uncomment this papa to test checking against props
-    // <div className={`${props.modal ? 'bg-primary ' : 'border border-base-300 bg-base-200 '} flex flex-col w-full h-full items-center justify-center rounded rounded-xl`}>
+    <div className={`${props.modal ? 'bg-primary ' : 'border border-base-300 bg-base-200 '} flex flex-col w-full h-full items-center justify-center rounded rounded-xl`}>
 
 
-    // comment this papa our when you're testing the one above, this works with no props being checked
-    <div className={`border border-base-300 bg-base-200 flex flex-col w-full h-full items-center justify-center rounded rounded-xl`}>
+      {/* <div className={`border border-base-300 bg-base-200 flex flex-col w-full h-full items-center justify-center rounded rounded-xl`}> */}
 
 
       <div className={`bg-base-100 p-[4rem] rounded rounded-xl flex flex-col justify-center items-center content-center relative`}>
@@ -32,10 +33,13 @@ export default function PppFallback(props: PppFallbackProps) {
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
             <span class="relative inline-flex rounded-full h-3 w-3 bg-success"></span>
           </span> */}
-          Upgrade Your Account
+
+          <a href={programSettings.PppBuyLink} target="blank">  Upgrade Your Account </a>
         </Button>
 
-        <p className='text-[.75rem] mt-[1rem]'>To learn more about our pricing, features, and licenses please visit <a href='#' className='link link-primary' target='_blank'>peg.software</a>.</p>
+
+        <p className='text-[.75rem] mt-[1rem]'>To learn more about our pricing, features, and licenses please visit  <a href="https://peg.software" target="blank"><span className='text-primary'>peg.software</span></a>.</p>
+
       </div>
 
     </div >
