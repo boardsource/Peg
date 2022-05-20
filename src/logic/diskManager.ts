@@ -154,7 +154,7 @@ export class DiskManager {
             const tmpPath = path.join(app.getPath("temp"), 'ppp.temp')
             const data = await fs.readFile(tmpPath, 'utf8');
             console.log("data", data)
-            this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
+            // this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
 
         } catch (error) {
             console.log("error in reading pro plan", error)

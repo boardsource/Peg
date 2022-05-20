@@ -1,7 +1,6 @@
 import { createSignal, onCleanup } from 'solid-js'
 import { ClientManager } from '../../logic/clientManager'
 import { KeyMap } from '../../logic/keymapManager'
-import { ProgramSettings } from '../../logic/programSettings'
 import StatusIndicator from './statusIndicator/statusIndicator'
 const clientManager = ClientManager.getInstance()
 const keymap = KeyMap.getInstance()
