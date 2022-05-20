@@ -35,12 +35,12 @@ export default function DownloadModal(props: ShareModalProps) {
         setSelectedFeature(remoteContentManager.selectedFeature)
         filterResults()
     })
-    onMount(() => {
-        remoteContentManager.GetFeatureList()
-    })
-    onCleanup(() => {
-        remoteContentManager.Unsubscribe(subId)
-    })
+    // onMount(() => {
+    //     remoteContentManager.GetFeatureList()
+    // })
+    // onCleanup(() => {
+    //     remoteContentManager.Unsubscribe(subId)
+    // })
     const backToListView = () => {
         SetCurrentView(Views.ListView)
 
@@ -224,6 +224,8 @@ export default function DownloadModal(props: ShareModalProps) {
 
     return (
         <PppChecker fallback={(
+            //this was your old stuff that did work
+
             // <div>
             //     <h2>Pro Account Feature</h2>
             //     <p>
@@ -232,7 +234,11 @@ export default function DownloadModal(props: ShareModalProps) {
             //         and many more features.
             //     </p>
             // </div>
+
+            //tried to use the modal bool here
             <PppFallback modal={true} />
+
+
         )}>
             <div className="DownloadModal">
                 {returnCorrectView()}
