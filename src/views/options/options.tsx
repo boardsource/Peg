@@ -10,6 +10,10 @@ import { createStore } from 'solid-js/store';
 import { ProgramSettings } from '../../logic/programSettings';
 import Toggle from '../../components/toggle/toggle';
 import { Toast } from '../../logic/toast'
+import Input from '../../components/input/input'
+import pegLogo from '../../images/peg_logo.svg'
+import ShareExternalIcon from '../../images/icons/shareExternalIcon'
+
 const programSettings = ProgramSettings.getInstance()
 
 const toast = Toast.getInstance()
@@ -48,71 +52,141 @@ export default function Options() {
 
   return (
     <MainView title="Options" supported={true}>
-      <Toggle label="Tool Tips" name="tooltips" value={options.toolTips} onChange={updateCheckToolTips} />
-      <Toggle label="Debug Mode" name="debug" value={options.debug} onChange={updateCheckDebug} />
 
-      <div className="testToggle">
-        <p>SELECT THEME:</p>
-        <div class="dropdown">
+      <div className="flex flex-1 w-full">
+        <div className="flex flex-col items-start w-[70%] mr-[1.5rem] relative">
+          <h3 className='text-[1.2rem] mb-2'>Program Settings</h3>
+          <h4 className='mb-1 text-primary'>Appearance</h4>
+          <p className='text-[.85rem] mb-[.2rem]'>Theme:</p>
+          <div class="dropdown w-[10rem] mb-5">
+            <PppChecker fallback={(
+              <select class="select select-sm select-primary w-full max-w-xs" onChange={updateTheme}>
+                <option disabled selected>Select Theme</option>
+                <For each={Object.keys(Theme)} fallback={<div>Loading...</div>}>
+                  {(key) => {
+                    if (key === Theme.light || key === Theme.dark || Theme.cupcake) {
+                      return (
+                        <>
+                          <option>{key}</option>
+                        </>
+                      )
+                    } else {
+                      <option disabled>{key}:with pro account</option>
+                    }
+                  }}
+                </For>
+              </select>
+            )}>
+              <select class="select select-primary w-full max-w-xs" onChange={updateTheme}>
+                <option disabled selected>Select Themes</option>
+                <For each={Object.keys(Theme)} fallback={<div>Loading...</div>}>
+                  {(key) => (
+                    <>
+                      <option >{key}</option>
+                    </>
+                  )}
+                </For>
+              </select>
+            </PppChecker>
+          </div>
 
-          <PppChecker fallback={(
-            <select class="select select-primary w-full max-w-xs" onChange={updateTheme}>
-              <option disabled selected>Theme</option>
-              <For each={Object.keys(Theme)} fallback={<div>Loading...</div>}>
-                {(key) => {
-                  if (key === Theme.light || key === Theme.dark || Theme.cupcake) {
-                    return (
-                      <>
-                        <option >{key}</option>
-                      </>
-                    )
-                  } else {
-                    <option disabled>{key}:with pro account</option>
-                  }
-                }}
-              </For>
-            </select>
-          )}>
-            <select class="select select-primary w-full max-w-xs" onChange={updateTheme}>
-              <option disabled selected>Themes</option>
-              <For each={Object.keys(Theme)} fallback={<div>Loading...</div>}>
-                {(key) => (
-                  <>
-                    <option >{key}</option>
-                  </>
-                )}
-              </For>
-            </select>
-          </PppChecker>
+
+          <div className="toggles w-[15rem]">
+            <div className="flex flex-col mb-5">
+              <h4 className='mb-1 text-primary'>Other</h4>
+              <div className="flex flex-1 justify-between">
+                <label className='text-[.85rem]' htmlFor="tooltips">Show Tooltips</label>
+                <Toggle label="" name="tooltips" value={options.toolTips} onChange={updateCheckToolTips} />
+              </div>
+            </div>
+
+            <div className="flex flex-col mb-5">
+              <h4 className='mb-1 text-primary'>Advanced</h4>
+              <div className="flex flex-1 justify-between">
+                <label className='text-[.85rem]' htmlFor="tooltips">Show Debug Mode</label>
+                <Toggle label="" name="debug" value={options.debug} onChange={updateCheckDebug} />
+              </div>
+            </div>
+          </div>
+          <div className="flex absolute justify-between bottom-0 w-[40%] rounded rounded-xl bg-base-200 pl-5 py-3">
+            <div className="flex flex-col">
+              <h3 className='mb-1 text-primary text-[1.1rem]'>Looking For Help?</h3>
+              <div className="flex flex-col">
+                <a href="#" className='flex items-center link text-sm mb-1' >Peg Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                <a href="#" className='flex items-center link text-sm mb-1' >KMK Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                <a href="#" className='flex items-center link text-sm mb-1' >Discord <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                <a href="#" className='flex items-center link text-sm mb-1' >Contact <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+              </div>
+            </div>
+            {/* <div className="my-2 mr-4 rounded rounded-md bg-base-100 w-[50%]">
+
+            </div> */}
+
+          </div>
+
+
+        </div>
+        <div className="flex flex-col flex-1">
+          <h3 className='text-[1.2rem] text-center mb-2'>Account Settings</h3>
+          <div className="flex flex-col flex-1 rounded-xl px-4 pt-4 pb-0">
+            <PppChecker false fallback={
+              <div className="flex flex-col">
+                <div className="flex w-full justify-between items-center mb-1">
+                  <h4 className='text-[.9rem]'>Account Level:</h4>
+                  <div class="badge badge-sm badge-outline badge-success">Pro License</div>
+                </div>
+                <p className='text-center mt-5 border border-success rounded rounded-lg p-3 text-[1.2rem]'>Thank you for purchasing a Peg Pro License or bundled product. </p>
+                <div className="flex justify-center items-center flex-1">
+                  <img src={pegLogo} className='h-[60%]' alt="peg logo" />
+                </div>
+                <p className='text-center text-[.75rem]'>You are helping support KMK Firmware, XYZ Charity, and further development of hardware and software for hobbyist electronics and input devices.</p>
+              </div>
+            }>
+              <div className="flex w-full justify-between items-center mb-1">
+                <h4 className='text-[.9rem]'>Account Level:</h4>
+                <div class="badge badge-sm badge-outline badge-warning">Free</div>
+              </div>
+              <div className="flex flex-col flex-1">
+
+                <Input name='string' label='Email' placeholder='Enter Email Address...' className='!input-sm' value={email()} onChange={(e) => {
+                  //@ts-ignore
+                  setEmail(e.target.value)
+                }} />
+                <Input name="password" label='Password' placeholder='Enter Password...' value={password()} onChange={(e) => {
+                  //@ts-ignore
+                  setPassword(e.target.value)
+                }} />
+                <Button className='btn-success mt-3 mb-[1rem]' selected={email() !== "" && password() !== ""} onClick={() => logIn(email(), password())}>
+                  Sign In
+                </Button>
+                <div className="border rounded rounded-md px-3 pt-2 pb-[.5rem] mb-4">
+                  <h4 className='text-[.7rem]'>
+                    Login to Peg using your <a className='link link-primary' href="boardsource.xyz" target='blank'>Boardsource.xyz</a> account. Ensure that it is the account used to <a className='link link-primary' href="#" target='blank'>purchase your Peg license</a>.
+                  </h4>
+                </div>
+                <div className="flex flex-col flex-1 w-full border border-primary px-3 py-2 rounded rounded-md relative">
+                  <div className="flex flex-col">
+                    <h5 className='text-[1rem] mb-[.4rem]'>Peg Pro License Features:</h5>
+                    <ul className='list-disc list-inside text-[.75rem]'>
+                      <li>Single per-key RGB Mapping</li>
+                      <li>Extensive OLED Customization</li>
+                      <li>Online Sharing/Downloading</li>
+                    </ul>
+                  </div>
+                  <div className="flex justify-center items-center flex-1">
+                    <img src={pegLogo} className='h-[60%]' alt="peg logo" />
+                  </div>
+                  <div className="flex text-center">
+                    <p className='text-[.65rem]'>To learn more about our pricing, features, and licenses please visit <a href='#' className='link link-primary' target='_blank'>peg.software</a>.</p>
+                  </div>
+                </div>
+              </div>
+
+            </PppChecker>
+          </div>
         </div>
 
 
-
-        <PppChecker false>
-          <h2>
-            Log in to gain pro plan features
-          </h2>
-          email:
-          <br />
-          <input type="text" value={email()} onChange={(e) => {
-            //@ts-ignore
-            setEmail(e.target.value)
-          }} />
-          <br />
-          password:
-          <br />
-          <input type="password" value={password()} onChange={(e) => {
-            //@ts-ignore
-            setPassword(e.target.value)
-          }} />
-          <br />
-
-          <Button selected={email() !== "" && password() !== ""} onClick={() => logIn(email(), password())}>
-            Sign in
-          </Button>
-
-
-        </PppChecker>
       </div>
     </MainView >
   )

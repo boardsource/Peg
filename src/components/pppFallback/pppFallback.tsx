@@ -37,7 +37,9 @@ export default function PppFallback(props: PppFallbackProps) {
           <a href={programSettings.PppBuyLink} target="blank">  Upgrade Your Account </a>
         </Button>
 
+
         <p className='text-[.75rem] mt-[1rem]'>To learn more about our pricing, features, and licenses please visit  <a href="https://peg.software" target="blank"><span className='text-primary'>peg.software</span></a>.</p>
+
       </div>
 
     </div >

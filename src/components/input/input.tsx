@@ -37,7 +37,7 @@ export default function Input(props: InputProps) {
       <div className="mb-1">
         <input type="text"
           placeholder={props.placeholder}
-          class="input input-bordered input-primary w-full max-w-xs"
+          class="input input-bordered input-sm input-primary w-full max-w-xs"
           value={props.value}
           onChange={props.onChange}
           name={props.name}
