@@ -22,7 +22,7 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
 
     const openModal = () => {
         const modal = Modal.getInstance()
-        modal.Open(`Set up new keyboard`, false, (
+        modal.Open(`New Board Setup`, false, (
             <NewBoardSetupModal />
         )
         )
