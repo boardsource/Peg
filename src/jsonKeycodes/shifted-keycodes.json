@@ -159,7 +159,7 @@
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "KC.DQT"
+        "Description": "\""
     },
     {
         "code": "KC.LEFT_ANGLE_BRACKET",
@@ -168,7 +168,7 @@
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "KC.LT"
+        "Description": "<"
     },
     {
         "code": "KC.RIGHT_ANGLE_BRACKET",
@@ -177,7 +177,7 @@
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "KC.GT"
+        "Description": ">"
     },
     {
         "code": "KC.QUESTION",

@@ -96,8 +96,6 @@ export class KeyMap extends Subscribable {
         });
 
 
-        Toast.Debug(``)
-
         this.haveMap = true;
         //RGB MATRIX
         const ledMap = baseMap.split("# ledmap");
@@ -240,6 +238,13 @@ export class KeyMap extends Subscribable {
         }
         this.updateSubScribers()
     }
+    public RemoveCodeBlock(index: number) {
+        let tempCodeBlocks = [...this.codeBlock]
+        tempCodeBlocks.splice(index, 1)
+        this.codeBlock = tempCodeBlocks
+        this.updateSubScribers()
+    }
+
 
     public ChangeLed(_layer: number, pos: number, newColor: Color) {
         // todo add in saving old changes for ctrl z 
@@ -270,6 +275,7 @@ export class KeyMap extends Subscribable {
         })
         return keymapString
     }
+
 
 
     keymapBackToString(): string {

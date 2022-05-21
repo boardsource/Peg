@@ -8,6 +8,7 @@ type TextareaProps = {
   name: string
   label?: string
   helpText?: string
+  className?: string
 }
 
 export default function Textarea(props: TextareaProps) {
@@ -24,7 +25,7 @@ export default function Textarea(props: TextareaProps) {
         </label>
         <textarea
           placeholder={props.placeholder}
-          class="textarea textarea-bordered resize-none"
+          class={`textarea textarea-bordered resize-none ${props.className ? props.className : ''}`}
           value={props.value}
           onChange={props.onChange}
           name={props.name}
@@ -38,7 +39,7 @@ export default function Textarea(props: TextareaProps) {
     return (
       <textarea
         placeholder={props.placeholder}
-        class="textarea textarea-bordered resize-none  mb-1"
+        class={`textarea textarea-bordered resize-none  mb-1 ${props.className ? props.className : ''}`}
         value={props.value}
         onChange={props.onChange}
         name={props.name}

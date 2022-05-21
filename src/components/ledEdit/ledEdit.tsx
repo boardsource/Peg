@@ -9,6 +9,7 @@ import { Color } from "../../logic/color";
 import UsableLedColors from "../usableLedColors/usableLedColors";
 import Button from "../button/button";
 import { ProgramSettings } from "../../logic/programSettings";
+import { Toast } from "../../logic/toast";
 const programSettings = ProgramSettings.getInstance()
 const clientManager = ClientManager.getInstance()
 type LedEditProps = {
@@ -17,13 +18,13 @@ type LedEditProps = {
 
 export default function LedEdit(props: LedEditProps) {
     const [currentColor, setCurrentColor] = createStore({ r: 0, g: 0, b: 0 }),
-        [changesMade, SetChangesMade] = createSignal(clientManager.changesMade)
+        [ppp, SetPpp] = createSignal(programSettings.PPP)
     const updateLocalChangesMade = () => {
-        SetChangesMade(clientManager.changesMade)
+        SetPpp(programSettings.PPP)
     }
-    const subId = clientManager.Subscribe(updateLocalChangesMade)
+    const subId = programSettings.Subscribe(updateLocalChangesMade)
     onCleanup(() => {
-        clientManager.Unsubscribe(subId)
+        programSettings.Unsubscribe(subId)
     })
     const setColor = () => {
         clientManager.NoticeToUpdateKey(new Color(currentColor.r, currentColor.g, currentColor.b))
@@ -58,21 +59,25 @@ export default function LedEdit(props: LedEditProps) {
             <div className="flex flex-col">
                 <div className="flex flex-1">
                     <div className="LedEdit__control mx-5 flex flex-col">
-                        <Button onClick={setColor} selected={true} disabled={!programSettings.PPP}>
+                        <Button className='mb-2 btn-outline' onClick={setColor} selected={ppp()} disabled={!ppp()} disabledOnClick={() => {
+                            Toast.Warn("Single key changes can only be made with a pro account")
+                        }}>
                             Apply
                         </Button>
-                        <Button onClick={setAllToColor} selected={true}>
+
+                        <br />
+                        <Button className='btn-outline' onClick={setAllToColor} selected={true}>
                             Apply To All
                         </Button>
 
 
                     </div>
-                    <div className="LedEdit__usable flex flex-col flex-1" >
+                    <div className="LedEdit__usable flex flex-col flex-1 border rounded rounded-xl p-4" >
                         <h2 className='text-lg mb-3'>Applied Colors</h2>
                         <UsableLedColors />
                     </div>
                 </div>
-                <div className="ml-5">
+                <div className="ml-5 mt-2">
                     <HelpText>
                         Select a Key from Layout, choose or input color code into color picker and click 'APPLY' to begin setting individual key colors. Select 'U' from the Layer Selector panel to set Underglow LED colors.
                     </HelpText>

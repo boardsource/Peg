@@ -5,7 +5,8 @@ import ShareFeature from '../../components/shareFeature/shareFeature'
 import { KeyMap } from '../../logic/keymapManager'
 import { ShareableFeatureType } from '../../types/types'
 import Button from '../../components/button/button'
-
+import { ClientManager } from '../../logic/clientManager'
+const clientManager = ClientManager.getInstance()
 const keymap = KeyMap.getInstance()
 
 export default function LED() {
@@ -49,10 +50,10 @@ export default function LED() {
                                     {/* delete button here for codeblock, should probably prompt with a modal as well to confirm */}
                                     <Button
                                         selected={true}
-                                        // onClick={() => {
-                                        //   //@ts-ignore
-                                        //   keycodes.RemoveCustomCode(key.code)
-                                        // }}
+                                        onClick={() => {
+                                            //@ts-ignore
+                                            clientManager.RemoveCodeBlock(i())
+                                        }}
                                         className='btn btn-ghost hover:btn-error gap-2'
                                         icon
                                     >

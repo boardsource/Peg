@@ -86,7 +86,7 @@ export default function OLED() {
     }
   }
   return (
-    <MainView title='OLED' description={`
+    <MainView title='OLED' ppp={true} description={`
         OLEDs are displays used on keyboards. OLEDs can display a wide range of items, examples are displaying the current layer or a static image of your choosing.`}
       supported={supportsOled()}
       featureType={ShareableFeatureType.oleds}>

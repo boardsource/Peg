@@ -14,7 +14,7 @@ const createWindow = async () => {
     maxHeight: 720,
     minWidth: 1280,
     minHeight: 720,
-    icon: `file://${__dirname}/../peg.png`,
+    icon: path.join(__dirname, "..", "favicon.ico"),
     frame: false,
     titleBarStyle: 'hiddenInset',
     // titleBarOverlay: {
@@ -26,6 +26,7 @@ const createWindow = async () => {
       preload: path.join(__dirname, 'preload.js'),
     },
   });
+
   if (mainWindow !== null) {
     const pegApp = new AppManager(mainWindow)
     await pegApp.diskManager.cacheData("")

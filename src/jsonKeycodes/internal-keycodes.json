@@ -1,7 +1,7 @@
 [
     {
-       "code": "KC.RESET",
-        "display": "",
+        "code": "KC.RESET",
+        "display": "Reset",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -9,8 +9,8 @@
         "Description": "Restarts the keyboard"
     },
     {
-       "code": "KC.DEBUG",
-        "display": "",
+        "code": "KC.DEBUG",
+        "display": "Debug",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -18,26 +18,26 @@
         "Description": "Toggle `debug_enabled"
     },
     {
-       "code": "KC.GESC",
-        "display": "",
+        "code": "KC.GESC",
+        "display": "G-ESC",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Escape when tapped"
+        "Description": "Escape when tapped, ` when pressed with Shift or GUI"
     },
     {
-       "code": "KC.BKDL",
-        "display": "",
+        "code": "KC.BKDL",
+        "display": "BK-DL",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Backspace when tapped"
+        "Description": "Backspace when tapped, Delete when pressed with GUI"
     },
     {
-       "code": "KC.UC_MODE_NOOP",
-        "display": "",
+        "code": "KC.UC_MODE_NOOP",
+        "display": "NOOP",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -45,8 +45,8 @@
         "Description": "Sets UnicodeMode to NOOP"
     },
     {
-       "code": "KC.UC_MODE_LINUX",
-        "display": "",
+        "code": "KC.UC_MODE_LINUX",
+        "display": "Linux",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -54,30 +54,21 @@
         "Description": "Sets UnicodeMode to Linux"
     },
     {
-       "code": "KC.UC_MODE_MACOS",
-        "display": "",
+        "code": "KC.UC_MODE_MACOS",
+        "display": "macOS",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Sets UnicodeMode to MocOS"
+        "Description": "Sets UnicodeMode to macOS"
     },
     {
-       "code": "KC.UC_MODE_WINC",
-        "display": "",
+        "code": "KC.UC_MODE_WINC",
+        "display": "Win",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
         "Description": "Sets UnicodeMode to WinCompose"
-    },
-    {
-       "code": "KC.MACRO_SLEEP_MS(ms)",
-        "display": "",
-        "keybinding": "",
-        "canHaveSub": false,
-        "canHaveNumber": false,
-        "subNumber": 0,
-        "Description": "Sleeps in a macro. Check MACROS for more information."
     }
 ]

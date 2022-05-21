@@ -7,6 +7,8 @@ import Button from "../button/button"
 import Paragraph from "../paragraph/paragraph"
 import PppChecker from "../pppChecker/pppChecker"
 import Searchbar from "../searchbar/searchbar"
+import PppFallback from "../pppFallback/pppFallback"
+
 const programSettings = ProgramSettings.getInstance()
 
 type ShareModalProps = {
@@ -31,7 +33,6 @@ export default function DownloadModal(props: ShareModalProps) {
     const subId = remoteContentManager.Subscribe(() => {
         setListOfFeatures(remoteContentManager.listOfFeatures)
         setSelectedFeature(remoteContentManager.selectedFeature)
-        console.log("feature", selectedFeature())
         filterResults()
     })
     onMount(() => {
@@ -223,14 +224,19 @@ export default function DownloadModal(props: ShareModalProps) {
 
     return (
         <PppChecker fallback={(
-            <div>
-                <h2>Pro Account Feature</h2>
-                <p>
-                    This feature is limited to pro accounts, pick up a pro account
-                    <a href={programSettings.PppBuyLink} target="blank"> here</a> to unlock the ability to download {ShareableFeatureToDisplayWord(props.featureType)}
-                    and many more features.
-                </p>
-            </div>
+            //this was your old stuff that did work
+
+            // <div>
+            //     <h2>Pro Account Feature</h2>
+            //     <p>
+            //         This feature is limited to pro accounts, pick up a pro account
+            //         <a href={programSettings.PppBuyLink} target="blank"> here</a> to unlock the ability to download {ShareableFeatureToDisplayWord(props.featureType)}
+            //         and many more features.
+            //     </p>
+            // </div>
+
+            //tried to use the modal bool here
+            <PppFallback modal={true} />
         )}>
             <div className="DownloadModal">
                 {returnCorrectView()}

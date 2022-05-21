@@ -5,11 +5,10 @@ type ButtonProps = {
     selected: boolean
     onClick: () => void
     children: any
-
     oledInfo?: boolean
     tinyButtons?: boolean
-
     disabled?: boolean
+    disabledOnClick?: () => void
     className?: string
 
     icon?: boolean
@@ -44,20 +43,21 @@ export default function Button(props: ButtonProps) {
         return color
     }
     return (
-        <button className={`${returnClasses()} ${props.selected ? `${returnColor()}` : ' btn-outline'} ${props.className}`}
+        <button className={`${returnClasses()} ${props.selected ? `${returnColor()}` : ' btn-outline'} ${props.className} ${props.disabled ? 'btn-error cursor-not-allowed' : ''}`}
             onClick={() => {
                 if (props.disabled !== undefined) {
                     if (props.disabled === false) {
                         props.onClick()
                     } else {
                         Toast.Debug("Button Disabled")
+                        if (props.disabledOnClick !== undefined) {
+
+                            props.disabledOnClick()
+                        }
                     }
                 } else {
                     props.onClick()
                 }
-
-
-
             }}
         >
             {props.children}

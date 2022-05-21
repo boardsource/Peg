@@ -1,7 +1,6 @@
 import { createSignal, onCleanup } from 'solid-js'
 import { ClientManager } from '../../logic/clientManager'
 import { KeyMap } from '../../logic/keymapManager'
-import { ProgramSettings } from '../../logic/programSettings'
 import StatusIndicator from './statusIndicator/statusIndicator'
 const clientManager = ClientManager.getInstance()
 const keymap = KeyMap.getInstance()
@@ -45,7 +44,7 @@ export default function ConnectivityStatus() {
     return (
         <StatusIndicator
             status={status()}
-            keyboard={keymap.keyLayout ? `${keymap.keyLayout?.features.creator}-${keymap.keyLayout?.features.name}` : "Peg - No keyboard"}
+            keyboard={keymap.keyLayout ? `${keymap.keyLayout?.features.creator}-${keymap.keyLayout?.features.name}` : "Peg - No Keyboard"}
         />
     )
 }

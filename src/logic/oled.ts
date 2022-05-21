@@ -198,7 +198,7 @@ export class Oled extends Subscribable {
                 const currentClientManager = ClientManager.getInstance()
                 switch (this.imgReactionType) {
                     case OledReactionType.layer:
-                        pegmapString = ` OledData(image={0:${this.oledReactionTypeToString(OledReactionType.layer)},1:["1.bmp","2.bmp","3.bmp","4.bmp"]})`
+                        pegmapString = ` OledData(image={0:${this.oledReactionTypeToString(OledReactionType.layer)},1:["1.bmp","2.bmp","3.bmp","4.bmp","5.bmp","6.bmp","7.bmp","8.bmp"]})`
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[0], fileNumber: 1 })
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[1], fileNumber: 2 })
                         currentClientManager.sendToBackend(ElectronEvents.SaveOled, { fileData: this.layers[2], fileNumber: 3 })

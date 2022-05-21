@@ -8,6 +8,7 @@ type InputProps = {
   name: string
   label?: string
   helpText?: string
+  className?: string
 };
 
 export default function Input(props: InputProps) {
@@ -24,7 +25,7 @@ export default function Input(props: InputProps) {
         </label>
         <input type="text"
           placeholder={props.placeholder}
-          class="input input-bordered input-sm w-full"
+          class={`input input-bordered input-sm w-full ${props.className ? props.className : ''}`}
           value={props.value}
           onChange={props.onChange}
           name={props.name}
@@ -36,7 +37,7 @@ export default function Input(props: InputProps) {
       <div className="mb-1">
         <input type="text"
           placeholder={props.placeholder}
-          class="input input-bordered input-primary w-full max-w-xs"
+          class="input input-bordered input-sm input-primary w-full max-w-xs"
           value={props.value}
           onChange={props.onChange}
           name={props.name}

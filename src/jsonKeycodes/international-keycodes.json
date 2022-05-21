@@ -1,7 +1,7 @@
 [
     {
-       "code": "KC.NONUS_HASH",
-        "display": "",
+        "code": "KC.NONUS_HASH",
+        "display": "NUHS",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -9,8 +9,8 @@
         "Description": "ISO Right of LSHIFT"
     },
     {
-       "code": "KC.NONUS_BSLASH",
-        "display": "",
+        "code": "KC.NONUS_BSLASH",
+        "display": "NUBS",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -18,26 +18,17 @@
         "Description": "ISO Left of Return"
     },
     {
-       "code": "KC.APPLICATION",
-        "display": "",
+        "code": "KC.APPLICATION",
+        "display": "App",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "KC.SEL"
+        "Description": "Select Menu Key (Near RCTRL)"
     },
     {
-       "code": "KC.INT1",
-        "display": "",
-        "keybinding": "",
-        "canHaveSub": false,
-        "canHaveNumber": false,
-        "subNumber": 0,
-        "Description": ""
-    },
-    {
-       "code": "KC.INT2",
-        "display": "",
+        "code": "KC.INT1",
+        "display": "INT1",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -45,8 +36,8 @@
         "Description": ""
     },
     {
-       "code": "KC.INT3",
-        "display": "",
+        "code": "KC.INT2",
+        "display": "INT2",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -54,8 +45,8 @@
         "Description": ""
     },
     {
-       "code": "KC.INT4",
-        "display": "",
+        "code": "KC.INT3",
+        "display": "INT3",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -63,8 +54,8 @@
         "Description": ""
     },
     {
-       "code": "KC.INT5",
-        "display": "",
+        "code": "KC.INT4",
+        "display": "INT4",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -72,8 +63,8 @@
         "Description": ""
     },
     {
-       "code": "KC.INT6",
-        "display": "",
+        "code": "KC.INT5",
+        "display": "INT5",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -81,8 +72,8 @@
         "Description": ""
     },
     {
-       "code": "KC.INT7",
-        "display": "",
+        "code": "KC.INT6",
+        "display": "INT6",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -90,8 +81,8 @@
         "Description": ""
     },
     {
-       "code": "KC.INT8",
-        "display": "",
+        "code": "KC.INT7",
+        "display": "INT7",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -99,8 +90,8 @@
         "Description": ""
     },
     {
-       "code": "KC.INT9",
-        "display": "",
+        "code": "KC.INT8",
+        "display": "INT8",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -108,8 +99,8 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG1",
-        "display": "",
+        "code": "KC.INT9",
+        "display": "INT9",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -117,8 +108,8 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG2",
-        "display": "",
+        "code": "KC.LANG1",
+        "display": "LANG1",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -126,8 +117,8 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG3",
-        "display": "",
+        "code": "KC.LANG2",
+        "display": "LANG2",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -135,8 +126,8 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG4",
-        "display": "",
+        "code": "KC.LANG3",
+        "display": "LANG3",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -144,8 +135,8 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG5",
-        "display": "",
+        "code": "KC.LANG4",
+        "display": "LANG4",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -153,8 +144,8 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG6",
-        "display": "",
+        "code": "KC.LANG5",
+        "display": "LANG5",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -162,8 +153,8 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG7",
-        "display": "",
+        "code": "KC.LANG6",
+        "display": "LANG6",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -171,8 +162,8 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG8",
-        "display": "",
+        "code": "KC.LANG7",
+        "display": "LANG7",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -180,8 +171,17 @@
         "Description": ""
     },
     {
-       "code": "KC.LANG9",
-        "display": "",
+        "code": "KC.LANG8",
+        "display": "LANG8",
+        "keybinding": "",
+        "canHaveSub": false,
+        "canHaveNumber": false,
+        "subNumber": 0,
+        "Description": ""
+    },
+    {
+        "code": "KC.LANG9",
+        "display": "LANG9",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,

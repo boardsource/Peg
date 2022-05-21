@@ -16,7 +16,8 @@ export default function Menubar() {
         //bird boi will make this exit the window
     }
     return (
-        <div className="menubar flex absolute w-full bg-red">
+        <div className="menubar flex absolute w-full ">
+            <div className="dragbar flex"></div>
             {/* <p>mac here</p> */}
             <div className={`menubar__controls absolute flex right-0 mr-1 mt-1 ${clientManager.platform === "darwin" ? "hide" : ""}`}>
                 <button className='p-1 rounded-md hover:bg-black hover:bg-opacity-5 transition duration-200' onClick={minimizeWindow}>

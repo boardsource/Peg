@@ -13,9 +13,6 @@ import {
     DragDropSensors,
 } from "@thisbeyond/solid-dnd";
 import Button from "../../components/button/button";
-
-import ShareFeature from "../../components/shareFeature/shareFeature";
-import DownloadFeature from "../../components/downloadFeature/downloadFeature";
 import MainView from "../../components/mainView/mainView";
 
 
@@ -30,56 +27,25 @@ type KeymapEditViewProps = {
 };
 
 export default function KeymapEditView(props: KeymapEditViewProps) {
-    const [isScaning, setIsScaning] = createSignal(clientManager.scaning)
-        , [haveMap, setHaveMap] = createSignal(keyMap.layout !== undefined)
-    const updatelocalIsScaning = () => {
-        setIsScaning(clientManager.scaning)
 
-        // console.log("scaning updating", isScaning())
-    }
-    const updateLocalHaveMap = () => {
-        setHaveMap(keyMap.layout !== undefined)
-    }
-    const subId = clientManager.Subscribe(updatelocalIsScaning)
-    const subId2 = keyMap.Subscribe(updateLocalHaveMap)
 
-    onCleanup(() => {
-        clientManager.Unsubscribe(subId)
-        keyMap.Unsubscribe(subId2)
-    })
-    const scanAgain = () => {
-        if (!clientManager.scaning && clientManager.keymap.layout === undefined) {
-            clientManager.sendToBackend(ElectronEvents.Scan, "")
-        }
-    }
 
     const returnEditView = () => {
-        if (isScaning()) {
-            return (
 
-                <NewBoardSetup />
+        return (
+            <>
 
-            )
-        } else {
-            return (
-                <>
-                    <Show when={!haveMap()} fallback={""}>
-                        <Button onClick={scanAgain} selected={true}>
-                            scan Again
-                        </Button>
+                <KeyLayout layer={0} isLed={props.isLed} isEncoder={props.isEncoder} />
+                {props.isLed ?
+                    <LedEdit /> : <UsableKeyCodeDisplay />
+                }
 
-                    </Show>
-                    <KeyLayout layer={0} isLed={props.isLed} isEncoder={props.isEncoder} />
-                    {props.isLed ?
-                        <LedEdit /> : <UsableKeyCodeDisplay />
-                    }
-
-                    {/* <ShareFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} /> */}
+                {/* <ShareFeature featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} /> */}
 
 
-                </>
-            );
-        }
+            </>
+        );
+
     }
     const isSupported = () => {
         if (props.isEncoder && keyMap.keyLayout) {
@@ -102,7 +68,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
 
     return (
 
-        <MainView title={props.title} supported={isSupported()} description={returnDescription()} featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps}>
+        <MainView title={props.title} supported={isSupported()} description={returnDescription()} featureType={props.isLed ? ShareableFeatureType.ledMaps : ShareableFeatureType.keyMaps} showNoBoardFallBack={true}>
 
             <div className="keymapEditView flex flex-col w-full h-full">
                 <DragDropProvider>

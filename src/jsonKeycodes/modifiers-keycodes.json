@@ -1,92 +1,92 @@
 [
     {
-       "code": "KC.HYPR",
-        "display": "",
+        "code": "KC.HYPR",
+        "display": "HYPR",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Left Control"
+        "Description": "Hold Left Control, Shift, Alt and GUI"
     },
     {
-       "code": "KC.MEH",
-        "display": "",
+        "code": "KC.MEH",
+        "display": "MEH",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Left Control"
+        "Description": "Hold Left Control, Shift and Alt"
     },
     {
-       "code": "KC.LCTL(kc)",
-        "display": "",
+        "code": "KC.LCTL(kc)",
+        "display": "LCTL+",
         "keybinding": "",
         "canHaveSub": true,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Left Control and press `kc"
+        "Description": "Hold Left Control and press kc"
     },
     {
-       "code": "KC.LSFT(kc)",
-        "display": "",
+        "code": "KC.LSFT(kc)",
+        "display": "LSFT+",
         "keybinding": "",
         "canHaveSub": true,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Left Shift and press `kc"
+        "Description": "Hold Left Shift and press kc"
     },
     {
-       "code": "KC.LALT(kc)",
-        "display": "",
+        "code": "KC.LALT(kc)",
+        "display": "LALT+",
         "keybinding": "",
         "canHaveSub": true,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Left Alt and press `kc"
+        "Description": "Hold Left Alt and press kc"
     },
     {
-       "code": "KC.LGUI(kc)",
-        "display": "",
+        "code": "KC.LGUI(kc)",
+        "display": "LGUI+",
         "keybinding": "",
         "canHaveSub": true,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Left GUI and press `kc"
+        "Description": "Hold Left GUI and press kc"
     },
     {
-       "code": "KC.RCTL(kc)",
-        "display": "",
+        "code": "KC.RCTL(kc)",
+        "display": "RCTL+",
         "keybinding": "",
         "canHaveSub": true,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Right Control and press `kc"
+        "Description": "Hold Right Control and press kc"
     },
     {
-       "code": "KC.RSFT(kc)",
-        "display": "",
+        "code": "KC.RSFT(kc)",
+        "display": "RSFT+",
         "keybinding": "",
         "canHaveSub": true,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Right Shift and press `kc"
+        "Description": "Hold Right Shift and press kc"
     },
     {
-       "code": "KC.RALT(kc)",
-        "display": "",
+        "code": "KC.RALT(kc)",
+        "display": "RALT+",
         "keybinding": "",
         "canHaveSub": true,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Right Alt and press `kc"
+        "Description": "Hold Right Alt and press kc"
     },
     {
-       "code": "KC.RGUI(kc)",
-        "display": "",
+        "code": "KC.RGUI(kc)",
+        "display": "RGUI+",
         "keybinding": "",
         "canHaveSub": true,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Hold Right GUI and press `kc"
+        "Description": "Hold Right GUI and press kc"
     }
 ]

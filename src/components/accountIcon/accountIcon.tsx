@@ -1,7 +1,5 @@
 import { createSignal, onCleanup } from 'solid-js'
-import testAvatar from '../../images/test_account_icon.png'
 import { ProgramSettings } from '../../logic/programSettings'
-import ConnectivityStatus from '../connectivityStatus/connectivityStatus'
 const programSettings = ProgramSettings.getInstance()
 
 export default function AccountIcon() {
