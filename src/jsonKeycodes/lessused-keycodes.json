@@ -1,7 +1,7 @@
 [
   {
     "code": "KC.PSCREEN",
-    "display": "",
+    "display": "PSCR",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -10,7 +10,7 @@
   },
   {
     "code": "KC.SCROLLLOCK",
-    "display": "",
+    "display": "SLCK",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -19,7 +19,7 @@
   },
   {
     "code": "KC.PAUSE",
-    "display": "",
+    "display": "PAUSE",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -28,7 +28,7 @@
   },
   {
     "code": "KC.INSERT",
-    "display": "",
+    "display": "INSERT",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -37,7 +37,7 @@
   },
   {
     "code": "KC.HOME",
-    "display": "",
+    "display": "HOME",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -46,7 +46,7 @@
   },
   {
     "code": "KC.PGUP",
-    "display": "",
+    "display": "PG UP",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -55,7 +55,7 @@
   },
   {
     "code": "KC.DELETE",
-    "display": "",
+    "display": "DEL",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -64,7 +64,7 @@
   },
   {
     "code": "KC.END",
-    "display": "",
+    "display": "END",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -73,7 +73,7 @@
   },
   {
     "code": "KC.PGDOWN",
-    "display": "",
+    "display": "PG DN",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -82,7 +82,7 @@
   },
   {
     "code": "KC.NUMLOCK",
-    "display": "",
+    "display": "NLOCK",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -91,7 +91,7 @@
   },
   {
     "code": "KC.KP_SLASH",
-    "display": "",
+    "display": "K /",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -100,7 +100,7 @@
   },
   {
     "code": "KC.KP_ASTERISK",
-    "display": "",
+    "display": "k *",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -109,7 +109,7 @@
   },
   {
     "code": "KC.KP_MINUS",
-    "display": "",
+    "display": "K -",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -118,7 +118,7 @@
   },
   {
     "code": "KC.KP_PLUS",
-    "display": "",
+    "display": "K +",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -127,7 +127,7 @@
   },
   {
     "code": "KC.KP_ENTER",
-    "display": "",
+    "display": "K ENT",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -136,7 +136,7 @@
   },
   {
     "code": "KC.KP_1",
-    "display": "",
+    "display": "K 1",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -145,7 +145,7 @@
   },
   {
     "code": "KC.KP_2",
-    "display": "",
+    "display": "K 2",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -154,7 +154,7 @@
   },
   {
     "code": "KC.KP_3",
-    "display": "",
+    "display": "K 3",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -163,7 +163,7 @@
   },
   {
     "code": "KC.KP_4",
-    "display": "",
+    "display": "K 4",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -172,7 +172,7 @@
   },
   {
     "code": "KC.KP_5",
-    "display": "",
+    "display": "K 5",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -181,7 +181,7 @@
   },
   {
     "code": "KC.KP_6",
-    "display": "",
+    "display": "K 6",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -190,7 +190,7 @@
   },
   {
     "code": "KC.KP_7",
-    "display": "",
+    "display": "K 7",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -199,7 +199,7 @@
   },
   {
     "code": "KC.KP_8",
-    "display": "",
+    "display": "K 8",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -208,7 +208,7 @@
   },
   {
     "code": "KC.KP_9",
-    "display": "",
+    "display": "K 9",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -217,7 +217,7 @@
   },
   {
     "code": "KC.KP_0",
-    "display": "",
+    "display": "K 0",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -226,7 +226,7 @@
   },
   {
     "code": "KC.KP_DOT",
-    "display": "",
+    "display": "K .",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -235,7 +235,7 @@
   },
   {
     "code": "KC.KP_EQUAL",
-    "display": "",
+    "display": "K =",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -244,7 +244,7 @@
   },
   {
     "code": "KC.F13",
-    "display": "",
+    "display": "F13",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -253,7 +253,7 @@
   },
   {
     "code": "KC.F14",
-    "display": "",
+    "display": "F14",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -262,7 +262,7 @@
   },
   {
     "code": "KC.F15",
-    "display": "",
+    "display": "F15",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -271,7 +271,7 @@
   },
   {
     "code": "KC.F16",
-    "display": "",
+    "display": "F16",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -280,7 +280,7 @@
   },
   {
     "code": "KC.F17",
-    "display": "",
+    "display": "F17",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -289,7 +289,7 @@
   },
   {
     "code": "KC.F18",
-    "display": "",
+    "display": "F18",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -298,7 +298,7 @@
   },
   {
     "code": "KC.F19",
-    "display": "",
+    "display": "F19",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -307,7 +307,7 @@
   },
   {
     "code": "KC.F20",
-    "display": "",
+    "display": "F20",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -316,7 +316,7 @@
   },
   {
     "code": "KC.F21",
-    "display": "",
+    "display": "F21",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -325,7 +325,7 @@
   },
   {
     "code": "KC.F22",
-    "display": "",
+    "display": "F22",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -334,7 +334,7 @@
   },
   {
     "code": "KC.F23",
-    "display": "",
+    "display": "F23",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -343,7 +343,7 @@
   },
   {
     "code": "KC.F24",
-    "display": "",
+    "display": "F24",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -352,7 +352,7 @@
   },
   {
     "code": "KC.LOCKING_CAPS",
-    "display": "",
+    "display": "L CAPS",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -361,7 +361,7 @@
   },
   {
     "code": "KC.LOCKING_NUM",
-    "display": "",
+    "display": "L NUML",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -370,7 +370,7 @@
   },
   {
     "code": "KC.LOCKING_SCROLL",
-    "display": "",
+    "display": "L SCRL",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -379,7 +379,7 @@
   },
   {
     "code": "KC.KP_COMMA",
-    "display": "",
+    "display": "K ,",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -388,7 +388,7 @@
   },
   {
     "code": "KC.KP_EQUAL_AS400",
-    "display": "",
+    "display": "KAS = ",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -397,7 +397,7 @@
   },
   {
     "code": "KC.AUDIO_MUTE",
-    "display": "",
+    "display": "Mute",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -406,7 +406,7 @@
   },
   {
     "code": "KC.AUDIO_VOL_UP",
-    "display": "",
+    "display": "VOL UP",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -415,7 +415,7 @@
   },
   {
     "code": "KC.AUDIO_VOL_DOWN",
-    "display": "",
+    "display": "VOL DN",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -424,7 +424,7 @@
   },
   {
     "code": "KC.MEDIA_NEXT_TRACK",
-    "display": "",
+    "display": "NEXT W",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -433,7 +433,7 @@
   },
   {
     "code": "KC.MEDIA_PREV_TRACK",
-    "display": "",
+    "display": "PREV W",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -442,7 +442,7 @@
   },
   {
     "code": "KC.MEDIA_STOP",
-    "display": "",
+    "display": "M STOP",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -451,7 +451,7 @@
   },
   {
     "code": "KC.MEDIA_PLAY_PAUSE",
-    "display": "",
+    "display": "M PLAY",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -460,7 +460,7 @@
   },
   {
     "code": "KC.MEDIA_EJECT",
-    "display": "",
+    "display": "EJECT",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -469,7 +469,7 @@
   },
   {
     "code": "KC.MEDIA_FAST_FORWARD",
-    "display": "",
+    "display": "NEXT M",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -478,7 +478,7 @@
   },
   {
     "code": "KC.MEDIA_REWIND",
-    "display": "",
+    "display": "PREV M",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
