@@ -129,7 +129,7 @@ export default function Options() {
         <div className="flex flex-col flex-1">
           <h3 className='text-[1.2rem] text-center mb-2'>Account Settings</h3>
           <div className="flex flex-col flex-1 rounded-xl px-4 pt-4 pb-0">
-            <PppChecker fallback={
+            <PppChecker false fallback={
               <div className="flex flex-col">
                 <div className="flex w-full justify-between items-center mb-1">
                   <h4 className='text-[.9rem]'>Account Level:</h4>
