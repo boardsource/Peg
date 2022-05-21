@@ -118,7 +118,7 @@
   },
   {
     "code": "KC.PSCREEN",
-    "display": "",
+    "display": "PSCR",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -127,7 +127,7 @@
   },
   {
     "code": "KC.SCROLLLOCK",
-    "display": "",
+    "display": "SLCK",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -136,7 +136,7 @@
   },
   {
     "code": "KC.PAUSE",
-    "display": "",
+    "display": "PAUSE",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -262,7 +262,7 @@
   },
   {
     "code": "KC.BSPC",
-    "display": "BK-SPC",
+    "display": "BSPC",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -271,7 +271,7 @@
   },
   {
     "code": "KC.INSERT",
-    "display": "",
+    "display": "INSERT",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -280,7 +280,7 @@
   },
   {
     "code": "KC.HOME",
-    "display": "",
+    "display": "HOME",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -289,7 +289,7 @@
   },
   {
     "code": "KC.PGUP",
-    "display": "",
+    "display": "PG UP",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -298,7 +298,7 @@
   },
   {
     "code": "KC.NUMLOCK",
-    "display": "",
+    "display": "N LCOK",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -307,7 +307,7 @@
   },
   {
     "code": "KC.KP_SLASH",
-    "display": "",
+    "display": "K /",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -316,7 +316,7 @@
   },
   {
     "code": "KC.KP_ASTERISK",
-    "display": "",
+    "display": "K *",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -325,7 +325,7 @@
   },
   {
     "code": "KC.KP_MINUS",
-    "display": "",
+    "display": "K -",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -460,7 +460,7 @@
   },
   {
     "code": "KC.DELETE",
-    "display": "",
+    "display": "DEL",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -469,7 +469,7 @@
   },
   {
     "code": "KC.END",
-    "display": "",
+    "display": "END",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -478,7 +478,7 @@
   },
   {
     "code": "KC.PGDOWN",
-    "display": "",
+    "display": "PG DN",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -487,7 +487,7 @@
   },
   {
     "code": "KC.KP_7",
-    "display": "",
+    "display": "K 7",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -496,7 +496,7 @@
   },
   {
     "code": "KC.KP_8",
-    "display": "",
+    "display": "K 8",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -505,7 +505,7 @@
   },
   {
     "code": "KC.KP_9",
-    "display": "",
+    "display": "K 9",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -514,7 +514,7 @@
   },
   {
     "code": "KC.KP_PLUS",
-    "display": "",
+    "display": "K +",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -640,7 +640,7 @@
   },
   {
     "code": "KC.KP_4",
-    "display": "",
+    "display": "K 4",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -649,7 +649,7 @@
   },
   {
     "code": "KC.KP_5",
-    "display": "",
+    "display": "K 5",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -658,7 +658,7 @@
   },
   {
     "code": "KC.KP_6",
-    "display": "",
+    "display": "K 6",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -775,7 +775,7 @@
   },
   {
     "code": "KC.UP",
-    "display": "Up Arrow",
+    "display": "Up",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -784,7 +784,7 @@
   },
   {
     "code": "KC.KP_1",
-    "display": "",
+    "display": "K 1",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -793,7 +793,7 @@
   },
   {
     "code": "KC.KP_2",
-    "display": "",
+    "display": "K 2",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -802,7 +802,7 @@
   },
   {
     "code": "KC.KP_3",
-    "display": "",
+    "display": "K 3",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -811,7 +811,7 @@
   },
   {
     "code": "KC.KP_ENTER",
-    "display": "",
+    "display": "K ENT",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -874,12 +874,12 @@
   },
   {
     "code": "KC.APPLICATION",
-    "display": "",
+    "display": "MENU",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
     "subNumber": 0,
-    "Description": "KC.SEL"
+    "Description": "KC.SEL Menu"
   },
   {
     "code": "KC.RCTRL",
@@ -892,7 +892,7 @@
   },
   {
     "code": "KC.LEFT",
-    "display": "Left Arrow",
+    "display": "Left",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -901,7 +901,7 @@
   },
   {
     "code": "KC.DOWN",
-    "display": "Down Arrow",
+    "display": "Down",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -910,7 +910,7 @@
   },
   {
     "code": "KC.RIGHT",
-    "display": "Right Arrow",
+    "display": "Right",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -919,7 +919,7 @@
   },
   {
     "code": "KC.KP_0",
-    "display": "",
+    "display": "K 0",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -928,7 +928,7 @@
   },
   {
     "code": "KC.KP_DOT",
-    "display": "",
+    "display": "K .",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
