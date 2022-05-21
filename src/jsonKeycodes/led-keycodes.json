@@ -1,7 +1,7 @@
 [
     {
         "code": "KC.RGB_TOG",
-        "display": "",
+        "display": "RGB T",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
