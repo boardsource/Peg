@@ -82,7 +82,7 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                 name: nameParts[1],
                 controller: "integrated",
                 config: "wired",
-                side: isLeftOrRight(nameParts[nameParts.length - 1]) ? nameParts[nameParts.length - 1] : "OP",
+                side: isLeftOrRight(nameParts[nameParts.length - 1]) ? nameParts[nameParts.length - 1] : "N/A",
                 _id: serverBoard._id
 
             }
@@ -183,6 +183,31 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
 
     }
 
+    const returnStyledTableItem = (item: string) => {
+        let tableItemClasses = ' '
+        let tableBadgeClasses = 'badge badge-outline badge-sm '
+        switch (item) {
+            case 'blok':
+                tableItemClasses += tableBadgeClasses + ' badge-primary'
+                break
+            case 'integrated':
+                tableItemClasses += tableBadgeClasses + ' badge-base-300'
+                break
+            case 'wired':
+                tableItemClasses += tableBadgeClasses + ' badge-secondary'
+                break
+            case 'N/A':
+                tableItemClasses += ' text-base-300'
+                break
+            default:
+                tableItemClasses += ''
+
+        }
+        return (
+            <span className={`${tableItemClasses}`}>{item}</span>
+        )
+
+    }
     const renderSubViews = () => {
         switch (currentView()) {
             case SubViews.PickBoard:
@@ -193,9 +218,10 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                                 <For each={Array.from(serverBoardFilters().keys())} fallback={<div>Loading...</div>}>
                                     {(category) => {
                                         const filters = serverBoardFilters().get(category)
+                                        // if (category === 'creator' || category === 'name') {
+
+                                        // }
                                         if (filters !== undefined) {
-
-
                                             return (
                                                 <div className="flex ">
                                                     <p>
@@ -204,6 +230,7 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
 
                                                     <For each={Array.from(filters.keys())} fallback={<div>Loading...</div>}>
                                                         {(filter) =>
+
                                                         (
                                                             <Button onClick={() => filterBoards(filter, category)} selected={currentFilter() === filter}>
                                                                 {filter}
@@ -219,16 +246,16 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                                 </For>
                             </div>
                             <div className="flex flex-1 items-start w-full bg-green-200 overflow-scroll">
-                                <table className="table max-w-[100%] w-full">
+                                <table className="table table-compact max-w-[100%] w-full">
                                     <thead>
                                         <tr>
                                             {/* <th></th> */}
-                                            <td>creator</td>
-                                            <td>name</td>
-                                            <td>controller</td>
-                                            <td>config</td>
-                                            <td>side</td>
-                                            <td></td>
+                                            <td>Creator</td>
+                                            <td>Name</td>
+                                            <td>Controller</td>
+                                            <td>Config</td>
+                                            <td>Side</td>
+                                            <td>Configure</td>
                                         </tr>
                                     </thead>
                                     <tbody className="">
@@ -239,11 +266,15 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                                                 {/* <th>{index() + 1}</th> */}
                                                 <td>{board.creator}</td>
                                                 <td>{board.name}</td>
-                                                <td>{board.controller}</td>
-                                                <td>{board.config}</td>
-                                                <td>{board.side}</td>
+                                                <td>{returnStyledTableItem(board.controller)}</td>
+                                                {/* <td>{board.controller === 'blok' ? (
+                                                    <span className={`${tableBadgeStyles} badge-primary`}>{board.controller}</span>
+                                                ) : board.controller}
+                                                </td> */}
+                                                <td>{returnStyledTableItem(board.config)}</td>
+                                                <td>{returnStyledTableItem(board.side)}</td>
                                                 <td>
-                                                    <Button onClick={() => selectServerBoard(board._id, board.fullName)} selected={false}>
+                                                    <Button onClick={() => selectServerBoard(board._id, board.fullName)} className={`!btn-xs`} selected={false}>
                                                         select
                                                     </Button>
                                                 </td>
