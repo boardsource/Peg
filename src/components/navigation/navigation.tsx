@@ -91,14 +91,6 @@ export default function Navigation() {
           <div class="bg-base-200 flex items-center justify-center h-[7rem] border-b border-base-300 py-7">
             <div className="flex h-full w-[100%] justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2284.97729 975.98346">
-                {/* <defs>
-                  <style>.
-                    cls-1,.cls-2{fill:none;stroke-miterlimit:10;stroke-width:28px;}
-                  .cls-1{stroke:#805ff7;}
-                  .cls-2{stroke:#98fce9;}
-                  .cls-3{fill:#231f20;}
-                  </style>
-                </defs> */}
                 <g id="Layer_2" data-name="Layer 2">
                   <g id="Layer_1-2" data-name="Layer 1">
                     <rect className="cls-1 fill-[none] stroke-[28px] stroke-[#805ff7]" x="105.03159" y="105.03159" width="765.92028" height="765.92028" rx="163.19043" transform="translate(-202.13279 487.99173) rotate(-45)" />
