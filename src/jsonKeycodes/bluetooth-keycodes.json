@@ -1,16 +1,16 @@
 [
     {
-       "code": "KC.BT_CLEAR_BONDS",
-        "display": "",
+        "code": "KC.BT_CLEAR_BONDS",
+        "display": "Clear",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
         "subNumber": 0,
-        "Description": "Clears all stored bondings"
+        "Description": "Clears all stored bluetooth bondings"
     },
     {
-       "code": "KC.BT_NEXT_CONN",
-        "display": "",
+        "code": "KC.BT_NEXT_CONN",
+        "display": "Next",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,
@@ -18,8 +18,8 @@
         "Description": "Selects the next BT connection"
     },
     {
-       "code": "KC.BT_PREV_CONN",
-        "display": "",
+        "code": "KC.BT_PREV_CONN",
+        "display": "Prev",
         "keybinding": "",
         "canHaveSub": false,
         "canHaveNumber": false,

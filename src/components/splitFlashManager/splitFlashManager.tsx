@@ -12,10 +12,10 @@ type SplitFlashManagerProps = {
 
 export const SplitFlashManager = (props: SplitFlashManagerProps) => {
     const clientManager = ClientManager.getInstance()
-    const [state, setState] = createStore({ displayState: SplitFlashStage.MainSide })
+    const [state, setState] = createStore({ displayState: SplitFlashStage.MainSide, canUnplug: clientManager.canUnplug })
 
     const updateLocalState = () => {
-        setState({ displayState: clientManager.SplitFlashDisplayState });
+        setState({ displayState: clientManager.SplitFlashDisplayState, canUnplug: clientManager.canUnplug });
     }
     const subId = clientManager.Subscribe(updateLocalState)
     onCleanup(() => {
@@ -38,18 +38,24 @@ export const SplitFlashManager = (props: SplitFlashManagerProps) => {
                         <p className='text-sm'>
                             We already save the changes made to the main side (left side) of your board, now we are going to need to flash the changes to the second side (right side) of your board.
                         </p>
-                        <div className='flex flex-col w-full border border-base-300 rounded rounded-md p-2 mt-4'>
-                            <span className="text-xl text-primary">Step 1</span>
-                            <p> Unplug the main side (left side) of your keyboard.</p>
+                        <Show when={state.canUnplug} fallback={(
+                            <p className='text-xl'>
+                                We are still saving your keymap dont unplug anything.
+                            </p>
+                        )}>
+                            <div className='flex flex-col w-full border border-base-300 rounded rounded-md p-2 mt-4'>
+                                <span className="text-xl text-primary">Step 1</span>
+                                <p> Unplug the main side (left side) of your keyboard.</p>
 
-                        </div>
-                        <p className='text-[.75rem] mt-1'>
-                            Push the button below when you've unplugged your main side (left half) of your keyboard.
-                        </p>
-                        <Button className={`btn btn-success btn-block mt-5`}
-                            onClick={() => ChangeDisplayState(SplitFlashStage.Unplugged)}>
-                            It's Unplugged!
-                        </Button>
+                            </div>
+                            <p className='text-[.75rem] mt-1'>
+                                Push the button below when you've unplugged your main side (left half) of your keyboard.
+                            </p>
+                            <Button className={`btn btn-success btn-block mt-5`} selected={false}
+                                onClick={() => ChangeDisplayState(SplitFlashStage.Unplugged)}>
+                                It's Unplugged!
+                            </Button>
+                        </Show>
                     </div>
 
                 );
@@ -65,13 +71,8 @@ export const SplitFlashManager = (props: SplitFlashManagerProps) => {
                             <p>Plug in the second side (right side) of your keyboard.</p>
                         </div>
                         <p className='text-[.75rem] mt-1'>
-                            Click the button below when you have your second side (right side) is plugged in.
                             <span>... you know I'm not hourly right?</span>
                         </p>
-                        <Button className={`btn btn-success btn-block mt-5`}
-                            onClick={() => ChangeDisplayState(SplitFlashStage.OffSide)}>
-                            I Plugged My Right Side In!
-                        </Button>
                     </div>
 
                 );
@@ -86,12 +87,12 @@ export const SplitFlashManager = (props: SplitFlashManagerProps) => {
                             <p className='text-xl'> I will go ahead and flash this side for you now.</p>
                         </div>
                         <div className="flex justify-between">
-                            <Button className={`btn btn-success btn-block mt-5 w-[47%]`}
-                                onClick={() => ChangeDisplayState(SplitFlashStage.Finished)}>
+                            <Button className={`btn btn-success btn-block mt-5 w-[47%]`} selected={false}
+                                onClick={() => { }}>
                                 Thank You!
                             </Button>
-                            <Button className={`btn btn-success btn-block mt-5 w-[47%]`}
-                                onClick={() => ChangeDisplayState(SplitFlashStage.Finished)}>
+                            <Button className={`btn btn-success btn-block mt-5 w-[47%]`} selected={false}
+                                onClick={() => { }}>
                                 Thanks For Flashing Me!
                             </Button>
                         </div>
@@ -116,7 +117,7 @@ export const SplitFlashManager = (props: SplitFlashManagerProps) => {
                         <div className="flex text-xs mt-10">
                             <p><span className='font-semibold'>Pro Tip: </span>If you're changing the OLED on this half as well, keep it plugged in. If not, swap back to your main side.</p>
                         </div>
-                        <Button className={`btn btn-success btn-block mt-5`}
+                        <Button className={`btn btn-success btn-block mt-5`} selected={false}
                             onClick={() => props.close()}>
                             Close
                         </Button>

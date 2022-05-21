@@ -127,7 +127,6 @@ export class DiskManager {
             }
             if (!this.isScaning) {
 
-                console.log("scaning")
                 this.isScaning = true
                 await this.scanDrives()
                 if (this.didNotFindDrive && this.keepLooking) {
@@ -154,7 +153,7 @@ export class DiskManager {
             const tmpPath = path.join(app.getPath("temp"), 'ppp.temp')
             const data = await fs.readFile(tmpPath, 'utf8');
             console.log("data", data)
-            // this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
+            this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
 
         } catch (error) {
             console.log("error in reading pro plan", error)
@@ -230,7 +229,7 @@ export class DiskManager {
             for (const disk of disks) {
                 if (process.platform !== "win32") {
                     if (!disk.mounted.startsWith("/") || disk.used === 0) {
-                        console.log("not messing with ", disk)
+                        console.log("not messing with ")
                         continue
                     }
                 }
@@ -355,7 +354,7 @@ export class DiskManager {
                 }
                 //todo alaert user map did not update
                 console.log("dont have the needed stuff")
-                console.log("missing kb drive", this)
+                // console.log("missing kb drive", this)
             }
         } catch (error) {
             console.log("error in writing map", error)

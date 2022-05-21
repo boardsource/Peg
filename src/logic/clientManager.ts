@@ -25,6 +25,7 @@ export class ClientManager extends Subscribable {
     dontOverRide: boolean = false
     currentLayer: number = 0
     SplitFlashDisplayState: SplitFlashStage = SplitFlashStage.MainSide
+    canUnplug: boolean = true
 
     private constructor() {
         super();
@@ -34,8 +35,6 @@ export class ClientManager extends Subscribable {
 
         this.programSettings = ProgramSettings.getInstance()
         this.lessonToEvent(ElectronEvents.UpdateLayout, (args: string) => {
-
-            console.log("got updated layout")
             this.scaning = false
             this.updateSubScribers()
             this.keymap.ParceLayout(args)
@@ -45,18 +44,18 @@ export class ClientManager extends Subscribable {
 
         })
         this.lessonToEvent(ElectronEvents.UpdateKeyMap, (args: string) => {
-            console.log("got updated map")
             this.scaning = false
             if (!this.dontOverRide) {
                 this.keymap.StringToKeymap(args)
             } else {
-                console.log("Im not over riding")
+                this.keymap.oled = undefined
                 const ledBackup = [...this.keymap.ledMap]
                 const keymapBackup = [...this.keymap.keymap]
                 this.keymap.StringToKeymap(args)
                 this.keymap.ledMap = ledBackup
                 this.keymap.keymap = keymapBackup
                 this.ChangeSplitFlashDisplayState(SplitFlashStage.OffSide)
+                Toast.Debug(`not over riding keymap saving ledMap and keymap `)
             }
             this.updateSubScribers()
         })
@@ -80,6 +79,7 @@ export class ClientManager extends Subscribable {
                     }
                 });
             } catch (error) {
+                Toast.Debug(`Error in ReadSettings ${JSON.stringify(error)} `)
                 console.log("error", error)
             }
 
@@ -91,13 +91,16 @@ export class ClientManager extends Subscribable {
                 const customKeycodes = tempCustomCodes as KeyCode[]
                 this.keymap.codes.customCodes = new Map(customKeycodes.map(i => [i.code, i]));
             } catch (error) {
+                Toast.Debug(`Error in ReadCustomCodes ${JSON.stringify(error)} `)
                 console.log("error", error)
             }
         })
 
         this.lessonToEvent(ElectronEvents.MapSaved, () => {
-            Toast.Success("keymap saved!")
-            console.log("todo notify that map was saved")
+            Toast.Success("keymap saved! You can unplug your keyboard if you want")
+            this.canUnplug = true
+            this.updateSubScribers()
+
             if (this.SplitFlashDisplayState === SplitFlashStage.OffSide) {
                 this.ChangeSplitFlashDisplayState(SplitFlashStage.Finished)
             }
@@ -183,6 +186,8 @@ export class ClientManager extends Subscribable {
         }
         this.changesMade = true
         this.updateSubScribers()
+        Toast.Debug(`forcing all key change:  ${JSON.stringify({ layer, pos, newKey, isEncoder })} `)
+
     }
     public ForceAllLedChange(newColor: Color) {
         this.keymap.ChangeAllLeds(newColor)
@@ -191,6 +196,8 @@ export class ClientManager extends Subscribable {
         }
         this.changesMade = true
         this.updateSubScribers()
+        Toast.Debug(`forcing all leds to new color:  ${JSON.stringify(newColor)} `)
+
     }
     public RemoveCodeBlock(index: number) {
         this.keymap.RemoveCodeBlock(index)
@@ -203,16 +210,18 @@ export class ClientManager extends Subscribable {
     }
 
     public SaveMap() {
-        console.log("saving key map")
+        Toast.Debug(`wanting to save map`)
         if (this.changesMade) {
+            this.canUnplug = false
             this.sendToBackend(ElectronEvents.SaveMap, this.keymap.toString())
             this.changesMade = false
+            Toast.Debug(`saving map`)
         }
         if (this.ledChangesMadeAndIsSplit) {
             const modal = Modal.getInstance()
             modal.OpenDefault("Split LED Flashing", false, ModalDefault.SplitFlashManager)
             this.dontOverRide = true
-
+            Toast.Debug(`handling split led changes `)
         }
 
     }
@@ -221,11 +230,17 @@ export class ClientManager extends Subscribable {
         switch (newDisplayState) {
             case SplitFlashStage.Unplugged:
                 this.sendToBackend(ElectronEvents.FreshDriveScan, "")
+                Toast.Debug(`SplitFlashStage.Unplugged`)
                 break;
             case SplitFlashStage.OffSide:
                 if (this.keymap.keyLayout.features.rightSide) {
                     this.changesMade = true
-                    this.SaveMap()
+                    setTimeout(() => {
+                        this.SaveMap()
+                    }, 1000);
+
+                    this.ledChangesMadeAndIsSplit = false
+                    Toast.Debug(`SplitFlashStage.OffSide`)
                 }
             default:
                 break;
@@ -236,9 +251,12 @@ export class ClientManager extends Subscribable {
     async pingServer() {
         axios.get(`${this.programSettings.apiUrl}hp-check`).then(() => {
             this.isOnLine = true
+            Toast.Debug(`server on line`)
         }).catch(() => {
             this.isOnLine = false
             this.updateSubScribers()
+            Toast.Debug(`error from server hp-check`)
+
         })
     }
 

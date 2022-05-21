@@ -96,8 +96,6 @@ export class KeyMap extends Subscribable {
         });
 
 
-        Toast.Debug(``)
-
         this.haveMap = true;
         //RGB MATRIX
         const ledMap = baseMap.split("# ledmap");
