@@ -28,13 +28,7 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
         )
     }
     return (
-
-
-
-        // **** this NewBoardSetup may all become Loading component if you want/are okay with it *********
         <div className="NewBoardSetup flex flex-col w-full h-full justify-center relative">
-
-
             <div className="newboard flex flex-col items-center self-center absolute bottom-0">
                 <h2 className='text-[1rem] mb-1'>Board Not Appearing?</h2>
                 <p className='text-[.75rem] mb-3'>You may need to configure your board to work with Peg.</p>
@@ -42,8 +36,6 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
                     Setup New Board
                 </Button>
                 <p className='text-[.75rem]'>Visit <a href="#" className='link link-primary' target='_blank'>peg.software</a> for help setting up a new board.</p>
-                {/* ******* all of this stuff open in modal? ****** good way to fit it all OR we can have it replace the animation for scanning that is also a good option and keeps it all on page ****** */}
-
             </div>
 
 
