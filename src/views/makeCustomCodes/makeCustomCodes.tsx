@@ -20,7 +20,12 @@ const keycodes = KeyCodes.getInstance()
 
 export default function MakeCustomCodes() {
 
-  const [state, setState] = createStore({ display: "", code: "", description: "", showExport: true, showImport: false, importString: "", exportString: "", customCodes: Array.from(keycodes.customCodes.values()) });
+  // these are some maybe ghetto refs? tried following the docs but idk I guess they need to be defined better or some TS thing,but they do work
+  let exportTextarea
+  let importTextarea
+
+
+  const [state, setState] = createStore({ display: "", code: "", description: "", showExport: false, showImport: true, importString: "", exportString: "", customCodes: Array.from(keycodes.customCodes.values()) });
   const updateLocalState = () => {
     setState({ customCodes: Array.from(keycodes.customCodes.values()) })
     exportCodes()
@@ -71,13 +76,13 @@ export default function MakeCustomCodes() {
   const renderImport = () => {
     if (state.showImport) {
       return (
-        <div className="flex w-full h-full bg-yellow-200">
-          <textarea className='bg-red-200' name="importString" value={state.importString} onChange={onChange}></textarea>
+        <div className="flex w-full h-full">
+          <textarea ref={importTextarea} className='w-full border-none resize-none p-2' name="importString" value={state.importString} onChange={onChange}></textarea>
           {/* <p>IMPORT IMPORT</p> */}
-          <button onClick={importCodes}>
-            import
-          </button>
-        </div>
+          <Button className='btn-success btn-outline absolute right-4 bottom-5' onClick={importCodes}>
+            Import Keycodes
+          </Button>
+        </div >
 
       )
     }
@@ -86,10 +91,24 @@ export default function MakeCustomCodes() {
     if (state.showExport) {
       return (
         <div className="flex w-full h-full">
-          <textarea className='w-full border-none resize-none' name="ExportString" value={state.exportString}></textarea>
+          <textarea ref={exportTextarea} className='w-full border-none resize-none p-2' name="ExportString" value={state.exportString}></textarea>
         </div>
 
       )
+    }
+  }
+
+  const returnTextAreaButtonAction = () => {
+    if (state.showExport) {
+      return (
+        exportTextarea.select(), document.execCommand('copy')
+      )
+
+    } else {
+      return (
+        importTextarea.select(), document.execCommand('paste')
+      )
+
     }
   }
 
@@ -135,7 +154,19 @@ export default function MakeCustomCodes() {
                 <a class={`tab tab-xs ${state.showImport ? 'tab-active' : ''}`} onClick={() => { setState({ showImport: true, showExport: false }) }}>IMPORT</a>
               </div>
 
-              <div className="importExportContainer flex rounded-lg shadow border flex-1 w-full overflow-hidden">
+              <div className="importExportContainer flex rounded-lg shadow border flex-1 w-full overflow-scroll p-3 text-[.9rem] relative">
+                <Button className='btn-outline btn-info !btn-xs absolute right-4 top-5' onClick={() => { returnTextAreaButtonAction() }}>
+                  {state.showExport ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                    </svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                  )}
+                  {state.showExport ? 'COPY' : 'PASTE'}
+                </Button>
                 {renderImport()}
                 {renderExport()}
 
