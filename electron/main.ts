@@ -35,7 +35,7 @@ const createWindow = async () => {
 
   if (app.isPackaged) {
     // 'build/index.html'
-    mainWindow.loadURL(`file://${__dirname}/../index.html`);
+    mainWindow.loadURL(path.join(__dirname, "..", "index.html"));
   } else {
     mainWindow.loadURL('http://localhost:3000/index.html');
     require('electron-reload')(__dirname, {
