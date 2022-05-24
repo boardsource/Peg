@@ -108,6 +108,10 @@ export class ClientManager extends Subscribable {
         this.lessonToEvent(ElectronEvents.IsProPlan, () => {
             this.programSettings.PPP = true
         })
+        this.lessonToEvent(ElectronEvents.Misc, (data) => {
+            console.log("DATA", data)
+        })
+
 
         this.programSettings.Subscribe(() => {
             this.sendToBackend(ElectronEvents.SaveSettings,

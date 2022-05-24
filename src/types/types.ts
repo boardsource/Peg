@@ -112,6 +112,7 @@ export enum ElectronEvents {
     WindowClose = "WindowClose",
     WindowFullScreen = "WindowFullScreen",
     WindowMinimize = "WindowMinimize",
+    Misc = "Misc"
 }
 export enum ScrollerSides {
     Right = "right",
