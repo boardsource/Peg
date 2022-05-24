@@ -42,6 +42,13 @@ enum SubViews {
     SelectDrive = "SelectDrive",
     Waiting = "Waiting"
 }
+enum NameParts {
+    Creator = "creator",
+    Name = "name",
+    Controller = "controller",
+    Config = "config",
+    Side = "side"
+}
 
 const isLeftOrRight = (namePart?: string) => {
     if (namePart !== undefined) {
@@ -60,21 +67,24 @@ const isConfig = (namePart?: string) => {
 
 export default function NewBoardSetupModal(props: NewBoardSetupProps) {
     const [serverBoards, setServerBoards] = createSignal<splitUpServerBoard[]>([]),
-        [serverBoardFilters, setServerBoardFilters] = createSignal<Map<string, Map<string, splitUpServerBoard[]>>>(new Map()),
-        [currentFilter, setCurrentFilter] = createSignal("All"),
+        [filteredBoards, setFilteredBoards] = createSignal<splitUpServerBoard[]>([]),
+        [serverBoardFilters, setServerBoardFilters] = createSignal<Map<NameParts, Set<string>>>(new Map()),
+        [currentFilter, setCurrentFilter] = createSignal<Map<NameParts, Set<string>>>(new Map()),
+        [currentFilterStrs, setCurrentFilterStrs] = createSignal<Set<string>>(new Set()),
         [currentView, SetCurrentView] = createSignal(SubViews.Waiting),
         [kmk, setKmk] = createSignal(true),
         [boardName, setBoardName] = createSignal(""),
         [lib, setLib] = createSignal(true)
 
+
     let fullServerBoard: FullServerBoard | undefined = undefined;
     const buildFilters = (serverBoardsData: ServerBoard[]) => {
-
-        const filters: Map<string, Map<string, splitUpServerBoard[]>> = new Map();
-        const allMap = new Map()
-        allMap.set("All", new Map())
-        filters.set("All", allMap)
-
+        let splitBoards: splitUpServerBoard[] = [];
+        let boardNames = new Set<string>()
+        let boardCreators = new Set<string>()
+        let boardControllers = new Set<string>()
+        let boardConfigs = new Set<string>()
+        let boardSides = new Set<string>()
         serverBoardsData.forEach(serverBoard => {
             const nameParts = serverBoard.name.split("-")
             let splitUpBoard: splitUpServerBoard = {
@@ -100,46 +110,44 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                     }
                 }
             }
-            let tempValue = filters.get("All")
-            if (tempValue !== undefined) {
-                const tempAll = tempValue.get("All")
-                if (tempAll !== undefined) {
-                    tempValue.set("All", [...tempAll, splitUpBoard])
-                    filters.set("All", tempValue)
-                }
+            splitBoards.push(splitUpBoard)
+            boardNames.add(splitUpBoard.name)
+            boardCreators.add(splitUpBoard.creator)
+            boardControllers.add(splitUpBoard.controller)
+            boardConfigs.add(splitUpBoard.config)
+            boardSides.add(splitUpBoard.side)
+        })
+        let availableFilters: Map<NameParts, Set<string>> = new Map()
+        availableFilters.set(NameParts.Creator, boardCreators)
+        availableFilters.set(NameParts.Name, boardNames)
+        availableFilters.set(NameParts.Controller, boardControllers)
+        availableFilters.set(NameParts.Config, boardConfigs)
+        availableFilters.set(NameParts.Side, boardSides)
+        setServerBoards(splitBoards)
+        setServerBoardFilters(availableFilters)
+        setFilteredBoards(splitBoards)
+    }
 
-            }
-
-            const fieldsWeWantToFilterBy = ["creator", "name", "controller", "config", "side"]
-            fieldsWeWantToFilterBy.forEach(key => {
-
-                let category = filters.get(key)
-                if (category === undefined) {
-                    category = new Map()
-                }
-                //@ts-ignore
-                const value = splitUpBoard[key]
-                if (value !== undefined) {
-                    let tempValue = category.get(value)
-                    if (tempValue !== undefined) {
-                        category.set(value, [...tempValue, splitUpBoard])
+    const filterBoards = () => {
+        console.log(
+            "wtf", currentFilterStrs()
+        )
+        const tempCurrentFilter = currentFilter()
+        if (tempCurrentFilter.size > 0) {
+            return serverBoards().filter(board => {
+                for (let i = 0; i < Array.from(tempCurrentFilter.keys()).length; i++) {
+                    const category = Array.from(tempCurrentFilter.keys())[i];
+                    const tempCategory = tempCurrentFilter.get(category)
+                    if (tempCategory && tempCategory.size > 0) {
+                        return tempCategory.has(board[category])
                     } else {
-                        category.set(value, [splitUpBoard])
+                        return true
                     }
                 }
-
-                filters.set(key, category)
             })
-        })
-        setServerBoardFilters(filters)
-        let tempValue = filters.get("All")
-        if (tempValue !== undefined) {
-            const tempAll = tempValue.get("All")
-            if (tempAll !== undefined) {
-                setServerBoards(tempAll)
-            }
+        } else {
+            return serverBoards()
         }
-
     }
     const fetchServerBoards = async () => {
         clientManager.sendToBackend(ElectronEvents.DownLoadKmk, "")
@@ -175,12 +183,27 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
     onMount(() => {
         fetchServerBoards();
     });
-    const filterBoards = (key: string, category: string) => {
-        const newList = serverBoardFilters().get(category)?.get(key)
-        if (newList !== undefined) {
-            setCurrentFilter(key)
-            setServerBoards(newList)
+    const addFilters = (key: string, category: NameParts) => {
+
+        let tempCategory = currentFilter().get(category)
+        let tempCurrentFilterStrs = currentFilterStrs()
+        if (tempCategory !== undefined) {
+            if (tempCategory.has(key)) {
+                tempCategory.delete(key)
+                tempCurrentFilterStrs.delete(key)
+
+            } else {
+                tempCategory.add(key)
+                tempCurrentFilterStrs.add(key)
+            }
+            setCurrentFilter(currentFilter().set(category, tempCategory))
+            setFilteredBoards(filterBoards())
+        } else {
+            setCurrentFilter(currentFilter().set(category, new Set([key])))
+            setFilteredBoards(filterBoards())
+            tempCurrentFilterStrs.add(key)
         }
+        setCurrentFilterStrs(tempCurrentFilterStrs)
 
     }
 
@@ -209,6 +232,57 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
         )
 
     }
+    const isSelected = (filter: string) => {
+        console.log("called")
+        return currentFilterStrs().has(filter)
+    }
+    const returnFilterButtons = (category: NameParts) => {
+        const filters = serverBoardFilters().get(category)
+        if (filters !== undefined) {
+            if ((category === NameParts.Name || category === NameParts.Creator) && false) {
+                return (<div className="flex ">
+                    <p className='text-[.85rem] mb-[.2rem]'>{category}:</p>
+                    <div class="dropdown w-[10rem] mb-5">
+
+                        <select class="select select-primary w-full max-w-xs" onChange={(e) => {
+                            //@ts-ignores
+                            addFilters(e.target.value, category)
+                        }
+                        }>
+                            <option disabled selected>Select Themes</option>
+                            <For each={Array.from(filters)}>
+                                {(filter) => (
+                                    <>
+                                        <option>{filter}</option>
+                                    </>
+                                )}
+                            </For>
+                        </select>
+
+                    </div>
+                </div>)
+            } else {
+                return (
+                    <div className="flex ">
+                        <p>
+                            {category}:
+                        </p>
+
+                        <For each={Array.from(filters)}>
+                            {(filter) => (
+                                <Button onClick={() => addFilters(filter, category)} selected={currentFilterStrs().has(filter)}>
+                                    {filter}
+                                </Button>
+                            )
+                            }
+                        </For>
+                    </div>
+                )
+            }
+        } else {
+            return ""
+        }
+    }
     const renderSubViews = () => {
         switch (currentView()) {
             case SubViews.PickBoard:
@@ -216,41 +290,16 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                     <div className="NewBoardSetup__boards flex flex-col h-[550px]">
                         <div className='flex flex-col w-full h-full bg-yellow-200' >
                             <div className="flex flex-col bg-red-200">
-                                <For each={Array.from(serverBoardFilters().keys())} fallback={<div>Loading...</div>}>
-                                    {(category) => {
-                                        const filters = serverBoardFilters().get(category)
-                                        // if (category === 'creator' || category === 'name') {
-
-                                        // }
-                                        if (filters !== undefined) {
-                                            return (
-                                                <div className="flex ">
-                                                    <p>
-                                                        {category}:
-                                                    </p>
-
-                                                    <For each={Array.from(filters.keys())} fallback={<div>Loading...</div>}>
-                                                        {(filter) =>
-
-                                                        (
-                                                            <Button onClick={() => filterBoards(filter, category)} selected={currentFilter() === filter}>
-                                                                {filter}
-                                                            </Button>
-                                                        )
-                                                        }
-                                                    </For>
-                                                </div>
-                                            )
-                                        }
-                                    }
-                                    }
-                                </For>
+                                {returnFilterButtons(NameParts.Creator)}
+                                {returnFilterButtons(NameParts.Name)}
+                                {returnFilterButtons(NameParts.Controller)}
+                                {returnFilterButtons(NameParts.Side)}
+                                {returnFilterButtons(NameParts.Config)}
                             </div>
                             <div className="flex flex-1 items-start w-full bg-green-200 overflow-scroll">
                                 <table className="table table-compact max-w-[100%] w-full">
                                     <thead>
                                         <tr>
-                                            {/* <th></th> */}
                                             <td>Creator</td>
                                             <td>Name</td>
                                             <td>Controller</td>
@@ -260,18 +309,14 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                                         </tr>
                                     </thead>
                                     <tbody className="">
-                                        <For each={serverBoards()} fallback={<div>Loading...</div>}>
-                                            {(board, index) =>
+                                        <For each={filteredBoards()} fallback={<div>No matches</div>}>
+                                            {(board) =>
 
                                             (<tr>
-                                                {/* <th>{index() + 1}</th> */}
                                                 <td>{board.creator}</td>
                                                 <td>{board.name}</td>
                                                 <td>{returnStyledTableItem(board.controller)}</td>
-                                                {/* <td>{board.controller === 'blok' ? (
-                                                    <span className={`${tableBadgeStyles} badge-primary`}>{board.controller}</span>
-                                                ) : board.controller}
-                                                </td> */}
+
                                                 <td>{returnStyledTableItem(board.config)}</td>
                                                 <td>{returnStyledTableItem(board.side)}</td>
                                                 <td>

@@ -5,6 +5,7 @@ import { ElectronEvents, FileName } from "../types/types";
 
 
 
+
 export class AppManager {
     diskManager: DiskManager;
     win: Electron.BrowserWindow
@@ -12,6 +13,7 @@ export class AppManager {
         this.diskManager = new DiskManager(this)
         this.win = bWin;
         this.diskManager.readProPlan()
+
     }
 
     run() {

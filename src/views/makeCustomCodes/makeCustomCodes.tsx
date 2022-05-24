@@ -5,13 +5,10 @@ import { ClientManager } from "../../logic/clientManager";
 import { KeyCodes } from "../../logic/keycodes";
 import ShareFeature from "../../components/shareFeature/shareFeature";
 import Button from "../../components/button/button";
-import DownloadFeature from "../../components/downloadFeature/downloadFeature";
 import MainView from "../../components/mainView/mainView";
 import Input from "../../components/input/input";
 import Scroller from '../../components/scroller/scroller'
-import HelpTooltip from "../../components/helpTooltip/helpTooltip";
 import Textarea from '../../components/textarea/textarea'
-import { Transition } from 'solid-transition-group'
 import { Toast } from "../../logic/toast";
 
 const clientManager = ClientManager.getInstance()
@@ -21,8 +18,8 @@ const keycodes = KeyCodes.getInstance()
 export default function MakeCustomCodes() {
 
   // these are some maybe ghetto refs? tried following the docs but idk I guess they need to be defined better or some TS thing,but they do work
-  let exportTextarea
-  let importTextarea
+  let exportTextarea: HTMLTextAreaElement
+  let importTextarea: HTMLTextAreaElement
 
 
   const [state, setState] = createStore({ display: "", code: "", description: "", showExport: false, showImport: true, importString: "", exportString: "", customCodes: Array.from(keycodes.customCodes.values()) });

@@ -14,19 +14,14 @@ const createWindow = async () => {
     maxHeight: 720,
     minWidth: 1280,
     minHeight: 720,
-    icon: path.join(__dirname, "..", "favicon.ico"),
+    icon: path.join(__dirname, "..", "..", "icon.png"),
     frame: false,
     titleBarStyle: 'hiddenInset',
-    // titleBarOverlay: {
-    //   color: '#2f3241',
-    //   symbolColor: '#74b1be'
-    // },
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
-
   if (mainWindow !== null) {
     const pegApp = new AppManager(mainWindow)
     await pegApp.diskManager.cacheData("")
@@ -34,7 +29,6 @@ const createWindow = async () => {
   }
 
   if (app.isPackaged) {
-    // 'build/index.html'
     mainWindow.loadURL(path.join(__dirname, "..", "index.html"));
   } else {
     mainWindow.loadURL('http://localhost:3000/index.html');

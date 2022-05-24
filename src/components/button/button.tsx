@@ -2,7 +2,7 @@ import { Toast } from "../../logic/toast";
 
 
 type ButtonProps = {
-    selected: boolean
+    selected?: boolean
     onClick: () => void
     children: any
     oledInfo?: boolean
