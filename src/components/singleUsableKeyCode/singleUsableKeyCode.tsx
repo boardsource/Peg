@@ -81,7 +81,7 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             // console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
             const keyCodeLength = keyCode.length
             // console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
-            const baseSize = '150'
+            const baseSize = 6
             // let length = 0
             if (keyDisplayCode !== '') {
                 length = keyDisplayCodeLength
@@ -91,17 +91,17 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
                 return baseSize
             }
             if (length > 0 && length <= 3) {
-                return 300
-            } else if (length >= 4 && length <= 5) {
-                return 300
+                return 9
+            } else if (length >= 4 && length < 5) {
+                return 7
             } else if (length >= 6 && length <= 8) {
-                return 180
+                return baseSize
             } else {
-                return 300
+                return baseSize
             }
         }
         else {
-            return 300
+            return
         }
     }
 
@@ -118,14 +118,14 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
         >
-            <div className='codeContainer flex self-start h-full content-center'>
-                <svg width="100%"
-                    height='100%'
-                    viewBox="0 0 1000 1000"
+            <div className={`codeContainer`}>
+                <svg width={`29px`}
+                    height={`100%`}
+                    viewBox="0 0 29 29"
                     preserveAspectRatio="xMinYMid meet"
-                    style={returnMaxHeight()}
                     xmlns="http://www.w3.org/2000/svg"
-                    className=''>
+                    style={``}
+                    className={`flex self-center !max-w-[${magicNumbers.keyMultiplyer}px] !max-h-[${magicNumbers.keyMultiplyer}]px`}>
                     {/*@ts-ignore*/}
                     <text
                         x="50%"
@@ -133,8 +133,8 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
                         dominant-baseline="middle"
                         text-anchor="middle"
                         fill="black"
-                        className='fill-base-content'
-                        // font-size='200'
+                        className={`fill-base-content max-w-[${magicNumbers.keyMultiplyer}]`}
+                        // font-size='100%'
                         font-size={returnFontSize()}
                     >
 
