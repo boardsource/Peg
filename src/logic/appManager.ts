@@ -2,7 +2,7 @@
 import { DiskManager } from "./diskManager";
 import Electron, { app, ipcMain, BrowserWindow } from 'electron';
 import { ElectronEvents, FileName } from "../types/types";
-import path from "path";
+
 
 
 
@@ -13,7 +13,7 @@ export class AppManager {
         this.diskManager = new DiskManager(this)
         this.win = bWin;
         this.diskManager.readProPlan()
-        this.SendMiscEvent(ElectronEvents.Misc, path.join(__dirname, "..", "..", "favicon.ico"))
+
     }
 
     run() {
