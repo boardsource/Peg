@@ -1,4 +1,4 @@
-import { Show, createSignal, onMount, For, onCleanup } from "solid-js";
+import { Show, createSignal, onMount, For, onCleanup, batch } from "solid-js";
 
 import { ElectronEvents, FileName, KeyCode } from "../../types/types"
 
@@ -69,7 +69,7 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
         [filteredBoards, setFilteredBoards] = createSignal<splitUpServerBoard[]>([]),
         [serverBoardFilters, setServerBoardFilters] = createSignal<Map<NameParts, Set<string>>>(new Map()),
         [currentFilter, setCurrentFilter] = createSignal<Map<NameParts, Set<string>>>(new Map()),
-        [currentFilterStrs, setCurrentFilterStrs] = createSignal<Set<string>>(new Set()),
+        [currentFilterStrs, setCurrentFilterStrs] = createSignal<string[]>([]),
         [currentView, SetCurrentView] = createSignal(SubViews.Waiting),
         [kmk, setKmk] = createSignal(true),
         [boardName, setBoardName] = createSignal(""),
@@ -122,27 +122,30 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
         availableFilters.set(NameParts.Controller, boardControllers)
         availableFilters.set(NameParts.Config, boardConfigs)
         availableFilters.set(NameParts.Side, boardSides)
-        setServerBoards(splitBoards)
-        setServerBoardFilters(availableFilters)
-        setFilteredBoards(splitBoards)
+
+        batch(() => {
+            setServerBoards(splitBoards)
+            setServerBoardFilters(availableFilters)
+            setFilteredBoards(splitBoards)
+        })
+
     }
 
     const filterBoards = () => {
-        console.log(
-            "wtf", currentFilterStrs()
-        )
         const tempCurrentFilter = currentFilter()
         if (tempCurrentFilter.size > 0) {
             return serverBoards().filter(board => {
+                let match = true
                 for (let i = 0; i < Array.from(tempCurrentFilter.keys()).length; i++) {
                     const category = Array.from(tempCurrentFilter.keys())[i];
                     const tempCategory = tempCurrentFilter.get(category)
                     if (tempCategory && tempCategory.size > 0) {
-                        return tempCategory.has(board[category])
-                    } else {
-                        return true
+                        if (match) {
+                            match = tempCategory.has(board[category])
+                        }
                     }
                 }
+                return match
             })
         } else {
             return serverBoards()
@@ -152,6 +155,32 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
         clientManager.sendToBackend(ElectronEvents.DownLoadKmk, "")
         const serverBoards = await axios.get(`${programSettings.apiUrl}boards`)
         buildFilters(serverBoards.data)
+    }
+    onMount(() => {
+        fetchServerBoards();
+    });
+    const returnStyledTableItem = (item: string) => {
+        let tableItemClasses = ' '
+        let tableBadgeClasses = 'badge badge-outline badge-sm '
+        switch (item) {
+            case 'blok':
+                tableItemClasses += tableBadgeClasses + ' badge-primary'
+                break
+            case 'integrated':
+                tableItemClasses += tableBadgeClasses + ' badge-base-300'
+                break
+            case 'wired':
+                tableItemClasses += tableBadgeClasses + ' badge-secondary'
+                break
+            case 'N/A':
+                tableItemClasses += ' text-base-300'
+                break
+            default:
+                tableItemClasses += ''
+        }
+        return (
+            <span className={`${tableItemClasses}`}>{item}</span>
+        )
     }
     const selectServerBoard = async (id: string, name: string) => {
         const serverBoard = await axios.get(`${programSettings.apiUrl}boards/${id}`)
@@ -173,72 +202,45 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
             } else if (lib() && boardName() === "") {
                 Toast.Error("Sorry you wanted libs installed too but something happened and I dont have the data I need go to https://github.com/daysgobye/pegBoards and look for them")
             }
-
         }
-
-
     }
     clientManager.lessonToEvent(ElectronEvents.FilePickerClose, setPath)
-    onMount(() => {
-        fetchServerBoards();
-    });
     const addFilters = (key: string, category: NameParts) => {
 
         let tempCategory = currentFilter().get(category)
-        let tempCurrentFilterStrs = currentFilterStrs()
+        let tempCurrentFilterStrs = new Set(currentFilterStrs())
         if (tempCategory !== undefined) {
-            if (tempCategory.has(key)) {
-                tempCategory.delete(key)
-                tempCurrentFilterStrs.delete(key)
-
+            if (category === NameParts.Name || category === NameParts.Creator) {
+                if (tempCategory.has(key)) {
+                    tempCategory.clear()
+                    tempCurrentFilterStrs.delete(key)
+                } else {
+                    tempCategory.clear()
+                    tempCategory.add(key)
+                }
             } else {
-                tempCategory.add(key)
-                tempCurrentFilterStrs.add(key)
+                if (tempCategory.has(key)) {
+                    tempCategory.delete(key)
+                    tempCurrentFilterStrs.delete(key)
+                } else {
+                    tempCategory.add(key)
+                    tempCurrentFilterStrs.add(key)
+                }
             }
             setCurrentFilter(currentFilter().set(category, tempCategory))
-            setFilteredBoards(filterBoards())
         } else {
             setCurrentFilter(currentFilter().set(category, new Set([key])))
-            setFilteredBoards(filterBoards())
             tempCurrentFilterStrs.add(key)
         }
-        setCurrentFilterStrs(tempCurrentFilterStrs)
-
-    }
-
-    const returnStyledTableItem = (item: string) => {
-        let tableItemClasses = ' '
-        let tableBadgeClasses = 'badge badge-outline badge-sm '
-        switch (item) {
-            case 'blok':
-                tableItemClasses += tableBadgeClasses + ' badge-primary'
-                break
-            case 'integrated':
-                tableItemClasses += tableBadgeClasses + ' badge-base-300'
-                break
-            case 'wired':
-                tableItemClasses += tableBadgeClasses + ' badge-secondary'
-                break
-            case 'N/A':
-                tableItemClasses += ' text-base-300'
-                break
-            default:
-                tableItemClasses += ''
-
-        }
-        return (
-            <span className={`${tableItemClasses}`}>{item}</span>
-        )
-
-    }
-    const isSelected = (filter: string) => {
-        console.log("called")
-        return currentFilterStrs().has(filter)
+        batch(() => {
+            setFilteredBoards(filterBoards())
+            setCurrentFilterStrs([...tempCurrentFilterStrs])
+        })
     }
     const returnFilterButtons = (category: NameParts) => {
         const filters = serverBoardFilters().get(category)
         if (filters !== undefined) {
-            if ((category === NameParts.Name || category === NameParts.Creator) && false) {
+            if (category === NameParts.Name || category === NameParts.Creator) {
                 return (<div className="flex ">
                     <p className='text-[.85rem] mb-[.2rem]'>{category}:</p>
                     <div class="dropdown w-[10rem] mb-5">
@@ -248,7 +250,7 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                             addFilters(e.target.value, category)
                         }
                         }>
-                            <option disabled selected>Select Themes</option>
+                            <option disabled selected>Select {category}</option>
                             <For each={Array.from(filters)}>
                                 {(filter) => (
                                     <>
@@ -257,7 +259,6 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                                 )}
                             </For>
                         </select>
-
                     </div>
                 </div>)
             } else {
@@ -269,7 +270,7 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
 
                         <For each={Array.from(filters)}>
                             {(filter) => (
-                                <Button onClick={() => addFilters(filter, category)} selected={currentFilterStrs().has(filter)}>
+                                <Button onClick={() => addFilters(filter, category)} selected={currentFilterStrs().includes(filter)}>
                                     {filter}
                                 </Button>
                             )
@@ -357,13 +358,8 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
         }
     }
     return (
-
-
-
         <div className="NewBoardSetup flex flex-col w-full h-full justify-center relative">
-
             {renderSubViews()}
-
         </div>
     );
 }
