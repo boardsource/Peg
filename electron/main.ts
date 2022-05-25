@@ -14,7 +14,7 @@ const createWindow = async () => {
     maxHeight: 720,
     minWidth: 1280,
     minHeight: 720,
-    icon: path.join(__dirname, "..", "..", "icon.png"),
+    icon: path.join(__dirname, "..", "icon.png"),
     frame: false,
     titleBarStyle: 'hiddenInset',
     webPreferences: {
@@ -29,7 +29,7 @@ const createWindow = async () => {
   }
 
   if (app.isPackaged) {
-    mainWindow.loadURL(path.join(__dirname, "..", "index.html"));
+    mainWindow.loadURL(`file://${__dirname}/../index.html`);
   } else {
     mainWindow.loadURL('http://localhost:3000/index.html');
     require('electron-reload')(__dirname, {
