@@ -192,6 +192,7 @@ export class Oled extends Subscribable {
 
     public ToString(): string {
         let pegmapString
+
         switch (this.displayType) {
             case OledDisplayType.image:
                 this.layers[this.currentSelectedLayer] = this.display

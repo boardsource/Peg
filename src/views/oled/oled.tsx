@@ -117,17 +117,17 @@ export default function OLED() {
         <h4 className='text-md text-base-content mb-1.5  mt-2'>OLED Display Mode</h4>
         <p className='text-xs text-neutral mb-1'>
           <span className='badge badge-primary badge-outline badge-sm mr-1'>IMAGE</span>
-          is when Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi error expedita.</p>
+          Sets your oled to display an image you can upload or draw on it.</p>
         <p className='text-xs text-neutral mb-1'>
           <span className='badge badge-primary badge-outline badge-sm mr-1'>TEXT</span>
-          is when Lorem ipsum dolor, sit amet consectetur adipisicing elit. Animi error expedita.</p>
-        <h4 className='text-md text-base-content mb-1.5 mt-2'>Text Options</h4>
+          Sets your oled to display text, Each corner of the oled can be controlled independently.</p>
+        <h4 className='text-md text-base-content mb-1.5 mt-2'>Reaction Options</h4>
         <p className='text-xs text-neutral mb-1'>
           <span className='badge badge-warning badge-outline badge-sm mr-1'>STATIC</span>
-          Et magnam nihil labore quis, neque iusto fuga autem accusantium! END END END</p>
+          Sets your OLED to be static and never change.</p>
         <p className='text-xs text-neutral mb-1'>
           <span className='badge badge-warning badge-outline badge-sm mr-1'>LAYER</span>
-          Is Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus esse doloribus.</p>
+          Sets your OLED to react to your keyboards current layer.</p>
       </div>
 
       <div className="flex flex-col">

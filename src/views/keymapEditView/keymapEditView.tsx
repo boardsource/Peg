@@ -52,7 +52,7 @@ export default function KeymapEditView(props: KeymapEditViewProps) {
             return keyMap.keyLayout.features.encoders
         }
         if (props.isLed && keyMap.keyLayout) {
-            return keyMap.keyLayout.features.perkey
+            return keyMap.keyLayout.features.perkey || keyMap.keyLayout.features.underglow
         }
         return true
     }

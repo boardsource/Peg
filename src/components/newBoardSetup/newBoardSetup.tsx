@@ -41,7 +41,7 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
                 <Button className={`btn-success btn-outline btn-xs mt-1 mb-[2.2rem]`} onClick={openModal} selected={true}  >
                     Setup New Board
                 </Button>
-                <p className='text-[.75rem]'>Visit <a href="#" className='link link-primary' target='_blank'>peg.software</a> for help setting up a new board.</p>
+                <p className='text-[.75rem]'>Visit <a href="https://peg.software" className='link link-primary' target='_blank'>peg.software</a> for help setting up a new board.</p>
                 {/* ******* all of this stuff open in modal? ****** good way to fit it all OR we can have it replace the animation for scanning that is also a good option and keeps it all on page ****** */}
 
             </div>

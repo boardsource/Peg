@@ -112,9 +112,9 @@ export default function Options() {
             <div className="flex flex-col">
               <h3 className='mb-1 text-primary text-[1.1rem]'>Looking For Help?</h3>
               <div className="flex flex-col">
-                <a href="#" className='flex items-center link text-sm mb-1' >Peg Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
-                <a href="#" className='flex items-center link text-sm mb-1' >KMK Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
-                <a href="#" className='flex items-center link text-sm mb-1' >Discord <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                <a href="https://peg.software/docs/Peg_Client/" target='blank' className='flex items-center link text-sm mb-1' >Peg Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                <a href="https://github.com/KMKfw/kmk_firmware/tree/master/docs" className='flex items-center link text-sm mb-1' >KMK Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                <a href="https://discord.gg/D2wbZWGFMJ" className='flex items-center link text-sm mb-1' >Discord <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
                 <a href="#" className='flex items-center link text-sm mb-1' >Contact <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
               </div>
             </div>
