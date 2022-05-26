@@ -9,6 +9,7 @@ type InputProps = {
   label?: string
   helpText?: string
   className?: string
+  type?: string
 };
 
 export default function Input(props: InputProps) {
@@ -23,7 +24,7 @@ export default function Input(props: InputProps) {
             <HelpTooltip>Testing how this goes.</HelpTooltip>
           </Show>
         </label>
-        <input type="text"
+        <input type={props.type ? props.type : "text"}
           placeholder={props.placeholder}
           class={`input input-bordered input-sm w-full ${props.className ? props.className : ''}`}
           value={props.value}

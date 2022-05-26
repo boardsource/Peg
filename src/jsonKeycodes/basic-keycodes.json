@@ -433,7 +433,7 @@
   },
   {
     "code": "KC.LBRACKET",
-    "display": "{",
+    "display": "[",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -442,7 +442,7 @@
   },
   {
     "code": "KC.RBRACKET",
-    "display": "}",
+    "display": "]",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,
@@ -451,7 +451,7 @@
   },
   {
     "code": "KC.BSLASH",
-    "display": "/",
+    "display": "\\",
     "keybinding": "",
     "canHaveSub": false,
     "canHaveNumber": false,

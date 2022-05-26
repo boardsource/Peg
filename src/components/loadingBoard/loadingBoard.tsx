@@ -62,7 +62,7 @@ export default function LoadingBoard(props: LoadingBoardProps) {
                                 <h4 className='mb-[3rem] animate-pulse text-base-300 self-center'>Scanning...</h4>
                             } >
                                 <div className="flex flex-col justify-center items-center">
-                                    <p className='text-[.75rem] max-w-[27rem] text-center mb-2'><span className='text-warning'>Oops!</span> We found something while scanning but we aren't able to display the board. Please check your connected drives or visit <span className='text-primary'>peg.software/help</span> for more information.</p>
+                                    <p className='text-[.75rem] max-w-[27rem] text-center mb-2'><span className='text-warning'>Oops!</span> We found something while scanning but we aren't able to display the board. Please check your connected drives or visit <span className='text-primary'>peg.software/docs</span> for more information.</p>
                                     <Button className={`btn-warning animate-bounce btn-xs mt-3`} onClick={scanAgain} selected={false} >
                                         Scan Again
                                     </Button>
