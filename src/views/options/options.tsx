@@ -113,9 +113,9 @@ export default function Options() {
               <h3 className='mb-1 text-primary text-[1.1rem]'>Looking For Help?</h3>
               <div className="flex flex-col">
                 <a href="https://peg.software/docs/Peg_Client/" target='blank' className='flex items-center link text-sm mb-1' >Peg Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
-                <a href="https://github.com/KMKfw/kmk_firmware/tree/master/docs" className='flex items-center link text-sm mb-1' >KMK Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
-                <a href="https://discord.gg/D2wbZWGFMJ" className='flex items-center link text-sm mb-1' >Discord <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
-                <a href="#" className='flex items-center link text-sm mb-1' >Contact <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                <a href="https://github.com/KMKfw/kmk_firmware/tree/master/docs" target='blank' className='flex items-center link text-sm mb-1' >KMK Documentation <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                <a href="https://discord.gg/D2wbZWGFMJ" target='blank' className='flex items-center link text-sm mb-1' >Discord <span className='ml-1'><ShareExternalIcon size={3} /></span></a>
+                {/* <a href="#" className='flex items-center link text-sm mb-1' >Contact <span className='ml-1'><ShareExternalIcon size={3} /></span></a> */}
               </div>
             </div>
             {/* <div className="my-2 mr-4 rounded rounded-md bg-base-100 w-[50%]">
@@ -162,7 +162,7 @@ export default function Options() {
                   //@ts-ignore
                   setEmail(e.target.value)
                 }} />
-                <Input name="password" label='Password' placeholder='Enter Password...' value={password()} onChange={(e) => {
+                <Input name="password" label='Password' type="password" placeholder='Enter Password...' value={password()} onChange={(e) => {
                   //@ts-ignore
                   setPassword(e.target.value)
                 }} />
@@ -171,7 +171,7 @@ export default function Options() {
                 </Button>
                 <div className="border rounded rounded-md px-3 pt-2 pb-[.5rem] mb-4">
                   <h4 className='text-[.7rem]'>
-                    Login to Peg using your <a className='link link-primary' href="boardsource.xyz" target='blank'>Boardsource.xyz</a> account. Ensure that it is the account used to <a className='link link-primary' href="#" target='blank'>purchase your Peg license</a>.
+                    Login to Peg using your <a className='link link-primary' href="boardsource.xyz" target='blank'>Boardsource.xyz</a> account. Ensure that it is the account used to <a className='link link-primary' href={programSettings.PppBuyLink} target='blank'>purchase your Peg license</a>.
                   </h4>
                 </div>
                 <div className="flex flex-col flex-1 w-full border border-primary px-3 py-2 rounded rounded-md relative">
@@ -197,7 +197,7 @@ export default function Options() {
                     </svg>
                   </div>
                   <div className="flex text-center">
-                    <p className='text-[.65rem]'>To learn more about our pricing, features, and licenses please visit <a href='#' className='link link-primary' target='_blank'>peg.software</a>.</p>
+                    <p className='text-[.65rem]'>To learn more about our pricing, features, and licenses please visit <a href='https://peg.software' className='link link-primary' target='_blank'>peg.software</a>.</p>
                   </div>
                 </div>
               </div>

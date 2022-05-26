@@ -15,6 +15,7 @@ const programSettings = ProgramSettings.getInstance()
 const clientManager = ClientManager.getInstance()
 const keyMap = KeyMap.getInstance()
 type NewBoardSetupProps = {
+    close: () => void
 };
 type splitUpServerBoard = {
     creator: string;
@@ -202,6 +203,7 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
             } else if (lib() && boardName() === "") {
                 Toast.Error("Sorry you wanted libs installed too but something happened and I dont have the data I need go to https://github.com/daysgobye/pegBoards and look for them")
             }
+            props.close()
         }
     }
     clientManager.lessonToEvent(ElectronEvents.FilePickerClose, setPath)
