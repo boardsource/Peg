@@ -20,7 +20,7 @@ export default function Textarea(props: TextareaProps) {
         <label class="label flex items-start self-start">
           <span class={`label-text ${props.helpText ? 'mr-0.5' : ''}`}>{props.label}</span>
           <Show when={props.helpText} fallback={''}>
-            <HelpTooltip>Testing how this goes.</HelpTooltip>
+            <HelpTooltip title={`${props.label}`}>{props.helpText}</HelpTooltip>
           </Show>
         </label>
         <textarea

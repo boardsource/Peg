@@ -28,11 +28,7 @@ export default function Topbar() {
             <Show when={true} fallback={<div>Make Changes To Save Map...</div>}>
                 <div className="saveButton z-50 mr-1" >
                     <Button selected={changesMade()} onClick={saveMap}>
-                        <kbd class="kbd kbd-xs">shift</kbd>
-                        &nbsp + &nbsp
-                        <kbd class="kbd kbd-xs">⌘</kbd>
-                        &nbsp + &nbsp
-                        <kbd class="kbd kbd-xs">S</kbd>
+
                         &nbsp SAVE MAP &nbsp
                     </Button>
                 </div>

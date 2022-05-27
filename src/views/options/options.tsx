@@ -1,7 +1,7 @@
 import MainView from '../../components/mainView/mainView'
-import { For, createSignal, onCleanup } from 'solid-js'
+import { For, createSignal, onCleanup, Show } from 'solid-js'
 import { Notification } from "../../logic/notification";
-import { NotificationColor, Theme } from '../../types/types'
+import { ElectronEvents, NotificationColor, Theme } from '../../types/types'
 import { Modal } from "../../logic/modal";
 import PppChecker from '../../components/pppChecker/pppChecker';
 import Button from '../../components/button/button';
@@ -13,12 +13,32 @@ import { Toast } from '../../logic/toast'
 import Input from '../../components/input/input'
 import pegLogo from '../../images/peg_logo.svg'
 import ShareExternalIcon from '../../images/icons/shareExternalIcon'
+import HelpTooltip from '../../components/helpTooltip/helpTooltip';
+import { ClientManager } from '../../logic/clientManager';
 
 const programSettings = ProgramSettings.getInstance()
+const clientManager = ClientManager.getInstance()
 
-const toast = Toast.getInstance()
 
 
+function KmkUpDateModal() {
+  const setPath = (paths: string) => {
+    Toast.Info(`got this path for kmk install : ${paths}`)
+    if (paths !== "") {
+      let drivePath = paths
+      clientManager.sendToBackend(ElectronEvents.InstallKmk, drivePath)
+    }
+  }
+  clientManager.lessonToEvent(ElectronEvents.FilePickerClose, setPath)
+  return (<div>
+    To update KMK
+    <br />
+    <Button onClick={() => clientManager.sendToBackend(ElectronEvents.FilePicker, "")} selected={true}>
+      select Drive
+    </Button>
+  </div>
+  )
+}
 
 export default function Options() {
   // toast.Info('yay you did a think')
@@ -30,10 +50,9 @@ export default function Options() {
 
   const [email, setEmail] = createSignal(""),
     [password, setPassword] = createSignal(""),
-    [options, setOptions] = createStore({ debug: programSettings.debug, toolTips: programSettings.tooltips, theme: programSettings.theme })
+    [options, setOptions] = createStore({ debug: programSettings.debug, dev: programSettings.dev, toolTips: programSettings.tooltips, theme: programSettings.theme })
   const updateLocalChanges = () => {
-    setOptions({ debug: programSettings.debug, toolTips: programSettings.tooltips, theme: programSettings.theme })
-    console.log({ debug: programSettings.debug, toolTips: programSettings.tooltips })
+    setOptions({ debug: programSettings.debug, toolTips: programSettings.tooltips, theme: programSettings.theme, dev: programSettings.dev })
   }
   const subId = programSettings.Subscribe(updateLocalChanges)
   onCleanup(() => {
@@ -42,12 +61,23 @@ export default function Options() {
   const updateCheckDebug = (e: any) => {
     programSettings.debug = e.target.value
   }
+  const updateCheckDev = (e: any) => {
+    programSettings.dev = e.target.value
+  }
   const updateCheckToolTips = (e: any) => {
     programSettings.tooltips = e.target.value
   }
   const updateTheme = (e: any) => {
     programSettings.theme = e.target.value
 
+  }
+  const updateKmk = () => {
+    const modal = Modal.getInstance()
+    clientManager.sendToBackend(ElectronEvents.DownLoadKmk, "")
+    modal.Open(`KmK Update`, true, (
+      <KmkUpDateModal />
+    )
+    )
   }
 
   return (
@@ -102,11 +132,27 @@ export default function Options() {
 
             <div className="flex flex-col mb-5">
               <h4 className='mb-1 text-primary'>Advanced</h4>
-              <div className="flex flex-1 justify-between">
+              <div className="flex flex-1 justify-between mb-1">
                 <label className='text-[.85rem]' htmlFor="tooltips">Show Debug Mode</label>
+                <HelpTooltip title={"Debug_Mode"}>
+                  This mode Will yell at you with a bunch of stuff you dont care about 99% of the time.
+                </HelpTooltip>
                 <Toggle label="" name="debug" value={options.debug} onChange={updateCheckDebug} />
               </div>
+              <div className="flex flex-1 justify-between">
+                <label className='text-[.85rem]' htmlFor="tooltips">Dev Mode</label>
+                <HelpTooltip title={"Dev_Mode"}>
+                  This mode lets you do things that could break your keyboard.
+                  You should understand KmK/your keyboard or have backups before you start messing around.
+                </HelpTooltip>
+                <Toggle label="" name="dev" value={options.dev} onChange={updateCheckDev} />
+              </div>
             </div>
+            <Show when={options.dev}>
+              <Button onClick={updateKmk}>
+                Update KmK
+              </Button>
+            </Show>
           </div>
           <div className="flex absolute justify-between bottom-0 w-[40%] rounded rounded-xl bg-base-200 pl-5 py-3">
             <div className="flex flex-col">

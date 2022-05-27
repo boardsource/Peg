@@ -6,6 +6,7 @@ export class ProgramSettings extends Subscribable {
     private _seven: boolean = true
     private _tooltips: boolean = true;
     private _debug: boolean = false;
+    private _dev: boolean = false;
     //used to test off line mode
     // private _apiUrl: string = "http://159.89.159.24:300/api/"
     // " real server "
@@ -25,6 +26,13 @@ export class ProgramSettings extends Subscribable {
     }
     public set debug(newValue: boolean) {
         this._debug = newValue
+        this.updateSubScribers()
+    }
+    public get dev() {
+        return this._dev;
+    }
+    public set dev(newValue: boolean) {
+        this._dev = newValue
         this.updateSubScribers()
     }
     public get seven() {
