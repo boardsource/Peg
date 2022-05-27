@@ -10,9 +10,11 @@ import Input from "../../components/input/input";
 import Scroller from '../../components/scroller/scroller'
 import Textarea from '../../components/textarea/textarea'
 import { Toast } from "../../logic/toast";
+import { ProgramSettings } from "../../logic/programSettings";
 
 const clientManager = ClientManager.getInstance()
 const keycodes = KeyCodes.getInstance()
+const programSettings = ProgramSettings.getInstance()
 
 
 export default function MakeCustomCodes() {
@@ -22,29 +24,46 @@ export default function MakeCustomCodes() {
   let importTextarea: HTMLTextAreaElement
 
 
-  const [state, setState] = createStore({ display: "", code: "", description: "", showExport: false, showImport: true, importString: "", exportString: "", customCodes: Array.from(keycodes.customCodes.values()) });
+  const [state, setState] = createStore({
+    display: "",
+    code: "",
+    description: "",
+    showExport: false,
+    showImport: true,
+    importString: "",
+    exportString: "",
+    customCodes: Array.from(keycodes.customCodes.values()),
+    dev: programSettings.dev
+  });
   const updateLocalState = () => {
-    setState({ customCodes: Array.from(keycodes.customCodes.values()) })
+    setState({ customCodes: Array.from(keycodes.customCodes.values()), dev: programSettings.dev })
     exportCodes()
   }
   const subId = clientManager.Subscribe(updateLocalState)
+  const subId2 = programSettings.Subscribe(updateLocalState)
+
   onCleanup(() => {
     clientManager.Unsubscribe(subId);
+    programSettings.Unsubscribe(subId2)
+
 
   })
   const onChange = (e: Event) => {
     //@ts-ignore
     setState({ [e.target.name]: e.target.value })
     //@ts-ignore
-    if (e.target.name === "code") {
+    if (e.target.name === "code" && !state.dev) {
       //@ts-ignore
       setState({ description: `send ${e.target.value} string ` })
     }
   }
   const saveKey = () => {
     if (state.display !== "" && state.code !== "" && state.description != "") {
+      if (state.dev) {
+        Toast.Warn("This keycode was made in dev mode and may not work or crash your keyboard.")
+      }
       const newCode: KeyCode = {
-        code: `send_string('${state.code}')`,
+        code: state.dev ? state.code : `send_string('${state.code}')`,
         display: state.display,
         keybinding: "",
         canHaveSub: false,
@@ -122,15 +141,15 @@ export default function MakeCustomCodes() {
               onChange={onChange} value={state.display}
               name="display"
               placeholder="Enter display name of key..."
-              helpText='This is a test of help text 1ST!!!!'
+
             />
           </div>
           <div className="flex w-[100%]">
             <Textarea
-              label="String Sent:"
+              label={state.dev ? "Full Custom Keycode:" : "String Sent:"}
               name="code" onChange={onChange} value={state.code}
-              placeholder="Output of keypress..."
-              helpText='This is a test of help text 2nd'
+              placeholder={state.dev ? "KC.LT(1, KC.BSPC, tap_time=100)" : "Output of keypress..."}
+              helpText={state.dev ? "This needs to be a full key code like 'KC.MO(3)'" : "the output from the key press 'hello world' "}
             />
           </div>
           <Textarea label="Description:"
@@ -166,12 +185,8 @@ export default function MakeCustomCodes() {
                 </Button>
                 {renderImport()}
                 {renderExport()}
-
               </div>
-
-
             </div>
-
           </div>
         </div>
 
@@ -210,6 +225,7 @@ export default function MakeCustomCodes() {
                             onClick={() => {
                               //@ts-ignore
                               keycodes.RemoveCustomCode(key.code)
+                              updateLocalState()
                             }}
                             className='w-full btn-outline btn-error hover:btn-error gap-2'
                             icon

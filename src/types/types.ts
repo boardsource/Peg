@@ -29,6 +29,7 @@ export interface LayoutFeatures {
     rx_tx: boolean
     uartFlip: boolean
     splitPico: boolean
+    bootSize: number
 }
 export interface LayoutKey {
     x: number;
