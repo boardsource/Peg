@@ -16,7 +16,6 @@ const clientManager = ClientManager.getInstance()
 const keycodes = KeyCodes.getInstance()
 const programSettings = ProgramSettings.getInstance()
 
-
 export default function MakeCustomCodes() {
 
   // these are some maybe ghetto refs? tried following the docs but idk I guess they need to be defined better or some TS thing,but they do work
@@ -64,7 +63,7 @@ export default function MakeCustomCodes() {
       }
       const newCode: KeyCode = {
         code: state.dev ? state.code : `send_string('${state.code}')`,
-        display: state.display,
+        display: KeyCodes.MakeSafeDisplay(state.display),
         keybinding: "",
         canHaveSub: false,
         canHaveSubNumber: false,
@@ -81,6 +80,7 @@ export default function MakeCustomCodes() {
     const tempNewCodes = JSON.parse(state.importString)
     const newCodes = tempNewCodes as KeyCode[]
     newCodes.forEach(newCode => {
+      const tempCode = { ...newCode, display: KeyCodes.MakeSafeDisplay(newCode.display) }
       keycodes.AddCustomCode(newCode)
     });
 

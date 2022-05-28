@@ -263,4 +263,22 @@ export class KeyCodes {
             JSON.stringify(Array.from(this.customCodes.values())).replace("null", '""')
         )
     }
+
+    public static MakeSafeDisplay(wantedName: string) {
+        return wantedName.replaceAll(",", "-")
+            .replaceAll(" ", "_")
+            .replaceAll(".", "-")
+            .replaceAll("(", "")
+            .replaceAll(")", "")
+            .replaceAll("[", "")
+            .replaceAll("]", "")
+            .replaceAll("{", "")
+            .replaceAll("}", "")
+            .replaceAll("<", "")
+            .replaceAll(">", "")
+            .replaceAll("\"", "")
+            .replaceAll("'", "")
+            .replaceAll("`", "")
+            .toUpperCase()
+    }
 }

@@ -101,5 +101,21 @@ export class MiscKeymapParts {
         }
         return imports + baseCode;
     }
+
+    public static MakeBootPy(name: string, split: boolean, side: boolean, size?: number) {
+        let bootImports = `import storage\n`
+        let bootPy = `storage.remount("/", readonly=False)\nm = storage.getmount("/")\n`
+        if (split) {
+            bootPy += `m.label = "${name.toUpperCase()}${side ? "R" : "L"}"\n`
+        } else {
+            bootPy += `m.label = "${name.toUpperCase()}"\n`
+        }
+        bootPy += `storage.remount("/", readonly=True)\nstorage.enable_usb_drive()\n`
+        if (size && size > 0) {
+            bootImports += `import supervisor\n`
+            bootPy += `supervisor.set_next_stack_limit(${size} + ${size})`
+        }
+        return `${bootImports}${bootPy}`
+    }
 }
 

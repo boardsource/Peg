@@ -7,20 +7,34 @@ import { ElectronEvents, FileName } from "../types/types";
 
 
 export class AppManager {
+    private static instance: AppManager;
     diskManager: DiskManager;
     win: Electron.BrowserWindow
-    constructor(bWin: Electron.BrowserWindow) {
+    private constructor(bWin: Electron.BrowserWindow) {
         this.diskManager = new DiskManager(this)
         this.win = bWin;
         this.diskManager.readProPlan()
+        console.log("making a AppManager")
 
+    }
+    public static getInstance(bWin: Electron.BrowserWindow): AppManager {
+        console.log("getting a AppManager")
+        if (!AppManager.instance) {
+            AppManager.instance = new AppManager(bWin);
+
+        }
+        return AppManager.instance;
     }
 
     run() {
         setTimeout(() => {
-            console.log("running on main thread")
             this.diskManager.manageDriveScan()
-        }, 1000);
+            this.diskManager.readProPlan()
+        }, 2000);
+
+    }
+    public ClientUp() {
+        this.diskManager.readProPlan()
     }
     public async DownloadKmk() {
         if (this.diskManager !== undefined) {
@@ -45,7 +59,7 @@ export class AppManager {
     }
     public FreshScan(_event: Electron.IpcMainEvent, _fileName: string,) {
         if (this.diskManager !== undefined) {
-            this.diskManager.freshDriveScan()
+            this.diskManager.freshDriveScan(true)
         }
     }
 

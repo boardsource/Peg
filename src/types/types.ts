@@ -77,7 +77,8 @@ export enum FileName {
     kb = "kb.py",
     layout = "layout.json",
     settings = "settings.json",
-    customCodes = "customCodes.json"
+    customCodes = "customCodes.json",
+    boot = "boot.py"
 }
 export enum ShareableFeatureType {
     keyCodes = "keycodes",
@@ -113,7 +114,11 @@ export enum ElectronEvents {
     WindowClose = "WindowClose",
     WindowFullScreen = "WindowFullScreen",
     WindowMinimize = "WindowMinimize",
+    BoardChange = "BoardChange",
+    LostConnectionToBoard = "LostConnectionToBoard",
+    ClientUp = "ClientUp",
     Misc = "Misc"
+
 }
 export enum ScrollerSides {
     Right = "right",
