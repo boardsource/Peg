@@ -41,7 +41,8 @@ type FullServerBoard = {
 enum SubViews {
     PickBoard = "PickBoard",
     SelectDrive = "SelectDrive",
-    Waiting = "Waiting"
+    Waiting = "Waiting",
+    SplitStartOver = "SplitStartOver"
 }
 enum NameParts {
     Creator = "creator",
@@ -63,6 +64,9 @@ const isConfig = (namePart?: string) => {
     }
     return false
 }
+const nameIsSplit = (name: string) => {
+    return name.endsWith("L") || name.endsWith("R")
+}
 
 
 
@@ -75,7 +79,8 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
         [currentView, SetCurrentView] = createSignal(SubViews.Waiting),
         [kmk, setKmk] = createSignal(true),
         [boardName, setBoardName] = createSignal(""),
-        [lib, setLib] = createSignal(true)
+        [lib, setLib] = createSignal(true),
+        [secondPass, setSecondPass] = createSignal(false)
 
 
     let fullServerBoard: FullServerBoard | undefined = undefined;
@@ -131,6 +136,11 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
             setFilteredBoards(splitBoards)
         })
 
+    }
+    const scanAgain = () => {
+        if (!clientManager.scaning && clientManager.keymap.layout === undefined) {
+            clientManager.sendToBackend(ElectronEvents.Scan, "")
+        }
     }
 
     const filterBoards = () => {
@@ -214,7 +224,17 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
             } catch (error) {
                 console.log("error making boot.py", error)
             }
-            props.close()
+            if (nameIsSplit(boardName())) {
+                if (secondPass()) {
+                    scanAgain()
+                    props.close()
+                } else {
+                    SetCurrentView(SubViews.SplitStartOver)
+                    setSecondPass(true)
+                }
+
+
+            } else { props.close() }
         }
     }
     clientManager.lessonToEvent(ElectronEvents.FilePickerClose, setPath)
@@ -296,6 +316,26 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
             return ""
         }
     }
+    const getOtherSide = () => {
+        const oldBoardName = boardName()
+        let tempName = ``
+        if (oldBoardName.endsWith("-L")) {
+            tempName = `${oldBoardName}`.replace(/.$/, "R")
+        } else {
+            tempName = `${oldBoardName}`.replace(/.$/, "L")
+        }
+        const officalName = serverBoards().find(board => board.fullName === tempName)
+        console.log("off", officalName, tempName)
+        return officalName
+
+    }
+    const splitStartOver = (pickedBoard?: splitUpServerBoard) => {
+        if (pickedBoard !== undefined) {
+            selectServerBoard(pickedBoard._id, pickedBoard.fullName)
+        } else {
+            SetCurrentView(SubViews.Waiting)
+        }
+    }
     const renderSubViews = () => {
         switch (currentView()) {
             case SubViews.PickBoard:
@@ -356,6 +396,32 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                         <Button onClick={() => clientManager.sendToBackend(ElectronEvents.FilePicker, "")} selected={true}>
                             select Drive
                         </Button>
+                    </div>)
+            case SubViews.SplitStartOver:
+                const maybeOtherSide = getOtherSide(),
+                    hasOtherSide = maybeOtherSide !== undefined
+                return (
+                    <div className="NewBoardSetup__split flex flex-col">
+                        <p>
+                            You complected the new board setup with a split. Do you want to flash the other side {hasOtherSide ? `with ${maybeOtherSide.fullName}?` : "?"}
+                            {" "}If so unplug your current side right now and plug in the new side then push the the button below.
+                        </p>
+                        <div className="flex">
+                            <Button className='btn-success mt-5' onClick={() => {
+                                splitStartOver(maybeOtherSide)
+                            }} selected={true}>
+                                yes
+                            </Button>
+                            <Show when={hasOtherSide}>
+                                <Button className='btn-success mt-5' onClick={splitStartOver} selected={true}>
+                                    yes but not that board
+                                </Button>
+                            </Show>
+                            <Button className='btn-success mt-5' onClick={() => props.close()} selected={false}>
+                                no get me out
+                            </Button>
+                        </div>
+
                     </div>)
             default:
 

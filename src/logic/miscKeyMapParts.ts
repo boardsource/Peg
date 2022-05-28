@@ -74,9 +74,9 @@ export class MiscKeymapParts {
         if (this.settings.split) {
             imports += "from kmk.modules.split import Split, SplitSide, SplitType\n";
             if (this.settings.rightSide) {
-                baseCode += "# TODO Comment one of these on each side\n#split_side = SplitSide.LEFT\nsplit_side = SplitSide.RIGHT\n";
+                baseCode += "# TODO Comment one of these on each side\n#split_side = SplitSide.LEFT\n#split_side = SplitSide.RIGHT\n";
             } else {
-                baseCode += "# TODO Comment one of these on each side\nsplit_side = SplitSide.LEFT\n#split_side = SplitSide.RIGHT\n";
+                baseCode += "# TODO Comment one of these on each side\n#split_side = SplitSide.LEFT\n#split_side = SplitSide.RIGHT\n";
             }
             if (this.settings.ble) {
                 if (this.programSettings.seven && false) {
@@ -87,10 +87,10 @@ export class MiscKeymapParts {
                     baseCode += "split = Split(split_type=Split.BLE,split_side = split_side)\n";
                 }
             } else if (this.settings.rx_tx) {
-                baseCode += `split = Split(split_side = split_side,data_pin=keyboard.rx, data_pin2=keyboard.tx, uart_flip=${this.settings.uartFlip ? "True" : "False"})\n`;
+                baseCode += `split = Split(data_pin=keyboard.rx, data_pin2=keyboard.tx, uart_flip=${this.settings.uartFlip ? "True" : "False"})\n`;
             }
             else {
-                baseCode += `split = Split(split_side = split_side${this.settings.splitPico ? ",use_pio=True" : ""})\n`;
+                baseCode += `split = Split(${this.settings.splitPico ? "use_pio=True" : ""})\n`;
 
             }
 
