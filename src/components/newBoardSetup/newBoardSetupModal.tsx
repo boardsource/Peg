@@ -1,6 +1,6 @@
 import { Show, createSignal, onMount, For, onCleanup, batch } from "solid-js";
 
-import { ElectronEvents, FileName, KeyCode } from "../../types/types"
+import { ElectronEvents, FileName, KeyCode, Layout } from "../../types/types"
 
 import axios from "axios"
 import { ProgramSettings } from "../../logic/programSettings";
@@ -10,6 +10,7 @@ import { Toast } from "../../logic/toast";
 import Toggle from "../toggle/toggle";
 
 import { KeyMap } from "../../logic/keymapManager";
+import { MiscKeymapParts } from "../../logic/miscKeyMapParts";
 
 const programSettings = ProgramSettings.getInstance()
 const clientManager = ClientManager.getInstance()
@@ -202,6 +203,16 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                 clientManager.sendToBackend(ElectronEvents.DownLoadAndInstallLib, { boardName: boardName(), path: drivePath })
             } else if (lib() && boardName() === "") {
                 Toast.Error("Sorry you wanted libs installed too but something happened and I dont have the data I need go to https://github.com/daysgobye/pegBoards and look for them")
+            }
+            try {
+                if (fullServerBoard?.Layout) {
+                    const layoutJson: Layout = JSON.parse(fullServerBoard?.Layout)
+                    const bootPy = MiscKeymapParts.MakeBootPy(layoutJson.features.name, layoutJson.features.split, layoutJson.features.rightSide, layoutJson.features.bootSize)
+                    clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: bootPy, path: [drivePath, FileName.boot] })
+                }
+
+            } catch (error) {
+                console.log("error making boot.py", error)
             }
             props.close()
         }

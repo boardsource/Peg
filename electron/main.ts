@@ -23,7 +23,7 @@ const createWindow = async () => {
     },
   });
   if (mainWindow !== null) {
-    const pegApp = new AppManager(mainWindow)
+    pegApp = AppManager.getInstance(mainWindow)
     await pegApp.diskManager.cacheData("")
     pegApp.run()
   }
@@ -51,7 +51,7 @@ const createWindow = async () => {
       pegApp.diskManager.readSettings(ElectronEvents.ReadCustomCodes, FileName.customCodes)
     } else {
       if (mainWindow !== null) {
-        const pegApp = new AppManager(mainWindow)
+        pegApp = AppManager.getInstance(mainWindow)
         pegApp.diskManager.cacheData("")
         pegApp.diskManager.readSettings(ElectronEvents.ReadSettings, FileName.settings)
         pegApp.diskManager.readSettings(ElectronEvents.ReadCustomCodes, FileName.customCodes)
@@ -98,8 +98,21 @@ ipcMain.on(ElectronEvents.Scan, (event: Electron.IpcMainEvent, fileName: string,
     pegApp.Scan(event, fileName)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.Scan(event, fileName)
+
+    }
+  }
+}
+)
+
+ipcMain.on(ElectronEvents.ClientUp, () => {
+  if (pegApp) {
+    pegApp.ClientUp()
+  } else {
+    if (mainWindow !== null) {
+      pegApp = AppManager.getInstance(mainWindow)
+      pegApp.ClientUp()
 
     }
   }
@@ -110,7 +123,7 @@ ipcMain.on(ElectronEvents.FreshDriveScan, (event: Electron.IpcMainEvent, fileNam
     pegApp.FreshScan(event, fileName)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.FreshScan(event, fileName)
 
     }
@@ -124,7 +137,7 @@ ipcMain.on(ElectronEvents.SaveMap, (event: Electron.IpcMainEvent, file: string,)
     pegApp.fileSave(event, file)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.fileSave(event, file)
 
     }
@@ -137,7 +150,7 @@ ipcMain.on(ElectronEvents.SaveSettings, (event: Electron.IpcMainEvent, file: str
     pegApp.SaveSetting(event, file, ElectronEvents.SaveSettings)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.SaveSetting(event, file, ElectronEvents.SaveSettings)
 
     }
@@ -151,7 +164,7 @@ ipcMain.on(ElectronEvents.SaveCustomCodes, (event: Electron.IpcMainEvent, file: 
     pegApp.SaveSetting(event, file, ElectronEvents.SaveCustomCodes)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.SaveSetting(event, file, ElectronEvents.SaveCustomCodes)
 
     }
@@ -165,7 +178,7 @@ ipcMain.on(ElectronEvents.Savefile, (event: Electron.IpcMainEvent, data: { fileD
     pegApp.writeFile(event, data)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.writeFile(event, data)
 
     }
@@ -178,7 +191,7 @@ ipcMain.on(ElectronEvents.InstallKmk, (event: Electron.IpcMainEvent, path: strin
     pegApp.InstallKmk(path)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.InstallKmk(path)
 
     }
@@ -191,7 +204,7 @@ ipcMain.on(ElectronEvents.DownLoadAndInstallLib, (event: Electron.IpcMainEvent, 
     pegApp.DownloadAndInstallLib(data.boardName, data.path)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.DownloadAndInstallLib(data.boardName, data.path)
     }
   }
@@ -203,7 +216,7 @@ ipcMain.on(ElectronEvents.SaveOled, (event: Electron.IpcMainEvent, data: { fileD
     pegApp.oledSave(event, data)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.oledSave(event, data)
 
     }
@@ -215,7 +228,7 @@ ipcMain.on(ElectronEvents.ReadOled, (event: Electron.IpcMainEvent, fileNumber: n
     pegApp.oledread(event, fileNumber)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.oledread(event, fileNumber)
 
     }
@@ -228,7 +241,7 @@ ipcMain.on(ElectronEvents.DownLoadKmk, (event: Electron.IpcMainEvent) => {
     pegApp.DownloadKmk()
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.DownloadKmk()
 
     }
@@ -242,7 +255,7 @@ ipcMain.on(ElectronEvents.SetProPlan, (event: Electron.IpcMainEvent, id: string)
     pegApp.saveProPlan(event, id)
   } else {
     if (mainWindow !== null) {
-      const pegApp = new AppManager(mainWindow)
+      pegApp = AppManager.getInstance(mainWindow)
       pegApp.saveProPlan(event, id)
 
     }

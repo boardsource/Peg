@@ -26,6 +26,7 @@ export class ClientManager extends Subscribable {
     currentLayer: number = 0
     SplitFlashDisplayState: SplitFlashStage = SplitFlashStage.MainSide
     canUnplug: boolean = true
+    lostConnectionToBoard: boolean = false;
 
     private constructor() {
         super();
@@ -105,6 +106,19 @@ export class ClientManager extends Subscribable {
                 this.ChangeSplitFlashDisplayState(SplitFlashStage.Finished)
             }
         })
+
+        this.lessonToEvent(ElectronEvents.BoardChange, () => {
+            Toast.Success("Detected New keyboard plugged in")
+        })
+        this.lessonToEvent(ElectronEvents.LostConnectionToBoard, () => {
+            if (!this.lostConnectionToBoard) {
+                Toast.Warn(`Peg lost connection to ${this.keymap.keyLayout.features.name}`)
+                this.lostConnectionToBoard = true
+                setTimeout(() => {
+                    this.lostConnectionToBoard = false
+                }, 10000);
+            }
+        })
         this.lessonToEvent(ElectronEvents.IsProPlan, () => {
             this.programSettings.PPP = true
         })
@@ -122,8 +136,9 @@ export class ClientManager extends Subscribable {
             if (!this.scaning && this.keymap.layout === undefined) {
                 this.sendToBackend(ElectronEvents.Scan, "")
             }
-
+            this.sendToBackend(ElectronEvents.ClientUp, "")
         }, 2000);
+
         this.pingServer()
 
 

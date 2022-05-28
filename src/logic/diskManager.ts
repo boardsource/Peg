@@ -1,6 +1,4 @@
-import { KeyMap } from "./keymapManager";
 import { app } from 'electron';
-import { readdir } from 'fs/promises';
 import { download } from "electron-dl"
 //@ts-ignore
 import { AppManager } from "./AppManager";
@@ -9,10 +7,11 @@ const bitmapManipulation = require("bitmap-manipulation");
 
 import * as fs from 'fs/promises';
 import path from 'path'
-import { ElectronEvents, FileName } from "../types/types";
+import { ElectronEvents, FileName, Layout } from "../types/types";
 import { ProgramSettings } from "./programSettings";
 //@ts-ignore
 import DecompressZip from 'decompress-zip'
+
 const programSettings = ProgramSettings.getInstance()
 type DiskInfo = {
     filesystem: string
@@ -33,14 +32,18 @@ export class DiskManager {
     keepLooking: boolean = true;
     isScaning: boolean = false;
     haveToldClientAboutScaning: boolean = false;
-
+    interval?: NodeJS.Timeout
+    currentLayout?: Layout
     appManager: AppManager;
+    fromSplitManager: boolean = false
     constructor(appManager: AppManager) {
         this.appManager = appManager
         console.log("setting up diskmanager")
         this.loadFromCacheIfCan()
         this.kmkPath = path.join(app.getPath("temp"), 'kmk.zip')
     }
+
+
     async loadFromCacheIfCan() {
         const dataStr = await this.readCache()
         console.log("trying to read cache:", dataStr)
@@ -56,7 +59,9 @@ export class DiskManager {
     delay(time: number) {
         return new Promise(res => setTimeout(res, time))
     };
-    public async freshDriveScan() {
+
+    public async freshDriveScan(fromSplitManager: boolean = false) {
+        this.fromSplitManager = fromSplitManager
         this.keymap = "";
         this.kbDrive = "";
         this.hasKeymap = "";
@@ -64,9 +69,73 @@ export class DiskManager {
         this.didNotFindDrive = false;
         this.keepLooking = true;
         this.isScaning = false;
+        this.currentLayout = undefined
         this.cacheData("")
         this.manageDriveScan()
+
     }
+    holdCurrentBoard(layout: string) {
+        let change = false
+        try {
+            const tempLayout: Layout = JSON.parse(layout)
+            if (!this.currentLayout && tempLayout.features !== undefined && tempLayout.features.name !== undefined && tempLayout.features.creator !== undefined && tempLayout.features.rightSide !== undefined) {
+                this.currentLayout = tempLayout
+                console.log("saving what we have")
+            }
+            if (this.currentLayout !== undefined && tempLayout.features !== undefined && tempLayout.features.name !== undefined && tempLayout.features.creator !== undefined && tempLayout.features.rightSide !== undefined) {
+                if (tempLayout.features.name !== this.currentLayout.features.name || tempLayout.features.creator !== this.currentLayout.features.creator || tempLayout.features.rightSide !== this.currentLayout.features.rightSide) {
+                    console.log("we got changes")
+                    change = true
+                }
+            }
+
+        } catch (error) {
+            console.log("error reading json", error)
+        }
+        return change
+    }
+    async pingDrive() {
+        try {
+            const files = await fs.readdir(this.kbDrive);
+            if (files.includes("main.py") && files.includes("layout.json")) {
+                if (this.hasLayout !== "") {
+                    const layoutJson = await fs.readFile(this.hasLayout, 'utf8');
+                    const hasChanged = this.holdCurrentBoard(layoutJson)
+                    if (hasChanged) {
+                        this.appManager.SendMiscEvent(ElectronEvents.BoardChange, "")
+                        if (this.interval) {
+                            clearInterval(this.interval);
+                            this.interval = undefined
+                        }
+                        if (!this.fromSplitManager) {
+                            this.freshDriveScan()
+                        }
+                    }
+
+                }
+            }
+        } catch (error) {
+            if (!this.fromSplitManager) {
+                this.appManager.SendMiscEvent(ElectronEvents.LostConnectionToBoard, "")
+            }
+
+        }
+    }
+    async managePingDrive() {
+        if (this.kbDrive) {
+            if (this.interval === undefined) {
+                const intervalTime = 5000
+                const interval = setInterval(() => {
+                    this.pingDrive()
+                }, intervalTime)
+                this.interval = interval
+            }
+        } else {
+            await this.scanDrives(true)
+            this.managePingDrive()
+        }
+    }
+
 
     public async DownloadAndInstallLib(BoardName: string, drivePath: string) {
         try {
@@ -126,7 +195,6 @@ export class DiskManager {
                 this.appManager.UpdateKeyMap(mainPy)
             }
             if (!this.isScaning) {
-
                 this.isScaning = true
                 await this.scanDrives()
                 if (this.didNotFindDrive && this.keepLooking) {
@@ -136,23 +204,20 @@ export class DiskManager {
                         this.appManager.SendMiscEvent(ElectronEvents.ScanAgain, "scaning again")
                         this.haveToldClientAboutScaning = true
                     }
-
                     this.manageDriveScan()
-
-
                 }
             }
 
         } catch (error) {
             console.log("error in scanning again", error, this)
         }
+        this.managePingDrive()
 
     }
     async readProPlan() {
         try {
             const tmpPath = path.join(app.getPath("temp"), 'ppp.temp')
             const data = await fs.readFile(tmpPath, 'utf8');
-            console.log("data", data)
             this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
 
         } catch (error) {
@@ -251,7 +316,9 @@ export class DiskManager {
             if (this.kbDrive !== "") {
                 this.didNotFindDrive = false;
                 this.haveToldClientAboutScaning = false
+                this.fromSplitManager = false
                 let tempData: any = { kbDrive: this.kbDrive }
+
                 if (this.hasKeymap !== "") {
                     const mainPy = await fs.readFile(this.hasKeymap, 'utf8');
                     if (!dontUpdate) {

@@ -107,7 +107,22 @@ export default function KeyLayout(props: KeyLayoutProps) {
         if (props.isEncoder && keymap.encoderMap.length > 0) {
             return keymap.encoderMap[currentLayer()][index]
         } else {
-            return currentLayer() === 1 && props.isLed ? ledCode : keymap.keymap[currentLayer()][index]
+            if (currentLayer() === 1 && props.isLed) {
+                return ledCode
+            } else if (keymap.keymap.length > 0) {
+                return keymap.keymap[currentLayer()][index]
+            } else {
+                return {
+                    code: "KC.NO",
+                    display: "no",
+                    keybinding: "",
+                    canHaveSub: false,
+                    canHaveSubNumber: false,
+                    subNumber: 0,
+                    Description: "no key set yet"
+                }
+            }
+
         }
     }
 

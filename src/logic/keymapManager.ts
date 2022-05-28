@@ -66,6 +66,7 @@ export class KeyMap extends Subscribable {
         this.keymapStr = new Array();
         //todo rework to map
         layers.forEach((match: string) => {
+            console.log("MATCH", match)
             const cleanedMatch = this.codes.SwapCustoms(match.replaceAll("[", "").replaceAll("]", ""))
 
             this.keymapStr.push(cleanedMatch.split(","));
