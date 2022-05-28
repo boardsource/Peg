@@ -12,7 +12,7 @@ export default function NewBoardSetup(props: NewBoardSetupProps) {
 
     const openModal = () => {
         const modal = Modal.getInstance()
-        modal.Open(`New Board Setup`, false, (
+        modal.Open(`New Board Setup`, true, (
             <NewBoardSetupModal close={() => { modal.Close() }} />
         )
         )
