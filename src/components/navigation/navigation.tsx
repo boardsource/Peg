@@ -1,7 +1,6 @@
 import { For } from 'solid-js'
 import { NavLink, useLocation } from "solid-app-router";
-import bsLogo from '../../images/boardsource_logo.svg'
-import pegLogo from '../../images/peg_logo.svg'
+
 import ShareExternalIcon from '../../images/icons/shareExternalIcon';
 
 export default function Navigation() {

@@ -7,7 +7,7 @@ const bitmapManipulation = require("bitmap-manipulation");
 
 import * as fs from 'fs/promises';
 import path from 'path'
-import { ElectronEvents, FileName, Layout } from "../types/types";
+import { ElectronEvents, FileName, Layout, ToastLevel } from "../types/types";
 import { ProgramSettings } from "./programSettings";
 //@ts-ignore
 import DecompressZip from 'decompress-zip'
@@ -117,6 +117,7 @@ export class DiskManager {
         } catch (error) {
             if (!this.fromSplitManager) {
                 this.appManager.SendMiscEvent(ElectronEvents.LostConnectionToBoard, "")
+                this.freshDriveScan()
             }
 
         }
@@ -155,11 +156,26 @@ export class DiskManager {
                     zip.extract({
                         path: drivePath,
                     });
+                    zip.on("list", () => {
+                        this.appManager.ClientToast(ToastLevel.success, "Installed libs")
+                    })
+                    zip.on("error", () => {
+                        this.appManager.ClientToast(ToastLevel.error, "Error extracting libs")
+                    })
+
                 } catch (error) {
                     console.log("error extracting libs", error)
+                    this.appManager.ClientToast(ToastLevel.error, "Error extracting libs")
+
                 }
             }
-        }).catch((error: Error) => { console.log("error downloading libs", error) })
+        }).catch((error: Error) => {
+            console.log("error downloading libs", error)
+            this.appManager.ClientToast(ToastLevel.error, "Error downloading libs")
+
+
+
+        })
 
 
     }
@@ -168,7 +184,9 @@ export class DiskManager {
         download(this.appManager.win, `${programSettings.apiUrl}kmk.zip`, {
             directory: app.getPath("temp"),
             filename: "kmk.zip",
-            onCompleted: (file: any) => { console.log(file, "file") }
+            onCompleted: (file: any) => {
+                this.appManager.ClientToast(ToastLevel.success, "Downloaded KmK")
+            }
 
         }).catch((error: Error) => { console.log("Error", error) })
     }
@@ -181,8 +199,16 @@ export class DiskManager {
             zip.extract({
                 path: drivePath,
             });
+            zip.on("list", () => {
+                this.appManager.ClientToast(ToastLevel.success, "Installed KmK")
+            })
+            zip.on("error", (error: any) => {
+                console.log("error extracting kmk", error)
+                this.appManager.ClientToast(ToastLevel.error, "Error extracting KmK")
+            })
         } catch (error) {
-            console.log("erro extracting", error)
+            console.log("error extracting kmk", error)
+            this.appManager.ClientToast(ToastLevel.error, "Error extracting KmK")
         }
 
     }
@@ -372,6 +398,7 @@ export class DiskManager {
             }
         } catch (error) {
             console.log("error in writing map", error)
+            this.appManager.ClientToast(ToastLevel.error, `Error in saving map.`)
 
             //todo alaert user map did not update
         }
@@ -390,8 +417,11 @@ export class DiskManager {
                     console.log("removing code.py")
                     fs.unlink(codePyPath)
                 }
+            } else {
+                this.appManager.ClientToast(ToastLevel.success, `${data.path[1]} Saved`)
             }
         } catch (error) {
+            this.appManager.ClientToast(ToastLevel.error, `Error when saving ${path.join("/")}`)
             console.log("error in writing map", error)
             //todo alaert user map did not update
         }

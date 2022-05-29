@@ -1,4 +1,4 @@
-import { ElectronEvents, KeyCode, ModalDefault, SplitFlashStage } from "../types/types";
+import { ElectronEvents, KeyCode, ModalDefault, SplitFlashStage, ToastLevel } from "../types/types";
 import { Color } from "./color";
 import { isKeyCode } from "./helpers";
 import { KeyMap } from "./keymapManager";
@@ -109,6 +109,10 @@ export class ClientManager extends Subscribable {
 
         this.lessonToEvent(ElectronEvents.BoardChange, () => {
             Toast.Success("Detected New keyboard plugged in")
+        })
+
+        this.lessonToEvent(ElectronEvents.Toast, (data: { status: ToastLevel, message: string }) => {
+            Toast.getInstance().show(data.message, data.status)
         })
         this.lessonToEvent(ElectronEvents.LostConnectionToBoard, () => {
             if (!this.lostConnectionToBoard) {
@@ -227,12 +231,14 @@ export class ClientManager extends Subscribable {
     public SaveMap() {
         Toast.Debug(`wanting to save map`)
         if (this.changesMade) {
+            Toast.Success(`Saving Changes Dont Unplug Your Keyboard`)
             this.canUnplug = false
             this.sendToBackend(ElectronEvents.SaveMap, this.keymap.toString())
             this.changesMade = false
             Toast.Debug(`saving map`)
         }
         if (this.ledChangesMadeAndIsSplit) {
+            Toast.Success(`Saving Changes Dont Unplug Your Keyboard`)
             const modal = Modal.getInstance()
             modal.OpenDefault("Split LED Flashing", false, ModalDefault.SplitFlashManager)
             this.dontOverRide = true

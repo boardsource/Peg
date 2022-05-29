@@ -1,7 +1,7 @@
 
 import { DiskManager } from "./diskManager";
 import Electron, { app, ipcMain, BrowserWindow } from 'electron';
-import { ElectronEvents, FileName } from "../types/types";
+import { ElectronEvents, FileName, ToastLevel } from "../types/types";
 
 
 
@@ -113,6 +113,11 @@ export class AppManager {
         console.log("updated", oledData !== undefined)
         if (this.win)
             this.win.webContents.send(ElectronEvents.UpdateOled, { oledData, fileNumber });
+    }
+
+    public ClientToast(status: ToastLevel, message: string) {
+        this.SendMiscEvent(ElectronEvents.Toast, { status, message })
+
     }
 
 }
