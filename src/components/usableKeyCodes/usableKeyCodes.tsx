@@ -1,8 +1,9 @@
 import "./usableKeyCodes.css"
-import { Show, createSignal, onMount, For } from "solid-js";
-import { KeyMap } from "../../logic/keymapManager";
+import { For } from "solid-js";
+
 import { KeyCode, LayoutKey } from "../../types/types"
 import SingleUsableKeyCode from "../singleUsableKeyCode/singleUsableKeyCode";
+import { Link } from "solid-app-router";
 type UsableKeyCodesProps = {
     keycodes: KeyCode[]
     layout: LayoutKey[] | undefined
@@ -10,9 +11,7 @@ type UsableKeyCodesProps = {
 };
 
 export default function UsableKeyCodes(props: UsableKeyCodesProps) {
-    // onMount(() => {
 
-    // });
     const returnLoop = () => {
         if (props.layout) {
             return (<For each={props.layout} fallback={<div>Loading...</div>}>
@@ -22,7 +21,9 @@ export default function UsableKeyCodes(props: UsableKeyCodesProps) {
                 }}
             </For>)
         } else {
-            return (<For each={props.keycodes} fallback={<div>Loading...</div>}>
+            return (<For each={props.keycodes} fallback={<div>
+                <Link href="/index.html/makeCustom" >  No Keycodes Yet Make Some Here </Link>
+            </div>}>
                 {(key, index) => <SingleUsableKeyCode code={key} layoutKey={undefined} index={index()} />}
             </For>)
         }

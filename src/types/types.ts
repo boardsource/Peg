@@ -117,6 +117,7 @@ export enum ElectronEvents {
     BoardChange = "BoardChange",
     LostConnectionToBoard = "LostConnectionToBoard",
     ClientUp = "ClientUp",
+    Toast = "Toast",
     Misc = "Misc"
 
 }

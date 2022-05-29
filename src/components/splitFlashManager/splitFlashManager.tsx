@@ -55,6 +55,11 @@ export const SplitFlashManager = (props: SplitFlashManagerProps) => {
                                 onClick={() => ChangeDisplayState(SplitFlashStage.Unplugged)}>
                                 It's Unplugged!
                             </Button>
+
+                            <Button className={`btn btn-error btn-block mt-5`} selected={true}
+                                onClick={() => props.close()}>
+                                I dont care Close
+                            </Button>
                         </Show>
                     </div>
 
