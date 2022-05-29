@@ -70,9 +70,8 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
         clientManager.NoticeThatKeyIsWaiting(returnGlowindex(), props.isLed, props.isEncoder)
     }
     const clearButtonPress = () => {
-        const keymap = KeyMap.getInstance()
         const codes = KeyCodes.getInstance()
-        keymap.ChangeKey(props.index, props.layer, codes.KeyCodeForString("KC.NO"), props.isEncoder);
+        clientManager.ForceKeyChange(props.layer, props.index, codes.KeyCodeForString("KC.NO"), props.isEncoder);
     }
     const returnStyles = () => {
         // inline styles that need to be set based off of app state in some way.
@@ -223,9 +222,23 @@ export default function SingleLayoutKey(props: SingleLayoutKeyProps) {
 
             <button onClick={mainButtonPress} className={`singleLayoutKey__main w-full k${state.code.display}`}>
                 <Show when={state.code.canHaveSub} fallback={""}>
-
-                    {state.code.display !== "" ? state.code.display : state.code.code}
-                    <br />
+                    <svg width="100%"
+                        height="20%"
+                        viewBox="0 0 500 100"
+                        preserveAspectRatio="xMinYMid meet"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className='singleLayoutKey__sub_title'>
+                        {/*@ts-ignore*/}
+                        <text
+                            x="50%"
+                            y="50%"
+                            dominant-baseline="middle"
+                            text-anchor="middle"
+                            className={`${returnSVGColor()}`}
+                            font-size={returnFontSize(state.code.display, state.code.code)}
+                        >  {state.code.display !== "" ? state.code.display : state.code.code}
+                        </text>
+                    </svg>
                 </Show>
                 <svg width="100%"
                     height="100%"

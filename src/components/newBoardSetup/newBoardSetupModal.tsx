@@ -341,15 +341,15 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
             case SubViews.PickBoard:
                 return (
                     <div className="NewBoardSetup__boards flex flex-col h-[550px]">
-                        <div className='flex flex-col w-full h-full bg-yellow-200' >
-                            <div className="flex flex-col bg-red-200">
+                        <div className='flex flex-col w-full h-full ' >
+                            <div className="flex flex-col ">
                                 {returnFilterButtons(NameParts.Creator)}
                                 {returnFilterButtons(NameParts.Name)}
                                 {returnFilterButtons(NameParts.Controller)}
                                 {returnFilterButtons(NameParts.Side)}
                                 {returnFilterButtons(NameParts.Config)}
                             </div>
-                            <div className="flex flex-1 items-start w-full bg-green-200 overflow-scroll">
+                            <div className="flex flex-1 items-start w-full overflow-scroll">
                                 <table className="table table-compact max-w-[100%] w-full">
                                     <thead>
                                         <tr>
