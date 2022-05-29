@@ -1,8 +1,7 @@
 import "./keyLayout.sass"
-import { Show, createSignal, onMount, For, createResource, onCleanup } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createSignal, For, onCleanup } from "solid-js";
 import { KeyMap } from "../../logic/keymapManager";
-import { KeyCode, LayoutKey } from "../../types/types";
+import { KeyCode } from "../../types/types";
 import SingleLayoutKey from "../singleLayoutKey/singleLayoutKey";
 import { magicNumbers } from "../../magicNumbers";
 import {
@@ -22,7 +21,6 @@ type KeyLayoutProps = {
     isLed: boolean
     isEncoder: boolean
 };
-import ShareFeature from "../../components/shareFeature/shareFeature";
 
 export default function KeyLayout(props: KeyLayoutProps) {
     const [keys, setKeys] = createSignal({ ...keymap.keyLayout })
@@ -43,7 +41,7 @@ export default function KeyLayout(props: KeyLayoutProps) {
                 code = keycodes.KeyCodeForString(draggable_id)
             }
             const [index, encoder] = droppable.id.split(":")
-            console.log("drop", droppable.id, index, encoder)
+            // console.log("drop", droppable.id, index, encoder)
             clientManager.ForceKeyChange(currentLayer(), index, code, encoder === "R")
         }
     });

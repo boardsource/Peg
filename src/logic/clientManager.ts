@@ -231,14 +231,14 @@ export class ClientManager extends Subscribable {
     public SaveMap() {
         Toast.Debug(`wanting to save map`)
         if (this.changesMade) {
-            Toast.Success(`Saving Changes Dont Unplug Your Keyboard`)
+            Toast.Info(`Saving Changes Dont Unplug Your Keyboard`)
             this.canUnplug = false
             this.sendToBackend(ElectronEvents.SaveMap, this.keymap.toString())
             this.changesMade = false
             Toast.Debug(`saving map`)
         }
         if (this.ledChangesMadeAndIsSplit) {
-            Toast.Success(`Saving Changes Dont Unplug Your Keyboard`)
+            Toast.Info(`Saving Changes Dont Unplug Your Keyboard`)
             const modal = Modal.getInstance()
             modal.OpenDefault("Split LED Flashing", false, ModalDefault.SplitFlashManager)
             this.dontOverRide = true

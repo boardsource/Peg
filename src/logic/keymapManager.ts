@@ -66,7 +66,7 @@ export class KeyMap extends Subscribable {
         this.keymapStr = new Array();
         //todo rework to map
         layers.forEach((match: string) => {
-            console.log("MATCH", match)
+            // console.log("MATCH", match)
             const cleanedMatch = this.codes.SwapCustoms(match.replaceAll("[", "").replaceAll("]", ""))
 
             this.keymapStr.push(cleanedMatch.split(","));
@@ -184,7 +184,7 @@ export class KeyMap extends Subscribable {
                 } catch (error) {
                     Toast.Error(`error parsing oled map try reloading the default oled map and make sure you have the images in root`)
 
-                    console.log("error parsing oled map", error)
+                    // console.log("error parsing oled map", error)
                 }
             } else {
                 this.oled.FromString(tempOledMap)
@@ -209,7 +209,7 @@ export class KeyMap extends Subscribable {
             }
             Toast.Debug(`number of code blocks found ${this.codeBlock.length}`)
 
-            console.log(`number of code blocks found ${this.codeBlock.length}`, this.codeBlock)
+            // console.log(`number of code blocks found ${this.codeBlock.length}`, this.codeBlock)
             // this.codeBlock = codeblock[1]
 
 
