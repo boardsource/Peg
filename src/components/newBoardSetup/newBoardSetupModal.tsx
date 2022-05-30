@@ -80,8 +80,16 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
         [kmk, setKmk] = createSignal(true),
         [boardName, setBoardName] = createSignal(""),
         [lib, setLib] = createSignal(true),
-        [secondPass, setSecondPass] = createSignal(false)
+        [secondPass, setSecondPass] = createSignal(false),
+        [canUnplug, setcanUnplug] = createSignal(false)
 
+    const subId = clientManager.Subscribe(() => {
+        setcanUnplug(clientManager.canUnplug)
+
+    })
+    onCleanup(() => {
+        clientManager.Unsubscribe(subId)
+    })
 
     let fullServerBoard: FullServerBoard | undefined = undefined;
     const buildFilters = (serverBoardsData: ServerBoard[]) => {
@@ -206,11 +214,14 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
             clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: fullServerBoard?.Kb, path: [drivePath, FileName.kb] })
             clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: fullServerBoard?.Main, path: [drivePath, FileName.main] })
             clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: fullServerBoard?.Layout, path: [drivePath, FileName.layout] })
+            clientManager.canUnplug = false
             if (kmk()) {
                 clientManager.sendToBackend(ElectronEvents.InstallKmk, drivePath)
+                clientManager.kmkInstalled = false
             }
             if (lib() && boardName() !== "") {
                 clientManager.sendToBackend(ElectronEvents.DownLoadAndInstallLib, { boardName: boardName(), path: drivePath })
+                clientManager.libInstalled = false
             } else if (lib() && boardName() === "") {
                 Toast.Error("Sorry you wanted libs installed too but something happened and I dont have the data I need go to https://github.com/daysgobye/pegBoards and look for them")
             }
@@ -402,25 +413,32 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
                     hasOtherSide = maybeOtherSide !== undefined
                 return (
                     <div className="NewBoardSetup__split flex flex-col">
-                        <p>
-                            You complected the new board setup with a split. Do you want to flash the other side {hasOtherSide ? `with ${maybeOtherSide.fullName}?` : "?"}
-                            {" "}If so unplug your current side right now and plug in the new side then push the the button below.
-                        </p>
-                        <div className="flex">
-                            <Button className='btn-success mt-5' onClick={() => {
-                                splitStartOver(maybeOtherSide)
-                            }} selected={true}>
-                                yes
-                            </Button>
-                            <Show when={hasOtherSide}>
-                                <Button className='btn-success mt-5' onClick={splitStartOver} selected={true}>
-                                    yes but not that board
+                        <Show when={canUnplug()} fallback={(
+                            <p>
+                                We are still saving files but you just setup a split board. Hang on a second and we can setup the other side.
+                            </p>
+                        )}>
+                            <p>
+                                You complected the new board setup with a split. Do you want to flash the other side {hasOtherSide ? `with ${maybeOtherSide.fullName}?` : "?"}
+                                {" "}If so unplug your current side right now and plug in the new side then push the the button below.
+                            </p>
+                            <div className="flex">
+                                <Button className='btn-success mt-5' onClick={() => {
+                                    splitStartOver(maybeOtherSide)
+                                }} selected={true}>
+                                    yes
                                 </Button>
-                            </Show>
-                            <Button className='btn-success mt-5' onClick={() => props.close()} selected={false}>
-                                no get me out
-                            </Button>
-                        </div>
+                                <Show when={hasOtherSide}>
+                                    <Button className='btn-success mt-5' onClick={splitStartOver} selected={true}>
+                                        yes but not that board
+                                    </Button>
+                                </Show>
+                                <Button className='btn-success mt-5' onClick={() => props.close()} selected={false}>
+                                    no get me out
+                                </Button>
+                            </div>
+                        </Show>
+
 
                     </div>)
             default:
