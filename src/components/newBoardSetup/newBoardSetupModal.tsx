@@ -215,6 +215,8 @@ export default function NewBoardSetupModal(props: NewBoardSetupProps) {
             clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: fullServerBoard?.Main, path: [drivePath, FileName.main] })
             clientManager.sendToBackend(ElectronEvents.Savefile, { fileData: fullServerBoard?.Layout, path: [drivePath, FileName.layout] })
             clientManager.canUnplug = false
+            clientManager.TellThemToUpdate()
+
             if (kmk()) {
                 clientManager.sendToBackend(ElectronEvents.InstallKmk, drivePath)
                 clientManager.kmkInstalled = false
