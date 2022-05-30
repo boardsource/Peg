@@ -156,7 +156,7 @@ export class DiskManager {
                     zip.extract({
                         path: drivePath,
                     });
-                    zip.on("list", () => {
+                    zip.on("extract", () => {
                         this.appManager.ClientToast(ToastLevel.success, "Installed libs")
                     })
                     zip.on("error", () => {
@@ -199,7 +199,7 @@ export class DiskManager {
             zip.extract({
                 path: drivePath,
             });
-            zip.on("list", () => {
+            zip.on("extract", () => {
                 this.appManager.ClientToast(ToastLevel.success, "Installed KmK")
             })
             zip.on("error", (error: any) => {

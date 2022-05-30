@@ -27,6 +27,8 @@ export class ClientManager extends Subscribable {
     SplitFlashDisplayState: SplitFlashStage = SplitFlashStage.MainSide
     canUnplug: boolean = true
     lostConnectionToBoard: boolean = false;
+    kmkInstalled: boolean = true
+    libInstalled: boolean = true;
 
     private constructor() {
         super();
@@ -113,6 +115,22 @@ export class ClientManager extends Subscribable {
 
         this.lessonToEvent(ElectronEvents.Toast, (data: { status: ToastLevel, message: string }) => {
             Toast.getInstance().show(data.message, data.status)
+            if (data.status === ToastLevel.success) {
+                if (!this.kmkInstalled && data.message.toLowerCase().includes("kmk")) {
+                    console.log("kmk installed")
+                    this.kmkInstalled = true
+                }
+                if (!this.libInstalled && data.message.toLowerCase().includes("lib")) {
+                    console.log("lib installed")
+                    this.libInstalled = true
+                }
+                if (!this.canUnplug && this.libInstalled && this.kmkInstalled) {
+                    console.log("you good")
+                    this.canUnplug = true
+                    this.updateSubScribers()
+                }
+            }
+
         })
         this.lessonToEvent(ElectronEvents.LostConnectionToBoard, () => {
             if (!this.lostConnectionToBoard) {
