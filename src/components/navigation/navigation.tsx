@@ -141,7 +141,7 @@ export default function Navigation() {
                         <ellipse id="Oval" class="cls-3 fill-[#98fce9]" cx="351.82534" cy="357.09688" rx="52.39952" ry="53.18464" /></g></g></g></g></svg>
               </div>
               <div className="flex items-center justify-end w-full text-base-content">
-                <a class="text-base-content text-[.8rem] font-thin" href="boardsource.xyz">boardsource.xyz</a>
+                <a class="text-base-content text-[.8rem] font-thin" href="https://boardsource.xyz/" target='_blank'>boardsource.xyz</a>
                 <span className='ml-1'><ShareExternalIcon size={3} /></span>
               </div>
 
