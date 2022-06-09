@@ -57,6 +57,7 @@ export class DiskManager {
     }
 
     delay(time: number) {
+        // console.log("buying time")
         return new Promise(res => setTimeout(res, time))
     };
 
@@ -123,7 +124,7 @@ export class DiskManager {
         }
     }
     async managePingDrive() {
-        if (this.kbDrive) {
+        if (this.kbDrive !== "") {
             if (this.interval === undefined) {
                 const intervalTime = 5000
                 const interval = setInterval(() => {
@@ -132,8 +133,14 @@ export class DiskManager {
                 this.interval = interval
             }
         } else {
-            await this.scanDrives(true)
-            this.managePingDrive()
+            if (!this.isScaning) {
+                await this.scanDrives(true)
+            } else {
+                // await  this.delay(10000)
+                //         this.managePingDrive()
+
+            }
+
         }
     }
 
@@ -214,22 +221,24 @@ export class DiskManager {
     }
     public async manageDriveScan() {
         try {
+            // console.log("ManageDrive")
             if (!this.didNotFindDrive && this.hasKeymap !== "" && this.hasLayout !== "") {
                 const layoutjson = await fs.readFile(this.hasLayout, 'utf8');
                 this.appManager.UpdateLayout(layoutjson)
                 const mainPy = await fs.readFile(this.hasKeymap, 'utf8');
                 this.appManager.UpdateKeyMap(mainPy)
+                return
             }
             if (!this.isScaning) {
                 this.isScaning = true
                 await this.scanDrives()
                 if (this.didNotFindDrive && this.keepLooking) {
-                    await this.delay(1000)
-                    console.log("scaning again")
+                    // console.log("scaning again")
                     if (!this.haveToldClientAboutScaning) {
                         this.appManager.SendMiscEvent(ElectronEvents.ScanAgain, "scaning again")
                         this.haveToldClientAboutScaning = true
                     }
+                    await this.delay(5000)
                     this.manageDriveScan()
                 }
             }
@@ -315,9 +324,11 @@ export class DiskManager {
 
     public async scanDrives(dontUpdate: boolean = false) {
         try {
+            // console.log("scanDrives")
             const disks = await nodeDiskInfo.getDiskInfo()
 
             for (const disk of disks) {
+                // console.log("disk of disks")
                 if (process.platform !== "win32") {
                     if (!disk.mounted.startsWith("/") || disk.used === 0) {
                         console.log("not messing with ")
@@ -326,6 +337,7 @@ export class DiskManager {
                 }
 
                 try {
+                    // console.log("readdir")
                     const files = await fs.readdir(disk.mounted);
                     if (files.includes("main.py") && files.includes("layout.json")) {
                         this.kbDrive = `${disk.mounted}/`;
@@ -333,8 +345,8 @@ export class DiskManager {
                         this.hasLayout = `${this.kbDrive}layout.json`
                         break
                     }
-                } catch {
-                    console.log("this is not the drive you are looking for")
+                } catch (error) {
+                    console.log("this is not the drive you are looking for", error)
                     continue
                 }
 

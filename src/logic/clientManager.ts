@@ -155,9 +155,10 @@ export class ClientManager extends Subscribable {
                 }))
         })
         setTimeout(() => {
-            if (!this.scaning && this.keymap.layout === undefined) {
-                this.sendToBackend(ElectronEvents.Scan, "")
-            }
+            ///issues/3 removed this
+            // if (!this.scaning && this.keymap.layout === undefined) {
+            //     this.sendToBackend(ElectronEvents.Scan, "")
+            // }
             this.sendToBackend(ElectronEvents.ClientUp, "")
         }, 2000);
 
