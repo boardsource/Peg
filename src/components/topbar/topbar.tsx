@@ -25,7 +25,7 @@ export default function Topbar() {
 
     })
     return (
-        <div className="topbar flex w-f flex-1 items-center justify-between">
+        <div className="topbar flex w-f flex-1 justify-between mt-[.6rem]">
 
 
             {/* <Searchbar /> */}
@@ -38,17 +38,40 @@ export default function Topbar() {
             </Show>
 
 
-            <div className="topbar__right flex">
-                <Show when={canUnplug()} fallback={<div className="badge badge-error gap-2 badge-lg mr-2 mt-2">
-                    Dont Unplug
+            <div className="topbar__right flex flex-col-reverse items-end">
+                <Show when={canUnplug()} fallback={<div className="flex content-center mr-[.25rem] mt-[.2rem]  items-center">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-error" fill="none" viewBox="0 0 24 24" stroke="" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </span>
+                    <span className="text-[.85rem]">
+                        Do Not Unplug
+                    </span>
                 </div>}>
-                    <div className="badge badge-success gap-2 badge-lg  mr-2 mt-2">
+                    <div className="flex content-center mr-[.25rem] mt-[.2rem]  items-center">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-success" fill="none" viewBox="0 0 24 24" stroke="" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-[.85rem]">
+                            Safe To Unplug
+                        </span>
+
+
+
+                    </div>
+                </Show>
+                {/* <Show when={canUnplug()} fallback={<div className="badge badge-error gap-2 badge-lg mr-2 mt-2">
+                    Don't Unplug
+                </div>}>
+                    <div className="badge badge-success badge-outline gap-2 badge-md  mr-2 mt-2">
 
                         Safe To Unplug
 
 
                     </div>
-                </Show>
+                </Show> */}
                 <div className="topbar__right__connectivitystatus self-center">
                     <ConnectivityStatus />
                 </div>
