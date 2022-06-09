@@ -1,6 +1,6 @@
 {
   "name": "Peg",
-  "version": "0.8.8",
+  "version": "0.8.81",
   "private": true,
   "homepage": ".",
   "main": "build/electron/main.js",
