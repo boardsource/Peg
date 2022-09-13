@@ -77,12 +77,12 @@ export default function SingleUsableKeyCode(props: SingleUsableKeyCodeProps) {
     const returnFontSize = () => {
         if (!isColor(props.code)) {
             const keyDisplayCode = props.code.display, keyCode = props.code.code
-            const keyDisplayCodeLength = keyDisplayCode.length
+            const keyDisplayCodeLength =keyDisplayCode? keyDisplayCode.length:0
             // console.log('from usable lower, keyDisplayCodeLength =', keyDisplayCodeLength)
-            const keyCodeLength = keyCode.length
+            const keyCodeLength = keyCode?keyCode.length:0
             // console.log('from useable lwoer 2nd param, keyCodeLength =', keyCodeLength)
             const baseSize = 6
-            // let length = 0
+            let length = 0
             if (keyDisplayCode !== '') {
                 length = keyDisplayCodeLength
             } else if (keyDisplayCode == '' && keyCode !== '') {

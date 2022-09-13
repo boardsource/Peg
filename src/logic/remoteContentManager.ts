@@ -7,6 +7,7 @@ import { KeyMap } from "./keymapManager";
 import { Oled } from "./oled";
 import { KeyCodes } from "./keycodes";
 import { ShareableFeatureToDisplayWord } from "./helpers";
+import { Color } from "./color";
 
 
 export class RemoteContentManager extends Subscribable {
@@ -92,7 +93,7 @@ export class RemoteContentManager extends Subscribable {
                         Toast.Debug(`old ledMap length ${keymap.ledMap.length}`)
                         if (layout.name === this.selectedFeature.keyboard && layout.perkey) {
                             const ledmap = JSON.parse(this.selectedFeature?.code)
-                            keymap.ledMap = ledmap
+                            keymap.ledMap = ledmap.map((tempColor:{r:number,g:number,b:number})=>new Color(tempColor.r,tempColor.g,tempColor.b))
                             Toast.Debug(`new ledMap length ${keymap.ledMap.length}`)
                         } else {
                             Toast.Error(`Currently we dont support adding a ledmap from another keyboard.`)
