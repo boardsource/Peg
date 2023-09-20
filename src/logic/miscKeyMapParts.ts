@@ -53,7 +53,7 @@ export class MiscKeymapParts {
             })
         }
         if (this.settings.oled && this.keymap.oled !== undefined) {
-            imports += "from kmk.extensions.peg_oled_Display import Oled,OledDisplayMode,OledReactionType,OledData\n";
+            imports += "from kmk.extensions.peg_oled_display import Oled,OledDisplayMode,OledReactionType,OledData\n";
             baseCode += `${this.keymap.oled.ToString()}\nkeyboard.extensions.append(oled_ext)\n`
         }
 
