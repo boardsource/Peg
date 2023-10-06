@@ -256,6 +256,7 @@ export class DiskManager {
             this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
 
         } catch (error) {
+            this.appManager.SendMiscEvent(ElectronEvents.IsProPlan, true)
             console.log("error in reading pro plan", error)
             return ""
         }
