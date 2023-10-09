@@ -19,7 +19,7 @@ import ToastDisplay from '../components/toastDisplay/toastDisplay';
 
 
 export default function Root() {
-  console.log(window.location, "path is")
+  // console.log(window.location, "path is")
   return (
     <>
       {/* <NotificationDisplay /> */}
@@ -37,6 +37,17 @@ export default function Root() {
             <ToolTipDisplay />
             <ToastDisplay />
             <Routes>
+              <Route path="/" element={<KeymapEditView isLed={false} isEncoder={false} title="Keymap" />} />
+              <Route path="/led" element={<KeymapEditView isLed={true} isEncoder={false} title="LED" />} />
+              <Route path="/encoder" element={<KeymapEditView isLed={false} isEncoder={true} title="Encoder" />} />
+              <Route path="/oled" element={<OLED />} />
+              <Route path="/codeblock" element={<CodeBlock />} />
+              <Route path="/makeCustom" element={<MakeCustomCodes />} />
+              <Route path="/tester" element={<Tester />} />
+              <Route path="/options" element={<Options />} />
+              <Route path="/account" element={<Account />} />
+
+
               <Route path="/index.html/" element={<KeymapEditView isLed={false} isEncoder={false} title="Keymap" />} />
               <Route path="/index.html/led" element={<KeymapEditView isLed={true} isEncoder={false} title="LED" />} />
               <Route path="/index.html/encoder" element={<KeymapEditView isLed={false} isEncoder={true} title="Encoder" />} />

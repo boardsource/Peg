@@ -38,6 +38,30 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title> Peg </title>
+  <script>
+    window.electron = {
+      platform: "web",
+      ipcRenderer: {
+
+        send(channel, data) {
+          console.log("sending", data, "on", channel)
+        },
+        on(channel, func) {
+          console.log("on", func, "on", channel)
+
+        },
+        once(channel, func) {
+          console.log("on", func, "on", channel)
+
+        },
+      },
+    }
+
+
+
+
+
+  </script>
 </head>
 
 <body>
