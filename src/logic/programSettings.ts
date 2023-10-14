@@ -1,8 +1,12 @@
-import { Theme } from "../types/types";
+import { ConnectionType, Theme } from "../types/types";
 import { Subscribable } from "./subscribable";
 
 export class ProgramSettings extends Subscribable {
     private static instance: ProgramSettings;
+    private _autoConnect: boolean = true;
+    private _autoFileTree: boolean = false;
+
+    private _connectionType: ConnectionType = ConnectionType.Serial;
     private _seven: boolean = true
     private _tooltips: boolean = true;
     private _debug: boolean = false;
@@ -16,10 +20,59 @@ export class ProgramSettings extends Subscribable {
     private _PPP: boolean = false
     PppBuyLink: string = "https://boardsource.xyz/store/5f2efc462902de7151495057"
 
+    private saveState = () => {
+        const isBrowser = typeof window !== "undefined";
+
+        this.updateSubScribers();
+        if (isBrowser) {
+            localStorage.setItem(
+                "cpy_toolbox_settings",
+                JSON.stringify({
+                    connectionType: this._connectionType,
+                    autoConnect: this._autoConnect,
+                    debug: this._debug,
+                })
+            );
+        }
+    };
+
     private _theme: Theme = Theme.light;
     public version: string = "v0.1";
     private constructor() {
         super();
+        // const isBrowser = typeof window !== "undefined";
+        // if (isBrowser) {
+        //     const pastStateStr = localStorage.getItem("cpy_toolbox_settings");
+
+        //     const pastState = JSON.parse(pastStateStr ? pastStateStr : "{}");
+        //     if (pastState) {
+        //         this._connectionType = pastState.connectionType;
+        //         this._debug = pastState.debug;
+        //         this._autoConnect = pastState.autoConnect;
+        //     }
+        // }
+    }
+
+    public get connectionType() {
+        return this._connectionType;
+    }
+    public set connectionType(newValue: ConnectionType) {
+        this._connectionType = newValue;
+        this.saveState();
+    }
+    public get autoConnect() {
+        return this._autoConnect;
+    }
+    public set autoConnect(newValue: boolean) {
+        this._autoConnect = newValue;
+        this.saveState();
+    }
+    public get autoFileTree() {
+        return this._autoFileTree;
+    }
+    public set autoFileTree(newValue: boolean) {
+        this._autoFileTree = newValue;
+        this.saveState();
     }
     public get debug() {
         return this._debug;

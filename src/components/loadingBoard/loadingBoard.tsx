@@ -6,6 +6,7 @@ import Button from "../button/button";
 import NewBoardSetup from "../newBoardSetup/newBoardSetup";
 
 import pegSquareLogo from '../../images/peg_square_logo.svg'
+import WebConnect from "../webConnect";
 
 
 const clientManager = ClientManager.getInstance()
@@ -19,7 +20,8 @@ type LoadingBoardProps = {
 export default function LoadingBoard(props: LoadingBoardProps) {
     const [isScanning, setIsScanning] = createSignal(true),
         [haveMap, setHaveMap] = createSignal(keyMap.layout !== undefined),
-        [showSetup, setShowSetup] = createSignal(false)
+        [showSetup, setShowSetup] = createSignal(false),
+        [platform, setPlatform] = createSignal(clientManager.platform)
 
 
     const updateLocalIsScanning = () => {
@@ -29,6 +31,7 @@ export default function LoadingBoard(props: LoadingBoardProps) {
                 setShowSetup(true)
             }, 1);
         }
+        setPlatform(clientManager.platform)
         setIsScanning(clientManager.scaning)
 
     }
@@ -68,13 +71,16 @@ export default function LoadingBoard(props: LoadingBoardProps) {
                                     </Button>
                                 </div>
                             </Show>
+                            <Show when={platform() === "web"} fallback="" >
+                                <WebConnect />
+                            </Show>
                         </div>
 
-                        <div className="absolute bottom-0 w-full">
-                            {/* <Show when={showSetup()} fallback="" > */}
-                            <Show when={true} fallback="" >
-                                <NewBoardSetup />
-                            </Show>
+                        <div className="absolute bottom-0 w-full flex flex-col">
+
+                            <NewBoardSetup />
+
+
                         </div>
 
 

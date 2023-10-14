@@ -7,6 +7,7 @@ import { Subscribable } from "./subscribable";
 import axios from "axios"
 import { Modal } from "./modal";
 import { Toast } from "./toast";
+import WebBackend from "./backends/web/webBackend";
 
 export class ClientManager extends Subscribable {
     private static instance: ClientManager;
@@ -29,6 +30,7 @@ export class ClientManager extends Subscribable {
     lostConnectionToBoard: boolean = false;
     kmkInstalled: boolean = true
     libInstalled: boolean = true;
+    webBackend: WebBackend | undefined
 
     private constructor() {
         super();
@@ -36,7 +38,13 @@ export class ClientManager extends Subscribable {
         this.platform = window.electron.platform;
         this.keymap = KeyMap.getInstance()
 
+
         this.programSettings = ProgramSettings.getInstance()
+
+        if (this.platform === "web") {
+            this.webBackend = WebBackend.getInstance()
+        }
+
         this.lessonToEvent(ElectronEvents.UpdateLayout, (args: string) => {
             this.scaning = false
             this.updateSubScribers()
