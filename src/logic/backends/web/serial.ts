@@ -17,6 +17,7 @@ export class Serial extends Subscribable {
   responses: string[] = [];
   canSend: boolean;
   gotRepl: boolean = false;
+  useRawRead: boolean = false
   renderData: undefined | ((data: string) => void) = undefined;
   private constructor() {
     super();
@@ -78,9 +79,18 @@ export class Serial extends Subscribable {
   };
 
   readPort = async () => {
-    const returnFromPort = this.port.readUntil("\n");
-    if (returnFromPort) {
-      this.handleResponse(returnFromPort);
+    if (!this.useRawRead) {
+      const returnFromPort = this.port.readUntil("\n");
+      if (returnFromPort) {
+        this.handleResponse(returnFromPort);
+      }
+    } else {
+      // console.log("doing a raw read")
+      const returnFromPort = this.port.read()
+      // console.log("return", returnFromPort)
+      if (returnFromPort) {
+        this.handleResponse(returnFromPort);
+      }
     }
   };
 
@@ -136,12 +146,17 @@ export class Serial extends Subscribable {
     }
   };
 
-  sendAndStealResponse = async (toSend: string) => {
+  sendAndStealResponse = async (toSend: string, shouldBeRaw: boolean = false) => {
+    if (shouldBeRaw) {
+      this.useRawRead = true
+    }
     const startingLength = Number(`${this.responses.length}`);
     // console.log("before sending", this.responses.length);
     this.writeStringToByte(toSend);
     let delayCount = 0;
-    while (this.responses.length !== startingLength + 2) {
+    const increase: number = shouldBeRaw ? 1 : 2
+    while (this.responses.length !== startingLength + increase) {
+      console.log(this.responses.length, startingLength + increase)
       delayCount++;
       await delay(20);
     }
@@ -151,8 +166,17 @@ export class Serial extends Subscribable {
       this.responses.length,
       this.responses[this.responses.length - 1]
     );
-    return this.responses[this.responses.length - 1];
+    if (shouldBeRaw) {
+      this.useRawRead = false
+    }
+    let responce = this.responses[this.responses.length - 1];
+    if (shouldBeRaw) {
+      responce = responce.replace(toSend, "")
+    }
+    return responce
+
   };
+
   ctrlc = () => {
     this.write(ControlCodes.CtrlC);
   };

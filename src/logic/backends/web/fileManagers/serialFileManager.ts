@@ -120,6 +120,29 @@ export default class SerialFileManager implements IFileManager {
         return data
     }
     readFile = async (path: string) => {
+        let file = ""
+
+        await this.waitUntilCanUse()
+        this.setUsing(true)
+        await this.connection.getReplConnection()
+
+        this.connection.toggleLock(true)
+        this.connection.writeStringToByte("import os")
+        await delay()
+        this.connection.writeStringToByte(`f=open("${path}","r")`)
+        await delay()
+
+        file = await this.connection.sendAndStealResponse(`print(f.read())`, true)
+        file = file.replaceAll(">>>", "")
+
+        console.log("file", file)
+        this.connection.writeStringToByte("f.close()")
+        this.setUsing(false)
+        this.connection.toggleLock(false)
+        return file
+    }
+
+    backup_readFile = async (path: string) => {
         const getLine = async (lineNumber: number) => {
             console.log("getting line", lineNumber)
             this.connection.writeStringToByte(`print(l[${lineNumber}])`)
@@ -155,6 +178,10 @@ export default class SerialFileManager implements IFileManager {
         const file = filtered.join("")
         return file
     }
+
+
+
+
     writeFile = async (path: string, newFile: string) => {
         const checkSum = true
         await this.waitUntilCanUse()

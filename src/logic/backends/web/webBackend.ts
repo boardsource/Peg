@@ -112,7 +112,9 @@ class WebBackend {
 
     }
     private async saveMap(data: string) {
-        console.log("todo, save map")
+
+        console.log("todo, save map", data)
+        this.ideManger.savefile("/main.py", data)
 
     }
     private async saveCustomKeyCode(data: string) {

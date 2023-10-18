@@ -27,18 +27,25 @@ class IdeManger extends Subscribable {
     public get connected() {
         return this.ide.connected
     }
+    async savefile(path: string, fileData: string) {
+        if (!this.ide.connected) {
+            await this.ide.open()
+        }
+        this.ide.updateFile(path, fileData)
+        this.ide.saveFile(path)
+
+    }
 
     async connect() {
         await this.ide.open()
+        console.log("back from opening")
         await delay()
-
         await this.ide.getFileSystem()
         await delay()
-
         console.log("done getting file sytem ", this.ide.fileSystem)
         const mainPy = await this.ide.getFile("/main.py")
         if (mainPy) {
-            console.log({ mainPy })
+            console.log({ mainPy: mainPy.length })
 
             this.webBackend.reply(ElectronEvents.UpdateKeyMap, mainPy)
         }
@@ -46,7 +53,6 @@ class IdeManger extends Subscribable {
         const layoutJson = await this.ide.getFile("/layout.json")
         if (layoutJson) {
             this.webBackend.reply(ElectronEvents.UpdateLayout, layoutJson)
-            // console.log("json", layoutJson)
         }
 
 

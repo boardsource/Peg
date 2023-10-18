@@ -55,15 +55,11 @@ export class KeyMap extends Subscribable {
         const headerCharacterCount = 20;
         const footerCharacterCount = 3;
         const justLayers = baseMap.split("# keymap")[1];
-        console.log(baseMap, justLayers)
-
         const removedFooters = justLayers.substring(0, justLayers.length - footerCharacterCount);
         const rawLayers = removedFooters.substring(headerCharacterCount);
         const layers = rawLayers.replaceAll(/(?:\r\n|\r|\n)/g, '').split("],");
         const encoderMap = baseMap.split("# encodercount")
         const encoderCount = encoderMap.length == 3 ? Number(encoderMap[1].replace("#", "")) : 0
-
-
         this.keymapStr = new Array();
         //todo rework to map
         layers.forEach((match: string) => {
@@ -72,6 +68,7 @@ export class KeyMap extends Subscribable {
 
             this.keymapStr.push(cleanedMatch.split(","));
         });
+
 
         this.keymap = new Array();
         this.encoderMap = new Array()

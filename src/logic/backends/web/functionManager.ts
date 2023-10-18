@@ -16,6 +16,9 @@ export default class FunctionManager {
         this.serial = Serial.getInstance()
         this.ideManager = Ide.getInstance()
         this.fileManager = new FileApiFileManager()
+        this.replReady = this.serial.connected
+        this.ideReady = this.ideManager.connected
+        this.fileReady = this.fileManager.connected
     }
 
     replReadyCheck = async () => {
@@ -65,10 +68,17 @@ export default class FunctionManager {
             alert("you are already good to go")
         } else {
             await this.ideReadyCheck()
+            this.ideManager.changeConnectionType(ConnectionType.FileApi)
+            this.ideManager.open()
+            await this.ideManager.getFileSystem()
             let bootPy = await this.ideManager.getFile("/boot.py")
-            bootPy += `import storage\r\nstorage.remount("/", False)`
+            bootPy = `import storage\r\nstorage.remount("/", False)\r\nstorage.disable_usb_drive()`
             this.ideManager.updateFile("/boot.py", bootPy)
-            this.ideManager.saveFile("/boot.py")
+            await this.ideManager.saveFile("/boot.py")
+            this.ideManager.changeConnectionType(ConnectionType.Serial)
+            this.ideManager.open()
+
+
         }
     }
 
