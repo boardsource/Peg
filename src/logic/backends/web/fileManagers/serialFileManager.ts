@@ -25,6 +25,19 @@ export default class SerialFileManager implements IFileManager {
     }
     setUsing = (newValue: boolean) => {
         this.inUse = newValue
+        if (!this.inUse) {
+            console.log("settings time out to give back board")
+            setTimeout(() => {
+                console.log("timeout is over lets see if I should still give back board")
+                if (!this.inUse) {
+                    console.log("yep I will give back the boad now")
+                    this.connection.rebootBoard()
+
+                }
+            }, 2000)
+
+        }
+
     }
 
     open = async () => {
@@ -100,6 +113,9 @@ export default class SerialFileManager implements IFileManager {
         const data = await possessFiles(files, "/")
         this.setUsing(false)
         this.connection.toggleLock(false)
+
+
+
         this.haveFileSystem = true
         return data
     }
@@ -122,7 +138,7 @@ export default class SerialFileManager implements IFileManager {
         await delay()
         let numOfLines = await this.connection.sendAndStealResponse(`print(len(l))`)
         await delay()
-        // console.log("going to get lines", numOfLines)
+        console.log("going to get lines", numOfLines)
         const responsesPreFile = this.connection.responses.length
         for (let i = 0; i < Number(numOfLines); i++) {
             await getLine(i)
@@ -130,6 +146,10 @@ export default class SerialFileManager implements IFileManager {
         this.connection.writeStringToByte("f.close()")
         this.setUsing(false)
         this.connection.toggleLock(false)
+
+
+
+
         const fileResponses = [...this.connection.responses].splice(responsesPreFile, this.connection.responses.length - 1)
         const filtered: string[] = fileResponses.filter(res => !res.startsWith(">>> "))
         const file = filtered.join("")
@@ -154,6 +174,8 @@ export default class SerialFileManager implements IFileManager {
         this.connection.writeStringToByte("os.sync()")
         this.setUsing(false)
         this.connection.toggleLock(false)
+
+
         if (checkSum) {
             const savedFile = await this.readFile(path)
             if (comparStrings(savedFile, newFile)) {
@@ -178,6 +200,8 @@ export default class SerialFileManager implements IFileManager {
         this.setUsing(false)
         this.connection.toggleLock(false)
 
+
+
     }
     makeFile = async (path: string, name: string) => {
         const newPath = `${path}/${name}`
@@ -193,6 +217,8 @@ export default class SerialFileManager implements IFileManager {
         this.connection.writeStringToByte("os.sync()")
         this.setUsing(false)
         this.connection.toggleLock(false)
+
+
     }
 
 }

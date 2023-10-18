@@ -85,7 +85,7 @@ class Ide extends Subscribable {
             try {
                 const file = await this.connection.readFile(path)
                 this.files.set(path, file)
-                console.log(file)
+                // console.log(file)
                 return file
 
             } catch (error) {

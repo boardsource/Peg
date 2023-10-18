@@ -6,7 +6,7 @@ export class ProgramSettings extends Subscribable {
     private _autoConnect: boolean = true;
     private _autoFileTree: boolean = false;
 
-    private _connectionType: ConnectionType = ConnectionType.FileApi;
+    private _connectionType: ConnectionType = ConnectionType.Serial;
     private _seven: boolean = true
     private _tooltips: boolean = true;
     private _debug: boolean = false;

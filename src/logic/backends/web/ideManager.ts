@@ -32,20 +32,21 @@ class IdeManger extends Subscribable {
         await this.ide.open()
         await delay()
 
-        // await this.ide.getFileSystem()
-        // await delay()
+        await this.ide.getFileSystem()
+        await delay()
 
-        // console.log("done getting file sytem ", this.ide.fileSystem)
+        console.log("done getting file sytem ", this.ide.fileSystem)
         const mainPy = await this.ide.getFile("/main.py")
         if (mainPy) {
+            console.log({ mainPy })
+
             this.webBackend.reply(ElectronEvents.UpdateKeyMap, mainPy)
-            // console.log("main", mainPy)
         }
 
         const layoutJson = await this.ide.getFile("/layout.json")
         if (layoutJson) {
             this.webBackend.reply(ElectronEvents.UpdateLayout, layoutJson)
-            console.log("json", layoutJson)
+            // console.log("json", layoutJson)
         }
 
 

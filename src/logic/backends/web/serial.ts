@@ -51,6 +51,17 @@ export class Serial extends Subscribable {
     }
   };
 
+  rebootBoard = async () => {
+    if (this.gotRepl) {
+      this.ctrlc();
+      await delay();
+      this.ctrld();
+      this.gotRepl = false;
+      return await delay();
+    } else {
+      return await delay();
+    }
+  }
   handleResponse = (returnFromPort: string) => {
     this.responses.push(returnFromPort);
     if (this.renderData) {
@@ -92,7 +103,7 @@ export class Serial extends Subscribable {
 
   write = async (data: any) => {
     // if (this.canSend) {
-    console.log("writing:", data);
+    // console.log("writing:", data);
     this.port.write(data);
     // } else {
     //     this.communicate("ToolBox ERROR: ToolBox is in the middle of possessing commands try again after you see a message saying 'Terminal Free'")
@@ -127,7 +138,7 @@ export class Serial extends Subscribable {
 
   sendAndStealResponse = async (toSend: string) => {
     const startingLength = Number(`${this.responses.length}`);
-    console.log("before sending", this.responses.length);
+    // console.log("before sending", this.responses.length);
     this.writeStringToByte(toSend);
     let delayCount = 0;
     while (this.responses.length !== startingLength + 2) {
