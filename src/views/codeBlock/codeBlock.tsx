@@ -26,13 +26,7 @@ export default function LED() {
                 <p>
                     Your keyboard does not have a code block currently. Download one with the button below or wrap any code in "# codeblock"
                 </p>
-                <Button
-					onClick={() => {
-						clientManager.sendToBackend(ElectronEvents.OpenFile, "");
-					}}
-				>
-					Add Code Blocks
-				</Button>
+                <Button onClick={() => {clientManager.sendToBackend(ElectronEvents.OpenFile, "")}}>Add Code Blocks</Button>
             </div>
             
 
@@ -78,16 +72,11 @@ export default function LED() {
                         )}
                     </For>
                     {codeBlocks().length > 0 ? (
-						<Button
-							onClick={() => {
-								clientManager.sendToBackend(ElectronEvents.OpenFile, "");
-							}}
-						>
-							Edit Code Blocks
-						</Button>
-					) : (
-						""
-					)}
+			<Button onClick={() => {clientManager.sendToBackend(ElectronEvents.OpenFile, "");}}>
+			    Edit Code Blocks
+			</Button>) 
+		    : ("")
+		    }
                 </div>
             </div>
 
