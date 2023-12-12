@@ -505,4 +505,22 @@ export class DiskManager {
         }
 
     }
+    public async createTempKeymap() {
+        
+        if(this.hasKeymap !== ""){
+            const mainPy = await fs.readFile(this.hasKeymap, 'utf8');
+
+            try{
+                const tempKeymap = await fs.access(path.join(app.getPath("temp"), "tempKeymap.py"));
+                console.log("found temp keymap")
+                await fs.unlink(path.join(app.getPath("temp"), "tempKeymap.py"))
+                console.log("deleted temp keymap")
+                await fs.writeFile(path.join(app.getPath("temp"), "tempKeymap.py"), mainPy)
+                console.log("created temp keymap")
+            } catch (error) {
+                console.log("no temp keymap found")
+                await fs.writeFile(path.join(app.getPath("temp"), "tempKeymap.py"), mainPy)
+            }
+        }
+    }
 }
