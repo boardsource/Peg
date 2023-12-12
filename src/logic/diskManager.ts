@@ -95,9 +95,6 @@ export class DiskManager {
         }
         return change
     }
-    public getDrivePath(): string {
-		return this.kbDrive;
-	}
     async pingDrive() {
         try {
             const files = await fs.readdir(this.kbDrive);
