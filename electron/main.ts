@@ -4,6 +4,7 @@ import * as path from 'path';
 import { ElectronEvents, FileName } from '../src/types/types';
 let mainWindow: BrowserWindow | null = null;
 let pegApp: AppManager | null = null;
+const fs = require("fs")
 const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
@@ -294,7 +295,23 @@ ipcMain.on(ElectronEvents.WindowMinimize, (event: Electron.IpcMainEvent) => {
   }
 }
 )
-
+ipcMain.on(ElectronEvents.OpenFile, (event: Electron.IpcMainEvent) => {
+  if(pegApp){
+    //create file 
+    pegApp.diskManager.createTempKeymap()
+        //  open file
+    shell.openPath(path.join(app.getPath("temp"), "/tempKeymap.py"));
+    // wait for changes
+    const watcher = fs.watchFile(path.join(app.getPath("temp"), "/tempKeymap.py"), (currentState:any, previousState:any) =>{
+      if (previousState.mtimeMs!== 0){
+        console.log("second Change")
+        //call diskmanager save file
+        pegApp!.diskManager.saveFile(fs.readFileSync(path.join(app.getPath("temp"), "/tempKeymap.py")))
+      }
+      console.log(previousState.mtimeMs)
+    });
+  }
+});
 
 
 

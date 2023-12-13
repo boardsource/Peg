@@ -3,7 +3,7 @@ import DownloadFeature from '../../components/downloadFeature/downloadFeature'
 import MainView from '../../components/mainView/mainView'
 import ShareFeature from '../../components/shareFeature/shareFeature'
 import { KeyMap } from '../../logic/keymapManager'
-import { ShareableFeatureType } from '../../types/types'
+import { ShareableFeatureType, ElectronEvents } from '../../types/types'
 import Button from '../../components/button/button'
 import { ClientManager } from '../../logic/clientManager'
 const clientManager = ClientManager.getInstance()
@@ -22,9 +22,14 @@ export default function LED() {
     })
     const fallBack = () => {
         return (
-            <p>
-                Your keyboard does not have a code block currently. Download one with the button below or wrap any code in "# codeblock"
-            </p>
+            <div>
+                <p>
+                    Your keyboard does not have a code block currently. Download one with the button below or wrap any code in "# codeblock"
+                </p>
+                <Button onClick={() => {clientManager.sendToBackend(ElectronEvents.OpenFile, "")}}>Add Code Blocks</Button>
+            </div>
+            
+
         )
     }
     return (
@@ -66,6 +71,12 @@ export default function LED() {
                             </div>
                         )}
                     </For>
+                    {codeBlocks().length > 0 ? (
+			<Button onClick={() => {clientManager.sendToBackend(ElectronEvents.OpenFile, "");}}>
+			    Edit Code Blocks
+			</Button>) 
+		    : ("")
+		    }
                 </div>
             </div>
 

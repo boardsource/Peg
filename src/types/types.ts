@@ -118,7 +118,8 @@ export enum ElectronEvents {
     LostConnectionToBoard = "LostConnectionToBoard",
     ClientUp = "ClientUp",
     Toast = "Toast",
-    Misc = "Misc"
+    Misc = "Misc",
+    OpenFile = "OpenFile",
 
 }
 export enum ScrollerSides {
